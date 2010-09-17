@@ -1,0 +1,38 @@
+#############################################################################
+# QVlc - Qt and libVLC connector library
+# cmake_uninstall.cmake - Uninstallation script
+#############################################################################
+# Copyright (C) 2008-2010 Tadej Novak
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#
+# This file may be used under the terms of the
+# GNU General Public License version 3.0 as published by the
+# Free Software Foundation and appearing in the file LICENSE.GPL
+# included in the packaging of this file.
+#############################################################################
+
+IF(NOT EXISTS "@CMAKE_CURRENT_BINARY_DIR@/install_manifest.txt")
+  MESSAGE(FATAL_ERROR "Cannot find install manifest: \"@CMAKE_CURRENT_BINARY_DIR@/install_manifest.txt\"")
+ENDIF(NOT EXISTS "@CMAKE_CURRENT_BINARY_DIR@/install_manifest.txt")
+
+FILE(READ "@CMAKE_CURRENT_BINARY_DIR@/install_manifest.txt" files)
+STRING(REGEX REPLACE "\n" ";" files "${files}")
+FOREACH(file ${files})
+  MESSAGE(STATUS "Uninstalling \"${file}\"")
+  IF(EXISTS "${file}")
+    EXEC_PROGRAM(
+      "@CMAKE_COMMAND@" ARGS "-E remove \"${file}\""
+      OUTPUT_VARIABLE rm_out
+      RETURN_VALUE rm_retval
+      )
+    IF("${rm_retval}" STREQUAL 0)
+    ELSE("${rm_retval}" STREQUAL 0)
+      MESSAGE(FATAL_ERROR "Problem when removing \"${file}\"")
+    ENDIF("${rm_retval}" STREQUAL 0)
+  ELSE(EXISTS "${file}")
+    MESSAGE(STATUS "File \"${file}\" does not exist.")
+  ENDIF(EXISTS "${file}")
+ENDFOREACH(file)
