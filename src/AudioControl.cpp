@@ -15,7 +15,8 @@
 *****************************************************************************/
 
 #include "AudioControl.h"
-#include "Instance.h"
+#include "core/Error.h"
+#include "core/MediaPlayer.h"
 
 VlcAudioControl::VlcAudioControl(QObject *parent) :
 	QObject(parent),
@@ -51,7 +52,7 @@ void VlcAudioControl::updateActions()
 		delete _actionGroup;
 	_actionGroup = new QActionGroup(this);
 
-	if(!VlcInstance::isActive()) {
+	if(!VlcMediaPlayer::isActive()) {
 		emit actions("audio", _actionList);
 		return;
 	}
@@ -75,7 +76,7 @@ void VlcAudioControl::updateActions()
 		return;
 	}
 
-	VlcInstance::checkError();
+	VlcError::errmsg();
 
 	for (int i = 0; i < _actionList.size(); ++i) {
 		_actionList[i]->setCheckable(true);
@@ -85,7 +86,7 @@ void VlcAudioControl::updateActions()
 
 
 	_actionList[libvlc_audio_get_track(_vlcCurrentMediaPlayer)]->setChecked(true);
-	VlcInstance::checkError();
+	VlcError::errmsg();
 
 	emit actions("audio", _actionList);
 
@@ -98,7 +99,7 @@ void VlcAudioControl::update()
 
 	libvlc_audio_set_track(_vlcCurrentMediaPlayer, id);
 
-	VlcInstance::checkError();
+	VlcError::errmsg();
 }
 
 void VlcAudioControl::reset()

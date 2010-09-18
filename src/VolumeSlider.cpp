@@ -16,7 +16,8 @@
 
 #include <QtGui/QHBoxLayout>
 
-#include "Instance.h"
+#include "core/Error.h"
+#include "core/MediaPlayer.h"
 #include "VolumeSlider.h"
 
 VlcVolumeSlider::VlcVolumeSlider(QWidget *parent) :
@@ -59,7 +60,7 @@ void VlcVolumeSlider::setVolume(const int &volume)
 
 void VlcVolumeSlider::updateVolume()
 {
-	if(!VlcInstance::isActive())
+	if(!VlcMediaPlayer::isActive())
 		return;
 
 	int volume = libvlc_audio_get_volume(_vlcCurrentMediaPlayer);
@@ -68,7 +69,7 @@ void VlcVolumeSlider::updateVolume()
 		libvlc_audio_set_volume (_vlcCurrentMediaPlayer, _currentVolume);
 	}
 
-	VlcInstance::checkError();
+	VlcError::errmsg();
 }
 
 void VlcVolumeSlider::volumeControl(const bool &up)
@@ -88,7 +89,7 @@ void VlcVolumeSlider::mute()
 {
 	int isMute = libvlc_audio_get_mute(_vlcCurrentMediaPlayer);
 
-	VlcInstance::checkError();
+	VlcError::errmsg();
 
 	if(isMute == 1) {
 		_timer->start(100);
@@ -102,5 +103,5 @@ void VlcVolumeSlider::mute()
 
 	libvlc_audio_toggle_mute(_vlcCurrentMediaPlayer);
 
-	VlcInstance::checkError();
+	VlcError::errmsg();
 }

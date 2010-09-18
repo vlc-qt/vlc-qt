@@ -1,5 +1,5 @@
 #############################################################################
-# VLC-Qt - Qt and libVLC connector library
+# VLC-Qt - Qt and libvlc connector library
 #############################################################################
 # Copyright (C) 2008-2010 Tadej Novak
 #
@@ -601,7 +601,7 @@ FILE_PATTERNS          =
 # should be searched for input files as well. Possible values are YES and NO.
 # If left blank NO is used.
 
-RECURSIVE              = NO
+RECURSIVE              = YES
 
 # The EXCLUDE tag can be used to specify files and/or directories that should
 # excluded from the INPUT source files. This way you can easily exclude a

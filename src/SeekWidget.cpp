@@ -17,7 +17,8 @@
 #include <QtCore/QTime>
 #include <QtGui/QHBoxLayout>
 
-#include "Instance.h"
+#include "core/Error.h"
+#include "core/MediaPlayer.h"
 #include "SeekWidget.h"
 
 VlcSeekWidget::VlcSeekWidget(QWidget *parent)
@@ -58,7 +59,7 @@ VlcSeekWidget::~VlcSeekWidget()
 
 void VlcSeekWidget::updateTime()
 {
-	if(VlcInstance::isActive()) {
+	if(VlcMediaPlayer::isActive()) {
 		libvlc_time_t fullTime;
 		libvlc_time_t currentTime;
 
@@ -78,7 +79,7 @@ void VlcSeekWidget::updateTime()
 		_seek->setValue(0);
 	}
 
-	VlcInstance::checkError();
+	VlcError::errmsg();
 }
 
 void VlcSeekWidget::changeTime()
@@ -90,5 +91,5 @@ void VlcSeekWidget::changeTime()
 
 	libvlc_media_player_set_time(_vlcCurrentMediaPlayer, _seek->value());
 
-	VlcInstance::checkError();
+	VlcError::errmsg();
 }

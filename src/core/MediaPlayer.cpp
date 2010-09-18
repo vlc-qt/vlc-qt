@@ -1,6 +1,6 @@
 /****************************************************************************
-* VLC-Qt - Qt and libVLC connector library
-* Instance.cpp: Main libVLC instance
+* VLC-Qt - Qt and libvlc connector library
+* MediaPlayer.cpp: MediaPlayer
 *****************************************************************************
 * Copyright (C) 2008-2010 Tadej Novak
 *
@@ -15,17 +15,14 @@
 *****************************************************************************/
 
 #include <QtCore/QDebug>
-#include <QtGui/QMessageBox>
 
-#include "Config.h"
-#include "Instance.h"
+#include "core/Error.h"
+#include "core/MediaPlayer.h"
 
-libvlc_instance_t * _vlcInstance = NULL;
-libvlc_media_player_t * _vlcCurrentMediaPlayer = NULL;
+libvlc_media_player_t *_vlcCurrentMediaPlayer = NULL;
 
-VlcInstance::VlcInstance(const QList<const char *> &args,
-						 const WId &widget,
-						 QObject *parent) :
+VlcMediaPlayer::VlcMediaPlayer(const WId &widget,
+							   QObject *parent) :
 	QObject(parent),
 	_vlcMedia(NULL),
 	_widgetId(widget)
@@ -34,62 +31,24 @@ VlcInstance::VlcInstance(const QList<const char *> &args,
 	connect(_check, SIGNAL(timeout()), this, SLOT(checkPlayingState()));
 	_check->start(300);
 
-	const char *vlcArgs[args.size()];
-	for(int i=0; i<args.size(); i++)
-		vlcArgs[i] = args[i];
-
-	_vlcInstance = libvlc_new(sizeof(vlcArgs) / sizeof(*vlcArgs), vlcArgs);
-
-	checkError();
-
-	if(_vlcInstance) {
-		qDebug() << "libvlc-qt" << version() << "initialised";
-		qDebug() << "Using libVLC version:" << libvlc_get_version();
-		qDebug() << "libVLC loaded";
-	} else {
-		qDebug() << "libvlc-qt Error: libVLC failed to load!";
-		switch(fatalError()) {
-		case QMessageBox::Ok:
-			exit(-100);
-			break;
-		default:
-			break;
-		};
-	}
 }
 
-VlcInstance::~VlcInstance()
+VlcMediaPlayer::~VlcMediaPlayer()
 {
 	delete _check;
-
-	libvlc_release(_vlcInstance);
 }
 
-QString VlcInstance::version()
-{
-#ifdef LIBVLCQT_VERSION
-	return QString(LIBVLCQT_VERSION);
-#else
-	return QString("Unknown");
-#endif //LIBVLCQT_VERSION
-}
-
-QString VlcInstance::libVlcVersion()
-{
-	return QString(libvlc_get_version());
-}
-
-void VlcInstance::open(const QString &media)
+void VlcMediaPlayer::open(const QString &media)
 {
 	unloadMedia();
 
-	/* Create a new LibVLC media descriptor */
+	/* Create a new libvlc media descriptor */
 	_vlcMedia = libvlc_media_new_location(_vlcInstance, media.toAscii());
-	checkError();
-	qDebug() << "libVlc" <<"Media:" << media;
+	VlcError::errmsg();
+	qDebug() << "libvlc" <<"Media:" << media;
 
 	_vlcCurrentMediaPlayer = libvlc_media_player_new_from_media(_vlcMedia);
-	checkError();
+	VlcError::errmsg();
 
 
 	/* Disable mouse and keyboard events */
@@ -107,13 +66,13 @@ void VlcInstance::open(const QString &media)
 		libvlc_media_player_set_xwindow(_vlcCurrentMediaPlayer, _widgetId);
 #endif // Q_WS_*
 
-		checkError();
+		VlcError::errmsg();
 	}
 
 	play();
 }
 
-void VlcInstance::unloadMedia()
+void VlcMediaPlayer::unloadMedia()
 {
 	if (_vlcCurrentMediaPlayer) {
 		libvlc_media_player_release(_vlcCurrentMediaPlayer);
@@ -125,39 +84,39 @@ void VlcInstance::unloadMedia()
 		_vlcMedia = NULL;
 	}
 
-	checkError();
+	VlcError::errmsg();
 }
 
-void VlcInstance::play()
+void VlcMediaPlayer::play()
 {
 	if(_vlcCurrentMediaPlayer == NULL)
 		return;
 
 	libvlc_media_player_play(_vlcCurrentMediaPlayer);
-	checkError();
+	VlcError::errmsg();
 }
 
-void VlcInstance::pause()
+void VlcMediaPlayer::pause()
 {
 	if(_vlcCurrentMediaPlayer == NULL)
 		return;
 
 	if(libvlc_media_player_can_pause(_vlcCurrentMediaPlayer) == 1)
 		libvlc_media_player_pause(_vlcCurrentMediaPlayer);
-	checkError();
+	VlcError::errmsg();
 }
 
-void VlcInstance::stop()
+void VlcMediaPlayer::stop()
 {
 	if(_vlcCurrentMediaPlayer == NULL)
 		return;
 
 	libvlc_media_player_stop(_vlcCurrentMediaPlayer);
 	unloadMedia();
-	checkError();
+	VlcError::errmsg();
 }
 
-void VlcInstance::checkPlayingState()
+void VlcMediaPlayer::checkPlayingState()
 {
 	if(_vlcCurrentMediaPlayer == NULL) {
 		emit state(false, false, false);
@@ -175,15 +134,7 @@ void VlcInstance::checkPlayingState()
 	emit state(playing, audio_count, video_count);
 }
 
-void VlcInstance::checkError()
-{
-	if(libvlc_errmsg()) {
-		qDebug() << "libVLC" << "Error:" << libvlc_errmsg();
-		libvlc_clearerr();
-	}
-}
-
-bool VlcInstance::isActive()
+bool VlcMediaPlayer::isActive()
 {
 	if(_vlcCurrentMediaPlayer == NULL)
 		return false;
@@ -203,14 +154,4 @@ bool VlcInstance::isActive()
 		return false;
 	else
 		return true;
-}
-
-int VlcInstance::fatalError() const
-{
-	 int ret = QMessageBox::critical(0, "libVLC Initialization",
-									"libVLC could not be initialized successfully.\n"
-									"The application will now exit.",
-									QMessageBox::Ok | QMessageBox::Cancel,
-									QMessageBox::Ok);
-	 return ret;
 }

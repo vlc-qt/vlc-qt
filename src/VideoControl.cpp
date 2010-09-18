@@ -14,7 +14,8 @@
 * included in the packaging of this file.
 *****************************************************************************/
 
-#include "Instance.h"
+#include "core/Error.h"
+#include "core/MediaPlayer.h"
 #include "VideoControl.h"
 
 VlcVideoControl::VlcVideoControl(const QString &lang, QObject *parent) :
@@ -57,7 +58,7 @@ void VlcVideoControl::updateSubtitleActions() {
 		delete _actionSubGroup;
 	_actionSubGroup = new QActionGroup(this);
 
-	if(!VlcInstance::isActive()) {
+	if(!VlcMediaPlayer::isActive()) {
 		emit actions("sub", _actionSubList);
 		return;
 	}
@@ -81,7 +82,7 @@ void VlcVideoControl::updateSubtitleActions() {
 		return;
 	}
 
-	VlcInstance::checkError();
+	VlcError::errmsg();
 
 	for (int i = 0; i < _actionSubList.size(); ++i) {
 		_actionSubList[i]->setCheckable(true);
@@ -98,7 +99,7 @@ void VlcVideoControl::updateSubtitleActions() {
 
 	_actionSubList[libvlc_video_get_spu(_vlcCurrentMediaPlayer)]->setChecked(true);
 
-	VlcInstance::checkError();
+	VlcError::errmsg();
 
 	emit actions("sub", _actionSubList);
 
@@ -111,17 +112,17 @@ void VlcVideoControl::updateSubtitles()
 
 	libvlc_video_set_spu(_vlcCurrentMediaPlayer, id);
 
-	VlcInstance::checkError();
+	VlcError::errmsg();
 }
 
 void VlcVideoControl::loadSubtitle(const QString &sub)
 {
-	if(!VlcInstance::isActive() || sub.isEmpty())
+	if(!VlcMediaPlayer::isActive() || sub.isEmpty())
 		return;
 
 	libvlc_video_set_subtitle_file(_vlcCurrentMediaPlayer, sub.toUtf8().data());
 
-	VlcInstance::checkError();
+	VlcError::errmsg();
 
 	_timer->start(1000);
 }
@@ -136,7 +137,7 @@ void VlcVideoControl::updateVideoActions() {
 		delete _actionVideoGroup;
 	_actionVideoGroup = new QActionGroup(this);
 
-	if(!VlcInstance::isActive()) {
+	if(!VlcMediaPlayer::isActive()) {
 		emit actions("video", _actionVideoList);
 		return;
 	}
@@ -159,7 +160,7 @@ void VlcVideoControl::updateVideoActions() {
 		return;
 	}
 
-	VlcInstance::checkError();
+	VlcError::errmsg();
 
 	for (int i = 0; i < _actionVideoList.size(); ++i) {
 		_actionVideoList[i]->setCheckable(true);
@@ -169,7 +170,7 @@ void VlcVideoControl::updateVideoActions() {
 
 	_actionVideoList[libvlc_video_get_track(_vlcCurrentMediaPlayer)]->setChecked(true);
 
-	VlcInstance::checkError();
+	VlcError::errmsg();
 
 	emit actions("video", _actionVideoList);
 
@@ -182,7 +183,7 @@ void VlcVideoControl::updateVideo()
 
 	libvlc_video_set_track(_vlcCurrentMediaPlayer, id);
 
-	VlcInstance::checkError();
+	VlcError::errmsg();
 }
 
 void VlcVideoControl::reset()

@@ -1,6 +1,6 @@
 /****************************************************************************
-* VLC-Qt - Qt and libVLC connector library
-* Instance.h: Main libVLC instance
+* VLC-Qt - Qt and libvlc connector library
+* MediaPlayer.h: MediaPlayer
 *****************************************************************************
 * Copyright (C) 2008-2010 Tadej Novak
 *
@@ -14,43 +14,40 @@
 * included in the packaging of this file.
 *****************************************************************************/
 
-#ifndef VLCQT_VLCINSTANCE_H_
-#define VLCQT_VLCINSTANCE_H_
+#ifndef VLCQT_MEDIAPLAYER_H_
+#define VLCQT_MEDIAPLAYER_H_
 
 #include <QtCore/QObject>
+#include <QtCore/QString>
 #include <QtCore/QTimer>
 #include <QtGui/QWidget>
-
 #include <vlc/vlc.h>
 
-#include "Config.h"
+#include "Instance.h"
 
-extern libvlc_instance_t *_vlcInstance;
 extern libvlc_media_player_t *_vlcCurrentMediaPlayer;
 
-/*! \class Instance Instance.h vlc-qt/Instance.h
-	\brief Main instance
+/*! \class VlcMediaPlayer MediaPlayer.h vlc-qt/MediaPlayer.h
+	\brief Media Player
 
-	This class is basic Instance manager for VLC-Qt library.
+	A basic MediaPlayer manager for VLC-Qt library.
 	It provides main playback controls.
 */
-class VlcInstance : public QObject
+class VlcMediaPlayer : public QObject
 {
 Q_OBJECT
 public:
 	/*!
-		Instance constructor. This is mandatory to use VLC-Qt and all its other classes.
-		\param args libVLC arguments
+		MediaPlayer constructor. This is mandatory to use libvlc playback functions.
 		\param widget unique ID of video widget
 		\param parent instance's parent object
 	*/
-	VlcInstance(const QList<const char *> &args, const WId &widget = NULL, QObject *parent = NULL);
+	VlcMediaPlayer(const WId &widget = NULL, QObject *parent = NULL);
 
 	/*!
-		Instance destructor
+		MediaPlayer destructor
 	*/
-	~VlcInstance();
-
+	~VlcMediaPlayer();
 
 	/*!
 		Open media file or stream. Any media shoudl be playable and opened.
@@ -63,23 +60,6 @@ public:
 		\return true if instance is playing
 	*/
 	static bool isActive();
-
-	/*!
-		Error check
-	*/
-	static void checkError();
-
-	/*!
-		Version info
-		\return version
-	*/
-	static QString version();
-
-	/*!
-		libVLC version info
-		\return libVLC version
-	*/
-	static QString libVlcVersion();
 
 
 public slots:
@@ -113,7 +93,6 @@ private slots:
 	void checkPlayingState();
 
 private:
-	int fatalError() const;
 	void unloadMedia();
 
 	libvlc_media_t * _vlcMedia;
@@ -122,4 +101,4 @@ private:
 	QTimer *_check;
 };
 
-#endif // VLCQT_VLCINSTANCE_H_
+#endif // VLCQT_MEDIAPLAYER_H_
