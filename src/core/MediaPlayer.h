@@ -24,6 +24,7 @@
 #include <vlc/vlc.h>
 
 #include "Instance.h"
+#include "Media.h"
 
 extern libvlc_media_player_t *_vlcCurrentMediaPlayer;
 
@@ -95,7 +96,7 @@ private slots:
 private:
 	void unloadMedia();
 
-	libvlc_media_t * _vlcMedia;
+	VlcMedia *_vlcMedia;
 	WId _widgetId;
 
 	QTimer *_check;

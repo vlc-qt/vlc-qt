@@ -42,12 +42,11 @@ void VlcMediaPlayer::open(const QString &media)
 {
 	unloadMedia();
 
-	/* Create a new libvlc media descriptor */
-	_vlcMedia = libvlc_media_new_location(_vlcInstance, media.toAscii());
-	VlcError::errmsg();
-	qDebug() << "libvlc" <<"Media:" << media;
+	// Create a new Media item
+	_vlcMedia = new VlcMedia(media);
 
-	_vlcCurrentMediaPlayer = libvlc_media_player_new_from_media(_vlcMedia);
+	// Create a new MediaPlayer instance
+	_vlcCurrentMediaPlayer = libvlc_media_player_new_from_media(_vlcMedia->libvlcMedia());
 	VlcError::errmsg();
 
 
@@ -80,7 +79,7 @@ void VlcMediaPlayer::unloadMedia()
 	}
 
 	if (_vlcMedia) {
-		libvlc_media_release(_vlcMedia);
+		delete _vlcMedia;
 		_vlcMedia = NULL;
 	}
 
@@ -141,10 +140,9 @@ bool VlcMediaPlayer::isActive()
 
 	// It's possible that the vlc doesn't play anything
 	// so check before
-	libvlc_media_t *curMedia;
-	curMedia = libvlc_media_player_get_media(_vlcCurrentMediaPlayer);
+	VlcMedia *media = new VlcMedia(libvlc_media_player_get_media(_vlcCurrentMediaPlayer));
 
-	if (curMedia == NULL)
+	if (media->libvlcMedia() == NULL)
 		return false;
 
 	libvlc_state_t state;

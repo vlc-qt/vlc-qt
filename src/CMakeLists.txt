@@ -34,6 +34,7 @@ SET(VLCQT_SRCS
 	AudioControl.cpp
 	core/Error.cpp
 	core/Instance.cpp
+	core/Media.cpp
 	core/MediaPlayer.cpp
 	SeekWidget.cpp
 	VideoControl.cpp
@@ -44,6 +45,7 @@ SET(VLCQT_SRCS
 SET(VLCQT_MOCS
 	AudioControl.h
 	core/Instance.h
+	core/Media.h
 	core/MediaPlayer.h
 	SeekWidget.h
 	VideoControl.h
