@@ -22,7 +22,8 @@
 #include <QtGui/QSlider>
 #include <QtGui/QWidget>
 
-/*! \class SeekWidget SeekWidget.h vlc-qt/SeekWidget.h
+/*!
+	\class VlcSeekWidget SeekWidget.h vlc-qt/SeekWidget.h
 	\brief Seek widget
 
 	This is one of VLC-Qt GUI classes.
@@ -34,7 +35,7 @@ Q_OBJECT
 public:
 	/*!
 		\brief VlcSeekWidget constructor
-		\param parent seek widget's parent GUI widget
+		\param parent seek widget's parent GUI widget (QWidget)
 	*/
 	VlcSeekWidget(QWidget *parent = 0);
 

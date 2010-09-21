@@ -28,7 +28,8 @@
 
 extern libvlc_media_player_t *_vlcCurrentMediaPlayer;
 
-/*! \class VlcMediaPlayer MediaPlayer.h vlc-qt/MediaPlayer.h
+/*!
+	\class VlcMediaPlayer MediaPlayer.h vlc-qt/MediaPlayer.h
 	\brief Media Player
 
 	A basic MediaPlayer manager for VLC-Qt library.
@@ -42,8 +43,8 @@ public:
 		\brief VlcMediaPlayer constructor.
 
 		This is mandatory to use libvlc playback functions.
-		\param widget unique ID of video widget
-		\param parent instance's parent object
+		\param widget unique ID of video widget (WId)
+		\param parent instance's parent object (QObject)
 	*/
 	VlcMediaPlayer(const WId &widget = NULL, QObject *parent = NULL);
 
@@ -66,14 +67,14 @@ public:
 
 	/*!
 		\brief Open media file or stream. Any media should be playable and opened.
-		\param media path or URL
+		\param media path or URL (QString)
 	*/
 	void open(const QString &media);
 
 	/*! \brief Set the movie time (in ms).
 
 		This has no effect if no media is being played. Not all formats and protocols support this.
-		\param time the movie time (in ms)
+		\param time the movie time (in ms) (int)
 	*/
 	static void setTime(const int &time);
 

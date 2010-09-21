@@ -22,7 +22,8 @@
 #include <QtGui/QSlider>
 #include <QtGui/QWidget>
 
-/*! \class VolumeSlider VolumeSlider.h vlc-qt/VolumeSlider.h
+/*!
+	\class VlcVolumeSlider VolumeSlider.h vlc-qt/VolumeSlider.h
 	\brief Volume slider widget
 
 	This is one of VLC-Qt GUI classes.
@@ -34,7 +35,7 @@ Q_OBJECT
 public:
 	/*!
 		\brief VlcVolumeSlider constructor
-		\param parent volume slider's parent GUI widget
+		\param parent volume slider's parent GUI widget (QWidget)
 	*/
 	VlcVolumeSlider(QWidget *parent = 0);
 
@@ -52,15 +53,21 @@ public slots:
 
 	/*!
 		\brief Set volume for current media
-		\param volume number from 0 to 200
+		\param volume number from 0 to 200 (int)
 	*/
 	void setVolume(const int &volume);
+
+	/*!
+		\brief Get volume for current media
+		\return volume number from 0 to 200 (int)
+	*/
+	int volume() const;
 
 	/*!
 		\brief Decreases or increases volume for 1, depending on the parameter.
 
 		Limits from 0 to 200 apply to this function.
-		\param up if true increases the volume
+		\param up if true increases the volume (bool)
 	*/
 	void volumeControl(const bool &up);
 

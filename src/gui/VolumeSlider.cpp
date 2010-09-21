@@ -81,6 +81,11 @@ void VlcVolumeSlider::updateVolume()
 	VlcAudio::setVolume(_currentVolume);
 }
 
+int VlcVolumeSlider::volume() const
+{
+	return _currentVolume;
+}
+
 void VlcVolumeSlider::volumeControl(const bool &up)
 {
 	if(up) {

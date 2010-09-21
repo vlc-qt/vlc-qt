@@ -24,7 +24,8 @@
 
 extern libvlc_instance_t *_vlcInstance;
 
-/*! \class VlcInstance Instance.h vlc-qt/Instance.h
+/*!
+	\class VlcInstance Instance.h vlc-qt/Instance.h
 	\brief Main instance
 
 	A basic Instance manager for VLC-Qt library.
@@ -39,8 +40,8 @@ public:
 
 		This is mandatory for using VLC-Qt and all its other classes.
 
-		\param args libvlc arguments
-		\param parent Instance's parent object
+		\param args libvlc arguments (QList<const char *>)
+		\param parent Instance's parent object (QObject)
 	*/
 	VlcInstance(const QList<const char *> &args, QObject *parent = NULL);
 
@@ -77,12 +78,13 @@ public:
 	*/
 	static QString changeset();
 
-	/*! \brief Sets the application name.
+	/*!
+		\brief Sets the application name.
 
 		libvlc passes this as the user agent string when a protocol requires it.
 
-		\param application Application name
-		\param version Application version
+		\param application Application name (QString)
+		\param version Application version (QString)
 	*/
 	void setUserAgent(const QString &application, const QString &version);
 };

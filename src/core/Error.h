@@ -19,7 +19,8 @@
 
 #include <vlc/vlc.h>
 
-/*! \class VlcError Error.h vlc-qt/Error.h
+/*!
+	\class VlcError Error.h vlc-qt/Error.h
 	\brief Error handler
 
 	A basic error handler for VLC-Qt library.
@@ -27,14 +28,16 @@
 class VlcError
 {
 public:
-	/*! \brief A human-readable error message for the last libvlc error in the calling thread.
+	/*!
+		\brief A human-readable error message for the last libvlc error in the calling thread.
 
 		The resulting string is valid until another error occurs.
 		\warning There may be no output, if there is no error.
 	*/
 	static void errmsg();
 
-	/*! \brief Clears the libvlc error status for the current thread.
+	/*!
+		\brief Clears the libvlc error status for the current thread.
 
 		This is optional. By default, the error status is automatically overriden when a new error occurs, and destroyed when the thread exits.
 	*/

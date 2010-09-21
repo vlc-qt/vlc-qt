@@ -17,7 +17,8 @@
 #ifndef VLCQT_AUDIO_H_
 #define VLCQT_AUDIO_H_
 
-/*! \class VlcAudio Audio.h vlc-qt/Audio.h
+/*!
+	\class VlcAudio Audio.h vlc-qt/Audio.h
 	\brief Audio controls
 
 	A group of audio controls functions.
@@ -25,25 +26,29 @@
 class VlcAudio
 {
 public:
-	/*! \brief Get current mute status.
+	/*!
+		\brief Get current mute status.
 
 		\return current mute status (bool)
 	*/
 	static bool getMute();
 
-	/*! \brief Set current audio level.
+	/*!
+		\brief Set current audio level.
 
-		\param volume new audio level
+		\param volume new audio level (int)
 	*/
 	static void setVolume(const int &volume);
 
-	/*! \brief Toggle mute status.
+	/*!
+		\brief Toggle mute status.
 
 		\return new mute status (bool)
 	*/
 	static bool toggleMute();
 
-	/*! \brief Get current audio level.
+	/*!
+		\brief Get current audio level.
 
 		\return current audio level, -1 if media is not playing (int)
 	*/

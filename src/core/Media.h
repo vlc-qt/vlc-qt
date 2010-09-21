@@ -21,7 +21,8 @@
 #include <QtCore/QString>
 #include <vlc/vlc.h>
 
-/*! \class VlcMedia Media.h vlc-qt/Media.h
+/*!
+	\class VlcMedia Media.h vlc-qt/Media.h
 	\brief Media item
 
 	An abstract representation of a playable media.
@@ -35,8 +36,8 @@ public:
 		\brief VlcMedia constructor.
 
 		This constructor creates a new media instance from a media location.
-		\param location location of the media
-		\param parent instance's parent object
+		\param location location of the media (QString)
+		\param parent instance's parent object (QObject)
 	*/
 	VlcMedia(const QString &location, QObject *parent = 0);
 
@@ -44,8 +45,8 @@ public:
 		\brief VlcMedia constructor.
 
 		This constructor creates a new media instance from an existing one.
-		\param media libvlc media item
-		\param parent instance's parent object
+		\param media libvlc media item (libvlc_media_t)
+		\param parent instance's parent object (QObject)
 	*/
 	VlcMedia(libvlc_media_t *media, QObject *parent = 0);
 
