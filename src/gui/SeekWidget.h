@@ -1,5 +1,5 @@
 /****************************************************************************
-* VLC-Qt - Qt and libVLC connector library
+* VLC-Qt - Qt and libvlc connector library
 * SeekWidget.h: Seek widget
 *****************************************************************************
 * Copyright (C) 2008-2010 Tadej Novak
@@ -33,13 +33,13 @@ class VlcSeekWidget : public QWidget
 Q_OBJECT
 public:
 	/*!
-		SeekWidget constructor
+		\brief VlcSeekWidget constructor
 		\param parent seek widget's parent GUI widget
 	*/
 	VlcSeekWidget(QWidget *parent = 0);
 
 	/*!
-		SeekWidget destructor
+		VlcSeekWidget destructor
 	*/
 	~VlcSeekWidget();
 

@@ -1,5 +1,5 @@
 /****************************************************************************
-* VLC-Qt - Qt and libVLC connector library
+* VLC-Qt - Qt and libvlc connector library
 * SeekWidget.cpp: Seek widget
 *****************************************************************************
 * Copyright (C) 2008-2010 Tadej Novak
@@ -19,7 +19,7 @@
 
 #include "core/Error.h"
 #include "core/MediaPlayer.h"
-#include "SeekWidget.h"
+#include "gui/SeekWidget.h"
 
 VlcSeekWidget::VlcSeekWidget(QWidget *parent)
 	:QWidget(parent)
@@ -60,11 +60,8 @@ VlcSeekWidget::~VlcSeekWidget()
 void VlcSeekWidget::updateTime()
 {
 	if(VlcMediaPlayer::isActive()) {
-		libvlc_time_t fullTime;
-		libvlc_time_t currentTime;
-
-		fullTime = libvlc_media_player_get_length(_vlcCurrentMediaPlayer);
-		currentTime = libvlc_media_player_get_time(_vlcCurrentMediaPlayer);
+		int fullTime = VlcMediaPlayer::lenght();
+		int currentTime = VlcMediaPlayer::time();
 
 		_labelFull->setText(QTime(0,0,0,0).addMSecs(fullTime).toString("hh:mm:ss"));
 		_seek->setMaximum(fullTime);
@@ -78,8 +75,6 @@ void VlcSeekWidget::updateTime()
 		_labelElapsed->setText("00:00:00");
 		_seek->setValue(0);
 	}
-
-	VlcError::errmsg();
 }
 
 void VlcSeekWidget::changeTime()
@@ -89,7 +84,5 @@ void VlcSeekWidget::changeTime()
 
 	_labelElapsed->setText(QTime(0,0,0,0).addMSecs(_seek->value()).toString("hh:mm:ss"));
 
-	libvlc_media_player_set_time(_vlcCurrentMediaPlayer, _seek->value());
-
-	VlcError::errmsg();
+	VlcMediaPlayer::setTime(_seek->value());
 }

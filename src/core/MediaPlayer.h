@@ -39,28 +39,49 @@ class VlcMediaPlayer : public QObject
 Q_OBJECT
 public:
 	/*!
-		MediaPlayer constructor. This is mandatory to use libvlc playback functions.
+		\brief VlcMediaPlayer constructor.
+
+		This is mandatory to use libvlc playback functions.
 		\param widget unique ID of video widget
 		\param parent instance's parent object
 	*/
 	VlcMediaPlayer(const WId &widget = NULL, QObject *parent = NULL);
 
 	/*!
-		MediaPlayer destructor
+		VlcMediaPlayer destructor
 	*/
 	~VlcMediaPlayer();
 
 	/*!
-		Open media file or stream. Any media shoudl be playable and opened.
+		\brief Check if player is currently playing any media.
+		\return true if instance is playing (bool)
+	*/
+	static bool isActive();
+
+	/*!
+		\brief Get the current movie lenght (in ms).
+		\return the movie lenght (in ms), or -1 if there is no media (int)
+	*/
+	static int lenght();
+
+	/*!
+		\brief Open media file or stream. Any media should be playable and opened.
 		\param media path or URL
 	*/
 	void open(const QString &media);
 
-	/*!
-		Check if player is currently playing any media
-		\return true if instance is playing
+	/*! \brief Set the movie time (in ms).
+
+		This has no effect if no media is being played. Not all formats and protocols support this.
+		\param time the movie time (in ms)
 	*/
-	static bool isActive();
+	static void setTime(const int &time);
+
+	/*!
+		\brief Get the current movie time (in ms).
+		\return the movie time (in ms), or -1 if there is no media (int)
+	*/
+	static int time();
 
 
 public slots:

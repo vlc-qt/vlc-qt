@@ -32,30 +32,32 @@ class VlcMedia : public QObject
 Q_OBJECT
 public:
 	/*!
-		\brief Media constructor.
+		\brief VlcMedia constructor.
 
+		This constructor creates a new media instance from a media location.
 		\param location location of the media
 		\param parent instance's parent object
 	*/
 	VlcMedia(const QString &location, QObject *parent = 0);
 
 	/*!
-		\brief Media constructor.
+		\brief VlcMedia constructor.
 
-		\param widget unique ID of video widget
+		This constructor creates a new media instance from an existing one.
 		\param media libvlc media item
+		\param parent instance's parent object
 	*/
 	VlcMedia(libvlc_media_t *media, QObject *parent = 0);
 
 	/*!
-		\brief Media destructor
+		\brief VlcMedia destructor
 	*/
 	~VlcMedia();
 
 	/*!
 		\brief libvlc media item
 
-		\return libvlc_media_t item
+		\return libvlc media item (libvlc_media_t)
 	*/
 	libvlc_media_t *libvlcMedia();
 

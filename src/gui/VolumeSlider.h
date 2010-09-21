@@ -1,5 +1,5 @@
 /****************************************************************************
-* VLC-Qt - Qt and libVLC connector library
+* VLC-Qt - Qt and libvlc connector library
 * VolumeSlider.h: Volume manager and slider
 *****************************************************************************
 * Copyright (C) 2008-2010 Tadej Novak
@@ -26,47 +26,43 @@
 	\brief Volume slider widget
 
 	This is one of VLC-Qt GUI classes.
-	It provides main volume control and also visual display of current volume.
+	It provides graphical volume control and also visual display of current volume.
 */
 class VlcVolumeSlider : public QWidget
 {
 Q_OBJECT
 public:
 	/*!
-		VolumeSlider constructor
+		\brief VlcVolumeSlider constructor
 		\param parent volume slider's parent GUI widget
 	*/
 	VlcVolumeSlider(QWidget *parent = 0);
 
 	/*!
-		VolumeSlider destructor
+		VlcVolumeSlider destructor
 	*/
 	~VlcVolumeSlider();
 
 
-	/*!
-		Returns current volume of active instance
-		\return current volume
-	*/
-	int volume() const {return _currentVolume;}
-
 public slots:
 	/*!
-		Set volume for current instance
+		\brief Toggle mute
+	*/
+	void mute();
+
+	/*!
+		\brief Set volume for current media
 		\param volume number from 0 to 200
 	*/
 	void setVolume(const int &volume);
 
 	/*!
-		Toggle mute
-	*/
-	void mute();
+		\brief Decreases or increases volume for 1, depending on the parameter.
 
-	/*!
-		Increases volume for 1. This function is provided for convenience.
-		\sa volumeControl()
+		Limits from 0 to 200 apply to this function.
+		\param up if true increases the volume
 	*/
-	void volumeUp() {volumeControl(true);}
+	void volumeControl(const bool &up);
 
 	/*!
 		Decreases volume for 1. This function is provided for convenience.
@@ -75,11 +71,10 @@ public slots:
 	void volumeDown() {volumeControl(false);}
 
 	/*!
-		Decreases or increases volume for 1, depending on the parameter.
-		Limits from 0 to 200 apply to this function.
-		\param up if true increases the volume
+		Increases volume for 1. This function is provided for convenience.
+		\sa volumeControl()
 	*/
-	void volumeControl(const bool &up);
+	void volumeUp() {volumeControl(true);}
 
 
 private slots:

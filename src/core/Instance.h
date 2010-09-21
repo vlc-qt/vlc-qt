@@ -35,7 +35,7 @@ class VlcInstance : public QObject
 Q_OBJECT
 public:
 	/*!
-		\brief Instance constructor.
+		\brief VlcInstance constructor.
 
 		This is mandatory for using VLC-Qt and all its other classes.
 
@@ -45,35 +45,35 @@ public:
 	VlcInstance(const QList<const char *> &args, QObject *parent = NULL);
 
 	/*!
-		Instance destructor
+		VlcInstance destructor
 	*/
 	~VlcInstance();
 
 	/*!
 		\brief VLC-QT version info
 
-		\return a string containing the VLC-Qt version
+		\return a string containing the VLC-Qt version (QString)
 	*/
 	static QString libVersion();
 
 	/*!
 		\brief libvlc version info
 
-		\return a string containing the libvlc version
+		\return a string containing the libvlc version (QString)
 	*/
 	static QString version();
 
 	/*!
 		\brief libvlc compiler info
 
-		\return a string containing the compiler version
+		\return a string containing the compiler version (QString)
 	*/
 	static QString compiler();
 
 	/*!
 		\brief libvlc changeset info
 
-		\return a string containing the changeset
+		\return a string containing the changeset (QString)
 	*/
 	static QString changeset();
 

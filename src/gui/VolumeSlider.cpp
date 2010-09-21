@@ -1,5 +1,5 @@
 /****************************************************************************
-* VLC-Qt - Qt and libVLC connector library
+* VLC-Qt - Qt and libvlc connector library
 * VolumeSlider.cpp: Volume manager and slider
 *****************************************************************************
 * Copyright (C) 2008-2010 Tadej Novak
@@ -16,9 +16,10 @@
 
 #include <QtGui/QHBoxLayout>
 
+#include "core/Audio.h"
 #include "core/Error.h"
 #include "core/MediaPlayer.h"
-#include "VolumeSlider.h"
+#include "gui/VolumeSlider.h"
 
 VlcVolumeSlider::VlcVolumeSlider(QWidget *parent) :
 	QWidget(parent)
@@ -51,6 +52,23 @@ VlcVolumeSlider::~VlcVolumeSlider()
 	delete _timer;
 }
 
+void VlcVolumeSlider::mute()
+{
+	bool mute = VlcAudio::getMute();
+
+	if(mute) {
+		_timer->start(100);
+		_slider->setDisabled(false);
+		_label->setDisabled(false);
+	} else {
+		_timer->stop();
+		_slider->setDisabled(true);
+		_label->setDisabled(true);
+	}
+
+	VlcAudio::toggleMute();
+}
+
 void VlcVolumeSlider::setVolume(const int &volume)
 {
 	_currentVolume = volume;
@@ -60,16 +78,7 @@ void VlcVolumeSlider::setVolume(const int &volume)
 
 void VlcVolumeSlider::updateVolume()
 {
-	if(!VlcMediaPlayer::isActive())
-		return;
-
-	int volume = libvlc_audio_get_volume(_vlcCurrentMediaPlayer);
-
-	if(volume != _currentVolume) {
-		libvlc_audio_set_volume (_vlcCurrentMediaPlayer, _currentVolume);
-	}
-
-	VlcError::errmsg();
+	VlcAudio::setVolume(_currentVolume);
 }
 
 void VlcVolumeSlider::volumeControl(const bool &up)
@@ -83,25 +92,4 @@ void VlcVolumeSlider::volumeControl(const bool &up)
 			setVolume(_currentVolume-1);
 		}
 	}
-}
-
-void VlcVolumeSlider::mute()
-{
-	int isMute = libvlc_audio_get_mute(_vlcCurrentMediaPlayer);
-
-	VlcError::errmsg();
-
-	if(isMute == 1) {
-		_timer->start(100);
-		_slider->setDisabled(false);
-		_label->setDisabled(false);
-	} else {
-		_timer->stop();
-		_slider->setDisabled(true);
-		_label->setDisabled(true);
-	}
-
-	libvlc_audio_toggle_mute(_vlcCurrentMediaPlayer);
-
-	VlcError::errmsg();
 }
