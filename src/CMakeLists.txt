@@ -37,10 +37,11 @@ SET(VLCQT_SRCS
 	core/Instance.cpp
 	core/Media.cpp
 	core/MediaPlayer.cpp
+	core/Video.cpp
 	gui/SeekWidget.cpp
 	gui/VolumeSlider.cpp
+	gui/VideoWidget.cpp
 	VideoControl.cpp
-	VideoWidget.cpp
 )
 
 SET(VLCQT_MOCS
@@ -50,14 +51,15 @@ SET(VLCQT_MOCS
 	core/MediaPlayer.h
 	gui/SeekWidget.h
 	gui/VolumeSlider.h
+	gui/VideoWidget.h
 	VideoControl.h
-	VideoWidget.h
 )
 
 SET(VLCQT_HEADERS
 	${VLCQT_MOCS}
 	core/Audio.h
 	core/Error.h
+	core/Video.h
 	${CMAKE_BINARY_DIR}/src/Config.h
 )
 
