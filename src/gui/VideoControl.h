@@ -1,5 +1,5 @@
 /****************************************************************************
-* VLC-Qt - Qt and libVLC connector library
+* VLC-Qt - Qt and libvlc connector library
 * VideoControl.h: Video and subtitles controller
 *****************************************************************************
 * Copyright (C) 2008-2010 Tadej Novak
@@ -23,7 +23,8 @@
 #include <QtGui/QAction>
 #include <QtGui/QActionGroup>
 
-/*! \class VideoControl VideoControl.h vlc-qt/VideoControl.h
+/*!
+	\classVlc VideoControl VideoControl.h vlc-qt/VideoControl.h
 	\brief Video control class
 
 	This is one of VLC-Qt control classes.

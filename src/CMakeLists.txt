@@ -31,28 +31,28 @@ INCLUDE_DIRECTORIES("${CMAKE_BINARY_DIR}/src" "${CMAKE_SOURCE_DIR}/src")
 ###################
 # Set your list of sources here.
 SET(VLCQT_SRCS
-	AudioControl.cpp
 	core/Audio.cpp
 	core/Error.cpp
 	core/Instance.cpp
 	core/Media.cpp
 	core/MediaPlayer.cpp
 	core/Video.cpp
+	gui/AudioControl.cpp
 	gui/SeekWidget.cpp
 	gui/VolumeSlider.cpp
+	gui/VideoControl.cpp
 	gui/VideoWidget.cpp
-	VideoControl.cpp
 )
 
 SET(VLCQT_MOCS
-	AudioControl.h
 	core/Instance.h
 	core/Media.h
 	core/MediaPlayer.h
+	gui/AudioControl.h
 	gui/SeekWidget.h
 	gui/VolumeSlider.h
+	gui/VideoControl.h
 	gui/VideoWidget.h
-	VideoControl.h
 )
 
 SET(VLCQT_HEADERS

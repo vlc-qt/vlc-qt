@@ -1,5 +1,5 @@
 /****************************************************************************
-* VLC-Qt - Qt and libVLC connector library
+* VLC-Qt - Qt and libvlc connector library
 * VideoControl.h: Video and subtitles controller
 *****************************************************************************
 * Copyright (C) 2008-2010 Tadej Novak
@@ -16,7 +16,8 @@
 
 #include "core/Error.h"
 #include "core/MediaPlayer.h"
-#include "VideoControl.h"
+#include "core/Video.h"
+#include "gui/VideoControl.h"
 
 VlcVideoControl::VlcVideoControl(const QString &lang, QObject *parent) :
 	QObject(parent),
@@ -63,43 +64,33 @@ void VlcVideoControl::updateSubtitleActions() {
 		return;
 	}
 
-
-	if(libvlc_video_get_spu_count(_vlcCurrentMediaPlayer) != 0) {
-		libvlc_track_description_t *desc;
-		desc = libvlc_video_get_spu_description(_vlcCurrentMediaPlayer);
-		_mapSub.insert(QString().fromUtf8(desc->psz_name), 0);
-		_actionSubList << new QAction(QString().fromUtf8(desc->psz_name), this);
-
-		if(libvlc_video_get_spu_count(_vlcCurrentMediaPlayer) > 1) {
-			for(int i = 1; i < libvlc_video_get_spu_count(_vlcCurrentMediaPlayer); i++) {
-				desc = desc->p_next;
-				_mapSub.insert(QString().fromUtf8(desc->psz_name), i);
-				_actionSubList << new QAction(QString().fromUtf8(desc->psz_name), this);
-			}
+	if(VlcVideo::subtitleCount() > 0) {
+		QStringList desc = VlcVideo::subtitleDescription();
+		for(int i = 0; i < desc.size(); i++) {
+			_mapSub.insert(desc[i], i);
+			_actionSubList << new QAction(desc[i], this);
 		}
 	} else {
 		emit actions("sub", _actionSubList);
 		return;
 	}
 
-	VlcError::errmsg();
-
 	for (int i = 0; i < _actionSubList.size(); ++i) {
 		_actionSubList[i]->setCheckable(true);
 		_actionSubGroup->addAction(_actionSubList[i]);
 		connect(_actionSubList[i], SIGNAL(triggered()), this, SLOT(updateSubtitles()));
 
-		if(!_manualLanguage)
-			for(int j = 0; j < _preferedLanguage.size(); ++j)
+		if(!_manualLanguage) {
+			for(int j = 0; j < _preferedLanguage.size(); ++j) {
 				if(_actionSubList[i]->text().contains(_preferedLanguage[j],Qt::CaseInsensitive)) {
 					_actionSubList[i]->trigger();
 					_manualLanguage = true;
 				}
+			}
+		}
 	}
 
-	_actionSubList[libvlc_video_get_spu(_vlcCurrentMediaPlayer)]->setChecked(true);
-
-	VlcError::errmsg();
+	_actionSubList[VlcVideo::subtitle()]->setChecked(true);
 
 	emit actions("sub", _actionSubList);
 
@@ -110,19 +101,15 @@ void VlcVideoControl::updateSubtitles()
 {
 	int id = _mapSub.value(_actionSubGroup->checkedAction()->text());
 
-	libvlc_video_set_spu(_vlcCurrentMediaPlayer, id);
-
-	VlcError::errmsg();
+	VlcVideo::setSubtitle(id);
 }
 
 void VlcVideoControl::loadSubtitle(const QString &sub)
 {
-	if(!VlcMediaPlayer::isActive() || sub.isEmpty())
+	if(sub.isEmpty())
 		return;
 
-	libvlc_video_set_subtitle_file(_vlcCurrentMediaPlayer, sub.toUtf8().data());
-
-	VlcError::errmsg();
+	VlcVideo::setSubtitleFile(sub);
 
 	_timer->start(1000);
 }
@@ -142,25 +129,17 @@ void VlcVideoControl::updateVideoActions() {
 		return;
 	}
 
-	if(libvlc_video_get_track_count(_vlcCurrentMediaPlayer) != 0) {
-		libvlc_track_description_t *desc;
-		desc = libvlc_video_get_track_description(_vlcCurrentMediaPlayer);
-		_mapVideo.insert(QString().fromUtf8(desc->psz_name), desc->i_id);
-		_actionVideoList << new QAction(QString().fromUtf8(desc->psz_name), this);
-
-		if(libvlc_video_get_track_count(_vlcCurrentMediaPlayer) > 1) {
-			for(int i = 1; i < libvlc_video_get_track_count(_vlcCurrentMediaPlayer); i++) {
-				desc = desc->p_next;
-				_mapVideo.insert(QString().fromUtf8(desc->psz_name), desc->i_id);
-				_actionVideoList << new QAction(QString().fromUtf8(desc->psz_name), this);
-			}
+	if(VlcVideo::trackCount() > 0) {
+		QStringList desc = VlcVideo::trackDescription();
+		QList<int> ids = VlcVideo::trackIds();
+		for(int i = 0; i < desc.size(); i++) {
+			_mapVideo.insert(desc[i], ids[i]);
+			_actionVideoList << new QAction(desc[i], this);
 		}
 	} else {
 		emit actions("video", _actionVideoList);
 		return;
 	}
-
-	VlcError::errmsg();
 
 	for (int i = 0; i < _actionVideoList.size(); ++i) {
 		_actionVideoList[i]->setCheckable(true);
@@ -168,9 +147,7 @@ void VlcVideoControl::updateVideoActions() {
 		connect(_actionVideoList[i], SIGNAL(triggered()), this, SLOT(updateVideo()));
 	}
 
-	_actionVideoList[libvlc_video_get_track(_vlcCurrentMediaPlayer)]->setChecked(true);
-
-	VlcError::errmsg();
+	_actionVideoList[VlcVideo::track()]->setChecked(true);
 
 	emit actions("video", _actionVideoList);
 
@@ -181,9 +158,7 @@ void VlcVideoControl::updateVideo()
 {
 	int id = _mapVideo.value(_actionVideoGroup->checkedAction()->text());
 
-	libvlc_video_set_track(_vlcCurrentMediaPlayer, id);
-
-	VlcError::errmsg();
+	VlcVideo::setTrack(id);
 }
 
 void VlcVideoControl::reset()

@@ -1,5 +1,5 @@
 /****************************************************************************
-* VLC-Qt - Qt and libVLC connector library
+* VLC-Qt - Qt and libvlc connector library
 * AudioControl.h: Audio controller
 *****************************************************************************
 * Copyright (C) 2008-2010 Tadej Novak
@@ -23,7 +23,8 @@
 #include <QtCore/QTimer>
 #include <QtGui/QAction>
 
-/*! \class AudioControl AudioControl.h vlc-qt/AudioControl.h
+/*!
+	\class VlcAudioControl AudioControl.h vlc-qt/AudioControl.h
 	\brief Audio control class
 
 	This is one of VLC-Qt control classes.
@@ -34,8 +35,8 @@ class VlcAudioControl : public QObject
 Q_OBJECT
 public:
 	/*!
-		AudioControl constructor
-		\param parent audio controller's parent object
+		\brief VlcAudioControl constructor
+		\param parent audio controller's parent object (QObject)
 	*/
 	VlcAudioControl(QObject *parent = 0);
 
@@ -46,7 +47,8 @@ public:
 
 
 	/*!
-		Reset all settings and selected audio tracks.
+		\brief Reset all settings and selected audio tracks.
+
 		Usually called on media change.
 	*/
 	void reset();
@@ -54,7 +56,8 @@ public:
 
 signals:
 	/*!
-		Signal sending actions for changing audio tracks
+		\brief Signal sending actions for changing audio tracks
+
 		\param QString type of actions
 		\param QList<QAction*> list of actions
 	*/
@@ -62,6 +65,7 @@ signals:
 
 
 private slots:
+	void clean();
 	void update();
 	void updateActions();
 

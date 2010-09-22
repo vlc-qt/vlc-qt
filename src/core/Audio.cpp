@@ -20,41 +20,94 @@
 
 bool VlcAudio::getMute()
 {
-	bool mute = libvlc_audio_get_mute(_vlcCurrentMediaPlayer);
-	VlcError::errmsg();
+	bool mute = false;
+	if(_vlcCurrentMediaPlayer) {
+		mute = libvlc_audio_get_mute(_vlcCurrentMediaPlayer);
+		VlcError::errmsg();
+	}
 
 	return mute;
 }
 
 void VlcAudio::setVolume(const int &volume)
 {
-	// No use, if media is not playing
-	if(!VlcMediaPlayer::isActive())
-		return;
+	if(_vlcCurrentMediaPlayer) {
+		// Don't change if volume is the same
+		if(volume != VlcAudio::volume()) {
+			libvlc_audio_set_volume(_vlcCurrentMediaPlayer, volume);
+			VlcError::errmsg();
+		}
+	}
+}
 
-	// Don't change if volume is the same
-	if(volume != VlcAudio::volume()) {
-		libvlc_audio_set_volume(_vlcCurrentMediaPlayer, volume);
+void VlcAudio::setTrack(const int &track)
+{
+	if(_vlcCurrentMediaPlayer) {
+		libvlc_audio_set_track(_vlcCurrentMediaPlayer, track);
 		VlcError::errmsg();
 	}
 }
 
 bool VlcAudio::toggleMute()
 {
-	libvlc_audio_toggle_mute(_vlcCurrentMediaPlayer);
-	VlcError::errmsg();
+	if(_vlcCurrentMediaPlayer) {
+		libvlc_audio_toggle_mute(_vlcCurrentMediaPlayer);
+		VlcError::errmsg();
+	}
 
 	return getMute();
 }
 
+int VlcAudio::track()
+{
+	int track = -1;
+	if(_vlcCurrentMediaPlayer) {
+		track = libvlc_audio_get_track(_vlcCurrentMediaPlayer);
+		VlcError::errmsg();
+	}
+
+	return track;
+}
+
+int VlcAudio::trackCount()
+{
+	int count = -1;
+	if(_vlcCurrentMediaPlayer) {
+		count = libvlc_audio_get_track_count(_vlcCurrentMediaPlayer);
+		VlcError::errmsg();
+	}
+
+	return count;
+}
+
+QStringList VlcAudio::trackDescription()
+{
+	QStringList descriptions;
+
+	if(_vlcCurrentMediaPlayer) {
+		libvlc_track_description_t *desc;
+		desc = libvlc_audio_get_track_description(_vlcCurrentMediaPlayer);
+		VlcError::errmsg();
+
+		descriptions << QString().fromUtf8(desc->psz_name);
+		if(trackCount() > 1) {
+			for(int i = 1; i < trackCount(); i++) {
+				desc = desc->p_next;
+				descriptions << QString().fromUtf8(desc->psz_name);
+			}
+		}
+	}
+
+	return descriptions;
+}
+
 int VlcAudio::volume()
 {
-	// No use, if media is not playing
-	if(!VlcMediaPlayer::isActive())
-		return -1;
-
-	int volume = libvlc_audio_get_volume(_vlcCurrentMediaPlayer);
-	VlcError::errmsg();
+	int volume = -1;
+	if(_vlcCurrentMediaPlayer) {
+		libvlc_audio_get_volume(_vlcCurrentMediaPlayer);
+		VlcError::errmsg();
+	}
 
 	return volume;
 }

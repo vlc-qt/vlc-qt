@@ -1,5 +1,5 @@
 /****************************************************************************
-* VLC-Qt - Qt and libVLC connector library
+* VLC-Qt - Qt and libvlc connector library
 * AudioControl.h: Audio controller
 *****************************************************************************
 * Copyright (C) 2008-2010 Tadej Novak
@@ -14,9 +14,9 @@
 * included in the packaging of this file.
 *****************************************************************************/
 
-#include "AudioControl.h"
-#include "core/Error.h"
+#include "core/Audio.h"
 #include "core/MediaPlayer.h"
+#include "gui/AudioControl.h"
 
 VlcAudioControl::VlcAudioControl(QObject *parent) :
 	QObject(parent),
@@ -33,23 +33,36 @@ VlcAudioControl::VlcAudioControl(QObject *parent) :
 
 VlcAudioControl::~VlcAudioControl()
 {
-	delete _timer;
+	clean();
 
-	for(int i=0; i<_actionList.size(); i++)
-		delete _actionList[i];
-	if(_actionGroup)
-		delete _actionGroup;
+	delete _timer;
 }
 
-void VlcAudioControl::updateActions()
+void VlcAudioControl::clean()
 {
 	for(int i=0; i<_actionList.size(); i++)
 		delete _actionList[i];
 	_actionList.clear();
 	_map.clear();
-
 	if(_actionGroup)
 		delete _actionGroup;
+}
+
+void VlcAudioControl::reset()
+{
+	_timer->start(2000);
+}
+
+void VlcAudioControl::update()
+{
+	int id = _map.value(_actionGroup->checkedAction()->text());
+
+	VlcAudio::setTrack(id);
+}
+
+void VlcAudioControl::updateActions()
+{
+	clean();
 	_actionGroup = new QActionGroup(this);
 
 	if(!VlcMediaPlayer::isActive()) {
@@ -57,26 +70,16 @@ void VlcAudioControl::updateActions()
 		return;
 	}
 
-	if(libvlc_audio_get_track_count(_vlcCurrentMediaPlayer) != 0) {
-		libvlc_track_description_t *desc;
-		desc = libvlc_audio_get_track_description(_vlcCurrentMediaPlayer);
-		_map.insert(QString().fromUtf8(desc->psz_name), 0);
-		_actionList << new QAction(QString().fromUtf8(desc->psz_name), this);
-
-		if(libvlc_audio_get_track_count(_vlcCurrentMediaPlayer) > 1) {
-			for(int i = 1; i < libvlc_audio_get_track_count(_vlcCurrentMediaPlayer); i++) {
-				desc = desc->p_next;
-				_map.insert(QString().fromUtf8(desc->psz_name), i);
-				_actionList << new QAction(QString().fromUtf8(desc->psz_name), this);
-			}
+	if(VlcAudio::trackCount() > 0) {
+		QStringList desc = VlcAudio::trackDescription();
+		for(int i = 0; i < desc.size(); i++) {
+			_map.insert(desc[i], i);
+			_actionList << new QAction(desc[i], this);
 		}
-
 	} else {
 		emit actions("audio", _actionList);
 		return;
 	}
-
-	VlcError::errmsg();
 
 	for (int i = 0; i < _actionList.size(); ++i) {
 		_actionList[i]->setCheckable(true);
@@ -84,25 +87,9 @@ void VlcAudioControl::updateActions()
 		connect(_actionList[i], SIGNAL(triggered()), this, SLOT(update()));
 	}
 
-
-	_actionList[libvlc_audio_get_track(_vlcCurrentMediaPlayer)]->setChecked(true);
-	VlcError::errmsg();
+	_actionList[VlcAudio::track()]->setChecked(true);
 
 	emit actions("audio", _actionList);
 
 	_timer->start(60000);
-}
-
-void VlcAudioControl::update()
-{
-	int id = _map.value(_actionGroup->checkedAction()->text());
-
-	libvlc_audio_set_track(_vlcCurrentMediaPlayer, id);
-
-	VlcError::errmsg();
-}
-
-void VlcAudioControl::reset()
-{
-	_timer->start(2000);
 }

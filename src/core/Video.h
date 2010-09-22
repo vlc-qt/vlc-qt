@@ -17,7 +17,9 @@
 #ifndef VLCQT_VIDEO_H_
 #define VLCQT_VIDEO_H_
 
+#include <QtCore/QList>
 #include <QtCore/QString>
+#include <QtCore/QStringList>
 
 /*!
 	\class VlcVideo Video.h vlc-qt/Video.h
@@ -64,11 +66,53 @@ public:
 	static void setDeinterlace(const QString &filter);
 
 	/*!
+		\brief Set current video subtitle.
+
+		\param subtitle new video subtitle (int)
+	*/
+	static void setSubtitle(const int &subtitle);
+
+	/*!
+		\brief Set new video subtitle file.
+
+		\param subtitle new video subtitle file (QString)
+	*/
+	static void setSubtitleFile(const QString &subtitle);
+
+	/*!
 		\brief Set new teletext page to retrieve.
 
 		\param page new teletext page number (int)
 	*/
 	static void setTeletextPage(const int &page);
+
+	/*!
+		\brief Set current video track.
+
+		\param track new video track (int)
+	*/
+	static void setTrack(const int &track);
+
+	/*!
+		\brief Get current video subtitle.
+
+		\return the number of current video subtitle, or -1 if none (int)
+	*/
+	static int subtitle();
+
+	/*!
+		\brief Get number of available video subtitles.
+
+		\return the number of available video subtitles, or -1 if unavailable (int)
+	*/
+	static int subtitleCount();
+
+	/*!
+		\brief Get the description of available video subtitles.
+
+		\return list with description of available video subtitles (QStringList)
+	*/
+	static QStringList subtitleDescription();
 
 	/*!
 		\brief Get current teletext page requested.
@@ -81,6 +125,34 @@ public:
 		\brief Toggle teletext transparent status on video output.
 	*/
 	static void toggleTeletext();
+
+	/*!
+		\brief Get current video track.
+
+		\return the number of current video track, or -1 if none (int)
+	*/
+	static int track();
+
+	/*!
+		\brief Get number of available video tracks.
+
+		\return the number of available video tracks, or -1 if unavailable (int)
+	*/
+	static int trackCount();
+
+	/*!
+		\brief Get the description of available video tracks.
+
+		\return list with description of available video tracks (QStringList)
+	*/
+	static QStringList trackDescription();
+
+	/*!
+		\brief Get the ids of available video tracks.
+
+		\return list with ids of available video tracks (QList<int>)
+	*/
+	static QList<int> trackIds();
 };
 
 #endif // VLCQT_VIDEO_H_

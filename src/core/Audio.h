@@ -17,6 +17,8 @@
 #ifndef VLCQT_AUDIO_H_
 #define VLCQT_AUDIO_H_
 
+#include <QtCore/QStringList>
+
 /*!
 	\class VlcAudio Audio.h vlc-qt/Audio.h
 	\brief Audio controls
@@ -41,11 +43,39 @@ public:
 	static void setVolume(const int &volume);
 
 	/*!
+		\brief Set current audio track.
+
+		\param track new audio track (int)
+	*/
+	static void setTrack(const int &track);
+
+	/*!
 		\brief Toggle mute status.
 
 		\return new mute status (bool)
 	*/
 	static bool toggleMute();
+
+	/*!
+		\brief Get current audio track.
+
+		\return the number of current audio track, or -1 if none (int)
+	*/
+	static int track();
+
+	/*!
+		\brief Get number of available audio tracks.
+
+		\return the number of available audio tracks, or -1 if unavailable (int)
+	*/
+	static int trackCount();
+
+	/*!
+		\brief Get the description of available audio tracks.
+
+		\return list with description of available audio tracks (QStringList)
+	*/
+	static QStringList trackDescription();
 
 	/*!
 		\brief Get current audio level.
