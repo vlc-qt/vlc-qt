@@ -16,8 +16,10 @@
 
 #include <QtCore/QDebug>
 
+#include "core/Audio.h"
 #include "core/Error.h"
 #include "core/MediaPlayer.h"
+#include "core/Video.h"
 
 libvlc_media_player_t *_vlcCurrentMediaPlayer = NULL;
 
@@ -50,8 +52,8 @@ void VlcMediaPlayer::checkPlayingState()
 	bool video_count;
 
 	playing = libvlc_media_player_get_state(_vlcCurrentMediaPlayer) == libvlc_Playing;
-	audio_count = libvlc_audio_get_track_count(_vlcCurrentMediaPlayer) > 0;
-	video_count = libvlc_video_get_track_count(_vlcCurrentMediaPlayer) > 0;
+	audio_count = VlcAudio::trackCount() > 0;
+	video_count = VlcVideo::trackCount() > 0;
 
 	emit state(playing, audio_count, video_count);
 }

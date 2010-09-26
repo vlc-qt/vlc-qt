@@ -62,6 +62,9 @@ void VlcVideoWidget::mouseDoubleClickEvent(QMouseEvent *event)
 void VlcVideoWidget::mouseMoveEvent(QMouseEvent *event)
 {
 	event->ignore();
+	if(isFullScreen()) {
+		emit mouseShow(event->globalPos());
+	}
 
 	if(isFullScreen() && _hide) {
 		qApp->setOverrideCursor(Qt::ArrowCursor);
@@ -93,6 +96,7 @@ void VlcVideoWidget::hideMouse()
 	if(isFullScreen() && _hide) {
 		qApp->setOverrideCursor(Qt::BlankCursor);
 		_timerMouse->stop();
+		emit mouseHide();
 	}
 }
 

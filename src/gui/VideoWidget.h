@@ -75,9 +75,15 @@ signals:
 	void wheel(const bool);
 
 	/*!
-		\brief Signal sending if mouse moved
+		\brief Signal sending if mouse moved and cursor is showed
+		\param QPoint global position
 	*/
-	void mouseMove();
+	void mouseShow(const QPoint);
+
+	/*!
+		\brief Signal sending if mouse cursor is hidden
+	*/
+	void mouseHide();
 
 
 public slots:
