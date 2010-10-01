@@ -1,5 +1,5 @@
 #############################################################################
-# VLC-Qt - Qt and libVLC connector library
+# VLC-Qt - Qt and libvlc connector library
 #############################################################################
 # Copyright (C) 2008-2010 Tadej Novak
 #
@@ -17,12 +17,12 @@ PROJECT(vlc-qt)
 cmake_minimum_required(VERSION 2.6)
 
 CONFIGURE_FILE(
-  "${CMAKE_SOURCE_DIR}/cmake_uninstall.cmake.in"
-  "${CMAKE_BINARY_DIR}/cmake_uninstall.cmake"
-  IMMEDIATE @ONLY)
+	"${CMAKE_SOURCE_DIR}/cmake_uninstall.cmake.in"
+	"${CMAKE_BINARY_DIR}/cmake_uninstall.cmake"
+	IMMEDIATE @ONLY)
 
 ADD_CUSTOM_TARGET(uninstall
-  "${CMAKE_COMMAND}" -P "${CMAKE_BINARY_DIR}/cmake_uninstall.cmake")
+	"${CMAKE_COMMAND}" -P "${CMAKE_BINARY_DIR}/cmake_uninstall.cmake")
 
 set(CMAKE_MODULE_PATH
 	${CMAKE_SOURCE_DIR}/cmake
@@ -46,5 +46,19 @@ FIND_PACKAGE(LIBVLC REQUIRED)
 FILE(READ VERSION VLCQT_VERSION)
 STRING(REGEX REPLACE "\n" "" VLCQT_VERSION "${VLCQT_VERSION}") # get rid of the newline at the end
 MESSAGE("You are compiling libvlc-qt ${VLCQT_VERSION}")
+
+# Find Git Version Patch
+FIND_PROGRAM(GIT git)
+IF(GIT)
+	EXECUTE_PROCESS(
+		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+		COMMAND ${GIT} rev-parse --short HEAD
+		OUTPUT_VARIABLE GIT_OUT OUTPUT_STRIP_TRAILING_WHITESPACE
+	)
+	SET(PROJECT_VERSION_PATCH "${GIT_OUT}-git")
+	MESSAGE(STATUS "Git Version Patch: ${GIT_OUT}")
+ELSE(GIT)
+	SET(GIT_OUT 0)
+ENDIF(GIT)
 
 ADD_SUBDIRECTORY(src) 

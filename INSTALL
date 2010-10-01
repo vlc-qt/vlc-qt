@@ -1,0 +1,58 @@
+VLC-Qt
+===================================
+VLC-Qt is a free library used to connect Qt and libvlc libraries.
+
+
+Build dependencies:
+===================
+The latest version of Qt4, libvlc and CMake is prefered.
+
+- g++ >=4, make (http://gcc.gnu.org, http://www.mingw.org)
+- cmake >=2.6 (http://www.cmake.org)
+- Qt development package >=4.6 (http://qt.nokia.com)
+- libvlc-dev >=1.1 (http://www.videolan.org)
+- doxygen (www.doxygen.org, Optional for documentation)
+
+
+Runtime dependencies:
+=====================
+- Qt library, same version
+- libvlc library and plugins, same version
+
+
+Compilation:
+============
+1. Go to VLC-Qt root directory and run:
+(this will create a build directory and compile VLC-Qt)
+	$ mkdir build
+	$ cd build
+	$ cmake . -DCMAKE_INSTALL_PREFIX=prefix
+	$ make
+
+2. (Optional) Compile Documentation:
+	$ cd doc
+	$ doxygen
+
+
+Installation
+============
+	$ make install
+
+
+Windows users
+=============
+Compilation process should not differ too much.
+Installation should be made manually!
+
+
+Troubleshooting:
+================
+If you get the following error (could be only the last line!):
+
+	QT_QMAKE_EXECUTABLE set to qmake version: QTVERSION = **Unknown**
+	QT_QMAKE_EXECUTABLE = /usr/bin/qmake, please set to path to qmake from qt4.
+	Qt qmake not found!
+
+Then you have to run cmake with the following switch:
+	$ cmake . -DQT_QMAKE_EXECUTABLE="/usr/lib/qt4/bin/qmake"
+	(replace the path to fit your needs).

@@ -1,6 +1,6 @@
 /****************************************************************************
-* VLC-Qt - Qt and libVLC connector library
-* Config.h: Version info
+* VLC-Qt - Qt and libvlc connector library
+* Config.h: Version info and other configuration options
 *****************************************************************************
 * Copyright (C) 2008-2010 Tadej Novak
 *
@@ -19,5 +19,6 @@
 
 // Version
 #define LIBVLCQT_VERSION "@VLCQT_VERSION@"
+#define LIBVLCQT_VERSION_PATCH "@PROJECT_VERSION_PATCH@"
 
 #endif // VLCQT_CONFIG_H_

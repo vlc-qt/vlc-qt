@@ -1,0 +1,27 @@
+VLC-Qt
+===================================
+VLC-Qt is a free library used to connect Qt and libvlc libraries.
+It contains core classes for main media playback and also some GUI
+classes for faster media player developement.
+
+VLC-Qt is free (libre) software. This means that the library
+source code is available to public, anyone is welcome to research
+how the library works, participate in its development, freely distribute
+the library and spread the word!
+
+VLC-Qt runs on Linux and Windows,
+other operating systems are currently not supported.
+
+
+Copyright info
+==============
+Copyright (C) 2008-2010 Tadej Novak
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+This file may be used under the terms of the
+GNU General Public License version 3.0 as published by the
+Free Software Foundation and appearing in the file LICENSE.GPL
+included in the packaging of this file.

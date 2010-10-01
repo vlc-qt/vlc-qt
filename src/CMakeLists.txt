@@ -1,5 +1,5 @@
 #############################################################################
-# VLC-Qt - Qt and libVLC connector library
+# VLC-Qt - Qt and libvlc connector library
 #############################################################################
 # Copyright (C) 2008-2010 Tadej Novak
 #
