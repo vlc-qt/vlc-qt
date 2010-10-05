@@ -19,10 +19,14 @@
 #include "core/Video.h"
 #include "gui/VideoControl.h"
 
-VlcVideoControl::VlcVideoControl(const QString &lang, QObject *parent) :
-	QObject(parent),
-	_actionSubList(QList<QAction*>()), _mapSub(QMap<QString,int>()), _actionSubGroup(0),
-	_actionVideoList(QList<QAction*>()), _mapVideo(QMap<QString,int>()), _actionVideoGroup(0),
+VlcVideoControl::VlcVideoControl(const QString &lang, QObject *parent)
+	: QObject(parent),
+	_actionSubList(QList<QAction*>()),
+	_mapSub(QMap<QString,int>()),
+	_actionSubGroup(0),
+	_actionVideoList(QList<QAction*>()),
+	_mapVideo(QMap<QString,int>()),
+	_actionVideoGroup(0),
 	_manualLanguage(false)
 {
 	if(!lang.isNull() && !lang.isEmpty())

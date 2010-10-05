@@ -24,11 +24,12 @@
 #include "core/Video.h"
 #include "gui/VideoWidget.h"
 
-VlcVideoWidget::VlcVideoWidget(QWidget *parent) :
-	QWidget(parent),
+VlcVideoWidget::VlcVideoWidget(QWidget *parent)
+	: QWidget(parent),
 	_hide(true),
-	_desktopWidth(QApplication::desktop()->width()), _desktopHeight(QApplication::desktop()->height()),
-	_currentRatio(""), _currentCrop(""), _currentFilter("")
+	_currentRatio(""),
+	_currentCrop(""),
+	_currentFilter("")
 {
 	setMouseTracking(true);
 

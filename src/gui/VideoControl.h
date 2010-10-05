@@ -39,7 +39,8 @@ public:
 		\param lang default subtitle language
 		\param parent video controller's parent object
 	*/
-	VlcVideoControl(const QString &lang = 0, QObject *parent = 0);
+	VlcVideoControl(const QString &lang = 0,
+					QObject *parent = 0);
 
 	/*!
 		VideoControl destructor
@@ -72,7 +73,8 @@ signals:
 		\param QString type of actions
 		\param QList<QAction*> list of actions
 	*/
-	void actions(const QString, QList<QAction*>);
+	void actions(const QString,
+				 QList<QAction*>);
 
 
 private slots:

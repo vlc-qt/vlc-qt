@@ -39,7 +39,8 @@ public:
 		\param location location of the media (QString)
 		\param parent instance's parent object (QObject)
 	*/
-	VlcMedia(const QString &location, QObject *parent = 0);
+	VlcMedia(const QString &location,
+			 QObject *parent = 0);
 
 	/*!
 		\brief VlcMedia constructor.
@@ -48,7 +49,8 @@ public:
 		\param media libvlc media item (libvlc_media_t)
 		\param parent instance's parent object (QObject)
 	*/
-	VlcMedia(libvlc_media_t *media, QObject *parent = 0);
+	VlcMedia(libvlc_media_t *media,
+			 QObject *parent = 0);
 
 	/*!
 		\brief VlcMedia destructor

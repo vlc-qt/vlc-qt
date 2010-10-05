@@ -61,7 +61,8 @@ signals:
 		\param QString type of actions
 		\param QList<QAction*> list of actions
 	*/
-	void actions(const QString, QList<QAction*>);
+	void actions(const QString,
+				 QList<QAction*>);
 
 
 private slots:

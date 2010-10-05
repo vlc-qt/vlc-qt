@@ -22,7 +22,7 @@
 #include "gui/SeekWidget.h"
 
 VlcSeekWidget::VlcSeekWidget(QWidget *parent)
-	:QWidget(parent)
+	: QWidget(parent)
 {
 	_seek = new QSlider(this);
 	_seek->setOrientation(Qt::Horizontal);

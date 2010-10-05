@@ -18,8 +18,8 @@
 #include "core/MediaPlayer.h"
 #include "gui/AudioControl.h"
 
-VlcAudioControl::VlcAudioControl(QObject *parent) :
-	QObject(parent),
+VlcAudioControl::VlcAudioControl(QObject *parent)
+	: QObject(parent),
 	_actionList(QList<QAction*>()),
 	_map(QMap<QString,int>()),
 	_actionGroup(0)

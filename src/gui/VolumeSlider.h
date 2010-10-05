@@ -75,13 +75,13 @@ public slots:
 		Decreases volume for 1. This function is provided for convenience.
 		\sa volumeControl()
 	*/
-	void volumeDown() {volumeControl(false);}
+	void volumeDown() { volumeControl(false); }
 
 	/*!
 		Increases volume for 1. This function is provided for convenience.
 		\sa volumeControl()
 	*/
-	void volumeUp() {volumeControl(true);}
+	void volumeUp() { volumeControl(true); }
 
 
 private slots:

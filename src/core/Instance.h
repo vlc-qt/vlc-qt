@@ -43,7 +43,8 @@ public:
 		\param args libvlc arguments (QList<const char *>)
 		\param parent Instance's parent object (QObject)
 	*/
-	VlcInstance(const QList<const char *> &args, QObject *parent = NULL);
+	VlcInstance(const QList<const char *> &args,
+				QObject *parent = NULL);
 
 	/*!
 		VlcInstance destructor
@@ -86,7 +87,8 @@ public:
 		\param application Application name (QString)
 		\param version Application version (QString)
 	*/
-	void setUserAgent(const QString &application, const QString &version);
+	void setUserAgent(const QString &application,
+					  const QString &version);
 };
 
 #endif // VLCQT_VLCINSTANCE_H_

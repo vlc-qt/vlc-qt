@@ -21,8 +21,8 @@
 #include "core/MediaPlayer.h"
 #include "gui/VolumeSlider.h"
 
-VlcVolumeSlider::VlcVolumeSlider(QWidget *parent) :
-	QWidget(parent)
+VlcVolumeSlider::VlcVolumeSlider(QWidget *parent)
+	: QWidget(parent)
 {
 	_slider = new QSlider(this);
 	_slider->setOrientation(Qt::Horizontal);

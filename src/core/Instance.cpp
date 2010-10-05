@@ -24,8 +24,8 @@
 libvlc_instance_t *_vlcInstance = NULL;
 
 VlcInstance::VlcInstance(const QList<const char *> &args,
-						 QObject *parent) :
-	QObject(parent)
+						 QObject *parent)
+	: QObject(parent)
 {
 	// Convert arguments to required format
 	const char *vlcArgs[args.size()];
@@ -63,7 +63,7 @@ QString VlcInstance::libVersion()
 #endif //LIBVLCQT_VERSION
 
 #ifdef LIBVLCQT_VERSION_PATCH
-	if(QString(LIBVLCQT_VERSION_PATCH) != "0") {
+	if(QString(LIBVLCQT_VERSION_PATCH) != "0" && QString(LIBVLCQT_VERSION_PATCH) != "") {
 		version.append("-" + QString(LIBVLCQT_VERSION_PATCH));
 	}
 #endif //LIBVLCQT_VERSION
@@ -89,7 +89,8 @@ QString VlcInstance::version()
 	return QString(libvlc_get_version());
 }
 
-void VlcInstance::setUserAgent(const QString &application, const QString &version)
+void VlcInstance::setUserAgent(const QString &application,
+							   const QString &version)
 {
 	QString applicationOutput = application + " " + version;
 	QString httpOutput = application + "/" + version + " " + "libvlc-qt" + "/" + libVersion(); // "AppName/1.2.3 libvlc-qt/1.2.3"

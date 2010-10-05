@@ -24,8 +24,8 @@
 libvlc_media_player_t *_vlcCurrentMediaPlayer = NULL;
 
 VlcMediaPlayer::VlcMediaPlayer(const WId &widget,
-							   QObject *parent) :
-	QObject(parent),
+							   QObject *parent)
+	: QObject(parent),
 	_vlcMedia(NULL),
 	_widgetId(widget)
 {

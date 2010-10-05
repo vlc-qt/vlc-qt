@@ -46,7 +46,8 @@ public:
 		\param widget unique ID of video widget (WId)
 		\param parent instance's parent object (QObject)
 	*/
-	VlcMediaPlayer(const WId &widget = NULL, QObject *parent = NULL);
+	VlcMediaPlayer(const WId &widget = NULL,
+				   QObject *parent = NULL);
 
 	/*!
 		VlcMediaPlayer destructor
@@ -109,7 +110,9 @@ signals:
 		\param bool true if media has audio
 		\param bool true if media has video
 	*/
-	void state(const bool, const bool, const bool);
+	void state(const bool,
+			   const bool,
+			   const bool);
 
 
 private slots:

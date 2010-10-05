@@ -21,8 +21,8 @@
 #include "core/Media.h"
 
 VlcMedia::VlcMedia(const QString &location,
-				   QObject *parent) :
-    QObject(parent)
+				   QObject *parent)
+	: QObject(parent)
 {
 	// Create a new libvlc media descriptor from location
 	_vlcMedia = libvlc_media_new_location(_vlcInstance, location.toAscii().data());
@@ -31,8 +31,8 @@ VlcMedia::VlcMedia(const QString &location,
 }
 
 VlcMedia::VlcMedia(libvlc_media_t *media,
-				   QObject *parent) :
-	QObject(parent)
+				   QObject *parent)
+	: QObject(parent)
 {
 	// Create a new libvlc media descriptor from existing one
 	_vlcMedia = media;

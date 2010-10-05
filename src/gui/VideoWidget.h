@@ -48,7 +48,7 @@ public:
 		\return widget ID (WId)
 		\sa VlcMediaPlayer::VlcMediaPlayer()
 	*/
-	WId widgetId() {return _widget->winId();}
+	WId widgetId() { return _widget->winId(); }
 
 protected:
 	void mouseDoubleClickEvent(QMouseEvent *event);
@@ -222,9 +222,6 @@ private:
 	QTimer *_timerSettings;
 
 	bool _hide;
-
-	int _desktopWidth;
-	int _desktopHeight;
 
 	QString _currentRatio;
 	QString _currentCrop;
