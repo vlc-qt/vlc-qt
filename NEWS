@@ -1,0 +1,7 @@
+0.4.0 (2010-10-08)
+  * QVlc project is now separated from Tano and now known as VLC-Qt.
+  * Only libvlc 1.1 and later are supported.
+  * Instance has been split into VlcError, VlcInstance, VlcMedia and VlcMediaPlayer classes.
+  * New VlcAudio and VlcVideo classes
+  * Code cleanup and optimisation
+  * Doxygen documentation update
