@@ -16,6 +16,8 @@
 
 #include <QtCore/QDebug>
 
+#include <vlc/vlc.h>
+
 #include "core/Error.h"
 #include "core/Instance.h"
 #include "core/Media.h"

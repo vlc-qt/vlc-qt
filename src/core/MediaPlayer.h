@@ -21,10 +21,11 @@
 #include <QtCore/QString>
 #include <QtCore/QTimer>
 #include <QtGui/QWidget>
-#include <vlc/vlc.h>
 
 #include "Instance.h"
 #include "Media.h"
+
+struct libvlc_media_player_t;
 
 extern libvlc_media_player_t *_vlcCurrentMediaPlayer;
 

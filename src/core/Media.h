@@ -19,7 +19,8 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QString>
-#include <vlc/vlc.h>
+
+struct libvlc_media_t;
 
 /*!
 	\class VlcMedia Media.h vlc-qt/Media.h

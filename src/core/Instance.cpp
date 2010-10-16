@@ -17,6 +17,8 @@
 #include <QtCore/QDebug>
 #include <QtGui/QMessageBox>
 
+#include <vlc/vlc.h>
+
 #include "Config.h"
 #include "core/Error.h"
 #include "core/Instance.h"

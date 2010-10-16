@@ -18,9 +18,10 @@
 #define VLCQT_VLCINSTANCE_H_
 
 #include <QtCore/QObject>
-#include <vlc/vlc.h>
 
 #include "Config.h"
+
+struct libvlc_instance_t;
 
 extern libvlc_instance_t *_vlcInstance;
 
