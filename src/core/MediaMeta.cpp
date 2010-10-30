@@ -16,22 +16,13 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include <QtCore/QDebug>
-#include <vlc/vlc.h>
+#include "core/Media.h"
+#include "core/MediaMeta.h"
 
-#include "core/Error.h"
-
-void VlcError::errmsg()
+VlcMediaMeta::VlcMediaMeta(VlcMedia *media)
+	: _media(media)
 {
-	// Outputs libvlc error message if there is any
-	if(libvlc_errmsg()) {
-		qDebug() << "libvlc" << "Error:" << libvlc_errmsg();
-		clearerr();
-	}
+
 }
 
-void VlcError::clearerr()
-{
-	// Clears libvlc error message
-	libvlc_clearerr();
-}
+VlcMediaMeta::~VlcMediaMeta() { }

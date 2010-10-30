@@ -16,60 +16,35 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_MEDIA_H_
-#define VLCQT_MEDIA_H_
+#ifndef VLCQT_MEDIAMETA_H_
+#define VLCQT_MEDIAMETA_H_
 
-#include <QtCore/QObject>
-#include <QtCore/QString>
-
-struct libvlc_media_t;
+class VlcMedia;
 
 /*!
-	\class VlcMedia Media.h vlc-qt/Media.h
-	\brief Media item
+	\class VlcMediaMeta MediaMeta.h vlc-qt/MediaMeta.h
+	\brief Media meta information manager
 
-	An abstract representation of a playable media.
-	It consists of a media location and various optional meta data.
+	A manager and editor of media's meta information.
 */
-class VlcMedia : public QObject
+class VlcMediaMeta
 {
-Q_OBJECT
 public:
 	/*!
-		\brief VlcMedia constructor.
+		\brief VlcMediaMeta constructor.
 
 		This constructor creates a new media instance from a media location.
-		\param location location of the media (QString)
-		\param parent instance's parent object (QObject)
+		\param media selected media for meta information (VlcMedia*)
 	*/
-	VlcMedia(const QString &location,
-			 QObject *parent = 0);
+	VlcMediaMeta(VlcMedia *media);
 
 	/*!
-		\brief VlcMedia constructor.
-
-		This constructor creates a new media instance from an existing one.
-		\param media libvlc media item (libvlc_media_t)
-		\param parent instance's parent object (QObject)
+		\brief VlcMediaMeta destructor
 	*/
-	VlcMedia(libvlc_media_t *media,
-			 QObject *parent = 0);
-
-	/*!
-		\brief VlcMedia destructor
-	*/
-	~VlcMedia();
-
-	/*!
-		\brief libvlc media item
-
-		\return libvlc media item (libvlc_media_t)
-	*/
-	libvlc_media_t *libvlcMedia();
+	~VlcMediaMeta();
 
 private:
-	libvlc_media_t * _vlcMedia;
-
+	VlcMedia *_media;
 };
 
-#endif // VLCQT_MEDIA_H_
+#endif // VLCQT_MEDIAMETA_H_
