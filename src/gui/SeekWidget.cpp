@@ -1,17 +1,19 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* SeekWidget.cpp: Seek widget
-*****************************************************************************
-* Copyright (C) 2008-2010 Tadej Novak
+* Copyright (C) 2010 Tadej Novak <ntadej@users.sourceforge.net>
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
 *
-* This file may be used under the terms of the
-* GNU General Public License version 3.0 as published by the
-* Free Software Foundation and appearing in the file LICENSE.GPL
-* included in the packaging of this file.
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
 #include <QtCore/QTime>
@@ -22,7 +24,8 @@
 #include "gui/SeekWidget.h"
 
 VlcSeekWidget::VlcSeekWidget(QWidget *parent)
-	: QWidget(parent)
+	: QWidget(parent),
+	_autoHide(false)
 {
 	_seek = new QSlider(this);
 	_seek->setOrientation(Qt::Horizontal);
@@ -68,12 +71,22 @@ void VlcSeekWidget::updateTime()
 
 		_labelElapsed->setText(QTime(0,0,0,0).addMSecs(currentTime).toString("hh:mm:ss"));
 		_seek->setValue(currentTime);
+
+		if(_autoHide && fullTime == 0) {
+			setVisible(false);
+		} else {
+			setVisible(true);
+		}
 	} else {
 		_labelFull->setText("00:00:00");
 		_seek->setMaximum(0);
 
 		_labelElapsed->setText("00:00:00");
 		_seek->setValue(0);
+
+		if(_autoHide) {
+			setVisible(false);
+		}
 	}
 }
 
