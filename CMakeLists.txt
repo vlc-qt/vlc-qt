@@ -64,4 +64,19 @@ ELSE(GIT)
 	SET(GIT_OUT 0)
 ENDIF(GIT)
 
+
+##########
+# Source #
+##########
 ADD_SUBDIRECTORY(src) 
+
+
+#########
+# Tests #
+#########
+OPTION(BUILD_TESTS "Build Tests")
+MESSAGE("Build Tests: ${BUILD_TESTS}")
+
+IF(${BUILD_TESTS})
+	ADD_SUBDIRECTORY(test)
+ENDIF(${BUILD_TESTS})

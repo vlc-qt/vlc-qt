@@ -16,35 +16,38 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_MEDIAMETA_H_
-#define VLCQT_MEDIAMETA_H_
+#ifndef VLCQT_TEST_METAMANAGER_H_
+#define VLCQT_TEST_METAMANAGER_H_
 
-class VlcMedia;
+#include <QtGui/QDialog>
 
-/*!
-	\class VlcMediaMeta MediaMeta.h vlc-qt/MediaMeta.h
-	\brief Media meta information manager
+#include "core/Instance.h"
+#include "core/Media.h"
+#include "core/MetaManager.h"
 
-	A manager and editor of media's meta information.
-*/
-class VlcMediaMeta
+namespace Ui {
+	class TestMetaManager;
+}
+
+class TestMetaManager : public QDialog
 {
+Q_OBJECT
 public:
-	/*!
-		\brief VlcMediaMeta constructor.
+	TestMetaManager(QWidget *parent = 0);
+	~TestMetaManager();
 
-		This constructor creates a new media instance from a media location.
-		\param media selected media for meta information (VlcMedia*)
-	*/
-	VlcMediaMeta(VlcMedia *media);
-
-	/*!
-		\brief VlcMediaMeta destructor
-	*/
-	~VlcMediaMeta();
+private slots:
+	void open();
+	void read();
+	void save();
+	void set();
 
 private:
+	Ui::TestMetaManager *ui;
+
+	VlcInstance *_instance;
 	VlcMedia *_media;
+	VlcMetaManager *_meta;
 };
 
-#endif // VLCQT_MEDIAMETA_H_
+#endif //VLCQT_TEST_METAMANAGER_H_

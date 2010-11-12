@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #############################################################################
+# Configuration #
+#################
 
 CONFIGURE_FILE(
 	"${CMAKE_SOURCE_DIR}/src/Config.h.in"
@@ -32,14 +34,15 @@ INCLUDE_DIRECTORIES("${CMAKE_BINARY_DIR}/src" "${CMAKE_SOURCE_DIR}/src")
 ###################
 # List of sources #
 ###################
-# Set your list of sources here.
+# Define the C++ source files
 SET(VLCQT_SRCS
 	core/Audio.cpp
+	core/Common.cpp
 	core/Error.cpp
 	core/Instance.cpp
 	core/Media.cpp
-	core/MediaMeta.cpp
 	core/MediaPlayer.cpp
+	core/MetaManager.cpp
 	core/Video.cpp
 	gui/AudioControl.cpp
 	gui/SeekWidget.cpp
@@ -48,6 +51,7 @@ SET(VLCQT_SRCS
 	gui/VideoWidget.cpp
 )
 
+# Define the MOC source files
 SET(VLCQT_MOCS
 	core/Instance.h
 	core/Media.h
@@ -59,15 +63,22 @@ SET(VLCQT_MOCS
 	gui/VideoWidget.h
 )
 
+# Define the Include files
 SET(VLCQT_HEADERS
 	${VLCQT_MOCS}
 	core/Audio.h
+	core/Common.h
 	core/Error.h
-	core/MediaMeta.h
+	core/MetaManager.h
 	core/Video.h
 	${CMAKE_BINARY_DIR}/src/Config.h
 )
 
+
+#####################
+# Compiler settings #
+#####################
+# Include required directories
 INCLUDE(${QT_USE_FILE})
 QT4_WRAP_CPP(VLCQT_MOCS_SRCS ${VLCQT_MOCS})
 

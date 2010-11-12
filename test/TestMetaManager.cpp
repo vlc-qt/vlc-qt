@@ -16,13 +16,39 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include "core/Media.h"
-#include "core/MediaMeta.h"
+#include <QtCore/QDebug>
 
-VlcMediaMeta::VlcMediaMeta(VlcMedia *media)
-	: _media(media)
+#include "TestMetaManager.h"
+#include "ui_TestMetaManager.h"
+
+TestMetaManager::TestMetaManager(QWidget *parent)
+	: QDialog(parent),
+	ui(new Ui::TestMetaManager)
+{
+	ui->setupUi(this);
+}
+
+TestMetaManager::~TestMetaManager()
+{
+	delete ui;
+}
+
+void TestMetaManager::open()
 {
 
 }
 
-VlcMediaMeta::~VlcMediaMeta() { }
+void TestMetaManager::read()
+{
+
+}
+
+void TestMetaManager::save()
+{
+
+}
+
+void TestMetaManager::set()
+{
+
+}
