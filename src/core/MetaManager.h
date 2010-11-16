@@ -133,27 +133,21 @@ public:
 
 	/*!
 		\brief Get current track rating.
-		\return current track rating (float)
+		\return current track rating (QString)
 	*/
-	float rating() const;
+	QString rating() const;
 
 	/*!
-		\brief Set track rating.
-		\param rating new track rating (float)
+		\brief Get current track year.
+		\return current track year (int)
 	*/
-	void setRating(const float &rating);
+	int year() const;
 
 	/*!
-		\brief Get current track date.
-		\return current track date (QDate)
+		\brief Set track year.
+		\param year new track year (int)
 	*/
-	QDate date() const;
-
-	/*!
-		\brief Set track date.
-		\param date new track date (QDate)
-	*/
-	void setDate(const QDate &date);
+	void setYear(const int &year);
 
 	/*!
 		\brief Get current track setting.
@@ -162,22 +156,10 @@ public:
 	QString setting() const;
 
 	/*!
-		\brief Set track setting.
-		\param setting new track setting (QString)
-	*/
-	void setSetting(const QString &setting);
-
-	/*!
 		\brief Get current track URL.
 		\return current track URL (QString)
 	*/
 	QString url() const;
-
-	/*!
-		\brief Set track URL.
-		\param url new track URL (QString)
-	*/
-	void setUrl(const QString &url);
 
 	/*!
 		\brief Get current track language.
@@ -190,18 +172,6 @@ public:
 		\param language new track language (QString)
 	*/
 	void setLanguage(const QString &language);
-
-	/*!
-		\brief Get current track now playing status.
-		\return current track now playing status (bool)
-	*/
-	bool playing() const;
-
-	/*!
-		\brief Set track now playing status.
-		\param status new track now playing status (bool)
-	*/
-	void setPlaying(const bool &status);
 
 	/*!
 		\brief Get current track publisher.
@@ -234,22 +204,10 @@ public:
 	QString artwork() const;
 
 	/*!
-		\brief Set track artwork URL.
-		\param url new track artwork URL (QString)
-	*/
-	void setArtwork(const QString &url);
-
-	/*!
 		\brief Get current track ID.
 		\return current track ID (QString)
 	*/
 	QString id() const;
-
-	/*!
-		\brief Set track ID.
-		\param id new track ID (QString)
-	*/
-	void setId(const QString &id);
 
 
 	/*!

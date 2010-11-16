@@ -29,7 +29,7 @@ VlcMedia::VlcMedia(const QString &location,
 	: QObject(parent)
 {
 	// Create a new libvlc media descriptor from location
-	_vlcMedia = libvlc_media_new_location(_vlcInstance, location.toAscii().data());
+	_vlcMedia = libvlc_media_new_path(_vlcInstance, location.toAscii().data());
 	VlcError::errmsg();
 	qDebug() << "libvlc" << "Media:" << location;
 }
