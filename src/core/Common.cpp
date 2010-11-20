@@ -18,7 +18,7 @@
 
 #include "core/Common.h"
 
-QList<const char *> VlcCommon::libvlcArgs(const bool &global)
+QList<const char *> Vlc::libvlcArgs(const bool &global)
 {
 	QList<const char *> args;
 

@@ -1,17 +1,19 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* VideoControl.h: Video and subtitles controller
-*****************************************************************************
-* Copyright (C) 2008-2010 Tadej Novak
+* Copyright (C) 2010 Tadej Novak <ntadej@users.sourceforge.net>
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
 *
-* This file may be used under the terms of the
-* GNU General Public License version 3.0 as published by the
-* Free Software Foundation and appearing in the file LICENSE.GPL
-* included in the packaging of this file.
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
 #include "core/Error.h"
@@ -19,18 +21,17 @@
 #include "core/Video.h"
 #include "gui/VideoControl.h"
 
-VlcVideoControl::VlcVideoControl(const QString &lang, QObject *parent)
+VlcVideoControl::VlcVideoControl(const QString &language,
+								 QObject *parent)
 	: QObject(parent),
-	_actionSubList(QList<QAction*>()),
-	_mapSub(QMap<QString,int>()),
-	_actionSubGroup(0),
-	_actionVideoList(QList<QAction*>()),
-	_mapVideo(QMap<QString,int>()),
-	_actionVideoGroup(0),
+	_actionSubList(QList<QAction *>()),
+	_mapSub(QMap<QString, int>()),
+	_actionVideoList(QList<QAction *>()),
+	_mapVideo(QMap<QString, int>()),
 	_manualLanguage(false)
 {
-	if(!lang.isNull() && !lang.isEmpty())
-		_preferedLanguage = lang.split(" / ");
+	if(!language.isNull() && !language.isEmpty())
+		_preferedLanguage = language.split(" / ");
 
 	_timer = new QTimer(this);
 	connect(_timer, SIGNAL(timeout()), this, SLOT(updateSubtitleActions()));
@@ -43,28 +44,20 @@ VlcVideoControl::~VlcVideoControl()
 {
 	delete _timer;
 
-	for(int i=0; i<_actionSubList.size(); i++)
+	for(int i = 0; i < _actionSubList.size(); i++)
 		delete _actionSubList[i];
-	for(int i=0; i<_actionVideoList.size(); i++)
+	for(int i = 0; i < _actionVideoList.size(); i++)
 		delete _actionVideoList[i];
-	if(_actionSubGroup)
-		delete _actionSubGroup;
-	if(_actionVideoGroup)
-		delete _actionVideoGroup;
 }
 
 void VlcVideoControl::updateSubtitleActions() {
-	for(int i=0; i<_actionSubList.size(); i++)
+	for(int i = 0; i < _actionSubList.size(); i++)
 		delete _actionSubList[i];
 	_actionSubList.clear();
 	_mapSub.clear();
 
-	if(_actionSubGroup)
-		delete _actionSubGroup;
-	_actionSubGroup = new QActionGroup(this);
-
 	if(!VlcMediaPlayer::isActive()) {
-		emit actions("sub", _actionSubList);
+		emit actions(Vlc::Subtitles, _actionSubList);
 		return;
 	}
 
@@ -75,18 +68,17 @@ void VlcVideoControl::updateSubtitleActions() {
 			_actionSubList << new QAction(desc[i], this);
 		}
 	} else {
-		emit actions("sub", _actionSubList);
+		emit actions(Vlc::Subtitles, _actionSubList);
 		return;
 	}
 
-	for (int i = 0; i < _actionSubList.size(); ++i) {
+	for (int i = 0; i < _actionSubList.size(); i++) {
 		_actionSubList[i]->setCheckable(true);
-		_actionSubGroup->addAction(_actionSubList[i]);
 		connect(_actionSubList[i], SIGNAL(triggered()), this, SLOT(updateSubtitles()));
 
 		if(!_manualLanguage) {
-			for(int j = 0; j < _preferedLanguage.size(); ++j) {
-				if(_actionSubList[i]->text().contains(_preferedLanguage[j],Qt::CaseInsensitive)) {
+			for(int j = 0; j < _preferedLanguage.size(); j++) {
+				if(_actionSubList[i]->text().contains(_preferedLanguage[j], Qt::CaseInsensitive)) {
 					_actionSubList[i]->trigger();
 					_manualLanguage = true;
 				}
@@ -96,40 +88,36 @@ void VlcVideoControl::updateSubtitleActions() {
 
 	_actionSubList[VlcVideo::subtitle()]->setChecked(true);
 
-	emit actions("sub", _actionSubList);
+	emit actions(Vlc::Subtitles, _actionSubList);
 
 	_timer->start(60000);
 }
 
 void VlcVideoControl::updateSubtitles()
 {
-	int id = _mapSub.value(_actionSubGroup->checkedAction()->text());
+	int id = _mapSub.value(qobject_cast<QAction *>(sender())->text());
 
 	VlcVideo::setSubtitle(id);
 }
 
-void VlcVideoControl::loadSubtitle(const QString &sub)
+void VlcVideoControl::loadSubtitle(const QString &subtitle)
 {
-	if(sub.isEmpty())
+	if(subtitle.isEmpty())
 		return;
 
-	VlcVideo::setSubtitleFile(sub);
+	VlcVideo::setSubtitleFile(subtitle);
 
 	_timer->start(1000);
 }
 
 void VlcVideoControl::updateVideoActions() {
-	for(int i=0; i<_actionVideoList.size(); i++)
+	for(int i = 0; i < _actionVideoList.size(); i++)
 		delete _actionVideoList[i];
 	_actionVideoList.clear();
 	_mapVideo.clear();
 
-	if(_actionVideoGroup)
-		delete _actionVideoGroup;
-	_actionVideoGroup = new QActionGroup(this);
-
 	if(!VlcMediaPlayer::isActive()) {
-		emit actions("video", _actionVideoList);
+		emit actions(Vlc::VideoTrack, _actionVideoList);
 		return;
 	}
 
@@ -141,26 +129,25 @@ void VlcVideoControl::updateVideoActions() {
 			_actionVideoList << new QAction(desc[i], this);
 		}
 	} else {
-		emit actions("video", _actionVideoList);
+		emit actions(Vlc::VideoTrack, _actionVideoList);
 		return;
 	}
 
-	for (int i = 0; i < _actionVideoList.size(); ++i) {
+	for (int i = 0; i < _actionVideoList.size(); i++) {
 		_actionVideoList[i]->setCheckable(true);
-		_actionVideoGroup->addAction(_actionVideoList[i]);
 		connect(_actionVideoList[i], SIGNAL(triggered()), this, SLOT(updateVideo()));
 	}
 
 	_actionVideoList[VlcVideo::track()]->setChecked(true);
 
-	emit actions("video", _actionVideoList);
+	emit actions(Vlc::VideoTrack, _actionVideoList);
 
 	_timer->start(60000);
 }
 
 void VlcVideoControl::updateVideo()
 {
-	int id = _mapVideo.value(_actionVideoGroup->checkedAction()->text());
+	int id = _mapVideo.value(qobject_cast<QAction *>(sender())->text());
 
 	VlcVideo::setTrack(id);
 }
@@ -171,7 +158,7 @@ void VlcVideoControl::reset()
 	_manualLanguage = false;
 }
 
-void VlcVideoControl::setDefaultSubtitleLanguage(const QString &lang)
+void VlcVideoControl::setDefaultSubtitleLanguage(const QString &language)
 {
-	_preferedLanguage = lang.split(" / ");
+	_preferedLanguage = language.split(" / ");
 }

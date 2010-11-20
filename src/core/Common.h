@@ -21,8 +21,28 @@
 
 #include <QtCore/QList>
 
-namespace VlcCommon
+/*!
+	\namespace Vlc Common.h vlc-qt/Common.h
+	\brief Common functions
+*/
+namespace Vlc
 {
+	/*!
+		\enum ActionsType
+		\brief Actions types identifiers
+	*/
+	enum ActionsType {
+		AudioTrack, /*!< audio tracks */
+		Subtitles, /*!< subtitles */
+		VideoTrack /*!< video tracks */
+	};
+
+	/*!
+		\brief Common libvlc arguments
+
+		\param global use global VLC settings or not (bool)
+		\return libvlc arguments (QList<const char *>)
+	*/
 	QList<const char *> libvlcArgs(const bool &global = false);
 };
 
