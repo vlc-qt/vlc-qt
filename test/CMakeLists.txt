@@ -25,12 +25,14 @@ PROJECT(test-vlc-qt)
 SET(Test_UIs
 	TestMain.ui
 	TestMetaManager.ui
+	TestRecorder.ui
 )
 
 # Define the MOC source files
 SET(Test_MOCs	# List of classes which Qt needs to produce MOCs for them (in order for events, signals, slots and other macros to work
 	TestMain.h
 	TestMetaManager.h
+	TestRecorder.h
 )
 
 # Define the C++ source files
@@ -38,6 +40,7 @@ SET(Test_Srcs
 	main.cpp
 	TestMain.cpp
 	TestMetaManager.cpp
+	TestRecorder.cpp
 )
 
 ################

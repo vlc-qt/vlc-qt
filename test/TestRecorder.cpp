@@ -18,32 +18,26 @@
 
 #include "core/Common.h"
 
-QList<const char *> Vlc::commonArgs(const bool &global)
+#include "TestRecorder.h"
+#include "ui_TestRecorder.h"
+
+TestRecorder::TestRecorder(QWidget *parent)
+	: QDialog(parent),
+	ui(new Ui::TestRecorder)
 {
-	QList<const char *> args;
+	ui->setupUi(this);
 
-	if(!global) {
-		args << "--ignore-config";
-	}
+	QString file = "/home/tadej/Videos/Tano/test.ts";
 
-	args << "--intf=dummy"
-		 << "--no-media-library"
-		 << "--reset-plugins-cache"
-		 << "--no-stats"
-		 << "--no-osd"
-		 << "--no-video-title-show";
+	_instance = new VlcInstance(Vlc::recorderArgs(file), this);
+	_player = new VlcMediaPlayer();
 
-	return args;
+	_player->open("udp://@232.4.1.1:5002");
+	_player->play();
 }
 
-QList<const char *> Vlc::recorderArgs(const QString &file)
+TestRecorder::~TestRecorder()
 {
-	QList<const char *> args;
-
-	args << "--demux"
-		 << "dump"
-		 << "--demuxdump-file"
-		 << file.toAscii().data();
-
-	return args;
+	delete ui;
+	delete _instance;
 }

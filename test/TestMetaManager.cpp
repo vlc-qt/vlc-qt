@@ -35,7 +35,7 @@ TestMetaManager::TestMetaManager(QWidget *parent)
 	connect(ui->buttonSet, SIGNAL(clicked()), this, SLOT(set()));
 	connect(ui->buttonSave, SIGNAL(clicked()), this, SLOT(save()));
 
-	_instance = new VlcInstance(Vlc::libvlcArgs(), this);
+	_instance = new VlcInstance(Vlc::commonArgs(), this);
 }
 
 TestMetaManager::~TestMetaManager()

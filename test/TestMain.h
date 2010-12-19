@@ -35,6 +35,7 @@ public:
 
 private slots:
 	void metaManagerTest();
+	void recorderTest();
 
 private:
 	Ui::TestMain *ui;

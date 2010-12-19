@@ -16,34 +16,32 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include "core/Common.h"
+#ifndef VLCQT_TEST_RECORDER_H_
+#define VLCQT_TEST_RECORDER_H_
 
-QList<const char *> Vlc::commonArgs(const bool &global)
-{
-	QList<const char *> args;
+#include <QtGui/QDialog>
 
-	if(!global) {
-		args << "--ignore-config";
-	}
+#include "core/Instance.h"
+#include "core/Media.h"
+#include "core/MediaPlayer.h"
 
-	args << "--intf=dummy"
-		 << "--no-media-library"
-		 << "--reset-plugins-cache"
-		 << "--no-stats"
-		 << "--no-osd"
-		 << "--no-video-title-show";
-
-	return args;
+namespace Ui {
+    class TestRecorder;
 }
 
-QList<const char *> Vlc::recorderArgs(const QString &file)
+class TestRecorder : public QDialog
 {
-	QList<const char *> args;
+Q_OBJECT
+public:
+	TestRecorder(QWidget *parent = 0);
+	~TestRecorder();
 
-	args << "--demux"
-		 << "dump"
-		 << "--demuxdump-file"
-		 << file.toAscii().data();
+private:
+	Ui::TestRecorder *ui;
 
-	return args;
-}
+	VlcInstance *_instance;
+	VlcMedia *_media;
+	VlcMediaPlayer *_player;
+};
+
+#endif // VLCQT_TEST_RECORDER_H_

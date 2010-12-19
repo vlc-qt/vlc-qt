@@ -20,6 +20,7 @@
 #include "ui_TestMain.h"
 
 #include "TestMetaManager.h"
+#include "TestRecorder.h"
 
 TestMain::TestMain(QWidget *parent)
 	: QMainWindow(parent),
@@ -29,6 +30,7 @@ TestMain::TestMain(QWidget *parent)
 
 	connect(ui->actionExit, SIGNAL(triggered()), qApp, SLOT(quit()));
 	connect(ui->buttonMetaManager, SIGNAL(clicked()), this, SLOT(metaManagerTest()));
+	connect(ui->buttonRecorder, SIGNAL(clicked()), this, SLOT(recorderTest()));
 }
 
 TestMain::~TestMain()
@@ -39,5 +41,11 @@ TestMain::~TestMain()
 void TestMain::metaManagerTest()
 {
 	TestMetaManager test;
+	test.exec();
+}
+
+void TestMain::recorderTest()
+{
+	TestRecorder test;
 	test.exec();
 }
