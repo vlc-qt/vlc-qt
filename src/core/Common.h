@@ -9,50 +9,40 @@
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 * GNU General Public License for more details.
 *
 * You should have received a copy of the GNU General Public License
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+* along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
 #ifndef VLCQT_COMMON_H_
 #define VLCQT_COMMON_H_
 
-#include <QtCore/QList>
 #include <QtCore/QString>
+#include <QtCore/QStringList>
 
 /*!
-	\namespace Vlc Common.h vlc-qt/Common.h
+	\namespace VlcCommon Common.h vlc-qt/Common.h
 	\brief Common functions
 */
-namespace Vlc
+namespace VlcCommon
 {
-	/*!
-		\enum ActionsType
-		\brief Actions types identifiers
-	*/
-	enum ActionsType {
-		AudioTrack, /*!< audio tracks */
-		Subtitles, /*!< subtitles */
-		VideoTrack /*!< video tracks */
-	};
-
 	/*!
 		\brief Common libvlc arguments
 
 		\param global use global VLC settings or not (bool)
-		\return libvlc arguments (QList<const char *>)
+		\return libvlc arguments (QStringList)
 	*/
-	QList<const char *> commonArgs(const bool &global = false);
+	QStringList args(const bool &global = false);
 
 	/*!
 		\brief Recorder libvlc arguments
 
 		\param file full output file path (QString)
-		\return libvlc arguments (QList<const char *>)
+		\return libvlc arguments (QStringList)
 	*/
-	QList<const char *> recorderArgs(const QString &file);
+	QStringList recorderArgs(const QString &file);
 };
 
 #endif // VLCQT_COMMON_H_

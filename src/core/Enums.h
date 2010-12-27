@@ -16,32 +16,24 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_TEST_RECORDER_H_
-#define VLCQT_TEST_RECORDER_H_
+#ifndef VLCQT_ENUMS_H_
+#define VLCQT_ENUMS_H_
 
-#include <QtGui/QDialog>
-
-#include "core/Instance.h"
-#include "core/Media.h"
-#include "core/MediaPlayer.h"
-
-namespace Ui {
-    class TestRecorder;
-}
-
-class TestRecorder : public QDialog
+/*!
+	\namespace Vlc Enums.h vlc-qt/Enums.h
+	\brief Common enumerations
+*/
+namespace Vlc
 {
-Q_OBJECT
-public:
-	TestRecorder(QWidget *parent = 0);
-	~TestRecorder();
-
-private:
-	Ui::TestRecorder *ui;
-
-	VlcInstance *_instance;
-	VlcMedia *_media;
-	VlcMediaPlayer *_player;
+	/*!
+		\enum ActionsType
+		\brief Actions types identifiers
+	*/
+	enum ActionsType {
+		AudioTrack, /*!< audio tracks */
+		Subtitles, /*!< subtitles */
+		VideoTrack /*!< video tracks */
+	};
 };
 
-#endif // VLCQT_TEST_RECORDER_H_
+#endif // VLCQT_ENUMS_H_

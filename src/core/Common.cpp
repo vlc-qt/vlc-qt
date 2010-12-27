@@ -9,18 +9,18 @@
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 * GNU General Public License for more details.
 *
 * You should have received a copy of the GNU General Public License
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+* along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
 #include "core/Common.h"
 
-QList<const char *> Vlc::commonArgs(const bool &global)
+QStringList VlcCommon::args(const bool &global)
 {
-	QList<const char *> args;
+	QStringList args;
 
 	if(!global) {
 		args << "--ignore-config";
@@ -36,14 +36,14 @@ QList<const char *> Vlc::commonArgs(const bool &global)
 	return args;
 }
 
-QList<const char *> Vlc::recorderArgs(const QString &file)
+QStringList VlcCommon::recorderArgs(const QString &file)
 {
-	QList<const char *> args;
+	QStringList args;
 
 	args << "--demux"
 		 << "dump"
 		 << "--demuxdump-file"
-		 << file.toAscii().data();
+		 << file;
 
 	return args;
 }

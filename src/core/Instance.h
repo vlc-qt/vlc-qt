@@ -41,10 +41,10 @@ public:
 
 		This is mandatory for using VLC-Qt and all its other classes.
 
-		\param args libvlc arguments (QList<const char *>)
+		\param args libvlc arguments (QStringList)
 		\param parent Instance's parent object (QObject)
 	*/
-	VlcInstance(const QList<const char *> &args,
+	VlcInstance(const QStringList &args,
 				QObject *parent = NULL);
 
 	/*!

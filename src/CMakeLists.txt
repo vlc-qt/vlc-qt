@@ -38,6 +38,7 @@ INCLUDE_DIRECTORIES("${CMAKE_BINARY_DIR}/src" "${CMAKE_SOURCE_DIR}/src")
 SET(VLCQT_SRCS
 	core/Audio.cpp
 	core/Common.cpp
+	core/Enums.cpp
 	core/Error.cpp
 	core/Instance.cpp
 	core/Media.cpp
@@ -68,6 +69,7 @@ SET(VLCQT_HEADERS
 	${VLCQT_MOCS}
 	core/Audio.h
 	core/Common.h
+	core/Enums.h
 	core/Error.h
 	core/MetaManager.h
 	core/Video.h

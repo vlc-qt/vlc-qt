@@ -27,14 +27,17 @@
 
 libvlc_instance_t *_vlcInstance = NULL;
 
-VlcInstance::VlcInstance(const QList<const char *> &args,
+VlcInstance::VlcInstance(const QStringList &args,
 						 QObject *parent)
 	: QObject(parent)
 {
 	// Convert arguments to required format
+	std::string stdStrings[args.size()];
 	const char *vlcArgs[args.size()];
-	for(int i=0; i<args.size(); i++)
-		vlcArgs[i] = args[i];
+	for(int i = 0; i < args.size(); i++) {
+		stdStrings[i] = args[i].toStdString();
+		vlcArgs[i] = stdStrings[i].c_str();
+	}
 
 	// Create new libvlc instance
 	_vlcInstance = libvlc_new(sizeof(vlcArgs) / sizeof(*vlcArgs), vlcArgs);
@@ -45,7 +48,6 @@ VlcInstance::VlcInstance(const QList<const char *> &args,
 	if(_vlcInstance) {
 		qDebug() << "libvlc-qt" << libVersion() << "initialised";
 		qDebug() << "Using libvlc version:" << version();
-		qDebug() << "libvlc loaded";
 	} else {
 		qDebug() << "libvlc-qt Error: libvlc failed to load!";
 		exit(-100);
