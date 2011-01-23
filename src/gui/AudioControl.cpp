@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2010 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,11 +20,16 @@
 #include "core/MediaPlayer.h"
 #include "gui/AudioControl.h"
 
-VlcAudioControl::VlcAudioControl(QObject *parent)
+VlcAudioControl::VlcAudioControl(const QString &language,
+								 QObject *parent)
 	: QObject(parent),
 	_actionList(QList<QAction *>()),
-	_map(QMap<QString, int>())
+	_map(QMap<QString, int>()),
+	_manualLanguage(false)
 {
+	if(!language.isNull() && !language.isEmpty())
+		_preferedLanguage = language.split(" / ");
+
 	_timer = new QTimer(this);
 	connect(_timer, SIGNAL(timeout()), this, SLOT(updateActions()));
 
@@ -82,6 +87,15 @@ void VlcAudioControl::updateActions()
 	for (int i = 0; i < _actionList.size(); i++) {
 		_actionList[i]->setCheckable(true);
 		connect(_actionList[i], SIGNAL(triggered()), this, SLOT(update()));
+
+		if(!_manualLanguage) {
+			for(int j = 0; j < _preferedLanguage.size(); j++) {
+				if(_actionList[i]->text().contains(_preferedLanguage[j], Qt::CaseInsensitive)) {
+					_actionList[i]->trigger();
+					_manualLanguage = true;
+				}
+			}
+		}
 	}
 
 	_actionList[VlcAudio::track()]->setChecked(true);
@@ -89,4 +103,9 @@ void VlcAudioControl::updateActions()
 	emit actions(Vlc::AudioTrack, _actionList);
 
 	_timer->start(60000);
+}
+
+void VlcAudioControl::setDefaultAudioLanguage(const QString &language)
+{
+	_preferedLanguage = language.split(" / ");
 }

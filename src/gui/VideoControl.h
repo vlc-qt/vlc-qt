@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2010 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -39,8 +39,8 @@ Q_OBJECT
 public:
 	/*!
 		VideoControl constructor
-		\param language default subtitle language
-		\param parent video controller's parent object
+		\param language default subtitle language (QString)
+		\param parent video controller's parent object (QObject)
 	*/
 	VlcVideoControl(const QString &language = 0,
 					QObject *parent = 0);
@@ -59,7 +59,7 @@ public:
 
 	/*!
 		Set default subtitle language
-		\param language comma separated languages
+		\param language comma separated languages (QString)
 	*/
 	void setDefaultSubtitleLanguage(const QString &language);
 
