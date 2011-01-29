@@ -56,7 +56,7 @@ public:
 	/*!
 		\brief Set new crop filter geometry.
 
-		\param ratio new crop filter geometry or NULL to reset to default (QString)
+		\param crop new crop filter geometry or NULL to reset to default (QString)
 	*/
 	static void setCropGeometry(const QString &crop);
 

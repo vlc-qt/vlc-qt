@@ -106,7 +106,28 @@ public slots:
 
 signals:
 	/*!
-		Signal sending VLC-Qt state
+		Signal sending VLC-Qt playing and buffering status
+		\param bool true if player is playing any media
+		\param bool true if player is buffering
+	*/
+	void playing(const bool,
+				 const bool);
+
+	/*!
+		Signal sending VLC-Qt audio status
+		\param bool true if media has audio
+	*/
+	void hasAudio(const bool);
+
+	/*!
+		Signal sending VLC-Qt video status
+		\param bool true if media has video
+	*/
+	void hasVideo(const bool);
+
+	/*!
+		Signal sending VLC-Qt state (DEPRECATED!)
+		\deprecated Use signals playing(), hasAudio() and hasVideo()
 		\param bool true if player is playing any media
 		\param bool true if media has audio
 		\param bool true if media has video

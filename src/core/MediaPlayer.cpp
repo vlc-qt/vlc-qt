@@ -49,19 +49,29 @@ VlcMediaPlayer::~VlcMediaPlayer()
 void VlcMediaPlayer::checkPlayingState()
 {
 	if(_vlcCurrentMediaPlayer == NULL) {
-		emit state(false, false, false);
+		emit playing(false, false);
+		emit hasAudio(false);
+		emit hasVideo(false);
+
+		emit state(false, false, false); // Deprecated!
 		return;
 	}
 
-	bool playing;
+	bool play;
+	bool buffering;
 	bool audio_count;
 	bool video_count;
 
-	playing = libvlc_media_player_get_state(_vlcCurrentMediaPlayer) == libvlc_Playing;
+	play = libvlc_media_player_get_state(_vlcCurrentMediaPlayer) == libvlc_Playing;
+	buffering = libvlc_media_player_get_state(_vlcCurrentMediaPlayer) == libvlc_Buffering;
 	audio_count = VlcAudio::trackCount() > 0;
 	video_count = VlcVideo::trackCount() > 0;
 
-	emit state(playing, audio_count, video_count);
+	emit playing(play, buffering);
+	emit hasAudio(audio_count);
+	emit hasVideo(video_count);
+
+	emit state(play, audio_count, video_count); // Deprecated!
 }
 
 bool VlcMediaPlayer::isActive()

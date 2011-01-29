@@ -27,7 +27,7 @@
 #include "Enums.h"
 
 /*!
-	\classVlc VideoControl VideoControl.h vlc-qt/VideoControl.h
+	\class VlcVideoControl VideoControl.h vlc-qt/VideoControl.h
 	\brief Video control class
 
 	This is one of VLC-Qt control classes.
