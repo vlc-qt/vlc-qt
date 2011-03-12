@@ -1,6 +1,6 @@
 #############################################################################
 # VLC-Qt - Qt and libvlc connector library
-# Copyright (C) 2010 Tadej Novak <ntadej@users.sourceforge.net>
+# Copyright (C) 2011 Tadej Novak <tadej@tano.si>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -9,15 +9,16 @@
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
 #############################################################################
 
 PROJECT(vlc-qt)
-cmake_minimum_required(VERSION 2.6)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+CMAKE_POLICY(SET CMP0012 NEW)
 
 CONFIGURE_FILE(
 	"${CMAKE_SOURCE_DIR}/cmake_uninstall.cmake.in"
@@ -27,7 +28,7 @@ CONFIGURE_FILE(
 ADD_CUSTOM_TARGET(uninstall
 	"${CMAKE_COMMAND}" -P "${CMAKE_BINARY_DIR}/cmake_uninstall.cmake")
 
-set(CMAKE_MODULE_PATH
+SET(CMAKE_MODULE_PATH
 	${CMAKE_SOURCE_DIR}/cmake
 )
 
@@ -62,7 +63,7 @@ IF(GIT)
 	MESSAGE(STATUS "Git Version Patch: ${GIT_OUT}")
 ELSE(GIT)
 	IF(GITBUILD)
-		SET(GIT_OUT GITBUILD)
+		SET(PROJECT_VERSION_PATCH "${GITBUILD}-git")
 	ELSE(GITBUILD)
 		SET(GIT_OUT 0)
 	ENDIF(GITBUILD)

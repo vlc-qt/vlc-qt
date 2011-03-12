@@ -68,4 +68,8 @@ INCLUDE(${QT_USE_FILE})
 ADD_EXECUTABLE(test-vlc-qt ${Test_UIC_Srcs} ${Test_Srcs} ${Test_MOC_Srcs})
 
 # Here the needed Qt Libraries are added to the link command.
-TARGET_LINK_LIBRARIES(test-vlc-qt ${QT_LIBRARIES} ${CMAKE_BINARY_DIR}/src/libvlc-qt.so)
+IF(MINGW)
+	TARGET_LINK_LIBRARIES(test-vlc-qt ${QT_LIBRARIES} ${CMAKE_BINARY_DIR}/src/libvlc-qt.dll.a)
+ELSE(MINGW)
+	TARGET_LINK_LIBRARIES(test-vlc-qt ${QT_LIBRARIES} ${CMAKE_BINARY_DIR}/src/libvlc-qt.so)
+ENDIF(MINGW)
