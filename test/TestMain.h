@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2010 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,11 @@ namespace Ui
 	class TestMain;
 }
 
+class TestPlayer;
+
+struct libvlc_instance_t;
+struct libvlc_media_player_t;
+
 class TestMain : public QMainWindow
 {
 Q_OBJECT
@@ -34,11 +39,18 @@ public:
 	~TestMain();
 
 private slots:
+	void libTest();
 	void metaManagerTest();
+	void playerTest();
 	void recorderTest();
 
 private:
 	Ui::TestMain *ui;
+
+	TestPlayer *_testPlayer;
+
+	libvlc_instance_t *_instance;
+	libvlc_media_player_t *_player;
 };
 
 #endif // VLCQT_TEST_MAIN_H_

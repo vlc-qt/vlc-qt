@@ -1,6 +1,6 @@
 #############################################################################
 # VLC-Qt - Qt and libvlc connector library
-# Copyright (C) 2010 Tadej Novak <ntadej@users.sourceforge.net>
+# Copyright (C) 2011 Tadej Novak <tadej@tano.si>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -9,11 +9,11 @@
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
 #############################################################################
 
 PROJECT(test-vlc-qt)
@@ -25,6 +25,7 @@ PROJECT(test-vlc-qt)
 SET(Test_UIs
 	TestMain.ui
 	TestMetaManager.ui
+	TestPlayer.ui
 	TestRecorder.ui
 )
 
@@ -32,6 +33,7 @@ SET(Test_UIs
 SET(Test_MOCs	# List of classes which Qt needs to produce MOCs for them (in order for events, signals, slots and other macros to work
 	TestMain.h
 	TestMetaManager.h
+	TestPlayer.h
 	TestRecorder.h
 )
 
@@ -40,6 +42,7 @@ SET(Test_Srcs
 	main.cpp
 	TestMain.cpp
 	TestMetaManager.cpp
+	TestPlayer.cpp
 	TestRecorder.cpp
 )
 
@@ -54,9 +57,9 @@ QT4_WRAP_CPP(Test_MOC_Srcs ${Test_MOCs})
 
 
 
-####################################
-# Include paths and set up targets #
-####################################
+#####################
+# Compiler settings #
+#####################
 # This needs to be added in order for #include to work inside .cpp files
 INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/src" "${CMAKE_BINARY_DIR}/test")
 
@@ -69,7 +72,13 @@ ADD_EXECUTABLE(test-vlc-qt ${Test_UIC_Srcs} ${Test_Srcs} ${Test_MOC_Srcs})
 
 # Here the needed Qt Libraries are added to the link command.
 IF(MINGW)
-	TARGET_LINK_LIBRARIES(test-vlc-qt ${QT_LIBRARIES} ${CMAKE_BINARY_DIR}/src/libvlc-qt.dll.a)
+	TARGET_LINK_LIBRARIES(test-vlc-qt ${QT_LIBRARIES} ${CMAKE_BINARY_DIR}/src/libvlc-qt.dll.a ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY})
 ELSE(MINGW)
-	TARGET_LINK_LIBRARIES(test-vlc-qt ${QT_LIBRARIES} ${CMAKE_BINARY_DIR}/src/libvlc-qt.so)
+	TARGET_LINK_LIBRARIES(test-vlc-qt ${QT_LIBRARIES} ${CMAKE_BINARY_DIR}/src/libvlc-qt.so ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY})
 ENDIF(MINGW)
+
+
+################
+# Installation #
+################
+INSTALL(TARGETS test-vlc-qt	RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)

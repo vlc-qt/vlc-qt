@@ -16,29 +16,44 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
+#include <QtGui/QFileDialog>
+
 #include "core/Common.h"
+#include "core/Instance.h"
+#include "core/MediaPlayer.h"
 
-#include "TestRecorder.h"
-#include "ui_TestRecorder.h"
+#include "TestPlayer.h"
+#include "ui_TestPlayer.h"
 
-TestRecorder::TestRecorder(QWidget *parent)
-	: QDialog(parent),
-	ui(new Ui::TestRecorder)
+TestPlayer::TestPlayer(QWidget *parent)
+	: QMainWindow(parent),
+	ui(new Ui::TestPlayer)
 {
 	ui->setupUi(this);
 
-	QString file = "/home/tadej/Videos/Tano/test.ts";
+	_instance = new VlcInstance(VlcCommon::args(), this);
+	_player = new VlcMediaPlayer(ui->video->widgetId(), this);
+	ui->volume->setVolume(50);
 
-	_instance = new VlcInstance(VlcCommon::recorderArgs(file.toAscii().data()), this);
-	_player = new VlcMediaPlayer();
-
-	_player->open("udp://@232.4.1.1:5002");
-	_player->play();
+	connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(open()));
 }
 
-TestRecorder::~TestRecorder()
+TestPlayer::~TestPlayer()
 {
 	delete ui;
 	delete _instance;
 	delete _player;
+}
+
+void TestPlayer::open()
+{
+	QString file =
+		QFileDialog::getOpenFileName(this, tr("Open file or URL"),
+						QDir::homePath(),
+						tr("Multimedia files(*)"));
+
+	if (file.isEmpty())
+		return;
+
+	_player->open(file);
 }

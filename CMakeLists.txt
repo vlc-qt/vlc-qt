@@ -42,6 +42,9 @@ ENDIF(MINGW)
 FIND_PACKAGE(Qt4 REQUIRED)
 FIND_PACKAGE(LIBVLC REQUIRED)
 
+# Set Qt4 bin dir to find QtCore4.dll and other libs to install
+STRING(REGEX REPLACE "([^ ]+)[/\\].*" "\\1" QT_BIN_DIR_TMP "${QT_QMAKE_EXECUTABLE}")
+STRING(REGEX REPLACE "\\\\" "/" QT_BIN_DIR "${QT_BIN_DIR_TMP}")  # Replace back slashes to slashes
 
 ###########
 # Version #
@@ -70,10 +73,41 @@ ELSE(GIT)
 ENDIF(GIT)
 
 
-##########
-# Source #
-##########
+###################
+# Compile and set #
+###################
 ADD_SUBDIRECTORY(src) 
+
+# Windows
+IF(MINGW)
+	STRING(REGEX REPLACE "\\\\" "/" LIBVLC_INCLUDE_DIR "${LIBVLC_INCLUDE_DIR}")
+
+	STRING(REGEX REPLACE "sdk/include" "" LIBVLC_BIN_DIR "${LIBVLC_INCLUDE_DIR}")
+	STRING(REGEX REPLACE "include" "bin" LIBVLC_BIN_DIR "${LIBVLC_BIN_DIR}")
+
+	SET(Qt_Libs
+		${QT_BIN_DIR}/libgcc_s_dw2-1.dll
+		${QT_BIN_DIR}/mingwm10.dll
+		${QT_BIN_DIR}/QtCore4.dll
+		${QT_BIN_DIR}/QtGui4.dll
+	)
+	SET(Vlc_Libs
+		${LIBVLC_BIN_DIR}/libvlc.dll
+		${LIBVLC_BIN_DIR}/libvlccore.dll
+	)
+	FILE(GLOB Vlc_Plugins ${LIBVLC_BIN_DIR}/plugins/*.dll)
+ENDIF(MINGW)
+
+
+################
+# Installation #
+################
+# Windows Extra
+IF(MINGW)
+	INSTALL(FILES ${Qt_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+	INSTALL(FILES ${Vlc_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+	INSTALL(FILES ${Vlc_Plugins} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin/plugins")
+ENDIF(MINGW)
 
 
 #########

@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2010 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -16,29 +16,33 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include "core/Common.h"
+#ifndef VLCQT_TEST_PLAYER_H_
+#define VLCQT_TEST_PLAYER_H_
 
-#include "TestRecorder.h"
-#include "ui_TestRecorder.h"
+#include <QtGui/QMainWindow>
 
-TestRecorder::TestRecorder(QWidget *parent)
-	: QDialog(parent),
-	ui(new Ui::TestRecorder)
-{
-	ui->setupUi(this);
-
-	QString file = "/home/tadej/Videos/Tano/test.ts";
-
-	_instance = new VlcInstance(VlcCommon::recorderArgs(file.toAscii().data()), this);
-	_player = new VlcMediaPlayer();
-
-	_player->open("udp://@232.4.1.1:5002");
-	_player->play();
+namespace Ui {
+	class TestPlayer;
 }
 
-TestRecorder::~TestRecorder()
+class VlcInstance;
+class VlcMediaPlayer;
+
+class TestPlayer : public QMainWindow
 {
-	delete ui;
-	delete _instance;
-	delete _player;
-}
+Q_OBJECT
+public:
+	TestPlayer(QWidget *parent = 0);
+	~TestPlayer();
+
+private slots:
+	void open();
+
+private:
+	Ui::TestPlayer *ui;
+
+	VlcInstance *_instance;
+	VlcMediaPlayer *_player;
+};
+
+#endif // VLCQT_TEST_PLAYER_H_
