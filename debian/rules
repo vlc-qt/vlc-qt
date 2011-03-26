@@ -1,0 +1,87 @@
+#!/usr/bin/make -f
+#############################################################################
+# VLC-Qt - Qt and libvlc connector library
+# Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+#
+# Based on sample debian/rules that uses debhelper.
+# This file was originally written by Joey Hess and Craig Small.
+# As a special exception, when this file is copied by dh-make into a
+# dh-make output file, you may use that output file without restriction.
+# This special exception was added by Craig Small in version 0.37 of dh-make.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#############################################################################
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+builddir/Makefile:
+	dh_testdir
+
+	mkdir -p builddir
+	cd builddir && cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_FLAGS="$(CFLAGS)" -DCMAKE_LD_FLAGS="-Wl,-z,defs" -DCMAKE_CXX_FLAGS="$(CXXFLAGS)" -DCMAKE_SKIP_RPATH=ON -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo -DPACKAGE=1 -DGITBUILD=e7bd32b
+
+
+build: build-stamp
+build-stamp:  builddir/Makefile 
+	dh_testdir
+
+	$(MAKE) -C builddir
+
+	touch $@
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp
+
+	rm -rf builddir
+
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_prep
+	dh_installdirs
+
+	cd builddir && $(MAKE) DESTDIR=$(CURDIR)/debian/tmp/ install
+
+
+
+# Build architecture-independent files
+binary-indep: install
+# We have nothing to do by default.
+
+# Build architecture-dependent files
+binary-arch: install
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs 
+	dh_installdocs
+	dh_install --sourcedir=debian/tmp/
+	dh_lintian
+	dh_link
+	dh_strip --dbg-package=libvlc-qt0-dbg
+	dh_compress
+	dh_fixperms
+	dh_makeshlibs -plibvlc-qt0 -V'libvlc-qt0 (=0.5.0)'
+	dh_shlibdeps -a
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install 

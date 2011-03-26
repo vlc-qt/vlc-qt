@@ -1,0 +1,44 @@
+Source: libvlc-qt
+Priority: extra
+Maintainer: Tadej Novak <tadej@tano.si>
+Build-Depends: debhelper (>= 7), cmake, libqt4-dev (>=4.6.0), libvlc-dev (>=1.1.0)
+Standards-Version: 3.9.1
+Section: libs
+Homepage: http://www.tano.si
+
+Package: libvlc-qt-dev
+Section: libdevel
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libvlc-qt0 (= ${binary:Version}), libvlc-dev (>=1.1.0)
+Replaces: libqvlc-dev
+Description: VLC-Qt - Qt and libvlc connector library [devel]
+ VLC-Qt is a free library used to connect Qt and libvlc libraries.
+ It contains core classes for main media playback and also some GUI
+ classes for faster media player developement.
+ .
+ This package contains development files for building software that
+ uses the libvlc-qt0 library.
+
+Package: libvlc-qt0-dbg
+Architecture: any
+Priority: extra
+Section: debug
+Depends: ${shlibs:Depends}, ${misc:Depends}, libvlc-qt0 (= ${binary:Version})
+Replaces: libqvlc0-dbg
+Description: VLC-Qt - Qt and libvlc connector library [debug]
+ VLC-Qt is a free library used to connect Qt and libvlc libraries.
+ It contains core classes for main media playback and also some GUI
+ classes for faster media player developement.
+ .
+ This package contains debugging files used to investigate problems
+ with binaries included in the libvlc-qt0 package.
+
+Package: libvlc-qt0
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libqt4-core (>=4.6.0), libqt4-gui (>=4.6.0), vlc (>=1.1.0)
+Replaces: libqvlc0
+Description: VLC-Qt - Qt and libvlc connector library
+ VLC-Qt is a free library used to connect Qt and libvlc libraries.
+ It contains core classes for main media playback and also some GUI
+ classes for faster media player developement.
