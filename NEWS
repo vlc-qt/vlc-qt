@@ -1,3 +1,11 @@
+0.5.0 (2011-04-03)
+  * Auto-hide option for seek widget
+  * Update for Audio and Video control classes
+  * Added recorder args
+  * Added ability to set default audio language
+  * New status signals
+  * [FIX] Bug #1 - Support for meta data
+
 0.4.0 (2010-10-08)
   * QVlc project is now separated from Tano and now known as VLC-Qt.
   * Only libvlc 1.1 and later are supported.
