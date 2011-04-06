@@ -154,7 +154,7 @@ int VlcVideo::teletextPage()
 	return page;
 }
 
-void VlcVideo::toggleTeletext()
+void VlcVideo::toggleTeletextTransparency()
 {
 	if(_vlcCurrentMediaPlayer) {
 		libvlc_toggle_teletext(_vlcCurrentMediaPlayer);

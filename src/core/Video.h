@@ -126,7 +126,7 @@ public:
 	/*!
 		\brief Toggle teletext transparent status on video output.
 	*/
-	static void toggleTeletext();
+	static void toggleTeletextTransparency();
 
 	/*!
 		\brief Get current video track.
