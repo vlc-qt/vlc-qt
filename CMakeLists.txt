@@ -23,23 +23,23 @@ CMAKE_POLICY(SET CMP0012 NEW)
 SET(VLCQT_SHARED ${PROJECT_NAME})
 
 CONFIGURE_FILE(
-	"${CMAKE_SOURCE_DIR}/cmake_uninstall.cmake.in"
-	"${CMAKE_BINARY_DIR}/cmake_uninstall.cmake"
-	IMMEDIATE @ONLY)
+    "${CMAKE_SOURCE_DIR}/cmake_uninstall.cmake.in"
+    "${CMAKE_BINARY_DIR}/cmake_uninstall.cmake"
+    IMMEDIATE @ONLY)
 
 ADD_CUSTOM_TARGET(uninstall
-	"${CMAKE_COMMAND}" -P "${CMAKE_BINARY_DIR}/cmake_uninstall.cmake")
+    "${CMAKE_COMMAND}" -P "${CMAKE_BINARY_DIR}/cmake_uninstall.cmake")
 
 SET(CMAKE_MODULE_PATH
-	${CMAKE_SOURCE_DIR}/cmake
+    ${CMAKE_SOURCE_DIR}/cmake
 )
 
 INCLUDE(ManageString)
 
 # Set MingW bin dir, if MingW present
 IF(MINGW)
-	STRING(REGEX REPLACE "([^ ]+)[/\\].*" "\\1" MINGW_BIN_DIR_TMP "${CMAKE_CXX_COMPILER}")
-	STRING(REGEX REPLACE "\\\\" "/" MINGW_BIN_DIR "${MINGW_BIN_DIR_TMP}") # Replace back slashes to slashes
+    STRING(REGEX REPLACE "([^ ]+)[/\\].*" "\\1" MINGW_BIN_DIR_TMP "${CMAKE_CXX_COMPILER}")
+    STRING(REGEX REPLACE "\\\\" "/" MINGW_BIN_DIR "${MINGW_BIN_DIR_TMP}") # Replace back slashes to slashes
 ENDIF(MINGW)
 
 # Add required libraries
@@ -65,19 +65,19 @@ MESSAGE("You are compiling libvlc-qt ${VLCQT_VERSION_MAJOR}.${VLCQT_VERSION_MINO
 # Find Git Version Patch
 FIND_PROGRAM(GIT git)
 IF(GIT)
-	EXECUTE_PROCESS(
-		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-		COMMAND ${GIT} rev-parse --short HEAD
-		OUTPUT_VARIABLE GIT_OUT OUTPUT_STRIP_TRAILING_WHITESPACE
-	)
-	SET(PROJECT_VERSION_PATCH "${GIT_OUT}-git")
-	MESSAGE(STATUS "Git Version Patch: ${GIT_OUT}")
+    EXECUTE_PROCESS(
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        COMMAND ${GIT} rev-parse --short HEAD
+        OUTPUT_VARIABLE GIT_OUT OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+    SET(PROJECT_VERSION_PATCH "${GIT_OUT}-git")
+    MESSAGE(STATUS "Git Version Patch: ${GIT_OUT}")
 ELSE(GIT)
-	IF(GITBUILD)
-		SET(PROJECT_VERSION_PATCH "${GITBUILD}-git")
-	ELSE(GITBUILD)
-		SET(GIT_OUT 0)
-	ENDIF(GITBUILD)
+    IF(GITBUILD)
+        SET(PROJECT_VERSION_PATCH "${GITBUILD}-git")
+    ELSE(GITBUILD)
+        SET(GIT_OUT 0)
+    ENDIF(GITBUILD)
 ENDIF(GIT)
 
 
@@ -85,25 +85,27 @@ ENDIF(GIT)
 # Compile and set #
 ###################
 ADD_SUBDIRECTORY(src) 
+ADD_SUBDIRECTORY(pkgconfig)
+ADD_SUBDIRECTORY(doc)
 
 # Windows
 IF(MINGW)
-	STRING(REGEX REPLACE "\\\\" "/" LIBVLC_INCLUDE_DIR "${LIBVLC_INCLUDE_DIR}")
+    STRING(REGEX REPLACE "\\\\" "/" LIBVLC_INCLUDE_DIR "${LIBVLC_INCLUDE_DIR}")
 
-	STRING(REGEX REPLACE "sdk/include" "" LIBVLC_BIN_DIR "${LIBVLC_INCLUDE_DIR}")
-	STRING(REGEX REPLACE "include" "bin" LIBVLC_BIN_DIR "${LIBVLC_BIN_DIR}")
+    STRING(REGEX REPLACE "sdk/include" "" LIBVLC_BIN_DIR "${LIBVLC_INCLUDE_DIR}")
+    STRING(REGEX REPLACE "include" "bin" LIBVLC_BIN_DIR "${LIBVLC_BIN_DIR}")
 
-	SET(Qt_Libs
-		${QT_BIN_DIR}/libgcc_s_dw2-1.dll
-		${QT_BIN_DIR}/mingwm10.dll
-		${QT_BIN_DIR}/QtCore4.dll
-		${QT_BIN_DIR}/QtGui4.dll
-	)
-	SET(Vlc_Libs
-		${LIBVLC_BIN_DIR}/libvlc.dll
-		${LIBVLC_BIN_DIR}/libvlccore.dll
-	)
-	FILE(GLOB Vlc_Plugins ${LIBVLC_BIN_DIR}/plugins/*.dll)
+    SET(Qt_Libs
+        ${QT_BIN_DIR}/libgcc_s_dw2-1.dll
+        ${QT_BIN_DIR}/mingwm10.dll
+        ${QT_BIN_DIR}/QtCore4.dll
+        ${QT_BIN_DIR}/QtGui4.dll
+    )
+    SET(Vlc_Libs
+        ${LIBVLC_BIN_DIR}/libvlc.dll
+        ${LIBVLC_BIN_DIR}/libvlccore.dll
+    )
+    FILE(GLOB Vlc_Plugins ${LIBVLC_BIN_DIR}/plugins/*.dll)
 ENDIF(MINGW)
 
 
@@ -112,9 +114,9 @@ ENDIF(MINGW)
 ################
 # Windows Extra
 IF(MINGW)
-	INSTALL(FILES ${Qt_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
-	INSTALL(FILES ${Vlc_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
-	INSTALL(FILES ${Vlc_Plugins} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin/plugins")
+    INSTALL(FILES ${Qt_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+    INSTALL(FILES ${Vlc_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+    INSTALL(FILES ${Vlc_Plugins} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin/plugins")
 ENDIF(MINGW)
 
 
@@ -125,5 +127,5 @@ OPTION(BUILD_TESTS "Build Tests" OFF)
 MESSAGE("Build Tests: ${BUILD_TESTS}")
 
 IF(${BUILD_TESTS})
-	ADD_SUBDIRECTORY(test)
+    ADD_SUBDIRECTORY(test)
 ENDIF(${BUILD_TESTS})

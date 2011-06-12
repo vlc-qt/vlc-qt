@@ -19,13 +19,9 @@
 #################
 
 CONFIGURE_FILE(
-	"${CMAKE_SOURCE_DIR}/src/Config.h.in"
-	"${CMAKE_BINARY_DIR}/src/Config.h"
-)
-
-CONFIGURE_FILE(
-	"${CMAKE_SOURCE_DIR}/doc/Doxyfile.in"
-	"${CMAKE_BINARY_DIR}/doc/Doxyfile"
+    "${CMAKE_SOURCE_DIR}/src/Config.h.in"
+    "${CMAKE_BINARY_DIR}/src/Config.h"
+    @ONLY
 )
 
 INCLUDE_DIRECTORIES("${CMAKE_BINARY_DIR}/src" "${CMAKE_SOURCE_DIR}/src")
@@ -36,44 +32,44 @@ INCLUDE_DIRECTORIES("${CMAKE_BINARY_DIR}/src" "${CMAKE_SOURCE_DIR}/src")
 ###################
 # Define the C++ source files
 SET(VLCQT_SRCS
-	core/Audio.cpp
-	core/Common.cpp
-	core/Enums.cpp
-	core/Error.cpp
-	core/Instance.cpp
-	core/Media.cpp
-	core/MediaPlayer.cpp
-	core/MetaManager.cpp
-	core/Video.cpp
-	gui/AudioControl.cpp
-	gui/SeekWidget.cpp
-	gui/VolumeSlider.cpp
-	gui/VideoControl.cpp
-	gui/VideoWidget.cpp
+    core/Audio.cpp
+    core/Common.cpp
+    core/Enums.cpp
+    core/Error.cpp
+    core/Instance.cpp
+    core/Media.cpp
+    core/MediaPlayer.cpp
+    core/MetaManager.cpp
+    core/Video.cpp
+    gui/AudioControl.cpp
+    gui/SeekWidget.cpp
+    gui/VolumeSlider.cpp
+    gui/VideoControl.cpp
+    gui/VideoWidget.cpp
 )
 
 # Define the MOC source files
 SET(VLCQT_MOCS
-	core/Instance.h
-	core/Media.h
-	core/MediaPlayer.h
-	gui/AudioControl.h
-	gui/SeekWidget.h
-	gui/VolumeSlider.h
-	gui/VideoControl.h
-	gui/VideoWidget.h
+    core/Instance.h
+    core/Media.h
+    core/MediaPlayer.h
+    gui/AudioControl.h
+    gui/SeekWidget.h
+    gui/VolumeSlider.h
+    gui/VideoControl.h
+    gui/VideoWidget.h
 )
 
 # Define the Include files
 SET(VLCQT_HEADERS
-	${VLCQT_MOCS}
-	core/Audio.h
-	core/Common.h
-	core/Enums.h
-	core/Error.h
-	core/MetaManager.h
-	core/Video.h
-	${CMAKE_BINARY_DIR}/src/Config.h
+    ${VLCQT_MOCS}
+    core/Audio.h
+    core/Common.h
+    core/Enums.h
+    core/Error.h
+    core/MetaManager.h
+    core/Video.h
+    ${CMAKE_BINARY_DIR}/src/Config.h
 )
 
 #####################
@@ -100,6 +96,6 @@ TARGET_LINK_LIBRARIES(${VLCQT_SHARED} ${QT_LIBRARIES} ${LIBVLC_LIBRARY} ${LIBVLC
 # Installation #
 ################
 INSTALL(TARGETS ${VLCQT_SHARED} RUNTIME DESTINATION bin
-					LIBRARY DESTINATION lib${LIB_SUFFIX}
-					ARCHIVE DESTINATION lib${LIB_SUFFIX})
+                    LIBRARY DESTINATION lib${LIB_SUFFIX}
+                    ARCHIVE DESTINATION lib${LIB_SUFFIX})
 INSTALL(FILES ${VLCQT_HEADERS} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/vlc-qt)

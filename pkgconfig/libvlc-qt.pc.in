@@ -1,0 +1,10 @@
+prefix=@CMAKE_INSTALL_PREFIX@
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libvlc-qt
+Description: Qt and libvlc connector library
+Version: @VLCQT_VERSION_MAJOR@.@VLCQT_VERSION_MINOR@.@VLCQT_VERSION_BUGFIX@
+Libs: -L${libdir} -lvlc-qt
+Cflags: -I${includedir}
