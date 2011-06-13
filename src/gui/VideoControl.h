@@ -27,78 +27,92 @@
 #include "Enums.h"
 
 /*!
-	\class VlcVideoControl VideoControl.h vlc-qt/VideoControl.h
-	\brief Video control class
+    \class VlcVideoControl VideoControl.h vlc-qt/VideoControl.h
+    \brief Video control class
 
-	This is one of VLC-Qt control classes.
-	It provides video and subtitle tracks management.
+    This is one of VLC-Qt control classes.
+    It provides video and subtitle tracks management.
 */
 class VlcVideoControl : public QObject
 {
 Q_OBJECT
 public:
-	/*!
-		VideoControl constructor
-		\param language default subtitle language (QString)
-		\param parent video controller's parent object (QObject)
-	*/
-	VlcVideoControl(const QString &language = 0,
-					QObject *parent = 0);
+    /*!
+        VideoControl constructor
+        \param language default subtitle language (QString)
+        \param parent video controller's parent object (QObject)
+    */
+    VlcVideoControl(const QString &language = 0,
+                    QObject *parent = 0);
 
-	/*!
-		VideoControl destructor
-	*/
-	~VlcVideoControl();
+    /*!
+        VideoControl destructor
+    */
+    ~VlcVideoControl();
 
 
-	/*!
-		Reset all settings and selected video and subtitle tracks
-		Usually called on media change.
-	*/
-	void reset();
+    /*!
+        Reset all settings and selected video and subtitle tracks
+        Usually called on media change.
+    */
+    void reset();
 
-	/*!
-		Set default subtitle language
-		\param language comma separated languages (QString)
-	*/
-	void setDefaultSubtitleLanguage(const QString &language);
+    /*!
+        Set default subtitle language
+        \param language comma separated languages (QString)
+    */
+    void setDefaultSubtitleLanguage(const QString &language);
 
 
 public slots:
-	/*!
-		Open and load subtitles from file
-		\param subtitle full path to subtitles file
-	*/
-	void loadSubtitle(const QString &subtitle);
+    /*!
+        Open and load subtitles from file
+        \param subtitle full path to subtitles file
+    */
+    void loadSubtitle(const QString &subtitle);
 
 
 signals:
-	/*!
-		Signal sending actions for changing video and subititle tracks
-		\param Vlc::ActionsType type of actions
-		\param QList<QAction*> list of actions
-	*/
-	void actions(const Vlc::ActionsType,
-				 const QList<QAction *>);
+    /*!
+        Signal sending actions for changing video and subititle tracks
+        \param QList<QAction*> list of actions
+        \param Vlc::ActionsType type of actions
+    */
+    void actions(const QList<QAction *>,
+                 const Vlc::ActionsType);
+
+    /*!
+        Signal sending actions for changing subititle tracks
+        \param Vlc::ActionsType type of actions
+        \param QList<QAction*> list of actions
+    */
+    void subtitleTracks(const QList<QAction *>);
+
+    /*!
+        Signal sending actions for changing video tracks
+        \param Vlc::ActionsType type of actions
+        \param QList<QAction*> list of actions
+    */
+    void videoTracks(const QList<QAction *>);
 
 
 private slots:
-	void updateSubtitleActions();
-	void updateSubtitles();
-	void updateVideoActions();
-	void updateVideo();
+    void updateSubtitleActions();
+    void updateSubtitles();
+    void updateVideoActions();
+    void updateVideo();
 
 private:
-	QTimer *_timer;
+    QTimer *_timer;
 
-	QList<QAction *> _actionSubList;
-	QMap<QString, int> _mapSub;
+    QList<QAction *> _actionSubList;
+    QMap<QString, int> _mapSub;
 
-	QList<QAction *> _actionVideoList;
-	QMap<QString, int> _mapVideo;
+    QList<QAction *> _actionVideoList;
+    QMap<QString, int> _mapVideo;
 
-	bool _manualLanguage;
-	QStringList _preferedLanguage;
+    bool _manualLanguage;
+    QStringList _preferedLanguage;
 };
 
 #endif // VLCQT_VIDEOCONTROL_H_

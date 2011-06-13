@@ -21,91 +21,94 @@
 #include "gui/AudioControl.h"
 
 VlcAudioControl::VlcAudioControl(const QString &language,
-								 QObject *parent)
-	: QObject(parent),
-	_actionList(QList<QAction *>()),
-	_map(QMap<QString, int>()),
-	_manualLanguage(false)
+                                 QObject *parent)
+    : QObject(parent),
+    _actionList(QList<QAction *>()),
+    _map(QMap<QString, int>()),
+    _manualLanguage(false)
 {
-	if(!language.isNull() && !language.isEmpty())
-		_preferedLanguage = language.split(" / ");
+    if(!language.isNull() && !language.isEmpty())
+        _preferedLanguage = language.split(" / ");
 
-	_timer = new QTimer(this);
-	connect(_timer, SIGNAL(timeout()), this, SLOT(updateActions()));
+    _timer = new QTimer(this);
+    connect(_timer, SIGNAL(timeout()), this, SLOT(updateActions()));
 
-	_timer->start(2000);
+    _timer->start(2000);
 }
 
 
 VlcAudioControl::~VlcAudioControl()
 {
-	clean();
+    clean();
 
-	delete _timer;
+    delete _timer;
 }
 
 void VlcAudioControl::clean()
 {
-	for(int i = 0; i < _actionList.size(); i++)
-		delete _actionList[i];
-	_actionList.clear();
-	_map.clear();
+    for(int i = 0; i < _actionList.size(); i++)
+        delete _actionList[i];
+    _actionList.clear();
+    _map.clear();
 }
 
 void VlcAudioControl::reset()
 {
-	_timer->start(2000);
+    _timer->start(2000);
 }
 
 void VlcAudioControl::update()
 {
-	int id = _map.value(qobject_cast<QAction *>(sender())->text());
+    int id = _map.value(qobject_cast<QAction *>(sender())->text());
 
-	VlcAudio::setTrack(id);
+    VlcAudio::setTrack(id);
 }
 
 void VlcAudioControl::updateActions()
 {
-	clean();
+    clean();
 
-	if(!VlcMediaPlayer::isActive()) {
-		emit actions(Vlc::AudioTrack, _actionList);
-		return;
-	}
+    if(!VlcMediaPlayer::isActive()) {
+        emit actions(_actionList, Vlc::AudioTrack);
+        emit audioTracks(_actionList);
+        return;
+    }
 
-	if(VlcAudio::trackCount() > 0) {
-		QStringList desc = VlcAudio::trackDescription();
-		for(int i = 0; i < desc.size(); i++) {
-			_map.insert(desc[i], i);
-			_actionList << new QAction(desc[i], this);
-		}
-	} else {
-		emit actions(Vlc::AudioTrack, _actionList);
-		return;
-	}
+    if(VlcAudio::trackCount() > 0) {
+        QStringList desc = VlcAudio::trackDescription();
+        for(int i = 0; i < desc.size(); i++) {
+            _map.insert(desc[i], i);
+            _actionList << new QAction(desc[i], this);
+        }
+    } else {
+        emit actions(_actionList, Vlc::AudioTrack);
+        emit audioTracks(_actionList);
+        return;
+    }
 
-	for (int i = 0; i < _actionList.size(); i++) {
-		_actionList[i]->setCheckable(true);
-		connect(_actionList[i], SIGNAL(triggered()), this, SLOT(update()));
+    for (int i = 0; i < _actionList.size(); i++) {
+        _actionList[i]->setCheckable(true);
+        connect(_actionList[i], SIGNAL(triggered()), this, SLOT(update()));
 
-		if(!_manualLanguage) {
-			for(int j = 0; j < _preferedLanguage.size(); j++) {
-				if(_actionList[i]->text().contains(_preferedLanguage[j], Qt::CaseInsensitive)) {
-					_actionList[i]->trigger();
-					_manualLanguage = true;
-				}
-			}
-		}
-	}
+        if(!_manualLanguage) {
+            for(int j = 0; j < _preferedLanguage.size(); j++) {
+                if(_actionList[i]->text().contains(_preferedLanguage[j], Qt::CaseInsensitive)) {
+                    _actionList[i]->trigger();
+                    _manualLanguage = true;
+                }
+            }
+        }
+    }
 
-	_actionList[VlcAudio::track()]->setChecked(true);
+    _actionList[VlcAudio::track()]->setChecked(true);
 
-	emit actions(Vlc::AudioTrack, _actionList);
+    emit actions(_actionList, Vlc::AudioTrack);
+    emit audioTracks(_actionList);
 
-	_timer->start(60000);
+    _timer->start(60000);
 }
 
 void VlcAudioControl::setDefaultAudioLanguage(const QString &language)
 {
-	_preferedLanguage = language.split(" / ");
+    _preferedLanguage = language.split(" / ");
 }

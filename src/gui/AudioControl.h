@@ -27,68 +27,75 @@
 #include "Enums.h"
 
 /*!
-	\class VlcAudioControl AudioControl.h vlc-qt/AudioControl.h
-	\brief Audio control class
+    \class VlcAudioControl AudioControl.h vlc-qt/AudioControl.h
+    \brief Audio control class
 
-	This is one of VLC-Qt control classes.
-	It provides audio tracks management.
+    This is one of VLC-Qt control classes.
+    It provides audio tracks management.
 */
 class VlcAudioControl : public QObject
 {
 Q_OBJECT
 public:
-	/*!
-		\brief VlcAudioControl constructor
-		\param language default audio language (QString)
-		\param parent audio controller's parent object (QObject)
-	*/
-	VlcAudioControl(const QString &language = 0,
-					QObject *parent = 0);
+    /*!
+        \brief VlcAudioControl constructor
+        \param language default audio language (QString)
+        \param parent audio controller's parent object (QObject)
+    */
+    VlcAudioControl(const QString &language = 0,
+                    QObject *parent = 0);
 
-	/*!
-		AudioControl destructor
-	*/
-	~VlcAudioControl();
+    /*!
+        AudioControl destructor
+    */
+    ~VlcAudioControl();
 
 
-	/*!
-		\brief Reset all settings and selected audio tracks.
+    /*!
+        \brief Reset all settings and selected audio tracks.
 
-		Usually called on media change.
-	*/
-	void reset();
+        Usually called on media change.
+    */
+    void reset();
 
-	/*!
-		Set default audio language
-		\param language comma separated languages (QString)
-	*/
-	void setDefaultAudioLanguage(const QString &language);
+    /*!
+        Set default audio language
+        \param language comma separated languages (QString)
+    */
+    void setDefaultAudioLanguage(const QString &language);
 
 
 signals:
-	/*!
-		\brief Signal sending actions for changing audio tracks
+    /*!
+        \brief Signal sending actions for changing audio tracks
 
-		\param Vlc::ActionsType type of actions
-		\param QList<QAction*> list of actions
-	*/
-	void actions(const Vlc::ActionsType,
-				 const QList<QAction *>);
+        \param QList<QAction*> list of actions
+        \param Vlc::ActionsType type of actions
+    */
+    void actions(const QList<QAction *>,
+                 const Vlc::ActionsType);
+
+    /*!
+        \brief Signal sending actions for changing audio tracks
+
+        \param QList<QAction*> list of actions
+    */
+    void audioTracks(const QList<QAction *>);
 
 
 private slots:
-	void clean();
-	void update();
-	void updateActions();
+    void clean();
+    void update();
+    void updateActions();
 
 private:
-	QTimer *_timer;
+    QTimer *_timer;
 
-	QList<QAction *> _actionList;
-	QMap<QString, int> _map;
+    QList<QAction *> _actionList;
+    QMap<QString, int> _map;
 
-	bool _manualLanguage;
-	QStringList _preferedLanguage;
+    bool _manualLanguage;
+    QStringList _preferedLanguage;
 };
 
 #endif // VLCQT_AUDIOCONTROL_H_
