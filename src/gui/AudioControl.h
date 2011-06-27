@@ -72,7 +72,7 @@ signals:
         \param QList<QAction*> list of actions
         \param Vlc::ActionsType type of actions
     */
-    void actions(const QList<QAction *>,
+    void actions(QList<QAction *>,
                  const Vlc::ActionsType);
 
     /*!
@@ -80,7 +80,7 @@ signals:
 
         \param QList<QAction*> list of actions
     */
-    void audioTracks(const QList<QAction *>);
+    void audioTracks(QList<QAction *>);
 
 
 private slots:
