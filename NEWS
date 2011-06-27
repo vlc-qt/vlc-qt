@@ -1,3 +1,8 @@
+0.5.1 (2011-06-27)
+  * Pkgconfig support
+  * Changes in audio/video controllers
+  * Teletext updates
+
 0.5.0 (2011-04-03)
   * Auto-hide option for seek widget
   * Update for Audio and Video control classes

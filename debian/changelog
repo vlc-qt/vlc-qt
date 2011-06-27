@@ -1,4 +1,13 @@
-libvlc-qt (0.5.0-0~natty~ppa1) natty; urgency=low
+libvlc-qt (0.5.1-1~ppa1~natty) natty; urgency=low
+
+  * Pkgconfig support
+  * Changes in audio/video controllers
+  * Teletext updates
+
+ -- Tadej Novak <tadej@tano.si>  Mon, 27 Jun 2011 10:43:59 +0200
+
+
+libvlc-qt (0.5.0-1~ppa1~natty) natty; urgency=low
 
   * Auto-hide option for seek widget
   * Update for Audio and Video control classes
@@ -8,3 +17,15 @@ libvlc-qt (0.5.0-0~natty~ppa1) natty; urgency=low
   * [FIX] Bug #1 - Support for meta data
 
  -- Tadej Novak <tadej@tano.si>  Sun, 03 Apr 2011 16:17:32 +0200
+
+
+libvlc-qt (0.4.0-1~ppa1~natty) natty; urgency=low
+
+  * QVlc project is now separated from Tano and now known as VLC-Qt.
+  * Only libvlc 1.1 and later are supported.
+  * Instance has been split into VlcError, VlcInstance, VlcMedia and VlcMediaPlayer classes.
+  * New VlcAudio and VlcVideo classes
+  * Code cleanup and optimisation
+  * Doxygen documentation update
+
+ -- Tadej Novak <ntadej@users.sourceforge.net>  Fri, 08 Oct 2010 14:55:34 +0200
