@@ -117,7 +117,7 @@ void VlcMediaPlayer::open(const QString &media)
 
 	/* Disable mouse and keyboard events */
 	libvlc_video_set_key_input(_vlcCurrentMediaPlayer, false);
-	//libvlc_video_set_mouse_input(_vlcCurrentMediaPlayer, false);
+        libvlc_video_set_mouse_input(_vlcCurrentMediaPlayer, false);
 
 
 	/* Get our media instance to use our window */
