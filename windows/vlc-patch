@@ -1,0 +1,45 @@
+diff --git a/modules/video_output/msw/events.c b/modules/video_output/msw/events.c
+index d2d5e26..b853f95 100644
+--- a/modules/video_output/msw/events.c
++++ b/modules/video_output/msw/events.c
+@@ -286,10 +286,38 @@ static void *EventThread( void *p_this )
+             break;
+ 
+         if( !b_mouse_support && isMouseEvent( msg.message ) )
+-            continue;
++        {
++           /*
++            * if there is a parent window, post message to it!
++            */
++           if( p_event->parent_window != NULL )
++           {
++              /*
++               * Messages we don't handle directly are dispatched
++               * to the parent window using the window procedure
++               */
++              PostMessage(p_event->hparent, msg.message,
++                          msg.wParam, msg.lParam);
++           }
++           continue;
++        }
+ 
+         if( !b_key_support && isKeyEvent( msg.message ) )
+-            continue;
++        {
++           /*
++            * if there is a parent window, post message to it!
++            */
++           if( p_event->parent_window != NULL )
++           {
++              /*
++               * Messages we don't handle directly are dispatched
++               * to the parent window using the window procedure
++               */
++              PostMessage(p_event->hparent, msg.message,
++                          msg.wParam, msg.lParam);
++           }
++           continue;
++        }
+ 
+         /* Handle mouse state */
+         if( msg.message == WM_MOUSEMOVE ||
