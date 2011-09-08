@@ -96,8 +96,6 @@ IF(MINGW)
     STRING(REGEX REPLACE "include" "bin" LIBVLC_BIN_DIR "${LIBVLC_BIN_DIR}")
 
     SET(Qt_Libs
-        ${QT_BIN_DIR}/libgcc_s_dw2-1.dll
-        ${QT_BIN_DIR}/mingwm10.dll
         ${QT_BIN_DIR}/QtCore4.dll
         ${QT_BIN_DIR}/QtGui4.dll
     )
