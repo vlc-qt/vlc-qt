@@ -17,28 +17,33 @@
 *****************************************************************************/
 
 #include "core/Common.h"
+#include "core/Instance.h"
+#include "core/Media.h"
+#include "core/MediaPlayer.h"
 
 #include "TestRecorder.h"
 #include "ui_TestRecorder.h"
 
 TestRecorder::TestRecorder(QWidget *parent)
-	: QDialog(parent),
-	ui(new Ui::TestRecorder)
+    : QDialog(parent),
+    ui(new Ui::TestRecorder)
 {
-	ui->setupUi(this);
+    ui->setupUi(this);
 
-	QString file = "/home/tadej/Videos/Tano/test.ts";
+    QString file = "/home/tadej/Videos/Tano/test.ts";
 
-	_instance = new VlcInstance(VlcCommon::recorderArgs(file.toAscii().data()), this);
-	_player = new VlcMediaPlayer();
+    _instance = new VlcInstance(VlcCommon::recorderArgs(file.toAscii().data()), this);
+    _player = new VlcMediaPlayer(_instance);
+    _media = new VlcMedia("udp://@232.4.1.1:5002", _instance);
 
-	_player->open("udp://@232.4.1.1:5002");
-	_player->play();
+    _player->open(_media);
+    _player->play();
 }
 
 TestRecorder::~TestRecorder()
 {
-	delete ui;
-	delete _instance;
-	delete _player;
+    delete ui;
+    delete _instance;
+    delete _player;
+    delete _media;
 }

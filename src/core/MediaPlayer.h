@@ -24,129 +24,164 @@
 #include <QtCore/QTimer>
 #include <QtGui/QWidget>
 
+class VlcAudio;
+class VlcInstance;
 class VlcMedia;
+class VlcVideo;
+
 struct libvlc_media_player_t;
 
-extern libvlc_media_player_t *_vlcCurrentMediaPlayer;
-
 /*!
-	\class VlcMediaPlayer MediaPlayer.h vlc-qt/MediaPlayer.h
-	\brief Media Player
+    \class VlcMediaPlayer MediaPlayer.h vlc-qt/MediaPlayer.h
+    \brief Media Player
 
-	A basic MediaPlayer manager for VLC-Qt library.
-	It provides main playback controls.
+    A basic MediaPlayer manager for VLC-Qt library.
+    It provides main playback controls.
 */
 class VlcMediaPlayer : public QObject
 {
 Q_OBJECT
 public:
-	/*!
-		\brief VlcMediaPlayer constructor.
+    /*!
+        \brief VlcMediaPlayer constructor.
 
-		This is mandatory to use libvlc playback functions.
-		\param widget unique ID of video widget (WId)
-		\param parent instance's parent object (QObject)
-	*/
-	VlcMediaPlayer(const WId &widget = NULL,
-				   QObject *parent = NULL);
+        This is mandatory to use libvlc playback functions.
 
-	/*!
-		VlcMediaPlayer destructor
-	*/
-	~VlcMediaPlayer();
+        \param instance instance object (VlcInstance *)
+    */
+    VlcMediaPlayer(VlcInstance *instance);
 
-	/*!
-		\brief Check if player is currently playing any media.
-		\return true if instance is playing (bool)
-	*/
-	static bool isActive();
+    /*!
+        VlcMediaPlayer destructor
+    */
+    ~VlcMediaPlayer();
 
-	/*!
-		\brief Get the current movie lenght (in ms).
-		\return the movie lenght (in ms), or -1 if there is no media (int)
-	*/
-	static int lenght();
+    /*!
+        \brief Returns libvlc media player object.
 
-	/*!
-		\brief Open media file or stream. Any media should be playable and opened.
-		\param media path or URL (QString)
-	*/
-	void open(const QString &media);
+        \return libvlc media player (libvlc_media_player_t *)
+    */
+    libvlc_media_player_t *core();
 
-	/*! \brief Set the movie time (in ms).
+    /*!
+        \brief Returns audio manager object.
 
-		This has no effect if no media is being played. Not all formats and protocols support this.
-		\param time the movie time (in ms) (int)
-	*/
-	static void setTime(const int &time);
+        \return audio manager (VlcAudio *)
+    */
+    VlcAudio *audio();
 
-	/*!
-		\brief Get the current movie time (in ms).
-		\return the movie time (in ms), or -1 if there is no media (int)
-	*/
-	static int time();
+    /*!
+        \brief Returns video manager object.
+
+        \return video manager (VlcVideo *)
+    */
+    VlcVideo *video();
+
+    /*!
+        \brief Check if player is currently playing any media.
+
+        \return true if instance is playing (const bool)
+    */
+    bool isActive() const;
+
+    /*!
+        \brief Get the current movie lenght (in ms).
+
+        \return the movie lenght (in ms), or -1 if there is no media (const int)
+    */
+    int lenght() const;
+
+    /*!
+        \brief Open media file or stream. Any media should be playable and opened.
+
+        \param media object (VlcMedia *)
+    */
+    void open(VlcMedia *media);
+
+    /*! \brief Set the movie time (in ms).
+
+        This has no effect if no media is being played. Not all formats and protocols support this.
+
+        \param time the movie time (in ms) (int)
+    */
+    void setTime(const int &time);
+
+    /*!
+        \brief Get the current movie time (in ms).
+
+        \return the movie time (in ms), or -1 if there is no media (const int)
+    */
+    int time() const;
+
+    /*! \brief Set video widget ID.
+
+        Set video widget ID to be able to play video inside Qt interface.
+
+        \param id video widget ID (WId)
+    */
+    void setVideoWidgetId(const WId &id);
+
+    /*!
+        \brief Get current video widget ID.
+
+        \return current video widget ID (const WId)
+    */
+    WId videoWidgetId() const;
 
 
 public slots:
-	/*!
-		Starts playing current media if possible
-	*/
-	void play();
+    /*!
+        \brief Starts playing current media if possible
+    */
+    void play();
 
-	/*!
-		Pauses the playback of current media if possible
-	*/
-	void pause();
+    /*!
+        \brief Pauses the playback of current media if possible
+    */
+    void pause();
 
-	/*!
-		Stops playing current media
-	*/
-	void stop();
+    /*!
+        \brief Stops playing current media
+    */
+    void stop();
 
 
 signals:
-	/*!
-		Signal sending VLC-Qt playing and buffering status
-		\param bool true if player is playing any media
-		\param bool true if player is buffering
-	*/
-	void playing(const bool,
-				 const bool);
+    /*!
+        \brief Signal sending VLC-Qt playing and buffering status
 
-	/*!
-		Signal sending VLC-Qt audio status
-		\param bool true if media has audio
-	*/
-	void hasAudio(const bool);
+        \param bool true if player is playing any media
+        \param bool true if player is buffering
+    */
+    void playing(const bool,
+                 const bool);
 
-	/*!
-		Signal sending VLC-Qt video status
-		\param bool true if media has video
-	*/
-	void hasVideo(const bool);
+    /*!
+        Signal sending VLC-Qt audio status
+        \param bool true if media has audio
+    */
+    void hasAudio(const bool);
 
-	/*!
-		Signal sending VLC-Qt state (DEPRECATED!)
-		\deprecated Use signals playing(), hasAudio() and hasVideo()
-		\param bool true if player is playing any media
-		\param bool true if media has audio
-		\param bool true if media has video
-	*/
-	void state(const bool,
-			   const bool,
-			   const bool);
+    /*!
+        \brief Signal sending VLC-Qt video status
+
+        \param bool true if media has video
+    */
+    void hasVideo(const bool);
 
 
 private slots:
-	void checkPlayingState();
+    void checkPlayingState();
 
 private:
-	void unloadMedia();
+    libvlc_media_player_t *_vlcMediaPlayer;
 
-	VlcMedia *_vlcMedia;
-	WId _widgetId;
+    VlcAudio *_vlcAudio;
+    VlcVideo *_vlcVideo;
 
-	QTimer *_check;
+    WId _widgetId;
+
+    QTimer *_check;
 };
 
 #endif // VLCQT_MEDIAPLAYER_H_

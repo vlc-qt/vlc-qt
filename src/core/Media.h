@@ -22,53 +22,55 @@
 #include <QtCore/QObject>
 #include <QtCore/QString>
 
+class VlcInstance;
+
 struct libvlc_media_t;
 
 /*!
-	\class VlcMedia Media.h vlc-qt/Media.h
-	\brief Media item
+    \class VlcMedia Media.h vlc-qt/Media.h
+    \brief Media item
 
-	An abstract representation of a playable media.
-	It consists of a media location and various optional meta data.
+    An abstract representation of a playable media.
+    It consists of a media location and various optional meta data.
 */
 class VlcMedia : public QObject
 {
 Q_OBJECT
 public:
-	/*!
-		\brief VlcMedia constructor.
+    /*!
+        \brief VlcMedia constructor.
 
-		This constructor creates a new media instance from a media location.
-		\param location location of the media (QString)
-		\param parent instance's parent object (QObject)
-	*/
-	VlcMedia(const QString &location,
-			 QObject *parent = 0);
+        This constructor creates a new media instance from a media location.
 
-	/*!
-		\brief VlcMedia constructor.
+        \param location location of the media (QString)
+        \param instance main libvlc instance (VlcInstance *)
+    */
+    VlcMedia(const QString &location,
+             VlcInstance *instance);
 
-		This constructor creates a new media instance from an existing one.
-		\param media libvlc media item (libvlc_media_t)
-		\param parent instance's parent object (QObject)
-	*/
-	VlcMedia(libvlc_media_t *media,
-			 QObject *parent = 0);
+    /*!
+        \brief VlcMedia constructor.
 
-	/*!
-		\brief VlcMedia destructor
-	*/
-	~VlcMedia();
+        This constructor creates a new media instance from an existing one.
 
-	/*!
-		\brief libvlc media item
+        \param media libvlc media item (libvlc_media_t *)
+    */
+    VlcMedia(libvlc_media_t *media);
 
-		\return libvlc media item (libvlc_media_t)
-	*/
-	libvlc_media_t *libvlcMedia();
+    /*!
+        \brief VlcMedia destructor
+    */
+    ~VlcMedia();
+
+    /*!
+        \brief libvlc media item
+
+        \return libvlc media item (libvlc_media_t *)
+    */
+    libvlc_media_t *core();
 
 private:
-	libvlc_media_t * _vlcMedia;
+    libvlc_media_t * _vlcMedia;
 
 };
 

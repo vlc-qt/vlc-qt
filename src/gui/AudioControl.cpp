@@ -20,12 +20,15 @@
 #include "core/MediaPlayer.h"
 #include "gui/AudioControl.h"
 
-VlcAudioControl::VlcAudioControl(const QString &language,
+VlcAudioControl::VlcAudioControl(VlcMediaPlayer *player,
+                                 const QString &language,
                                  QObject *parent)
     : QObject(parent),
-    _actionList(QList<QAction *>()),
-    _map(QMap<QString, int>()),
-    _manualLanguage(false)
+      _vlcAudio(player->audio()),
+      _vlcMediaPlayer(player),
+      _actionList(QList<QAction *>()),
+      _map(QMap<QString, int>()),
+      _manualLanguage(false)
 {
     if(!language.isNull() && !language.isEmpty())
         _preferedLanguage = language.split(" / ");
@@ -61,21 +64,21 @@ void VlcAudioControl::update()
 {
     int id = _map.value(qobject_cast<QAction *>(sender())->text());
 
-    VlcAudio::setTrack(id);
+    _vlcAudio->setTrack(id);
 }
 
 void VlcAudioControl::updateActions()
 {
     clean();
 
-    if(!VlcMediaPlayer::isActive()) {
+    if(!_vlcMediaPlayer->isActive()) {
         emit actions(_actionList, Vlc::AudioTrack);
         emit audioTracks(_actionList);
         return;
     }
 
-    if(VlcAudio::trackCount() > 0) {
-        QStringList desc = VlcAudio::trackDescription();
+    if(_vlcAudio->trackCount() > 0) {
+        QStringList desc = _vlcAudio->trackDescription();
         for(int i = 0; i < desc.size(); i++) {
             _map.insert(desc[i], i);
             _actionList << new QAction(desc[i], this);
@@ -100,7 +103,7 @@ void VlcAudioControl::updateActions()
         }
     }
 
-    _actionList[VlcAudio::track()]->setChecked(true);
+    _actionList[_vlcAudio->track()]->setChecked(true);
 
     emit actions(_actionList, Vlc::AudioTrack);
     emit audioTracks(_actionList);

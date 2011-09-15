@@ -25,32 +25,33 @@
 #include "core/Media.h"
 
 VlcMedia::VlcMedia(const QString &location,
-				   QObject *parent)
-	: QObject(parent)
+                   VlcInstance *instance)
+    : QObject(instance)
 {
-	// Create a new libvlc media descriptor from location
-	_vlcMedia = libvlc_media_new_location(_vlcInstance, location.toAscii().data());
-	VlcError::errmsg();
-	qDebug() << "libvlc" << "Media:" << location;
+    // Create a new libvlc media descriptor from location
+    _vlcMedia = libvlc_media_new_location(instance->core(), location.toAscii().data());
+
+    VlcError::errmsg();
+
+    qDebug() << "libvlc" << "Media:" << location;
 }
 
-VlcMedia::VlcMedia(libvlc_media_t *media,
-				   QObject *parent)
-	: QObject(parent)
+VlcMedia::VlcMedia(libvlc_media_t *media)
 {
-	// Create a new libvlc media descriptor from existing one
-	_vlcMedia = libvlc_media_duplicate(media);
-	VlcError::errmsg();
+    // Create a new libvlc media descriptor from existing one
+    _vlcMedia = libvlc_media_duplicate(media);
+
+    VlcError::errmsg();
 }
 
 VlcMedia::~VlcMedia()
 {
-	libvlc_media_release(_vlcMedia);
+    libvlc_media_release(_vlcMedia);
 
-	VlcError::errmsg();
+    VlcError::errmsg();
 }
 
-libvlc_media_t *VlcMedia::libvlcMedia()
+libvlc_media_t *VlcMedia::core()
 {
-	return _vlcMedia;
+    return _vlcMedia;
 }

@@ -26,6 +26,9 @@
 
 #include "Enums.h"
 
+class VlcAudio;
+class VlcMediaPlayer;
+
 /*!
     \class VlcAudioControl AudioControl.h vlc-qt/AudioControl.h
     \brief Audio control class
@@ -39,14 +42,17 @@ Q_OBJECT
 public:
     /*!
         \brief VlcAudioControl constructor
+
+        \param player media player (VlcMediaPlayer *)
         \param language default audio language (QString)
-        \param parent audio controller's parent object (QObject)
+        \param parent audio controller's parent object (QObject *)
     */
-    VlcAudioControl(const QString &language = 0,
+    VlcAudioControl(VlcMediaPlayer *player,
+                    const QString &language = 0,
                     QObject *parent = 0);
 
     /*!
-        AudioControl destructor
+        \brief AudioControl destructor
     */
     ~VlcAudioControl();
 
@@ -59,7 +65,8 @@ public:
     void reset();
 
     /*!
-        Set default audio language
+        \brief Set default audio language
+
         \param language comma separated languages (QString)
     */
     void setDefaultAudioLanguage(const QString &language);
@@ -89,6 +96,9 @@ private slots:
     void updateActions();
 
 private:
+    VlcAudio *_vlcAudio;
+    VlcMediaPlayer *_vlcMediaPlayer;
+
     QTimer *_timer;
 
     QList<QAction *> _actionList;

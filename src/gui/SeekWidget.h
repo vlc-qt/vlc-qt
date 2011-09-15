@@ -24,55 +24,77 @@
 #include <QtGui/QSlider>
 #include <QtGui/QWidget>
 
-/*!
-	\class VlcSeekWidget SeekWidget.h vlc-qt/SeekWidget.h
-	\brief Seek widget
+class VlcMediaPlayer;
 
-	This is one of VLC-Qt GUI classes.
-	It provides only a display of elapsed time and full time of the media.
+/*!
+    \class VlcSeekWidget SeekWidget.h vlc-qt/SeekWidget.h
+    \brief Seek widget
+
+    This is one of VLC-Qt GUI classes.
+    It provides only a display of elapsed time and full time of the media.
 */
 class VlcSeekWidget : public QWidget
 {
 Q_OBJECT
 public:
-	/*!
-		\brief VlcSeekWidget constructor
-		\param parent seek widget's parent GUI widget (QWidget)
-	*/
-	VlcSeekWidget(QWidget *parent = 0);
+    /*!
+        \brief VlcSeekWidget constructor
 
-	/*!
-		VlcSeekWidget destructor
-	*/
-	~VlcSeekWidget();
+        \param player media player (VlcMediaPlayer *)
+        \param parent seek widget's parent GUI widget (QWidget *)
+    */
+    VlcSeekWidget(VlcMediaPlayer *player,
+                  QWidget *parent = 0);
+
+    /*!
+        \brief VlcSeekWidget constructor
+
+        \param parent seek widget's parent GUI widget (QWidget *)
+    */
+    VlcSeekWidget(QWidget *parent = 0);
+
+    /*!
+        \brief VlcSeekWidget destructor
+    */
+    ~VlcSeekWidget();
+
+
+    /*!
+        \brief Set media player if initialised without it
+
+        \param player media player (VlcMediaPlayer *)
+    */
+    void setMediaPlayer(VlcMediaPlayer *player);
 
 public:
-	/*!
-		\brief Get auto-hide option.
+    /*!
+        \brief Get auto-hide option.
 
-		\return auto-hide option status, true if enabled (bool)
-	*/
-	bool autoHide() const { return _autoHide; }
+        \return auto-hide option status, true if enabled (bool)
+    */
+    bool autoHide() const { return _autoHide; }
 
-	/*!
-		\brief Set auto-hide option.
+    /*!
+        \brief Set auto-hide option.
 
-		This option will automatically hide seek widget, if enabled.
+        This option will automatically hide seek widget, if enabled.
 
-		\param autoHide new auto-hide option (bool)
-	*/
-	void setAutoHide(const bool &autoHide) { _autoHide = autoHide; }
+        \param autoHide new auto-hide option (bool)
+    */
+    void setAutoHide(const bool &autoHide) { _autoHide = autoHide; }
 
 private slots:
-	void changeTime();
-	void updateTime();
+    void changeTime();
+    void updateTime();
 
 private:
-	bool _autoHide;
-	QSlider *_seek;
-	QLabel *_labelElapsed;
-	QLabel *_labelFull;
-	QTimer *_timer;
+    VlcMediaPlayer *_vlcMediaPlayer;
+
+    bool _autoHide;
+    QSlider *_seek;
+    QLabel *_labelElapsed;
+    QLabel *_labelFull;
+    QTimer *_timer;
 };
 
 #endif // VLCQT_SEEKWIDGET_H_

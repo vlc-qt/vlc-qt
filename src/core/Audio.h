@@ -19,72 +19,95 @@
 #ifndef VLCQT_AUDIO_H_
 #define VLCQT_AUDIO_H_
 
+#include <QtCore/QObject>
 #include <QtCore/QStringList>
 
+class VlcMediaPlayer;
+
+struct libvlc_media_player_t;
+
 /*!
-	\class VlcAudio Audio.h vlc-qt/Audio.h
-	\brief Audio controls
+    \class VlcAudio Audio.h vlc-qt/Audio.h
+    \brief Audio controls
 
-	A group of audio controls functions.
+    A group of audio controls functions.
 */
-class VlcAudio
+class VlcAudio : public QObject
 {
+Q_OBJECT
 public:
-	/*!
-		\brief Get current mute status.
+    /*!
+        \brief VlcAudio constructor.
 
-		\return current mute status (bool)
-	*/
-	static bool getMute();
+        This constructor creates a new audio manager.
 
-	/*!
-		\brief Set current audio level.
+        \param player media player (VlcMediaPlayer *)
+    */
+    VlcAudio(VlcMediaPlayer *player);
 
-		\param volume new audio level (int)
-	*/
-	static void setVolume(const int &volume);
+    /*!
+        \brief VlcAudio destructor
+    */
+    ~VlcAudio();
 
-	/*!
-		\brief Set current audio track.
+    /*!
+        \brief Get current mute status.
 
-		\param track new audio track (int)
-	*/
-	static void setTrack(const int &track);
+        \return current mute status (const bool)
+    */
+    bool getMute() const;
 
-	/*!
-		\brief Toggle mute status.
+    /*!
+        \brief Set current audio level.
 
-		\return new mute status (bool)
-	*/
-	static bool toggleMute();
+        \param volume new audio level (int)
+    */
+    void setVolume(const int &volume);
 
-	/*!
-		\brief Get current audio track.
+    /*!
+        \brief Set current audio track.
 
-		\return the number of current audio track, or -1 if none (int)
-	*/
-	static int track();
+        \param track new audio track (int)
+    */
+    void setTrack(const int &track);
 
-	/*!
-		\brief Get number of available audio tracks.
+    /*!
+        \brief Toggle mute status.
 
-		\return the number of available audio tracks, or -1 if unavailable (int)
-	*/
-	static int trackCount();
+        \return new mute status (const bool)
+    */
+    bool toggleMute() const;
 
-	/*!
-		\brief Get the description of available audio tracks.
+    /*!
+        \brief Get current audio track.
 
-		\return list with description of available audio tracks (QStringList)
-	*/
-	static QStringList trackDescription();
+        \return the number of current audio track, or -1 if none (const int)
+    */
+    int track() const;
 
-	/*!
-		\brief Get current audio level.
+    /*!
+        \brief Get number of available audio tracks.
 
-		\return current audio level, -1 if media is not playing (int)
-	*/
-	static int volume();
+        \return the number of available audio tracks, or -1 if unavailable (const int)
+    */
+    int trackCount() const;
+
+    /*!
+        \brief Get the description of available audio tracks.
+
+        \return list with description of available audio tracks (const QStringList)
+    */
+    QStringList trackDescription() const;
+
+    /*!
+        \brief Get current audio level.
+
+        \return current audio level, -1 if media is not playing (const int)
+    */
+    int volume() const;
+
+private:
+    libvlc_media_player_t *_vlcMediaPlayer;
 };
 
 #endif // VLCQT_AUDIO_H_

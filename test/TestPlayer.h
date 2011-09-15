@@ -22,27 +22,29 @@
 #include <QtGui/QMainWindow>
 
 namespace Ui {
-	class TestPlayer;
+    class TestPlayer;
 }
 
 class VlcInstance;
+class VlcMedia;
 class VlcMediaPlayer;
 
 class TestPlayer : public QMainWindow
 {
 Q_OBJECT
 public:
-	TestPlayer(QWidget *parent = 0);
-	~TestPlayer();
+    TestPlayer(QWidget *parent = 0);
+    ~TestPlayer();
 
 private slots:
-	void open();
+    void open();
 
 private:
-	Ui::TestPlayer *ui;
+    Ui::TestPlayer *ui;
 
-	VlcInstance *_instance;
-	VlcMediaPlayer *_player;
+    VlcInstance *_instance;
+    VlcMedia *_media;
+    VlcMediaPlayer *_player;
 };
 
 #endif // VLCQT_TEST_PLAYER_H_

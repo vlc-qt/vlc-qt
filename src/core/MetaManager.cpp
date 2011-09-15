@@ -22,165 +22,165 @@
 #include "core/MetaManager.h"
 
 VlcMetaManager::VlcMetaManager(VlcMedia *media)
-	: _media(media)
+    : _media(media)
 {
-	libvlc_media_parse(media->libvlcMedia());
+    libvlc_media_parse(media->core());
 }
 
 VlcMetaManager::~VlcMetaManager() { }
 
 QString VlcMetaManager::title() const
 {
-	QString meta(libvlc_media_get_meta(_media->libvlcMedia(), libvlc_meta_Title));
-	return meta;
+    QString meta(libvlc_media_get_meta(_media->core(), libvlc_meta_Title));
+    return meta;
 }
 
 void VlcMetaManager::setTitle(const QString &title)
 {
-	libvlc_media_set_meta(_media->libvlcMedia(), libvlc_meta_Title, title.toAscii().data());
+    libvlc_media_set_meta(_media->core(), libvlc_meta_Title, title.toAscii().data());
 }
 
 QString VlcMetaManager::artist() const
 {
-	QString meta(libvlc_media_get_meta(_media->libvlcMedia(), libvlc_meta_Artist));
-	return meta;
+    QString meta(libvlc_media_get_meta(_media->core(), libvlc_meta_Artist));
+    return meta;
 }
 
 void VlcMetaManager::setArtist(const QString &artist)
 {
-	libvlc_media_set_meta(_media->libvlcMedia(), libvlc_meta_Artist, artist.toAscii().data());
+    libvlc_media_set_meta(_media->core(), libvlc_meta_Artist, artist.toAscii().data());
 }
 
 QString VlcMetaManager::genre() const
 {
-	QString meta(libvlc_media_get_meta(_media->libvlcMedia(), libvlc_meta_Genre));
-	return meta;
+    QString meta(libvlc_media_get_meta(_media->core(), libvlc_meta_Genre));
+    return meta;
 }
 
 void VlcMetaManager::setGenre(const QString &genre)
 {
-	libvlc_media_set_meta(_media->libvlcMedia(), libvlc_meta_Genre, genre.toAscii().data());
+    libvlc_media_set_meta(_media->core(), libvlc_meta_Genre, genre.toAscii().data());
 }
 
 QString VlcMetaManager::copyright() const
 {
-	QString meta(libvlc_media_get_meta(_media->libvlcMedia(), libvlc_meta_Copyright));
-	return meta;
+    QString meta(libvlc_media_get_meta(_media->core(), libvlc_meta_Copyright));
+    return meta;
 }
 
 void VlcMetaManager::setCopyright(const QString &copyright)
 {
-	libvlc_media_set_meta(_media->libvlcMedia(), libvlc_meta_Copyright, copyright.toAscii().data());
+    libvlc_media_set_meta(_media->core(), libvlc_meta_Copyright, copyright.toAscii().data());
 }
 
 QString VlcMetaManager::album() const
 {
-	QString meta(libvlc_media_get_meta(_media->libvlcMedia(), libvlc_meta_Album));
-	return meta;
+    QString meta(libvlc_media_get_meta(_media->core(), libvlc_meta_Album));
+    return meta;
 }
 
 void VlcMetaManager::setAlbum(const QString &album)
 {
-	libvlc_media_set_meta(_media->libvlcMedia(), libvlc_meta_Album, album.toAscii().data());
+    libvlc_media_set_meta(_media->core(), libvlc_meta_Album, album.toAscii().data());
 }
 
 int VlcMetaManager::number() const
 {
-	QString meta(libvlc_media_get_meta(_media->libvlcMedia(), libvlc_meta_TrackNumber));
-	return meta.toInt();
+    QString meta(libvlc_media_get_meta(_media->core(), libvlc_meta_TrackNumber));
+    return meta.toInt();
 }
 
 void VlcMetaManager::setNumber(const int &number)
 {
-	libvlc_media_set_meta(_media->libvlcMedia(), libvlc_meta_TrackNumber, QString().number(number).toAscii().data());
+    libvlc_media_set_meta(_media->core(), libvlc_meta_TrackNumber, QString().number(number).toAscii().data());
 }
 
 QString VlcMetaManager::description() const
 {
-	QString meta(libvlc_media_get_meta(_media->libvlcMedia(), libvlc_meta_Description));
-	return meta;
+    QString meta(libvlc_media_get_meta(_media->core(), libvlc_meta_Description));
+    return meta;
 }
 
 void VlcMetaManager::setDescription(const QString &description)
 {
-	libvlc_media_set_meta(_media->libvlcMedia(), libvlc_meta_Description, description.toAscii().data());
+    libvlc_media_set_meta(_media->core(), libvlc_meta_Description, description.toAscii().data());
 }
 
 QString VlcMetaManager::rating() const
 {
-	QString meta(libvlc_media_get_meta(_media->libvlcMedia(), libvlc_meta_Rating));
-	return meta;
+    QString meta(libvlc_media_get_meta(_media->core(), libvlc_meta_Rating));
+    return meta;
 }
 
 int VlcMetaManager::year() const
 {
-	QString meta(libvlc_media_get_meta(_media->libvlcMedia(), libvlc_meta_Date));
-	return meta.toInt();
+    QString meta(libvlc_media_get_meta(_media->core(), libvlc_meta_Date));
+    return meta.toInt();
 }
 
 void VlcMetaManager::setYear(const int &year)
 {
-	libvlc_media_set_meta(_media->libvlcMedia(), libvlc_meta_Date, QString().number(year).toAscii().data());
+    libvlc_media_set_meta(_media->core(), libvlc_meta_Date, QString().number(year).toAscii().data());
 }
 
 QString VlcMetaManager::setting() const
 {
-	QString meta(libvlc_media_get_meta(_media->libvlcMedia(), libvlc_meta_Setting));
-	return meta;
+    QString meta(libvlc_media_get_meta(_media->core(), libvlc_meta_Setting));
+    return meta;
 }
 
 QString VlcMetaManager::url() const
 {
-	QString meta(libvlc_media_get_meta(_media->libvlcMedia(), libvlc_meta_URL));
-	return meta;
+    QString meta(libvlc_media_get_meta(_media->core(), libvlc_meta_URL));
+    return meta;
 }
 
 QString VlcMetaManager::language() const
 {
-	QString meta(libvlc_media_get_meta(_media->libvlcMedia(), libvlc_meta_Language));
-	return meta;
+    QString meta(libvlc_media_get_meta(_media->core(), libvlc_meta_Language));
+    return meta;
 }
 
 void VlcMetaManager::setLanguage(const QString &language)
 {
-	libvlc_media_set_meta(_media->libvlcMedia(), libvlc_meta_Language, language.toAscii().data());
+    libvlc_media_set_meta(_media->core(), libvlc_meta_Language, language.toAscii().data());
 }
 
 QString VlcMetaManager::publisher() const
 {
-	QString meta(libvlc_media_get_meta(_media->libvlcMedia(), libvlc_meta_Publisher));
-	return meta;
+    QString meta(libvlc_media_get_meta(_media->core(), libvlc_meta_Publisher));
+    return meta;
 }
 
 void VlcMetaManager::setPublisher(const QString &publisher)
 {
-	libvlc_media_set_meta(_media->libvlcMedia(), libvlc_meta_Publisher, publisher.toAscii().data());
+    libvlc_media_set_meta(_media->core(), libvlc_meta_Publisher, publisher.toAscii().data());
 }
 
 QString VlcMetaManager::encoder() const
 {
-	QString meta(libvlc_media_get_meta(_media->libvlcMedia(), libvlc_meta_EncodedBy));
-	return meta;
+    QString meta(libvlc_media_get_meta(_media->core(), libvlc_meta_EncodedBy));
+    return meta;
 }
 
 void VlcMetaManager::setEncoder(const QString &encoder)
 {
-	libvlc_media_set_meta(_media->libvlcMedia(), libvlc_meta_EncodedBy, encoder.toAscii().data());
+    libvlc_media_set_meta(_media->core(), libvlc_meta_EncodedBy, encoder.toAscii().data());
 }
 
 QString VlcMetaManager::artwork() const
 {
-	QString meta(libvlc_media_get_meta(_media->libvlcMedia(), libvlc_meta_ArtworkURL));
-	return meta;
+    QString meta(libvlc_media_get_meta(_media->core(), libvlc_meta_ArtworkURL));
+    return meta;
 }
 
 QString VlcMetaManager::id() const
 {
-	QString meta(libvlc_media_get_meta(_media->libvlcMedia(), libvlc_meta_TrackID));
-	return meta;
+    QString meta(libvlc_media_get_meta(_media->core(), libvlc_meta_TrackID));
+    return meta;
 }
 
 bool VlcMetaManager::saveMeta() const
 {
-	return libvlc_media_save_meta(_media->libvlcMedia());
+    return libvlc_media_save_meta(_media->core());
 }

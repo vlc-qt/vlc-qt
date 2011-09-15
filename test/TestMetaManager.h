@@ -21,33 +21,33 @@
 
 #include <QtGui/QDialog>
 
-#include "core/Instance.h"
-#include "core/Media.h"
-#include "core/MetaManager.h"
+class VlcInstance;
+class VlcMedia;
+class VlcMetaManager;
 
 namespace Ui {
-	class TestMetaManager;
+    class TestMetaManager;
 }
 
 class TestMetaManager : public QDialog
 {
 Q_OBJECT
 public:
-	TestMetaManager(QWidget *parent = 0);
-	~TestMetaManager();
+    TestMetaManager(QWidget *parent = 0);
+    ~TestMetaManager();
 
 private slots:
-	void open();
-	void read();
-	void save();
-	void set();
+    void open();
+    void read();
+    void save();
+    void set();
 
 private:
-	Ui::TestMetaManager *ui;
+    Ui::TestMetaManager *ui;
 
-	VlcInstance *_instance;
-	VlcMedia *_media;
-	VlcMetaManager *_meta;
+    VlcInstance *_instance;
+    VlcMedia *_media;
+    VlcMetaManager *_meta;
 };
 
 #endif //VLCQT_TEST_METAMANAGER_H_

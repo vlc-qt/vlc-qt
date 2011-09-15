@@ -24,77 +24,109 @@
 #include <QtGui/QSlider>
 #include <QtGui/QWidget>
 
-/*!
-	\class VlcVolumeSlider VolumeSlider.h vlc-qt/VolumeSlider.h
-	\brief Volume slider widget
+class VlcAudio;
+class VlcMediaPlayer;
 
-	This is one of VLC-Qt GUI classes.
-	It provides graphical volume control and also visual display of current volume.
+/*!
+    \class VlcVolumeSlider VolumeSlider.h vlc-qt/VolumeSlider.h
+    \brief Volume slider widget
+
+    This is one of VLC-Qt GUI classes.
+    It provides graphical volume control and also visual display of current volume.
 */
 class VlcVolumeSlider : public QWidget
 {
 Q_OBJECT
 public:
-	/*!
-		\brief VlcVolumeSlider constructor
-		\param parent volume slider's parent GUI widget (QWidget)
-	*/
-	VlcVolumeSlider(QWidget *parent = 0);
+    /*!
+        \brief VlcVolumeSlider constructor
 
-	/*!
-		VlcVolumeSlider destructor
-	*/
-	~VlcVolumeSlider();
+        \param player media player (VlcMediaPlayer *)
+        \param parent volume slider's parent GUI widget (QWidget)
+    */
+    VlcVolumeSlider(VlcMediaPlayer *player,
+                    QWidget *parent = 0);
 
+    /*!
+        \brief VlcVolumeSlider constructor
+
+        \param parent volume slider's parent GUI widget (QWidget)
+    */
+    VlcVolumeSlider(QWidget *parent = 0);
+
+    /*!
+        \brief VlcVolumeSlider destructor
+    */
+    ~VlcVolumeSlider();
+
+
+    /*!
+        \brief Set media player if initialised without it
+
+        \param player media player (VlcMediaPlayer *)
+    */
+    void setMediaPlayer(VlcMediaPlayer *player);
 
 public slots:
-	/*!
-		\brief Toggle mute
-	*/
-	void mute();
+    /*!
+        \brief Toggle mute
+    */
+    void mute();
 
-	/*!
-		\brief Set volume for current media
-		\param volume number from 0 to 200 (int)
-	*/
-	void setVolume(const int &volume);
+    /*!
+        \brief Set volume for current media
 
-	/*!
-		\brief Get volume for current media
-		\return volume number from 0 to 200 (int)
-	*/
-	int volume() const;
+        \param volume number from 0 to 200 (int)
+    */
+    void setVolume(const int &volume);
 
-	/*!
-		\brief Decreases or increases volume for 1, depending on the parameter.
+    /*!
+        \brief Get volume for current media
 
-		Limits from 0 to 200 apply to this function.
-		\param up if true increases the volume (bool)
-	*/
-	void volumeControl(const bool &up);
+        \return volume number from 0 to 200 (const int)
+    */
+    int volume() const;
 
-	/*!
-		Decreases volume for 1. This function is provided for convenience.
-		\sa volumeControl()
-	*/
-	void volumeDown() { volumeControl(false); }
+    /*!
+        \brief Decreases or increases volume for 1, depending on the parameter.
 
-	/*!
-		Increases volume for 1. This function is provided for convenience.
-		\sa volumeControl()
-	*/
-	void volumeUp() { volumeControl(true); }
+        Limits from 0 to 200 apply to this function.
+
+        \param up if true increases the volume (bool)
+    */
+    void volumeControl(const bool &up);
+
+    /*!
+        \brief Decreases volume for 1.
+
+        This function is provided for convenience.
+
+        \sa volumeControl()
+    */
+    void volumeDown() { volumeControl(false); }
+
+    /*!
+        \brief Increases volume for 1.
+
+        This function is provided for convenience.
+
+        \sa volumeControl()
+    */
+    void volumeUp() { volumeControl(true); }
 
 
 private slots:
-	void updateVolume();
+    void updateVolume();
 
 private:
-	int _currentVolume;
+    VlcAudio *_vlcAudio;
+    VlcMediaPlayer *_vlcMediaPlayer;
 
-	QSlider *_slider;
-	QLabel *_label;
-	QTimer *_timer;
+    int _currentVolume;
+
+    QSlider *_slider;
+    QLabel *_label;
+    QTimer *_timer;
 };
 
 #endif // VLCQT_VOLUMESLIDER_H_

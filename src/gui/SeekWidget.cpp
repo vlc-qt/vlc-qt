@@ -23,79 +23,116 @@
 #include "core/MediaPlayer.h"
 #include "gui/SeekWidget.h"
 
-VlcSeekWidget::VlcSeekWidget(QWidget *parent)
-	: QWidget(parent),
-	_autoHide(false)
+VlcSeekWidget::VlcSeekWidget(VlcMediaPlayer *player,
+                             QWidget *parent)
+    : QWidget(parent),
+      _vlcMediaPlayer(player),
+      _autoHide(false)
 {
-	_seek = new QSlider(this);
-	_seek->setOrientation(Qt::Horizontal);
-	_seek->setMaximum(0);
-	_seek->setPageStep(1000);
+    _seek = new QSlider(this);
+    _seek->setOrientation(Qt::Horizontal);
+    _seek->setMaximum(0);
+    _seek->setPageStep(1000);
 
-	_labelElapsed = new QLabel(this);
-	_labelElapsed->setText("00:00:00");
+    _labelElapsed = new QLabel(this);
+    _labelElapsed->setText("00:00:00");
 
-	_labelFull = new QLabel(this);
-	_labelFull->setText("00:00:00");
+    _labelFull = new QLabel(this);
+    _labelFull->setText("00:00:00");
 
-	QHBoxLayout *layout = new QHBoxLayout;
-	layout->addWidget(_labelElapsed);
-	layout->addWidget(_seek);
-	layout->addWidget(_labelFull);
-	setLayout(layout);
+    QHBoxLayout *layout = new QHBoxLayout;
+    layout->addWidget(_labelElapsed);
+    layout->addWidget(_seek);
+    layout->addWidget(_labelFull);
+    setLayout(layout);
 
-	_timer = new QTimer(this);
+    _timer = new QTimer(this);
 
-	connect(_timer, SIGNAL(timeout()), this, SLOT(updateTime()));
-	connect(_seek, SIGNAL(sliderReleased()), this, SLOT(changeTime()));
+    connect(_timer, SIGNAL(timeout()), this, SLOT(updateTime()));
+    connect(_seek, SIGNAL(sliderReleased()), this, SLOT(changeTime()));
 
-	_timer->start(400);
+    _timer->start(400);
+}
+
+VlcSeekWidget::VlcSeekWidget(QWidget *parent)
+    : QWidget(parent),
+      _vlcMediaPlayer(0),
+      _autoHide(false)
+{
+    _seek = new QSlider(this);
+    _seek->setOrientation(Qt::Horizontal);
+    _seek->setMaximum(0);
+    _seek->setPageStep(1000);
+
+    _labelElapsed = new QLabel(this);
+    _labelElapsed->setText("00:00:00");
+
+    _labelFull = new QLabel(this);
+    _labelFull->setText("00:00:00");
+
+    QHBoxLayout *layout = new QHBoxLayout;
+    layout->addWidget(_labelElapsed);
+    layout->addWidget(_seek);
+    layout->addWidget(_labelFull);
+    setLayout(layout);
+
+    _timer = new QTimer(this);
+
+    connect(_timer, SIGNAL(timeout()), this, SLOT(updateTime()));
+    connect(_seek, SIGNAL(sliderReleased()), this, SLOT(changeTime()));
 }
 
 VlcSeekWidget::~VlcSeekWidget()
 {
-	delete _seek;
-	delete _labelElapsed;
-	delete _labelFull;
-	delete _timer;
+    delete _seek;
+    delete _labelElapsed;
+    delete _labelFull;
+    delete _timer;
+}
+
+void VlcSeekWidget::setMediaPlayer(VlcMediaPlayer *player)
+{
+    _vlcMediaPlayer = player;
+
+    _timer->start(400);
 }
 
 void VlcSeekWidget::updateTime()
 {
-	if(VlcMediaPlayer::isActive()) {
-		int fullTime = VlcMediaPlayer::lenght();
-		int currentTime = VlcMediaPlayer::time();
+    if(_vlcMediaPlayer->isActive()) {
+        int fullTime = _vlcMediaPlayer->lenght();
+        int currentTime = _vlcMediaPlayer->time();
 
-		_labelFull->setText(QTime(0,0,0,0).addMSecs(fullTime).toString("hh:mm:ss"));
-		_seek->setMaximum(fullTime);
+        _labelFull->setText(QTime(0,0,0,0).addMSecs(fullTime).toString("hh:mm:ss"));
+        _seek->setMaximum(fullTime);
 
-		_labelElapsed->setText(QTime(0,0,0,0).addMSecs(currentTime).toString("hh:mm:ss"));
-		_seek->setValue(currentTime);
+        _labelElapsed->setText(QTime(0,0,0,0).addMSecs(currentTime).toString("hh:mm:ss"));
+        _seek->setValue(currentTime);
 
-		if(_autoHide && fullTime == 0) {
-			setVisible(false);
-		} else {
-			setVisible(true);
-		}
-	} else {
-		_labelFull->setText("00:00:00");
-		_seek->setMaximum(0);
+        if(_autoHide && fullTime == 0) {
+            setVisible(false);
+        } else {
+            setVisible(true);
+        }
+    } else {
+        _labelFull->setText("00:00:00");
+        _seek->setMaximum(0);
 
-		_labelElapsed->setText("00:00:00");
-		_seek->setValue(0);
+        _labelElapsed->setText("00:00:00");
+        _seek->setValue(0);
 
-		if(_autoHide) {
-			setVisible(false);
-		}
-	}
+        if(_autoHide) {
+            setVisible(false);
+        }
+    }
 }
 
 void VlcSeekWidget::changeTime()
 {
-	if(_vlcCurrentMediaPlayer == NULL)
-		return;
+    if(!_vlcMediaPlayer->core())
+        return;
 
-	_labelElapsed->setText(QTime(0,0,0,0).addMSecs(_seek->value()).toString("hh:mm:ss"));
+    _labelElapsed->setText(QTime(0,0,0,0).addMSecs(_seek->value()).toString("hh:mm:ss"));
 
-	VlcMediaPlayer::setTime(_seek->value());
+    _vlcMediaPlayer->setTime(_seek->value());
 }

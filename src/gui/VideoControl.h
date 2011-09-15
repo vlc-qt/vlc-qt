@@ -26,6 +26,9 @@
 
 #include "Enums.h"
 
+class VlcMediaPlayer;
+class VlcVideo;
+
 /*!
     \class VlcVideoControl VideoControl.h vlc-qt/VideoControl.h
     \brief Video control class
@@ -38,27 +41,32 @@ class VlcVideoControl : public QObject
 Q_OBJECT
 public:
     /*!
-        VideoControl constructor
+        \brief VideoControl constructor
+
+        \param player media player (VlcMediaPlayer *)
         \param language default subtitle language (QString)
         \param parent video controller's parent object (QObject)
     */
-    VlcVideoControl(const QString &language = 0,
+    VlcVideoControl(VlcMediaPlayer *player,
+                    const QString &language = 0,
                     QObject *parent = 0);
 
     /*!
-        VideoControl destructor
+        \brief VideoControl destructor
     */
     ~VlcVideoControl();
 
 
     /*!
-        Reset all settings and selected video and subtitle tracks
+        \brief Reset all settings and selected video and subtitle tracks
+
         Usually called on media change.
     */
     void reset();
 
     /*!
-        Set default subtitle language
+        \brief Set default subtitle language
+
         \param language comma separated languages (QString)
     */
     void setDefaultSubtitleLanguage(const QString &language);
@@ -66,7 +74,8 @@ public:
 
 public slots:
     /*!
-        Open and load subtitles from file
+        \brief Open and load subtitles from file
+
         \param subtitle full path to subtitles file
     */
     void loadSubtitle(const QString &subtitle);
@@ -74,7 +83,8 @@ public slots:
 
 signals:
     /*!
-        Signal sending actions for changing video and subititle tracks
+        \brief Signal sending actions for changing video and subititle tracks
+
         \param QList<QAction*> list of actions
         \param Vlc::ActionsType type of actions
     */
@@ -82,14 +92,16 @@ signals:
                  const Vlc::ActionsType);
 
     /*!
-        Signal sending actions for changing subititle tracks
+        \brief Signal sending actions for changing subititle tracks
+
         \param Vlc::ActionsType type of actions
         \param QList<QAction*> list of actions
     */
     void subtitleTracks(QList<QAction *>);
 
     /*!
-        Signal sending actions for changing video tracks
+        \brief Signal sending actions for changing video tracks
+
         \param Vlc::ActionsType type of actions
         \param QList<QAction*> list of actions
     */
@@ -103,6 +115,9 @@ private slots:
     void updateVideo();
 
 private:
+    VlcMediaPlayer *_vlcMediaPlayer;
+    VlcVideo *_vlcVideo;
+
     QTimer *_timer;
 
     QList<QAction *> _actionSubList;

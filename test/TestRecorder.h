@@ -21,9 +21,9 @@
 
 #include <QtGui/QDialog>
 
-#include "core/Instance.h"
-#include "core/Media.h"
-#include "core/MediaPlayer.h"
+class VlcInstance;
+class VlcMedia;
+class VlcMediaPlayer;
 
 namespace Ui {
     class TestRecorder;
@@ -33,15 +33,15 @@ class TestRecorder : public QDialog
 {
 Q_OBJECT
 public:
-	TestRecorder(QWidget *parent = 0);
-	~TestRecorder();
+    TestRecorder(QWidget *parent = 0);
+    ~TestRecorder();
 
 private:
-	Ui::TestRecorder *ui;
+    Ui::TestRecorder *ui;
 
-	VlcInstance *_instance;
-	VlcMedia *_media;
-	VlcMediaPlayer *_player;
+    VlcInstance *_instance;
+    VlcMedia *_media;
+    VlcMediaPlayer *_player;
 };
 
 #endif // VLCQT_TEST_RECORDER_H_

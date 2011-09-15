@@ -23,27 +23,27 @@ PROJECT(test-vlc-qt)
 ###################
 # Define the UI source files
 SET(Test_UIs
-	TestMain.ui
-	TestMetaManager.ui
-	TestPlayer.ui
-	TestRecorder.ui
+    TestMain.ui
+    TestMetaManager.ui
+    TestPlayer.ui
+    TestRecorder.ui
 )
 
 # Define the MOC source files
-SET(Test_MOCs	# List of classes which Qt needs to produce MOCs for them (in order for events, signals, slots and other macros to work
-	TestMain.h
-	TestMetaManager.h
-	TestPlayer.h
-	TestRecorder.h
+SET(Test_MOCs    # List of classes which Qt needs to produce MOCs for them (in order for events, signals, slots and other macros to work
+    TestMain.h
+    TestMetaManager.h
+    TestPlayer.h
+    TestRecorder.h
 )
 
 # Define the C++ source files
 SET(Test_Srcs
-	main.cpp
-	TestMain.cpp
-	TestMetaManager.cpp
-	TestPlayer.cpp
-	TestRecorder.cpp
+    main.cpp
+    TestMain.cpp
+    TestMetaManager.cpp
+    TestPlayer.cpp
+    TestRecorder.cpp
 )
 
 ################
@@ -82,4 +82,4 @@ ENDIF(MINGW)
 ################
 # Installation #
 ################
-INSTALL(TARGETS test-vlc-qt	RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
+INSTALL(TARGETS test-vlc-qt    RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)

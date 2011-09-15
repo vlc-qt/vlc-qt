@@ -22,20 +22,20 @@
 #include "TestMain.h"
 
 #ifdef Q_WS_X11
-	#include <X11/Xlib.h>
+    #include <X11/Xlib.h>
 #endif
 
 int main(int argc, char *argv[])
 {
 #ifdef Q_WS_X11
-	XInitThreads();
+    XInitThreads();
 #endif
 
-	QApplication app(argc, argv);
-	QCoreApplication::setApplicationName("VLC-Qt-Test");
+    QApplication app(argc, argv);
+    QCoreApplication::setApplicationName("VLC-Qt-Test");
 
-	TestMain mainWindow;
-	mainWindow.show();
+    TestMain mainWindow;
+    mainWindow.show();
 
-	return app.exec();
+    return app.exec();
 }

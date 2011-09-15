@@ -27,169 +27,179 @@
 #include "core/MediaPlayer.h"
 #include "core/Video.h"
 
-libvlc_media_player_t *_vlcCurrentMediaPlayer = NULL;
-
-VlcMediaPlayer::VlcMediaPlayer(const WId &widget,
-							   QObject *parent)
-	: QObject(parent),
-	_vlcMedia(NULL),
-	_widgetId(widget)
+VlcMediaPlayer::VlcMediaPlayer(VlcInstance *instance)
+    : QObject(instance)
 {
-	_check = new QTimer(this);
-	connect(_check, SIGNAL(timeout()), this, SLOT(checkPlayingState()));
-	_check->start(300);
+    _vlcMediaPlayer = libvlc_media_player_new(instance->core());
 
+    /* Disable mouse and keyboard events */
+    libvlc_video_set_key_input(_vlcMediaPlayer, false);
+    libvlc_video_set_mouse_input(_vlcMediaPlayer, false);
+
+    VlcError::errmsg();
+
+    _vlcAudio = new VlcAudio(this);
+    _vlcVideo = new VlcVideo(this);
+
+    _check = new QTimer(this);
+    connect(_check, SIGNAL(timeout()), this, SLOT(checkPlayingState()));
+    _check->start(300);
 }
 
 VlcMediaPlayer::~VlcMediaPlayer()
 {
-	delete _check;
+    delete _check;
+
+    delete _vlcAudio;
+    delete _vlcVideo;
+
+    libvlc_media_player_release(_vlcMediaPlayer);
+}
+
+libvlc_media_player_t *VlcMediaPlayer::core()
+{
+    return _vlcMediaPlayer;
+}
+
+VlcAudio *VlcMediaPlayer::audio()
+{
+    return _vlcAudio;
+}
+
+VlcVideo *VlcMediaPlayer::video()
+{
+    return _vlcVideo;
 }
 
 void VlcMediaPlayer::checkPlayingState()
 {
-	if(_vlcCurrentMediaPlayer == NULL) {
-		emit playing(false, false);
-		emit hasAudio(false);
-		emit hasVideo(false);
+    if(!isActive()) {
+        emit playing(false, false);
+        emit hasAudio(false);
+        emit hasVideo(false);
 
-		emit state(false, false, false); // Deprecated!
-		return;
-	}
+        return;
+    }
 
-	bool play;
-	bool buffering;
-	bool audio_count;
-	bool video_count;
+    bool play;
+    bool buffering;
+    bool audio_count;
+    bool video_count;
 
-	play = libvlc_media_player_get_state(_vlcCurrentMediaPlayer) == libvlc_Playing;
-	buffering = libvlc_media_player_get_state(_vlcCurrentMediaPlayer) == libvlc_Buffering;
-	audio_count = VlcAudio::trackCount() > 0;
-	video_count = VlcVideo::trackCount() > 0;
+    play = libvlc_media_player_get_state(_vlcMediaPlayer) == libvlc_Playing;
+    buffering = libvlc_media_player_get_state(_vlcMediaPlayer) == libvlc_Buffering;
+    audio_count = _vlcAudio->trackCount() > 0;
+    video_count = _vlcVideo->trackCount() > 0;
 
-	emit playing(play, buffering);
-	emit hasAudio(audio_count);
-	emit hasVideo(video_count);
+    VlcError::errmsg();
 
-	emit state(play, audio_count, video_count); // Deprecated!
+    emit playing(play, buffering);
+    emit hasAudio(audio_count);
+    emit hasVideo(video_count);
 }
 
-bool VlcMediaPlayer::isActive()
+bool VlcMediaPlayer::isActive() const
 {
-	if(_vlcCurrentMediaPlayer == NULL)
-		return false;
+    // It's possible that the vlc doesn't play anything
+    // so check before
+    if (!libvlc_media_player_get_media(_vlcMediaPlayer))
+        return false;
 
-	// It's possible that the vlc doesn't play anything
-	// so check before
-	VlcMedia *media = new VlcMedia(libvlc_media_player_get_media(_vlcCurrentMediaPlayer));
+    libvlc_state_t state;
+    state = libvlc_media_player_get_state(_vlcMediaPlayer);
 
-	if (media->libvlcMedia() == NULL)
-		return false;
+    VlcError::errmsg();
 
-	libvlc_state_t state;
-	state = libvlc_media_player_get_state(_vlcCurrentMediaPlayer);
-
-	if(state == libvlc_NothingSpecial || state == libvlc_Ended || state == libvlc_Error)
-		return false;
-	else
-		return true;
+    if(state == libvlc_NothingSpecial || state == libvlc_Ended || state == libvlc_Error)
+        return false;
+    else
+        return true;
 }
 
-int VlcMediaPlayer::lenght()
+int VlcMediaPlayer::lenght() const
 {
-	libvlc_time_t lenght = libvlc_media_player_get_length(_vlcCurrentMediaPlayer);
-	VlcError::errmsg();
+    libvlc_time_t lenght = libvlc_media_player_get_length(_vlcMediaPlayer);
 
-	return lenght;
+    VlcError::errmsg();
+
+    return lenght;
 }
 
-void VlcMediaPlayer::open(const QString &media)
+void VlcMediaPlayer::open(VlcMedia *media)
 {
-	unloadMedia();
+    libvlc_media_player_set_media(_vlcMediaPlayer, media->core());
 
-	// Create a new Media item
-	_vlcMedia = new VlcMedia(media);
+    VlcError::errmsg();
 
-	// Create a new MediaPlayer instance
-	_vlcCurrentMediaPlayer = libvlc_media_player_new_from_media(_vlcMedia->libvlcMedia());
-	VlcError::errmsg();
-
-
-	/* Disable mouse and keyboard events */
-	libvlc_video_set_key_input(_vlcCurrentMediaPlayer, false);
-        libvlc_video_set_mouse_input(_vlcCurrentMediaPlayer, false);
-
-
-	/* Get our media instance to use our window */
-	if (_vlcCurrentMediaPlayer) {
-#if defined(Q_WS_WIN)
-		libvlc_media_player_set_hwnd(_vlcCurrentMediaPlayer, _widgetId);
-#elif defined(Q_WS_MAC)
-		libvlc_media_player_set_agl(_vlcCurrentMediaPlayer, _widgetId);
-#else // Q_WS_X11
-		libvlc_media_player_set_xwindow(_vlcCurrentMediaPlayer, _widgetId);
-#endif // Q_WS_*
-
-		VlcError::errmsg();
-	}
-
-	play();
+    play();
 }
 
 void VlcMediaPlayer::play()
 {
-	if(_vlcCurrentMediaPlayer == NULL)
-		return;
+    if(!_vlcMediaPlayer)
+        return;
 
-	libvlc_media_player_play(_vlcCurrentMediaPlayer);
-	VlcError::errmsg();
+    libvlc_media_player_play(_vlcMediaPlayer);
+
+    VlcError::errmsg();
 }
 
 void VlcMediaPlayer::pause()
 {
-	if(_vlcCurrentMediaPlayer == NULL)
-		return;
+    if(!_vlcMediaPlayer)
+        return;
 
-	if(libvlc_media_player_can_pause(_vlcCurrentMediaPlayer) == 1)
-		libvlc_media_player_pause(_vlcCurrentMediaPlayer);
-	VlcError::errmsg();
+    if(libvlc_media_player_can_pause(_vlcMediaPlayer) == 1)
+        libvlc_media_player_pause(_vlcMediaPlayer);
+
+    VlcError::errmsg();
 }
 
 void VlcMediaPlayer::setTime(const int &time)
 {
-	libvlc_media_player_set_time(_vlcCurrentMediaPlayer, time);
-	VlcError::errmsg();
+    libvlc_media_player_set_time(_vlcMediaPlayer, time);
+
+    VlcError::errmsg();
+}
+
+void VlcMediaPlayer::setVideoWidgetId(const WId &id)
+{
+    _widgetId = id;
+
+    /* Get our media instance to use our window */
+    if (_vlcMediaPlayer) {
+#if defined(Q_WS_WIN)
+        libvlc_media_player_set_hwnd(_vlcMediaPlayer, _widgetId);
+#elif defined(Q_WS_MAC)
+        libvlc_media_player_set_agl(_vlcMediaPlayer, _widgetId);
+#else // Q_WS_X11
+        libvlc_media_player_set_xwindow(_vlcMediaPlayer, _widgetId);
+#endif // Q_WS_*
+
+        VlcError::errmsg();
+    }
 }
 
 void VlcMediaPlayer::stop()
 {
-	if(_vlcCurrentMediaPlayer == NULL)
-		return;
+    if(!_vlcMediaPlayer)
+        return;
 
-	libvlc_media_player_stop(_vlcCurrentMediaPlayer);
-	unloadMedia();
-	VlcError::errmsg();
+    libvlc_media_player_stop(_vlcMediaPlayer);
+
+    VlcError::errmsg();
 }
 
-int VlcMediaPlayer::time()
+int VlcMediaPlayer::time() const
 {
-	libvlc_time_t time = libvlc_media_player_get_time(_vlcCurrentMediaPlayer);
-	VlcError::errmsg();
+    libvlc_time_t time = libvlc_media_player_get_time(_vlcMediaPlayer);
 
-	return time;
+    VlcError::errmsg();
+
+    return time;
 }
 
-void VlcMediaPlayer::unloadMedia()
+WId VlcMediaPlayer::videoWidgetId() const
 {
-	if (_vlcCurrentMediaPlayer) {
-		libvlc_media_player_release(_vlcCurrentMediaPlayer);
-		_vlcCurrentMediaPlayer = NULL;
-	}
-
-	if (_vlcMedia) {
-		delete _vlcMedia;
-		_vlcMedia = NULL;
-	}
-
-	VlcError::errmsg();
+    return _widgetId;
 }

@@ -23,80 +23,121 @@
 #include "core/MediaPlayer.h"
 #include "gui/VolumeSlider.h"
 
-VlcVolumeSlider::VlcVolumeSlider(QWidget *parent)
-	: QWidget(parent)
+VlcVolumeSlider::VlcVolumeSlider(VlcMediaPlayer *player,
+                                 QWidget *parent)
+    : QWidget(parent),
+      _vlcAudio(player->audio()),
+      _vlcMediaPlayer(player)
 {
-	_slider = new QSlider(this);
-	_slider->setOrientation(Qt::Horizontal);
-	_slider->setMaximum(200);
+    _slider = new QSlider(this);
+    _slider->setOrientation(Qt::Horizontal);
+    _slider->setMaximum(200);
 
-	_label = new QLabel(this);
-	_label->setMinimumWidth(20);
-	_label->setText(QString().number(0));
+    _label = new QLabel(this);
+    _label->setMinimumWidth(20);
+    _label->setText(QString().number(0));
 
-	QHBoxLayout *layout = new QHBoxLayout;
-	layout->addWidget(_slider);
-	layout->addWidget(_label);
-	setLayout(layout);
+    QHBoxLayout *layout = new QHBoxLayout;
+    layout->addWidget(_slider);
+    layout->addWidget(_label);
+    setLayout(layout);
 
-	_timer = new QTimer(this);
+    _timer = new QTimer(this);
 
-	connect(_timer, SIGNAL(timeout()), this, SLOT(updateVolume()));
-	connect(_slider, SIGNAL(valueChanged(int)), this, SLOT(setVolume(int)));
+    connect(_timer, SIGNAL(timeout()), this, SLOT(updateVolume()));
+    connect(_slider, SIGNAL(valueChanged(int)), this, SLOT(setVolume(int)));
 
-	_timer->start(100);
+    _timer->start(100);
+}
+
+VlcVolumeSlider::VlcVolumeSlider(QWidget *parent)
+    : QWidget(parent),
+      _vlcAudio(0),
+      _vlcMediaPlayer(0)
+{
+    _slider = new QSlider(this);
+    _slider->setOrientation(Qt::Horizontal);
+    _slider->setMaximum(200);
+
+    _label = new QLabel(this);
+    _label->setMinimumWidth(20);
+    _label->setText(QString().number(0));
+
+    QHBoxLayout *layout = new QHBoxLayout;
+    layout->addWidget(_slider);
+    layout->addWidget(_label);
+    setLayout(layout);
+
+    _timer = new QTimer(this);
+
+    connect(_timer, SIGNAL(timeout()), this, SLOT(updateVolume()));
+    connect(_slider, SIGNAL(valueChanged(int)), this, SLOT(setVolume(int)));
 }
 
 VlcVolumeSlider::~VlcVolumeSlider()
 {
-	delete _slider;
-	delete _label;
-	delete _timer;
+    delete _slider;
+    delete _label;
+    delete _timer;
+}
+
+void VlcVolumeSlider::setMediaPlayer(VlcMediaPlayer *player)
+{
+    _vlcAudio = player->audio();
+    _vlcMediaPlayer = player;
+
+    _timer->start(100);
 }
 
 void VlcVolumeSlider::mute()
 {
-	bool mute = VlcAudio::getMute();
+    if(!_vlcMediaPlayer->isActive())
+        return;
 
-	if(mute) {
-		_timer->start(100);
-		_slider->setDisabled(false);
-		_label->setDisabled(false);
-	} else {
-		_timer->stop();
-		_slider->setDisabled(true);
-		_label->setDisabled(true);
-	}
+    bool mute = _vlcAudio->getMute();
 
-	VlcAudio::toggleMute();
+    if(mute) {
+        _timer->start(100);
+        _slider->setDisabled(false);
+        _label->setDisabled(false);
+    } else {
+        _timer->stop();
+        _slider->setDisabled(true);
+        _label->setDisabled(true);
+    }
+
+    _vlcAudio->toggleMute();
 }
 
 void VlcVolumeSlider::setVolume(const int &volume)
 {
-	_currentVolume = volume;
-	_slider->setValue(_currentVolume);
-	_label->setText(QString().number(_currentVolume));
+    _currentVolume = volume;
+    _slider->setValue(_currentVolume);
+    _label->setText(QString().number(_currentVolume));
 }
 
 void VlcVolumeSlider::updateVolume()
 {
-	VlcAudio::setVolume(_currentVolume);
+    if(!_vlcMediaPlayer->isActive())
+        return;
+
+    _vlcAudio->setVolume(_currentVolume);
 }
 
 int VlcVolumeSlider::volume() const
 {
-	return _currentVolume;
+    return _currentVolume;
 }
 
 void VlcVolumeSlider::volumeControl(const bool &up)
 {
-	if(up) {
-		if(_currentVolume != 200) {
-			setVolume(_currentVolume+1);
-		}
-	} else {
-		if(_currentVolume != 0) {
-			setVolume(_currentVolume-1);
-		}
-	}
+    if(up) {
+        if(_currentVolume != 200) {
+            setVolume(_currentVolume + 1);
+        }
+    } else {
+        if(_currentVolume != 0) {
+            setVolume(_currentVolume - 1);
+        }
+    }
 }

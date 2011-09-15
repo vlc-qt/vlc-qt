@@ -41,34 +41,38 @@ SET(VLCQT_SRCS
     core/MediaPlayer.cpp
     core/MetaManager.cpp
     core/Video.cpp
+
     gui/AudioControl.cpp
     gui/SeekWidget.cpp
-    gui/VolumeSlider.cpp
     gui/VideoControl.cpp
     gui/VideoWidget.cpp
+    gui/VolumeSlider.cpp
 )
 
 # Define the MOC source files
 SET(VLCQT_MOCS
+    core/Audio.h
     core/Instance.h
     core/Media.h
     core/MediaPlayer.h
+    core/Video.h
+
     gui/AudioControl.h
     gui/SeekWidget.h
-    gui/VolumeSlider.h
     gui/VideoControl.h
     gui/VideoWidget.h
+    gui/VolumeSlider.h
 )
 
 # Define the Include files
 SET(VLCQT_HEADERS
     ${VLCQT_MOCS}
-    core/Audio.h
+
     core/Common.h
     core/Enums.h
     core/Error.h
     core/MetaManager.h
-    core/Video.h
+
     ${CMAKE_BINARY_DIR}/src/Config.h
 )
 

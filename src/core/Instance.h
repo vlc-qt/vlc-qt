@@ -23,73 +23,81 @@
 
 struct libvlc_instance_t;
 
-extern libvlc_instance_t *_vlcInstance;
-
 /*!
-	\class VlcInstance Instance.h vlc-qt/Instance.h
-	\brief Main instance
+    \class VlcInstance Instance.h vlc-qt/Instance.h
+    \brief Main instance
 
-	A basic Instance manager for VLC-Qt library.
-	It provides main instance controls.
+    A basic Instance manager for VLC-Qt library.
+    It provides main instance controls.
 */
 class VlcInstance : public QObject
 {
 Q_OBJECT
 public:
-	/*!
-		\brief VlcInstance constructor.
+    /*!
+        \brief VlcInstance constructor.
 
-		This is mandatory for using VLC-Qt and all its other classes.
+        This is mandatory for using VLC-Qt and all its other classes.
 
-		\param args libvlc arguments (QStringList)
-		\param parent Instance's parent object (QObject)
-	*/
-	VlcInstance(const QStringList &args,
-				QObject *parent = NULL);
+        \param args libvlc arguments (QStringList)
+        \param parent Instance's parent object (QObject *)
+    */
+    VlcInstance(const QStringList &args,
+                QObject *parent = NULL);
 
-	/*!
-		VlcInstance destructor
-	*/
-	~VlcInstance();
+    /*!
+        VlcInstance destructor
+    */
+    ~VlcInstance();
 
-	/*!
-		\brief VLC-QT version info
+    /*!
+        \brief Returns libvlc instance object.
 
-		\return a string containing the VLC-Qt version (QString)
-	*/
-	static QString libVersion();
+        \return libvlc instance (libvlc_instance_t *)
+    */
+    libvlc_instance_t *core();
 
-	/*!
-		\brief libvlc version info
+    /*!
+        \brief VLC-QT version info
 
-		\return a string containing the libvlc version (QString)
-	*/
-	static QString version();
+        \return a string containing the VLC-Qt version (QString)
+    */
+    static QString libVersion();
 
-	/*!
-		\brief libvlc compiler info
+    /*!
+        \brief libvlc version info
 
-		\return a string containing the compiler version (QString)
-	*/
-	static QString compiler();
+        \return a string containing the libvlc version (QString)
+    */
+    static QString version();
 
-	/*!
-		\brief libvlc changeset info
+    /*!
+        \brief libvlc compiler info
 
-		\return a string containing the changeset (QString)
-	*/
-	static QString changeset();
+        \return a string containing the compiler version (QString)
+    */
+    static QString compiler();
 
-	/*!
-		\brief Sets the application name.
+    /*!
+        \brief libvlc changeset info
 
-		libvlc passes this as the user agent string when a protocol requires it.
+        \return a string containing the changeset (QString)
+    */
+    static QString changeset();
 
-		\param application Application name (QString)
-		\param version Application version (QString)
-	*/
-	void setUserAgent(const QString &application,
-					  const QString &version);
+    /*!
+        \brief Sets the application name.
+
+        libvlc passes this as the user agent string when a protocol requires it.
+
+        \param application Application name (QString)
+        \param version Application version (QString)
+    */
+    void setUserAgent(const QString &application,
+                      const QString &version);
+
+private:
+    libvlc_instance_t *_vlcInstance;
 };
 
 #endif // VLCQT_VLCINSTANCE_H_

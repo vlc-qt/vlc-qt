@@ -23,7 +23,7 @@
 
 namespace Ui
 {
-	class TestMain;
+    class TestMain;
 }
 
 class TestPlayer;
@@ -35,22 +35,22 @@ class TestMain : public QMainWindow
 {
 Q_OBJECT
 public:
-	TestMain(QWidget *parent = 0);
-	~TestMain();
+    TestMain(QWidget *parent = 0);
+    ~TestMain();
 
 private slots:
-	void libTest();
-	void metaManagerTest();
-	void playerTest();
-	void recorderTest();
+    void libTest();
+    void metaManagerTest();
+    void playerTest();
+    void recorderTest();
 
 private:
-	Ui::TestMain *ui;
+    Ui::TestMain *ui;
 
-	TestPlayer *_testPlayer;
+    TestPlayer *_testPlayer;
 
-	libvlc_instance_t *_instance;
-	libvlc_media_player_t *_player;
+    libvlc_instance_t *_instance;
+    libvlc_media_player_t *_player;
 };
 
 #endif // VLCQT_TEST_MAIN_H_

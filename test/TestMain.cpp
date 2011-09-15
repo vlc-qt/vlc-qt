@@ -28,62 +28,62 @@
 #include "TestRecorder.h"
 
 TestMain::TestMain(QWidget *parent)
-	: QMainWindow(parent),
-	ui(new Ui::TestMain),
-	_testPlayer(0)
+    : QMainWindow(parent),
+    ui(new Ui::TestMain),
+    _testPlayer(0)
 {
-	ui->setupUi(this);
+    ui->setupUi(this);
 
-	connect(ui->actionExit, SIGNAL(triggered()), qApp, SLOT(quit()));
-	connect(ui->buttonLib, SIGNAL(clicked()), this, SLOT(libTest()));
-	connect(ui->buttonMetaManager, SIGNAL(clicked()), this, SLOT(metaManagerTest()));
-	connect(ui->buttonPlayer, SIGNAL(clicked()), this, SLOT(playerTest()));
-	connect(ui->buttonRecorder, SIGNAL(clicked()), this, SLOT(recorderTest()));
+    connect(ui->actionExit, SIGNAL(triggered()), qApp, SLOT(quit()));
+    connect(ui->buttonLib, SIGNAL(clicked()), this, SLOT(libTest()));
+    connect(ui->buttonMetaManager, SIGNAL(clicked()), this, SLOT(metaManagerTest()));
+    connect(ui->buttonPlayer, SIGNAL(clicked()), this, SLOT(playerTest()));
+    connect(ui->buttonRecorder, SIGNAL(clicked()), this, SLOT(recorderTest()));
 }
 
 TestMain::~TestMain()
 {
-	delete ui;
+    delete ui;
 }
 
 void TestMain::libTest()
 {
-	QStringList args = VlcCommon::args();
-	std::string stdStrings[args.size()];
-	const char *vlcArgs[args.size()];
-	for(int i = 0; i < args.size(); i++) {
-		stdStrings[i] = args[i].toStdString();
-		vlcArgs[i] = stdStrings[i].c_str();
-	}
+    QStringList args = VlcCommon::args();
+    std::string stdStrings[args.size()];
+    const char *vlcArgs[args.size()];
+    for(int i = 0; i < args.size(); i++) {
+        stdStrings[i] = args[i].toStdString();
+        vlcArgs[i] = stdStrings[i].c_str();
+    }
 
-	QString path = "/home/tadej/Videos/Yugo.mpeg";
-	std::string pathstd = path.toStdString();
-	const char * p = pathstd.c_str();
+    QString path = "/home/tadej/Videos/Yugo.mpeg";
+    std::string pathstd = path.toStdString();
+    const char * p = pathstd.c_str();
 
-	_instance = libvlc_new(sizeof(vlcArgs) / sizeof(*vlcArgs), vlcArgs);
-	libvlc_media_t *media = libvlc_media_new_path(_instance, p);
-	_player = libvlc_media_player_new_from_media(media);
-	libvlc_media_player_play(_player);
+    _instance = libvlc_new(sizeof(vlcArgs) / sizeof(*vlcArgs), vlcArgs);
+    libvlc_media_t *media = libvlc_media_new_path(_instance, p);
+    _player = libvlc_media_player_new_from_media(media);
+    libvlc_media_player_play(_player);
 }
 
 void TestMain::metaManagerTest()
 {
-	TestMetaManager test;
-	test.exec();
+    TestMetaManager test;
+    test.exec();
 }
 
 void TestMain::playerTest()
 {
-	if(_testPlayer) {
-		delete _testPlayer;
-	}
+    if(_testPlayer) {
+        delete _testPlayer;
+    }
 
-	_testPlayer = new TestPlayer(this);
-	_testPlayer->show();
+    _testPlayer = new TestPlayer(this);
+    _testPlayer->show();
 }
 
 void TestMain::recorderTest()
 {
-	TestRecorder test;
-	test.exec();
+    TestRecorder test;
+    test.exec();
 }
