@@ -1,3 +1,10 @@
+libvlc-qt (0.5.2~gitDATE.REV-1~natty) natty; urgency=low
+
+  * Daily build from Git
+
+ -- Tadej Novak <tadej@tano.si>  Thu, 15 Sep 2011 00:00:00 +0200
+
+
 libvlc-qt (0.5.1-1~ppa1~natty) natty; urgency=low
 
   * Pkgconfig support
