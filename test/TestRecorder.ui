@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Recorder Test</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../data/logo.qrc">
+    <normaloff>:/vlc-qt/icons/48x48/vlc-qt.png</normaloff>:/vlc-qt/icons/48x48/vlc-qt.png</iconset>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QLabel" name="label">
@@ -26,6 +30,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../data/logo.qrc"/>
+ </resources>
  <connections/>
 </ui>

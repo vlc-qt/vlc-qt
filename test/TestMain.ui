@@ -6,12 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>300</width>
-    <height>200</height>
+    <width>400</width>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>VLC-Qt Test</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../data/logo.qrc">
+    <normaloff>:/vlc-qt/icons/48x48/vlc-qt.png</normaloff>:/vlc-qt/icons/48x48/vlc-qt.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -30,6 +34,20 @@
      </widget>
     </item>
     <item>
+     <widget class="QPushButton" name="buttonDualInstance">
+      <property name="text">
+       <string>Dual Instance Test</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="buttonDualPlayer">
+      <property name="text">
+       <string>Dual Player Test</string>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QPushButton" name="buttonMetaManager">
       <property name="text">
        <string>Meta Manager Test</string>
@@ -43,6 +61,19 @@
       </property>
      </widget>
     </item>
+    <item>
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -50,7 +81,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>300</width>
+     <width>400</width>
      <height>23</height>
     </rect>
    </property>
@@ -69,7 +100,9 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../data/logo.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>actionExit</sender>

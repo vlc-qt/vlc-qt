@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>TestPlayer</class>
- <widget class="QMainWindow" name="TestPlayer">
+ <class>TestDual</class>
+ <widget class="QMainWindow" name="TestDual">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Test Player</string>
+   <string>Test Dual</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../data/logo.qrc">
@@ -20,24 +20,24 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="QGroupBox" name="group">
+     <widget class="QGroupBox" name="group1">
       <property name="title">
-       <string>Instance</string>
+       <string>Instance 1</string>
       </property>
       <layout class="QGridLayout" name="gridLayout">
        <item row="1" column="0">
-        <widget class="VlcVideoWidget" name="video" native="true"/>
+        <widget class="VlcVideoWidget" name="video1" native="true"/>
        </item>
        <item row="4" column="0">
-        <widget class="VlcVolumeSlider" name="volume" native="true"/>
+        <widget class="VlcVolumeSlider" name="volume1" native="true"/>
        </item>
        <item row="5" column="0">
-        <widget class="VlcSeekWidget" name="seek" native="true"/>
+        <widget class="VlcSeekWidget" name="seek1" native="true"/>
        </item>
        <item row="2" column="0">
-        <widget class="QPushButton" name="pause">
+        <widget class="QPushButton" name="pause1">
          <property name="text">
-          <string>Pause</string>
+          <string>Pause 1</string>
          </property>
          <property name="checkable">
           <bool>true</bool>
@@ -45,16 +45,58 @@
         </widget>
        </item>
        <item row="3" column="0">
-        <widget class="QPushButton" name="stop">
+        <widget class="QPushButton" name="stop1">
          <property name="text">
-          <string>Stop</string>
+          <string>Stop 1</string>
          </property>
         </widget>
        </item>
        <item row="0" column="0">
-        <widget class="QPushButton" name="open">
+        <widget class="QPushButton" name="open1">
          <property name="text">
-          <string>Open</string>
+          <string>Open 1</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="group2">
+      <property name="title">
+       <string>Instance 2</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="1" column="0">
+        <widget class="VlcVideoWidget" name="video2" native="true"/>
+       </item>
+       <item row="4" column="0">
+        <widget class="VlcVolumeSlider" name="volume2" native="true"/>
+       </item>
+       <item row="5" column="0">
+        <widget class="VlcSeekWidget" name="seek2" native="true"/>
+       </item>
+       <item row="2" column="0">
+        <widget class="QPushButton" name="pause2">
+         <property name="text">
+          <string>Pause 2</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QPushButton" name="stop2">
+         <property name="text">
+          <string>Stop 2</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QPushButton" name="open2">
+         <property name="text">
+          <string>Open 2</string>
          </property>
         </widget>
        </item>
@@ -123,7 +165,7 @@
   <connection>
    <sender>actionClose</sender>
    <signal>triggered()</signal>
-   <receiver>TestPlayer</receiver>
+   <receiver>TestDual</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">

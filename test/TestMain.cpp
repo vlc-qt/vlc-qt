@@ -23,30 +23,60 @@
 #include "TestMain.h"
 #include "ui_TestMain.h"
 
+#include "TestDualInstance.h"
+#include "TestDualPlayer.h"
 #include "TestMetaManager.h"
 #include "TestPlayer.h"
 #include "TestRecorder.h"
 
 TestMain::TestMain(QWidget *parent)
     : QMainWindow(parent),
-    ui(new Ui::TestMain),
-    _testPlayer(0)
+      ui(new Ui::TestMain),
+      _testDualInstance(0),
+      _testDualPlayer(0),
+      _testPlayer(0)
 {
     ui->setupUi(this);
 
     connect(ui->actionExit, SIGNAL(triggered()), qApp, SLOT(quit()));
-    connect(ui->buttonLib, SIGNAL(clicked()), this, SLOT(libTest()));
-    connect(ui->buttonMetaManager, SIGNAL(clicked()), this, SLOT(metaManagerTest()));
-    connect(ui->buttonPlayer, SIGNAL(clicked()), this, SLOT(playerTest()));
-    connect(ui->buttonRecorder, SIGNAL(clicked()), this, SLOT(recorderTest()));
+    connect(ui->buttonDualInstance, SIGNAL(clicked()), this, SLOT(dualInstance()));
+    connect(ui->buttonDualPlayer, SIGNAL(clicked()), this, SLOT(dualPlayer()));
+    connect(ui->buttonLib, SIGNAL(clicked()), this, SLOT(lib()));
+    connect(ui->buttonMetaManager, SIGNAL(clicked()), this, SLOT(metaManager()));
+    connect(ui->buttonPlayer, SIGNAL(clicked()), this, SLOT(player()));
+    connect(ui->buttonRecorder, SIGNAL(clicked()), this, SLOT(recorder()));
 }
 
 TestMain::~TestMain()
 {
     delete ui;
+
+    delete _testDualInstance;
+    delete _testDualPlayer;
+    delete _testPlayer;
 }
 
-void TestMain::libTest()
+void TestMain::dualInstance()
+{
+    if(_testDualInstance) {
+        delete _testDualInstance;
+    }
+
+    _testDualInstance = new TestDualInstance(this);
+    _testDualInstance->show();
+}
+
+void TestMain::dualPlayer()
+{
+    if(_testDualPlayer) {
+        delete _testDualPlayer;
+    }
+
+    _testDualPlayer = new TestDualPlayer(this);
+    _testDualPlayer->show();
+}
+
+void TestMain::lib()
 {
     QStringList args = VlcCommon::args();
     std::string stdStrings[args.size()];
@@ -66,13 +96,13 @@ void TestMain::libTest()
     libvlc_media_player_play(_player);
 }
 
-void TestMain::metaManagerTest()
+void TestMain::metaManager()
 {
     TestMetaManager test;
     test.exec();
 }
 
-void TestMain::playerTest()
+void TestMain::player()
 {
     if(_testPlayer) {
         delete _testPlayer;
@@ -82,7 +112,7 @@ void TestMain::playerTest()
     _testPlayer->show();
 }
 
-void TestMain::recorderTest()
+void TestMain::recorder()
 {
     TestRecorder test;
     test.exec();

@@ -30,8 +30,8 @@
 TestMetaManager::TestMetaManager(QWidget *parent)
     : QDialog(parent),
       ui(new Ui::TestMetaManager),
-      _meta(0),
-      _media(0)
+      _media(0),
+      _meta(0)
 {
     ui->setupUi(this);
 

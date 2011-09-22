@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Meta Manager Test</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../data/logo.qrc">
+    <normaloff>:/vlc-qt/icons/48x48/vlc-qt.png</normaloff>:/vlc-qt/icons/48x48/vlc-qt.png</iconset>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="1">
     <widget class="QPushButton" name="buttonOpen">
@@ -111,6 +115,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../data/logo.qrc"/>
+ </resources>
  <connections/>
 </ui>

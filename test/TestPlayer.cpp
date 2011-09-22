@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2010 Tadej Novak <tadej@tano.si>
+* Copyright (C) 200 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -42,7 +42,9 @@ TestPlayer::TestPlayer(QWidget *parent)
     ui->volume->setVolume(50);
     ui->seek->setMediaPlayer(_player);
 
-    connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(open()));
+    connect(ui->open, SIGNAL(clicked()), this, SLOT(open()));
+    connect(ui->pause, SIGNAL(clicked()), _player, SLOT(pause()));
+    connect(ui->stop, SIGNAL(clicked()), _player, SLOT(stop()));
 }
 
 TestPlayer::~TestPlayer()

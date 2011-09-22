@@ -23,6 +23,7 @@ PROJECT(test-vlc-qt)
 ###################
 # Define the UI source files
 SET(Test_UIs
+    TestDual.ui
     TestMain.ui
     TestMetaManager.ui
     TestPlayer.ui
@@ -31,6 +32,8 @@ SET(Test_UIs
 
 # Define the MOC source files
 SET(Test_MOCs    # List of classes which Qt needs to produce MOCs for them (in order for events, signals, slots and other macros to work
+    TestDualInstance.h
+    TestDualPlayer.h
     TestMain.h
     TestMetaManager.h
     TestPlayer.h
@@ -40,11 +43,14 @@ SET(Test_MOCs    # List of classes which Qt needs to produce MOCs for them (in o
 # Define the C++ source files
 SET(Test_Srcs
     main.cpp
+    TestDualInstance.cpp
+    TestDualPlayer.cpp
     TestMain.cpp
     TestMetaManager.cpp
     TestPlayer.cpp
     TestRecorder.cpp
 )
+
 
 ################
 # Qt4 settings #
@@ -54,7 +60,6 @@ QT4_WRAP_UI(Test_UIC_Srcs ${Test_UIs})
 
 # This script runs the meta object compiler moc.
 QT4_WRAP_CPP(Test_MOC_Srcs ${Test_MOCs})
-
 
 
 #####################

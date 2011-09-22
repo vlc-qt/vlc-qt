@@ -16,47 +16,40 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_TEST_MAIN_H_
-#define VLCQT_TEST_MAIN_H_
+#ifndef VLCQT_TEST_DUALPLAYER_H_
+#define VLCQT_TEST_DUALPLAYER_H_
 
 #include <QtGui/QMainWindow>
 
-namespace Ui
-{
-    class TestMain;
+namespace Ui {
+    class TestDual;
 }
 
-class TestDualInstance;
-class TestDualPlayer;
-class TestPlayer;
+class VlcInstance;
+class VlcMedia;
+class VlcMediaPlayer;
 
-struct libvlc_instance_t;
-struct libvlc_media_player_t;
-
-class TestMain : public QMainWindow
+class TestDualPlayer : public QMainWindow
 {
 Q_OBJECT
 public:
-    TestMain(QWidget *parent = 0);
-    ~TestMain();
+    TestDualPlayer(QWidget *parent = 0);
+    ~TestDualPlayer();
 
 private slots:
-    void dualInstance();
-    void dualPlayer();
-    void lib();
-    void metaManager();
-    void player();
-    void recorder();
+    void open1();
+    void open2();
 
 private:
-    Ui::TestMain *ui;
+    Ui::TestDual *ui;
 
-    TestDualInstance *_testDualInstance;
-    TestDualPlayer *_testDualPlayer;
-    TestPlayer *_testPlayer;
+    VlcInstance *_instance;
 
-    libvlc_instance_t *_instance;
-    libvlc_media_player_t *_player;
+    VlcMedia *_media1;
+    VlcMediaPlayer *_player1;
+
+    VlcMedia *_media2;
+    VlcMediaPlayer *_player2;
 };
 
-#endif // VLCQT_TEST_MAIN_H_
+#endif // VLCQT_TEST_DUALPLAYER_H_
