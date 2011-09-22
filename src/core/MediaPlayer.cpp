@@ -110,7 +110,7 @@ bool VlcMediaPlayer::isActive() const
 
     VlcError::errmsg();
 
-    if(state == libvlc_NothingSpecial || state == libvlc_Ended || state == libvlc_Error)
+    if(state == libvlc_NothingSpecial || state == libvlc_Stopped || state == libvlc_Ended || state == libvlc_Error)
         return false;
     else
         return true;
