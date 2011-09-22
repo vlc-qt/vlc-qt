@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/vlc-qt">
+        <file>icons/24x24/vlc-qt.png</file>
+        <file>icons/24x24/vlc.png</file>
+        <file>icons/48x48/vlc-qt.png</file>
+        <file>icons/48x48/vlc.png</file>
+        <file>icons/64x64/vlc-qt.png</file>
+        <file>icons/64x64/vlc.png</file>
+        <file>icons/128x128/vlc-qt.png</file>
+        <file>icons/128x128/vlc.png</file>
+        <file>icons/256x256/vlc-qt.png</file>
+        <file>icons/256x256/vlc.png</file>
+    </qresource>
+</RCC>

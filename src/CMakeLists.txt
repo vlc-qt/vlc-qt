@@ -76,17 +76,27 @@ SET(VLCQT_HEADERS
     ${CMAKE_BINARY_DIR}/src/Config.h
 )
 
+# Define the resource files
+SET(VLCQT_RESOURCES
+    ../data/logo.qrc
+)
+
 #####################
 # Compiler settings #
 #####################
 # Include required directories
 INCLUDE(${QT_USE_FILE})
+
+# This scripts runs the resource compiler rcc.
+QT4_ADD_RESOURCES(VLCQT_RESOURCES_SRCS ${VLCQT_RESOURCES})
+
+# This script runs the meta object compiler moc.
 QT4_WRAP_CPP(VLCQT_MOCS_SRCS ${VLCQT_MOCS})
 
 INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/src/core" "${CMAKE_SOURCE_DIR}/src/gui" ${LIBVLC_INCLUDE_DIR})
 
 # Create the library.
-ADD_LIBRARY(${VLCQT_SHARED} SHARED ${VLCQT_SRCS} ${VLCQT_MOCS_SRCS})
+ADD_LIBRARY(${VLCQT_SHARED} SHARED ${VLCQT_SRCS} ${VLCQT_MOCS_SRCS} ${VLCQT_RESOURCES_SRCS})
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     SET_TARGET_PROPERTIES(${VLCQT_SHARED} PROPERTIES VERSION ${VLCQT_VERSION}
