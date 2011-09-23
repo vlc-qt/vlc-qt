@@ -28,6 +28,6 @@ HEADERS  += DemoPlayer.h
 
 FORMS    += DemoPlayer.ui
 
-LIBS     += -L/home/tadej/workspace/install/lib -lvlc-qt # Edit for your configuration
+LIBS     += -L/home/tadej/workspace/install/stable/lib -lvlc-qt # Edit for your configuration
 
-INCLUDEPATH += /home/tadej/workspace/install/include # Edit for your configuration
+INCLUDEPATH += /home/tadej/workspace/install/stable/include # Edit for your configuration

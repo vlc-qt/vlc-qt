@@ -11,18 +11,51 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Demo Player</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="VlcVideoWidget" name="video" native="true"/>
-    </item>
-    <item>
-     <widget class="VlcVolumeSlider" name="volume" native="true"/>
-    </item>
-    <item>
-     <widget class="VlcSeekWidget" name="seek" native="true"/>
+     <widget class="QGroupBox" name="group">
+      <property name="title">
+       <string>Instance</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="1" column="0">
+        <widget class="VlcVideoWidget" name="video" native="true"/>
+       </item>
+       <item row="4" column="0">
+        <widget class="VlcVolumeSlider" name="volume" native="true"/>
+       </item>
+       <item row="5" column="0">
+        <widget class="VlcSeekWidget" name="seek" native="true"/>
+       </item>
+       <item row="2" column="0">
+        <widget class="QPushButton" name="pause">
+         <property name="text">
+          <string>Pause</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QPushButton" name="stop">
+         <property name="text">
+          <string>Stop</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QPushButton" name="open">
+         <property name="text">
+          <string>Open</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -39,17 +72,11 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionOpen"/>
     <addaction name="actionClose"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionOpen">
-   <property name="text">
-    <string>Open</string>
-   </property>
-  </action>
   <action name="actionClose">
    <property name="text">
     <string>Close</string>
@@ -62,12 +89,21 @@
    <extends>QWidget</extends>
    <header location="global">vlc-qt/VideoWidget.h</header>
    <container>1</container>
+   <slots>
+    <signal>fullscreen()</signal>
+    <slot>toggleFullscreen()</slot>
+   </slots>
   </customwidget>
   <customwidget>
    <class>VlcVolumeSlider</class>
    <extends>QWidget</extends>
    <header location="global">vlc-qt/VolumeSlider.h</header>
    <container>1</container>
+   <slots>
+    <slot>mute()</slot>
+    <slot>volumeUp()</slot>
+    <slot>volumeDown()</slot>
+   </slots>
   </customwidget>
   <customwidget>
    <class>VlcSeekWidget</class>

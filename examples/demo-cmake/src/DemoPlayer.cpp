@@ -20,40 +20,52 @@
 
 #include <vlc-qt/Common.h>
 #include <vlc-qt/Instance.h>
+#include <vlc-qt/Media.h>
 #include <vlc-qt/MediaPlayer.h>
 
 #include "DemoPlayer.h"
 #include "ui_DemoPlayer.h"
 
 DemoPlayer::DemoPlayer(QWidget *parent)
-	: QMainWindow(parent),
-	ui(new Ui::DemoPlayer)
+    : QMainWindow(parent),
+    ui(new Ui::DemoPlayer),
+    _media(0)
 {
-	ui->setupUi(this);
+  ui->setupUi(this);
 
-	_instance = new VlcInstance(VlcCommon::args(), this);
-	_player = new VlcMediaPlayer(ui->video->widgetId(), this);
-	ui->volume->setVolume(50);
+  _instance = new VlcInstance(VlcCommon::args(), this);
+  _player = new VlcMediaPlayer(_instance);
+  _player->setVideoWidgetId(ui->video->widgetId());
 
-	connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(open()));
+  ui->video->setMediaPlayer(_player);
+  ui->volume->setMediaPlayer(_player);
+  ui->volume->setVolume(50);
+  ui->seek->setMediaPlayer(_player);
+
+  connect(ui->open, SIGNAL(clicked()), this, SLOT(open()));
+  connect(ui->pause, SIGNAL(clicked()), _player, SLOT(pause()));
+  connect(ui->stop, SIGNAL(clicked()), _player, SLOT(stop()));
 }
 
 DemoPlayer::~DemoPlayer()
 {
-	delete ui;
-	delete _instance;
-	delete _player;
+    delete ui;
+    delete _instance;
+    delete _media;
+    delete _player;
 }
 
 void DemoPlayer::open()
 {
-	QString file =
-		QFileDialog::getOpenFileName(this, tr("Open file or URL"),
-						QDir::homePath(),
-						tr("Multimedia files(*)"));
+    QString file =
+        QFileDialog::getOpenFileName(this, tr("Open file or URL"),
+                        QDir::homePath(),
+                        tr("Multimedia files(*)"));
 
-	if (file.isEmpty())
-		return;
+    if (file.isEmpty())
+        return;
 
-	_player->open(file);
+    _media = new VlcMedia(file, _instance);
+
+    _player->open(_media);
 }
