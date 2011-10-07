@@ -1,3 +1,8 @@
+0.6.0 (git)
+  * Multiple instances and players support
+  * Examples for new VLC-Qt based projects
+  * Various bugfixes and improvements
+
 0.5.1 (2011-06-27)
   * Pkgconfig support
   * Changes in audio/video controllers
