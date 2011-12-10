@@ -31,6 +31,12 @@ class VlcVideo;
 
 struct libvlc_media_player_t;
 
+#if defined(Q_WS_MAC)
+ typedef void * WindowId;
+#else
+ typedef WId WindowId;
+#endif
+
 /*!
     \class VlcMediaPlayer MediaPlayer.h vlc-qt/MediaPlayer.h
     \brief Media Player
@@ -119,14 +125,14 @@ public:
 
         \param id video widget ID (WId)
     */
-    void setVideoWidgetId(const WId &id);
+    void setVideoWidgetId(WindowId id);
 
     /*!
         \brief Get current video widget ID.
 
         \return current video widget ID (const WId)
     */
-    WId videoWidgetId() const;
+    WindowId videoWidgetId() const;
 
 
 public slots:
@@ -179,7 +185,7 @@ private:
     VlcAudio *_vlcAudio;
     VlcVideo *_vlcVideo;
 
-    WId _widgetId;
+    WindowId _widgetId;
 
     QTimer *_check;
 };

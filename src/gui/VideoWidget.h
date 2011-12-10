@@ -21,8 +21,12 @@
 
 #include <QtCore/QTimer>
 #include <QtGui/QWidget>
+#if defined(Q_WS_MAC)
+ #include <QMacCocoaViewContainer>
+#endif
 
-class VlcMediaPlayer;
+#include "core/MediaPlayer.h"
+
 class VlcVideo;
 
 /*!
@@ -32,7 +36,11 @@ class VlcVideo;
     This is one of VLC-Qt GUI classes.
     It provides video display and mouse control.
 */
+#if defined(Q_WS_MAC)
+class VlcVideoWidget : public QMacCocoaViewContainer
+#else
 class VlcVideoWidget : public QWidget
+#endif
 {
 Q_OBJECT
 public:
@@ -71,7 +79,11 @@ public:
         \return widget ID (const WId)
         \sa VlcMediaPlayer::VlcMediaPlayer()
     */
-    inline WId widgetId() const { return _widget->winId(); }
+#if defined(Q_WS_MAC)
+    inline WindowId widgetId() const { return cocoaView(); }
+#else
+    inline WindowId widgetId() const { return _widget->winId(); }
+#endif
 
 protected:
     void mouseDoubleClickEvent(QMouseEvent *event);

@@ -162,7 +162,7 @@ void VlcMediaPlayer::setTime(const int &time)
     VlcError::errmsg();
 }
 
-void VlcMediaPlayer::setVideoWidgetId(const WId &id)
+void VlcMediaPlayer::setVideoWidgetId(WindowId id)
 {
     _widgetId = id;
 
@@ -171,7 +171,7 @@ void VlcMediaPlayer::setVideoWidgetId(const WId &id)
 #if defined(Q_WS_WIN)
         libvlc_media_player_set_hwnd(_vlcMediaPlayer, _widgetId);
 #elif defined(Q_WS_MAC)
-        libvlc_media_player_set_agl(_vlcMediaPlayer, _widgetId);
+        libvlc_media_player_set_nsobject(_vlcMediaPlayer, _widgetId);
 #else // Q_WS_X11
         libvlc_media_player_set_xwindow(_vlcMediaPlayer, _widgetId);
 #endif // Q_WS_*
@@ -199,7 +199,7 @@ int VlcMediaPlayer::time() const
     return time;
 }
 
-WId VlcMediaPlayer::videoWidgetId() const
+WindowId VlcMediaPlayer::videoWidgetId() const
 {
     return _widgetId;
 }
