@@ -49,10 +49,10 @@ TestPlayer::TestPlayer(QWidget *parent)
 
 TestPlayer::~TestPlayer()
 {
-    delete ui;
-    delete _instance;
     delete _player;
     delete _media;
+    delete _instance;
+    delete ui;
 }
 
 void TestPlayer::open()
