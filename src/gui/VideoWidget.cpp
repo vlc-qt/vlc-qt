@@ -27,6 +27,7 @@
 #endif
 
 #include "core/Error.h"
+#include "core/MediaPlayer.h"
 #include "core/Video.h"
 #include "gui/VideoWidget.h"
 

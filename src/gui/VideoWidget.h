@@ -25,8 +25,7 @@
  #include <QMacCocoaViewContainer>
 #endif
 
-#include "core/MediaPlayer.h"
-
+class VlcMediaPlayer;
 class VlcVideo;
 
 /*!
@@ -80,9 +79,9 @@ public:
         \sa VlcMediaPlayer::VlcMediaPlayer()
     */
 #if defined(Q_WS_MAC)
-    inline WindowId widgetId() const { return cocoaView(); }
+    inline WId widgetId() const { return WId(cocoaView()); }
 #else
-    inline WindowId widgetId() const { return _widget->winId(); }
+    inline WId widgetId() const { return _widget->winId(); }
 #endif
 
 protected:
