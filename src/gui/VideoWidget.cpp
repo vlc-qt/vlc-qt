@@ -22,6 +22,10 @@
 #include <QtGui/QMouseEvent>
 #include <QtGui/QToolBar>
 
+#if defined(Q_WS_MAC)
+ #import <Cocoa/Cocoa.h>
+#endif
+
 #include "core/Error.h"
 #include "core/MediaPlayer.h"
 #include "core/Video.h"
@@ -29,8 +33,14 @@
 
 VlcVideoWidget::VlcVideoWidget(VlcMediaPlayer *player,
                                QWidget *parent)
-    : QWidget(parent),
+    :
+#if defined(Q_WS_MAC)
+      QMacCocoaViewContainer(0, parent),
+#else
+      QWidget(parent),
+#endif
       _vlcVideo(player->video()),
+      _widget(0),
       _hide(true),
       _currentRatio(""),
       _currentCrop(""),
@@ -38,12 +48,18 @@ VlcVideoWidget::VlcVideoWidget(VlcMediaPlayer *player,
 {
     setMouseTracking(true);
 
+#if defined(Q_WS_MAC)
+    NSView *video = [[NSView alloc] init];
+    setCocoaView(video);
+    [video release];
+#else
     _widget = new QWidget(this);
     _widget->setMouseTracking(true);
 
     QHBoxLayout *layout = new QHBoxLayout;
     layout->addWidget(_widget);
     setLayout(layout);
+#endif
 
     _timerMouse = new QTimer(this);
     connect(_timerMouse, SIGNAL(timeout()), this, SLOT(hideMouse()));
@@ -52,8 +68,14 @@ VlcVideoWidget::VlcVideoWidget(VlcMediaPlayer *player,
 }
 
 VlcVideoWidget::VlcVideoWidget(QWidget *parent)
-    : QWidget(parent),
+    :
+#if defined(Q_WS_MAC)
+      QMacCocoaViewContainer(0, parent),
+#else
+      QWidget(parent),
+#endif
       _vlcVideo(0),
+      _widget(0),
       _hide(true),
       _currentRatio(""),
       _currentCrop(""),
@@ -61,12 +83,18 @@ VlcVideoWidget::VlcVideoWidget(QWidget *parent)
 {
     setMouseTracking(true);
 
+#if defined(Q_WS_MAC)
+    NSView *video = [[NSView alloc] init];
+    setCocoaView(video);
+    [video release];
+#else
     _widget = new QWidget(this);
     _widget->setMouseTracking(true);
 
     QHBoxLayout *layout = new QHBoxLayout;
     layout->addWidget(_widget);
     setLayout(layout);
+#endif
 
     _timerMouse = new QTimer(this);
     connect(_timerMouse, SIGNAL(timeout()), this, SLOT(hideMouse()));
