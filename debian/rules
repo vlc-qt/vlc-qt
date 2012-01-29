@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 #############################################################################
 # VLC-Qt - Qt and libvlc connector library
-# Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+# Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 #
 # Based on sample debian/rules that uses debhelper.
 # This file was originally written by Joey Hess and Craig Small.
@@ -30,7 +30,7 @@ builddir/Makefile:
 	dh_testdir
 
 	mkdir -p builddir
-	cd builddir && cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_FLAGS="$(CFLAGS)" -DCMAKE_LD_FLAGS="-Wl,-z,defs" -DCMAKE_CXX_FLAGS="$(CXXFLAGS)" -DCMAKE_SKIP_RPATH=ON -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo
+	cd builddir && cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_FLAGS="$(CFLAGS)" -DCMAKE_LD_FLAGS="-Wl,-z,defs" -DCMAKE_CXX_FLAGS="$(CXXFLAGS)" -DCMAKE_SKIP_RPATH=ON -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo -DGITBUILD=VCS
 
 
 build: build-stamp
@@ -76,7 +76,7 @@ binary-arch: install
 	dh_strip --dbg-package=libvlc-qt0-dbg
 	dh_compress
 	dh_fixperms
-	dh_makeshlibs -plibvlc-qt0 -V'libvlc-qt0 (=0.5.2)'
+	dh_makeshlibs -plibvlc-qt0
 	dh_shlibdeps -a
 	dh_installdeb
 	dh_gencontrol

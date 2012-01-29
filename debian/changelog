@@ -1,4 +1,4 @@
-libvlc-qt (0.6~gitDATE.REV-1~natty) natty; urgency=low
+libvlc-qt (0.6.0~gitDATE.REV-1~natty) natty; urgency=low
 
   * Daily build from Git
 
