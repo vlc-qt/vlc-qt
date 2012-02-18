@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -42,7 +42,6 @@ Q_OBJECT
 public:
     /*!
         \brief VlcAudioControl constructor
-
         \param player media player (VlcMediaPlayer *)
         \param language default audio language (QString)
         \param parent audio controller's parent object (QObject *)
@@ -66,7 +65,6 @@ public:
 
     /*!
         \brief Set default audio language
-
         \param language comma separated languages (QString)
     */
     void setDefaultAudioLanguage(const QString &language);
@@ -75,7 +73,6 @@ public:
 signals:
     /*!
         \brief Signal sending actions for changing audio tracks
-
         \param QList<QAction*> list of actions
         \param Vlc::ActionsType type of actions
     */
@@ -84,7 +81,6 @@ signals:
 
     /*!
         \brief Signal sending actions for changing audio tracks
-
         \param QList<QAction*> list of actions
     */
     void audioTracks(QList<QAction *>);

@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ VlcAudioControl::VlcAudioControl(VlcMediaPlayer *player,
       _map(QMap<QString, int>()),
       _manualLanguage(false)
 {
-    if(!language.isNull() && !language.isEmpty())
+    if (!language.isNull() && !language.isEmpty())
         _preferedLanguage = language.split(" / ");
 
     _timer = new QTimer(this);
@@ -42,15 +42,13 @@ VlcAudioControl::VlcAudioControl(VlcMediaPlayer *player,
 
 VlcAudioControl::~VlcAudioControl()
 {
-    clean();
-
     delete _timer;
 }
 
 void VlcAudioControl::clean()
 {
-    for(int i = 0; i < _actionList.size(); i++)
-        delete _actionList[i];
+    foreach (QAction * action, _actionList)
+        delete action;
     _actionList.clear();
     _map.clear();
 }
@@ -62,7 +60,11 @@ void VlcAudioControl::reset()
 
 void VlcAudioControl::update()
 {
-    int id = _map.value(qobject_cast<QAction *>(sender())->text());
+    QAction *action = qobject_cast<QAction *>(sender());
+    if (!action)
+        return;
+
+    int id = _map.value(action->text());
 
     _vlcAudio->setTrack(id);
 }
@@ -71,15 +73,15 @@ void VlcAudioControl::updateActions()
 {
     clean();
 
-    if(!_vlcMediaPlayer->isActive()) {
+    if (!_vlcMediaPlayer->isActive()) {
         emit actions(_actionList, Vlc::AudioTrack);
         emit audioTracks(_actionList);
         return;
     }
 
-    if(_vlcAudio->trackCount() > 0) {
+    if (_vlcAudio->trackCount() > 0) {
         QStringList desc = _vlcAudio->trackDescription();
-        for(int i = 0; i < desc.size(); i++) {
+        for (int i = 0; i < desc.size(); i++) {
             _map.insert(desc[i], i);
             _actionList << new QAction(desc[i], this);
         }
@@ -89,14 +91,14 @@ void VlcAudioControl::updateActions()
         return;
     }
 
-    for (int i = 0; i < _actionList.size(); i++) {
-        _actionList[i]->setCheckable(true);
-        connect(_actionList[i], SIGNAL(triggered()), this, SLOT(update()));
+    foreach (QAction *action, _actionList) {
+        action->setCheckable(true);
+        connect(action, SIGNAL(triggered()), this, SLOT(update()));
 
-        if(!_manualLanguage) {
-            for(int j = 0; j < _preferedLanguage.size(); j++) {
-                if(_actionList[i]->text().contains(_preferedLanguage[j], Qt::CaseInsensitive)) {
-                    _actionList[i]->trigger();
+        if (!_manualLanguage) {
+            foreach (QString language, _preferedLanguage) {
+                if (action->text().contains(language, Qt::CaseInsensitive)) {
+                    action->trigger();
                     _manualLanguage = true;
                 }
             }

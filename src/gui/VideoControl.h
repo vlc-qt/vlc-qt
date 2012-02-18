@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -42,7 +42,6 @@ Q_OBJECT
 public:
     /*!
         \brief VideoControl constructor
-
         \param player media player (VlcMediaPlayer *)
         \param language default subtitle language (QString)
         \param parent video controller's parent object (QObject)
@@ -66,7 +65,6 @@ public:
 
     /*!
         \brief Set default subtitle language
-
         \param language comma separated languages (QString)
     */
     void setDefaultSubtitleLanguage(const QString &language);
@@ -75,7 +73,6 @@ public:
 public slots:
     /*!
         \brief Open and load subtitles from file
-
         \param subtitle full path to subtitles file
     */
     void loadSubtitle(const QString &subtitle);
@@ -84,7 +81,6 @@ public slots:
 signals:
     /*!
         \brief Signal sending actions for changing video and subititle tracks
-
         \param QList<QAction*> list of actions
         \param Vlc::ActionsType type of actions
     */
@@ -93,7 +89,6 @@ signals:
 
     /*!
         \brief Signal sending actions for changing subititle tracks
-
         \param Vlc::ActionsType type of actions
         \param QList<QAction*> list of actions
     */
@@ -101,7 +96,6 @@ signals:
 
     /*!
         \brief Signal sending actions for changing video tracks
-
         \param Vlc::ActionsType type of actions
         \param QList<QAction*> list of actions
     */
