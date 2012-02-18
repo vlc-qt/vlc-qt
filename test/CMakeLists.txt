@@ -66,7 +66,7 @@ QT4_WRAP_CPP(Test_MOC_Srcs ${Test_MOCs})
 # Compiler settings #
 #####################
 # This needs to be added in order for #include to work inside .cpp files
-INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/src" "${CMAKE_BINARY_DIR}/test")
+INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/src/core" "${CMAKE_SOURCE_DIR}/src/gui" "${CMAKE_SOURCE_DIR}/src" "${CMAKE_BINARY_DIR}/test")
 INCLUDE_DIRECTORIES(${LIBVLC_INCLUDE_DIR})
 
 # This line adds the include path of the Qt

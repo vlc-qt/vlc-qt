@@ -31,10 +31,9 @@ namespace VlcCommon
 	/*!
 		\brief Common libvlc arguments
 
-		\param global use global VLC settings or not (bool)
 		\return libvlc arguments (QStringList)
 	*/
-	QStringList args(const bool &global = false);
+	QStringList args();
 
 	/*!
 		\brief Recorder libvlc arguments

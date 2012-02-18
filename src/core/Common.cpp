@@ -18,13 +18,9 @@
 
 #include "core/Common.h"
 
-QStringList VlcCommon::args(const bool &global)
+QStringList VlcCommon::args()
 {
 	QStringList args;
-
-	if(!global) {
-		args << "--ignore-config";
-	}
 
 	args << "--intf=dummy"
 		 << "--no-media-library"

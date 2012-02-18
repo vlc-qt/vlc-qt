@@ -28,55 +28,55 @@ VlcVideo::VlcVideo(VlcMediaPlayer *player)
 
 VlcVideo::~VlcVideo() { }
 
-QString VlcVideo::aspectRatio() const
+Vlc::Ratio VlcVideo::aspectRatio() const
 {
     QString ratio = "";
-    if(_vlcMediaPlayer) {
+    if (_vlcMediaPlayer) {
         ratio = libvlc_video_get_aspect_ratio(_vlcMediaPlayer);
         VlcError::errmsg();
     }
 
-    return ratio;
+    return Vlc::Ratio(Vlc::ratio().indexOf(ratio));
 }
 
-QString VlcVideo::cropGeometry() const
+Vlc::Ratio VlcVideo::cropGeometry() const
 {
     QString crop = "";
-    if(_vlcMediaPlayer) {
+    if (_vlcMediaPlayer) {
         crop = libvlc_video_get_crop_geometry(_vlcMediaPlayer);
         VlcError::errmsg();
     }
 
-    return crop;
+    return Vlc::Ratio(Vlc::ratio().indexOf(crop));
 }
 
-void VlcVideo::setAspectRatio(const QString &ratio)
+void VlcVideo::setAspectRatio(const Vlc::Ratio &ratio)
 {
-    if(_vlcMediaPlayer) {
-        libvlc_video_set_aspect_ratio(_vlcMediaPlayer, ratio.toAscii().data());
+    if (_vlcMediaPlayer) {
+        libvlc_video_set_aspect_ratio(_vlcMediaPlayer, Vlc::ratio()[ratio].toAscii().data());
         VlcError::errmsg();
     }
 }
 
-void VlcVideo::setCropGeometry(const QString &crop)
+void VlcVideo::setCropGeometry(const Vlc::Ratio &ratio)
 {
-    if(_vlcMediaPlayer) {
-        libvlc_video_set_crop_geometry(_vlcMediaPlayer, crop.toAscii().data());
+    if (_vlcMediaPlayer) {
+        libvlc_video_set_crop_geometry(_vlcMediaPlayer, Vlc::ratio()[ratio].toAscii().data());
         VlcError::errmsg();
     }
 }
 
-void VlcVideo::setDeinterlace(const QString &filter)
+void VlcVideo::setDeinterlace(const Vlc::Deinterlacing &filter)
 {
-    if(_vlcMediaPlayer) {
-        libvlc_video_set_deinterlace(_vlcMediaPlayer, filter.toAscii().data());
+    if (_vlcMediaPlayer) {
+        libvlc_video_set_deinterlace(_vlcMediaPlayer, Vlc::deinterlacing()[filter].toAscii().data());
         VlcError::errmsg();
     }
 }
 
 void VlcVideo::setSubtitle(const int &subtitle)
 {
-    if(_vlcMediaPlayer) {
+    if (_vlcMediaPlayer) {
         libvlc_video_set_spu(_vlcMediaPlayer, subtitle);
         VlcError::errmsg();
     }
@@ -84,7 +84,7 @@ void VlcVideo::setSubtitle(const int &subtitle)
 
 void VlcVideo::setSubtitleFile(const QString &subtitle)
 {
-    if(_vlcMediaPlayer) {
+    if (_vlcMediaPlayer) {
         libvlc_video_set_subtitle_file(_vlcMediaPlayer, subtitle.toAscii().data());
         VlcError::errmsg();
     }
@@ -92,7 +92,7 @@ void VlcVideo::setSubtitleFile(const QString &subtitle)
 
 void VlcVideo::setTeletextPage(const int &page)
 {
-    if(_vlcMediaPlayer) {
+    if (_vlcMediaPlayer) {
         libvlc_video_set_teletext(_vlcMediaPlayer, page);
         VlcError::errmsg();
     }
@@ -100,7 +100,7 @@ void VlcVideo::setTeletextPage(const int &page)
 
 void VlcVideo::setTrack(const int &track)
 {
-    if(_vlcMediaPlayer) {
+    if (_vlcMediaPlayer) {
         libvlc_video_set_track(_vlcMediaPlayer, track);
         VlcError::errmsg();
     }
@@ -109,7 +109,7 @@ void VlcVideo::setTrack(const int &track)
 int VlcVideo::subtitle() const
 {
     int subtitle = -1;
-    if(_vlcMediaPlayer) {
+    if (_vlcMediaPlayer) {
         subtitle = libvlc_video_get_spu(_vlcMediaPlayer);
         VlcError::errmsg();
     }
@@ -120,7 +120,7 @@ int VlcVideo::subtitle() const
 int VlcVideo::subtitleCount() const
 {
     int count = -1;
-    if(_vlcMediaPlayer) {
+    if (_vlcMediaPlayer) {
         count = libvlc_video_get_spu_count(_vlcMediaPlayer);
         VlcError::errmsg();
     }
@@ -132,13 +132,13 @@ QStringList VlcVideo::subtitleDescription() const
 {
     QStringList descriptions;
 
-    if(_vlcMediaPlayer) {
+    if (_vlcMediaPlayer) {
         libvlc_track_description_t *desc;
         desc = libvlc_video_get_spu_description(_vlcMediaPlayer);
         VlcError::errmsg();
 
         descriptions << QString().fromUtf8(desc->psz_name);
-        if(subtitleCount() > 1) {
+        if (subtitleCount() > 1) {
             for(int i = 1; i < subtitleCount(); i++) {
                 desc = desc->p_next;
                 descriptions << QString().fromUtf8(desc->psz_name);
@@ -152,7 +152,7 @@ QStringList VlcVideo::subtitleDescription() const
 int VlcVideo::teletextPage() const
 {
     int page = -1;
-    if(_vlcMediaPlayer) {
+    if (_vlcMediaPlayer) {
         page = libvlc_video_get_teletext(_vlcMediaPlayer);
         VlcError::errmsg();
     }
@@ -162,7 +162,7 @@ int VlcVideo::teletextPage() const
 
 void VlcVideo::toggleTeletextTransparency()
 {
-    if(_vlcMediaPlayer) {
+    if (_vlcMediaPlayer) {
         libvlc_toggle_teletext(_vlcMediaPlayer);
         VlcError::errmsg();
     }
@@ -171,7 +171,7 @@ void VlcVideo::toggleTeletextTransparency()
 int VlcVideo::track() const
 {
     int track = -1;
-    if(_vlcMediaPlayer) {
+    if (_vlcMediaPlayer) {
         track = libvlc_video_get_track(_vlcMediaPlayer);
         VlcError::errmsg();
     }
@@ -182,7 +182,7 @@ int VlcVideo::track() const
 int VlcVideo::trackCount() const
 {
     int count = -1;
-    if(_vlcMediaPlayer) {
+    if (_vlcMediaPlayer) {
         count = libvlc_video_get_track_count(_vlcMediaPlayer);
         VlcError::errmsg();
     }
@@ -194,13 +194,13 @@ QStringList VlcVideo::trackDescription() const
 {
     QStringList descriptions;
 
-    if(_vlcMediaPlayer) {
+    if (_vlcMediaPlayer) {
         libvlc_track_description_t *desc;
         desc = libvlc_video_get_track_description(_vlcMediaPlayer);
         VlcError::errmsg();
 
         descriptions << QString().fromUtf8(desc->psz_name);
-        if(trackCount() > 1) {
+        if (trackCount() > 1) {
             for(int i = 1; i < trackCount(); i++) {
                 desc = desc->p_next;
                 descriptions << QString().fromUtf8(desc->psz_name);
@@ -215,13 +215,13 @@ QList<int> VlcVideo::trackIds() const
 {
     QList<int> ids;
 
-    if(_vlcMediaPlayer) {
+    if (_vlcMediaPlayer) {
         libvlc_track_description_t *desc;
         desc = libvlc_video_get_track_description(_vlcMediaPlayer);
         VlcError::errmsg();
 
         ids << desc->i_id;
-        if(trackCount() > 1) {
+        if (trackCount() > 1) {
             for(int i = 1; i < trackCount(); i++) {
                 desc = desc->p_next;
                 ids << desc->i_id;

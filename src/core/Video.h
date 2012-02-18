@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,8 @@
 #include <QtCore/QList>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
+
+#include "Enums.h"
 
 class VlcMediaPlayer;
 
@@ -53,91 +55,78 @@ public:
 
     /*!
         \brief Get current video aspect ratio.
-
-        \return current video aspect-ratio or NULL if not specified (const QString)
+        \return current video aspect-ratio or NULL if not specified (const Vlc::Ratio)
     */
-    QString aspectRatio() const;
+    Vlc::Ratio aspectRatio() const;
 
     /*!
         \brief Get current crop filter geometry.
-
-        \return current crop filter geometry or NULL if not set (const QString)
+        \return current crop filter geometry or NULL if not set (const Vlc::Ratio)
     */
-    QString cropGeometry() const;
+    Vlc::Ratio cropGeometry() const;
 
     /*!
         \brief Set new video aspect ratio.
-
-        \param ratio new video aspect-ratio or NULL to reset to default (QString)
+        \param ratio new video aspect-ratio or NULL to reset to default (Vlc::Ratio)
     */
-    void setAspectRatio(const QString &ratio);
+    void setAspectRatio(const Vlc::Ratio &ratio);
 
     /*!
         \brief Set new crop filter geometry.
-
-        \param crop new crop filter geometry or NULL to reset to default (QString)
+        \param ratio new crop filter geometry or NULL to reset to default (Vlc::Ratio)
     */
-    void setCropGeometry(const QString &crop);
+    void setCropGeometry(const Vlc::Ratio &ratio);
 
     /*!
         \brief Enable or disable deinterlace filter.
-
-        \param filter type of deinterlace filter or NULL to reset to default (QString)
+        \param filter type of deinterlace filter or NULL to reset to default (Vlc::Deinterlacing)
     */
-    void setDeinterlace(const QString &filter);
+    void setDeinterlace(const Vlc::Deinterlacing &filter);
 
     /*!
         \brief Set current video subtitle.
-
         \param subtitle new video subtitle (int)
     */
     void setSubtitle(const int &subtitle);
 
     /*!
         \brief Set new video subtitle file.
-
         \param subtitle new video subtitle file (QString)
     */
     void setSubtitleFile(const QString &subtitle);
 
     /*!
         \brief Set new teletext page to retrieve.
-
         \param page new teletext page number (int)
     */
     void setTeletextPage(const int &page);
 
     /*!
         \brief Set current video track.
-
         \param track new video track (int)
     */
     void setTrack(const int &track);
 
     /*!
         \brief Get current video subtitle.
-
         \return the number of current video subtitle, or -1 if none (const int)
     */
     int subtitle() const;
 
     /*!
         \brief Get number of available video subtitles.
-
         \return the number of available video subtitles, or -1 if unavailable (const int)
     */
     int subtitleCount() const;
 
     /*!
         \brief Get the description of available video subtitles.
-
         \return list with description of available video subtitles (const QStringList)
     */
     QStringList subtitleDescription() const;
 
     /*!
         \brief Get current teletext page requested.
-
         \return current teletext page number (int)
     */
     int teletextPage() const;
@@ -149,28 +138,24 @@ public:
 
     /*!
         \brief Get current video track.
-
         \return the number of current video track, or -1 if none (const int)
     */
     int track() const;
 
     /*!
         \brief Get number of available video tracks.
-
         \return the number of available video tracks, or -1 if unavailable (const int)
     */
     int trackCount() const;
 
     /*!
         \brief Get the description of available video tracks.
-
         \return list with description of available video tracks (const QStringList)
     */
     QStringList trackDescription() const;
 
     /*!
         \brief Get the ids of available video tracks.
-
         \return list with ids of available video tracks (const QList<int>)
     */
     QList<int> trackIds() const;

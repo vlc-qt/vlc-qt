@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -42,9 +42,12 @@ VlcVideoWidget::VlcVideoWidget(VlcMediaPlayer *player,
       _vlcVideo(player->video()),
       _widget(0),
       _hide(true),
-      _currentRatio(""),
-      _currentCrop(""),
-      _currentFilter("")
+      _defaultAspectRatio(Vlc::Original),
+      _defaultCropRatio(Vlc::Original),
+      _defaultDeinterlacing(Vlc::Disabled),
+      _currentAspectRatio(Vlc::Original),
+      _currentCropRatio(Vlc::Original),
+      _currentDeinterlacing(Vlc::Disabled)
 {
     setMouseTracking(true);
 
@@ -77,9 +80,12 @@ VlcVideoWidget::VlcVideoWidget(QWidget *parent)
       _vlcVideo(0),
       _widget(0),
       _hide(true),
-      _currentRatio(""),
-      _currentCrop(""),
-      _currentFilter("")
+      _defaultAspectRatio(Vlc::Original),
+      _defaultCropRatio(Vlc::Original),
+      _defaultDeinterlacing(Vlc::Disabled),
+      _currentAspectRatio(Vlc::Original),
+      _currentCropRatio(Vlc::Original),
+      _currentDeinterlacing(Vlc::Disabled)
 {
     setMouseTracking(true);
 
@@ -114,39 +120,43 @@ void VlcVideoWidget::setMediaPlayer(VlcMediaPlayer *player)
     _vlcVideo = player->video();
 }
 
+
 //Events:
 void VlcVideoWidget::mouseDoubleClickEvent(QMouseEvent *event)
 {
     event->ignore();
     emit fullscreen();
 }
+
 void VlcVideoWidget::mouseMoveEvent(QMouseEvent *event)
 {
     event->ignore();
-    if(isFullScreen()) {
+    if (isFullScreen()) {
         emit mouseShow(event->globalPos());
     }
 
-    if(isFullScreen() && _hide) {
+    if (isFullScreen() && _hide) {
         qApp->setOverrideCursor(Qt::ArrowCursor);
 
         _timerMouse->start(1000);
     }
 }
+
 void VlcVideoWidget::mousePressEvent(QMouseEvent *event)
 {
     event->ignore();
 
-    if(event->button() == Qt::RightButton) {
+    if (event->button() == Qt::RightButton) {
         qApp->setOverrideCursor(Qt::ArrowCursor);
         emit rightClick(event->globalPos());
     }
 }
+
 void VlcVideoWidget::wheelEvent(QWheelEvent *event)
 {
     event->ignore();
 
-    if(event->delta() > 0)
+    if (event->delta() > 0)
         emit wheel(true);
     else
         emit wheel(false);
@@ -154,7 +164,7 @@ void VlcVideoWidget::wheelEvent(QWheelEvent *event)
 
 void VlcVideoWidget::hideMouse()
 {
-    if(isFullScreen() && _hide) {
+    if (isFullScreen() && _hide) {
         qApp->setOverrideCursor(Qt::BlankCursor);
         _timerMouse->stop();
         emit mouseHide();
@@ -187,162 +197,74 @@ void VlcVideoWidget::toggleFullscreen()
     }
 }
 
-void VlcVideoWidget::setPreviousSettings()
+void VlcVideoWidget::setDefaultAspectRatio(const Vlc::Ratio &ratio)
+{
+    _defaultAspectRatio = ratio;
+}
+
+void VlcVideoWidget::setDefaultCropRatio(const Vlc::Ratio &ratio)
+{
+    _defaultCropRatio = ratio;
+}
+
+void VlcVideoWidget::setDefaultDeinterlacing(const Vlc::Deinterlacing &deinterlacing)
+{
+    _defaultDeinterlacing = deinterlacing;
+}
+
+void VlcVideoWidget::enableDefaultSettings()
+{
+    _currentAspectRatio = defaultAspectRatio();
+    _currentCropRatio = defaultCropRatio();
+    _currentDeinterlacing = defaultDeinterlacing();
+
+    enablePreviousSettings();
+}
+
+void VlcVideoWidget::enablePreviousSettings()
 {
     _timerSettings->start(500);
 }
+
 void VlcVideoWidget::applyPreviousSettings()
 {
-    if(_currentRatio.isEmpty() && _currentCrop.isEmpty() && _currentFilter.isEmpty()) {
+    if (!_currentAspectRatio && !_currentCropRatio && !_currentDeinterlacing) {
         _timerSettings->stop();
         return;
     }
 
     bool ratio = false, crop = false;
-    if(_vlcVideo->aspectRatio() != _currentRatio) {
-        _vlcVideo->setAspectRatio(_currentRatio);
+    if (_vlcVideo->aspectRatio() != _currentAspectRatio) {
+        _vlcVideo->setAspectRatio(_currentAspectRatio);
     } else {
         ratio = true;
     }
-    if(_vlcVideo->cropGeometry() != _currentCrop) {
-        _vlcVideo->setCropGeometry(_currentCrop);
+    if (_vlcVideo->cropGeometry() != _currentCropRatio) {
+        _vlcVideo->setCropGeometry(_currentCropRatio);
     } else {
         crop = true;
     }
 
-    _vlcVideo->setDeinterlace(_currentFilter);
+    _vlcVideo->setDeinterlace(_currentDeinterlacing);
 
-    if(ratio && crop)
+    if (ratio && crop)
         _timerSettings->stop();
 }
 
-// Aspect ratios
-void VlcVideoWidget::setRatioOriginal()
+void VlcVideoWidget::setAspectRatio(const Vlc::Ratio &ratio)
 {
-    _currentRatio = "";
-    _vlcVideo->setAspectRatio(_currentRatio);
-}
-void VlcVideoWidget::setRatio1_1()
-{
-    _currentRatio = "1:1";
-    _vlcVideo->setAspectRatio(_currentRatio);
-}
-void VlcVideoWidget::setRatio4_3()
-{
-    _currentRatio = "4:3";
-    _vlcVideo->setAspectRatio(_currentRatio);
-}
-void VlcVideoWidget::setRatio16_9()
-{
-    _currentRatio = "16:9";
-    _vlcVideo->setAspectRatio(_currentRatio);
-}
-void VlcVideoWidget::setRatio16_10()
-{
-    _currentRatio = "16:10";
-    _vlcVideo->setAspectRatio(_currentRatio);
-}
-void VlcVideoWidget::setRatio2_21_1()
-{
-    _currentRatio = "221:100";
-    _vlcVideo->setAspectRatio(_currentRatio);
-}
-void VlcVideoWidget::setRatio5_4()
-{
-    _currentRatio = "5:4";
-    _vlcVideo->setAspectRatio(_currentRatio);
+    _currentAspectRatio = ratio;
+    _vlcVideo->setAspectRatio(ratio);
 }
 
-// Crop geometries
-void VlcVideoWidget::setCropOriginal()
+void VlcVideoWidget::setCropRatio(const Vlc::Ratio &ratio)
 {
-    _currentCrop = "";
-    _vlcVideo->setCropGeometry(_currentCrop);
-}
-void VlcVideoWidget::setCrop16_9()
-{
-    _currentCrop = "16:9";
-    _vlcVideo->setCropGeometry(_currentCrop);
-}
-void VlcVideoWidget::setCrop16_10()
-{
-    _currentCrop = "16:10";
-    _vlcVideo->setCropGeometry(_currentCrop);
-}
-void VlcVideoWidget::setCrop1_85_1()
-{
-    _currentCrop = "185:100";
-    _vlcVideo->setCropGeometry(_currentCrop);
-}
-void VlcVideoWidget::setCrop2_21_1()
-{
-    _currentCrop = "221:100";
-    _vlcVideo->setCropGeometry(_currentCrop);
-}
-void VlcVideoWidget::setCrop2_35_1()
-{
-    _currentCrop = "235:100";
-    _vlcVideo->setCropGeometry(_currentCrop);
-}
-void VlcVideoWidget::setCrop2_39_1()
-{
-    _currentCrop = "239:100";
-    _vlcVideo->setCropGeometry(_currentCrop);
-}
-void VlcVideoWidget::setCrop5_4()
-{
-    _currentCrop = "5:4";
-    _vlcVideo->setCropGeometry(_currentCrop);
-}
-void VlcVideoWidget::setCrop5_3()
-{
-    _currentCrop = "5:3";
-    _vlcVideo->setCropGeometry(_currentCrop);
-}
-void VlcVideoWidget::setCrop4_3()
-{
-    _currentCrop = "4:3";
-    _vlcVideo->setCropGeometry(_currentCrop);
-}
-void VlcVideoWidget::setCrop1_1()
-{
-    _currentCrop = "1:1";
-    _vlcVideo->setCropGeometry(_currentCrop);
+    _currentCropRatio = ratio;
+    _vlcVideo->setCropGeometry(ratio);
 }
 
-// Deinterlace filters
-void VlcVideoWidget::setFilterDisabled()
+void VlcVideoWidget::setDeinterlacing(const Vlc::Deinterlacing &deinterlacing)
 {
-    _currentFilter = "";
-    _vlcVideo->setDeinterlace(_currentFilter);
-}
-void VlcVideoWidget::setFilterDiscard()
-{
-    _currentFilter = "discard";
-    _vlcVideo->setDeinterlace(_currentFilter);
-}
-void VlcVideoWidget::setFilterBlend()
-{
-    _currentFilter = "blend";
-    _vlcVideo->setDeinterlace(_currentFilter);
-}
-void VlcVideoWidget::setFilterMean()
-{
-    _currentFilter = "mean";
-    _vlcVideo->setDeinterlace(_currentFilter);
-}
-void VlcVideoWidget::setFilterBob()
-{
-    _currentFilter = "bob";
-    _vlcVideo->setDeinterlace(_currentFilter);
-}
-void VlcVideoWidget::setFilterLinear()
-{
-    _currentFilter = "linear";
-    _vlcVideo->setDeinterlace(_currentFilter);
-}
-void VlcVideoWidget::setFilterX()
-{
-    _currentFilter = "x";
-    _vlcVideo->setDeinterlace(_currentFilter);
+    _currentDeinterlacing = deinterlacing;
+    _vlcVideo->setDeinterlace(deinterlacing);
 }
