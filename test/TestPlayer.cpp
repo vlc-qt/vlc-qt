@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 200 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
 *****************************************************************************/
 
 #include <QtGui/QFileDialog>
+#include <QtGui/QInputDialog>
 
 #include "core/Common.h"
 #include "core/Instance.h"
@@ -42,7 +43,8 @@ TestPlayer::TestPlayer(QWidget *parent)
     ui->volume->setVolume(50);
     ui->seek->setMediaPlayer(_player);
 
-    connect(ui->open, SIGNAL(clicked()), this, SLOT(open()));
+    connect(ui->openLocal, SIGNAL(clicked()), this, SLOT(openLocal()));
+    connect(ui->openUrl, SIGNAL(clicked()), this, SLOT(openUrl()));
     connect(ui->pause, SIGNAL(clicked()), _player, SLOT(pause()));
     connect(ui->stop, SIGNAL(clicked()), _player, SLOT(stop()));
 }
@@ -55,10 +57,10 @@ TestPlayer::~TestPlayer()
     delete ui;
 }
 
-void TestPlayer::open()
+void TestPlayer::openLocal()
 {
     QString file =
-        QFileDialog::getOpenFileName(this, tr("Open file or URL"),
+        QFileDialog::getOpenFileName(this, tr("Open file"),
                         QDir::homePath(),
                         tr("Multimedia files(*)"));
 
@@ -66,6 +68,19 @@ void TestPlayer::open()
         return;
 
     _media = new VlcMedia(file, _instance);
+
+    _player->open(_media);
+}
+
+void TestPlayer::openUrl()
+{
+    QString url =
+            QInputDialog::getText(this, tr("Open Url"), tr("Enter the URL you want to play"));
+
+    if (url.isEmpty())
+        return;
+
+    _media = new VlcMedia(QUrl(url), _instance);
 
     _player->open(_media);
 }

@@ -25,16 +25,16 @@
        <string>Instance</string>
       </property>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="1" column="0">
+       <item row="2" column="0">
         <widget class="VlcVideoWidget" name="video" native="true"/>
        </item>
-       <item row="4" column="0">
+       <item row="5" column="0">
         <widget class="VlcVolumeSlider" name="volume" native="true"/>
        </item>
-       <item row="5" column="0">
+       <item row="6" column="0">
         <widget class="VlcSeekWidget" name="seek" native="true"/>
        </item>
-       <item row="2" column="0">
+       <item row="3" column="0">
         <widget class="QPushButton" name="pause">
          <property name="text">
           <string>Pause</string>
@@ -44,7 +44,7 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
+       <item row="4" column="0">
         <widget class="QPushButton" name="stop">
          <property name="text">
           <string>Stop</string>
@@ -52,9 +52,16 @@
         </widget>
        </item>
        <item row="0" column="0">
-        <widget class="QPushButton" name="open">
+        <widget class="QPushButton" name="openLocal">
          <property name="text">
-          <string>Open</string>
+          <string>Open local file</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QPushButton" name="openUrl">
+         <property name="text">
+          <string>Open URL</string>
          </property>
         </widget>
        </item>

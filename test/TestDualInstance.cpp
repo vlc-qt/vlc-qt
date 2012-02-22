@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2010 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -75,7 +75,7 @@ TestDualInstance::~TestDualInstance()
 void TestDualInstance::open1()
 {
     QString file =
-        QFileDialog::getOpenFileName(this, tr("Open file or URL"),
+        QFileDialog::getOpenFileName(this, tr("Open file"),
                         QDir::homePath(),
                         tr("Multimedia files(*)"));
 
@@ -90,7 +90,7 @@ void TestDualInstance::open1()
 void TestDualInstance::open2()
 {
     QString file =
-        QFileDialog::getOpenFileName(this, tr("Open file or URL"),
+        QFileDialog::getOpenFileName(this, tr("Open file"),
                         QDir::homePath(),
                         tr("Multimedia files(*)"));
 

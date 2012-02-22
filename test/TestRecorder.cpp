@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2010 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ TestRecorder::TestRecorder(QWidget *parent)
 
     _instance = new VlcInstance(VlcCommon::recorderArgs(file.toAscii().data()), this);
     _player = new VlcMediaPlayer(_instance);
-    _media = new VlcMedia("udp://@232.4.1.1:5002", _instance);
+    _media = new VlcMedia(QUrl("udp://@232.4.1.1:5002"), _instance);
 
     _player->open(_media);
     _player->play();

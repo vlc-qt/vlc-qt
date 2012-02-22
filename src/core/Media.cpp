@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -24,16 +24,28 @@
 #include "core/Instance.h"
 #include "core/Media.h"
 
-VlcMedia::VlcMedia(const QString &location,
+VlcMedia::VlcMedia(const QUrl &location,
                    VlcInstance *instance)
     : QObject(instance)
 {
-    // Create a new libvlc media descriptor from location
-    _vlcMedia = libvlc_media_new_location(instance->core(), location.toAscii().data());
+    // Create a new libvlc media descriptor from location (URL)
+    _vlcMedia = libvlc_media_new_location(instance->core(), location.toString().toAscii().data());
 
     VlcError::errmsg();
 
-    qDebug() << "libvlc" << "Media:" << location;
+    qDebug() << "libvlc" << "Media URL:" << location;
+}
+
+VlcMedia::VlcMedia(const QString &localPath,
+                   VlcInstance *instance)
+    : QObject(instance)
+{
+    // Create a new libvlc media descriptor from local path
+    _vlcMedia = libvlc_media_new_path(instance->core(), localPath.toAscii().data());
+
+    VlcError::errmsg();
+
+    qDebug() << "libvlc" << "Local media path:" << localPath;
 }
 
 VlcMedia::VlcMedia(libvlc_media_t *media)

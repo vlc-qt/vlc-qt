@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QString>
+#include <QtCore/QUrl>
 
 class VlcInstance;
 
@@ -40,12 +41,23 @@ public:
     /*!
         \brief VlcMedia constructor.
 
-        This constructor creates a new media instance from a media location.
+        This constructor creates a new media instance from a media URL.
 
-        \param location location of the media (QString)
+        \param location URL of the media (QUrl)
         \param instance main libvlc instance (VlcInstance *)
     */
-    VlcMedia(const QString &location,
+    VlcMedia(const QUrl &location,
+             VlcInstance *instance);
+
+    /*!
+        \brief VlcMedia constructor.
+
+        This constructor creates a new media instance from a local media path.
+
+        \param localPath local media path (QString)
+        \param instance main libvlc instance (VlcInstance *)
+    */
+    VlcMedia(const QString &localPath,
              VlcInstance *instance);
 
     /*!
@@ -64,7 +76,6 @@ public:
 
     /*!
         \brief libvlc media item
-
         \return libvlc media item (libvlc_media_t *)
     */
     libvlc_media_t *core();
