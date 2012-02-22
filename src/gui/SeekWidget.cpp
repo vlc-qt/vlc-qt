@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -99,7 +99,9 @@ void VlcSeekWidget::setMediaPlayer(VlcMediaPlayer *player)
 
 void VlcSeekWidget::updateTime()
 {
-    if(_vlcMediaPlayer->isActive()) {
+    if (_vlcMediaPlayer->state() == Vlc::Buffering ||
+       _vlcMediaPlayer->state() == Vlc::Playing ||
+       _vlcMediaPlayer->state() == Vlc::Paused) {
         int fullTime = _vlcMediaPlayer->lenght();
         int currentTime = _vlcMediaPlayer->time();
 
@@ -109,7 +111,7 @@ void VlcSeekWidget::updateTime()
         _labelElapsed->setText(QTime(0,0,0,0).addMSecs(currentTime).toString("hh:mm:ss"));
         _seek->setValue(currentTime);
 
-        if(_autoHide && fullTime == 0) {
+        if (_autoHide && !fullTime) {
             setVisible(false);
         } else {
             setVisible(true);
@@ -121,7 +123,7 @@ void VlcSeekWidget::updateTime()
         _labelElapsed->setText("00:00:00");
         _seek->setValue(0);
 
-        if(_autoHide) {
+        if (_autoHide) {
             setVisible(false);
         }
     }
@@ -129,7 +131,7 @@ void VlcSeekWidget::updateTime()
 
 void VlcSeekWidget::changeTime()
 {
-    if(!_vlcMediaPlayer->core())
+    if (!_vlcMediaPlayer->core())
         return;
 
     _labelElapsed->setText(QTime(0,0,0,0).addMSecs(_seek->value()).toString("hh:mm:ss"));

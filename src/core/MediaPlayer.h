@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,8 @@
 #include <QtCore/QString>
 #include <QtCore/QTimer>
 #include <QtGui/QWidget>
+
+#include "Enums.h"
 
 class VlcAudio;
 class VlcInstance;
@@ -58,42 +60,30 @@ public:
 
     /*!
         \brief Returns libvlc media player object.
-
         \return libvlc media player (libvlc_media_player_t *)
     */
     libvlc_media_player_t *core();
 
     /*!
         \brief Returns audio manager object.
-
         \return audio manager (VlcAudio *)
     */
     VlcAudio *audio();
 
     /*!
         \brief Returns video manager object.
-
         \return video manager (VlcVideo *)
     */
     VlcVideo *video();
 
     /*!
-        \brief Check if player is currently playing any media.
-
-        \return true if instance is playing (const bool)
-    */
-    bool isActive() const;
-
-    /*!
         \brief Get the current movie lenght (in ms).
-
         \return the movie lenght (in ms), or -1 if there is no media (const int)
     */
     int lenght() const;
 
     /*!
         \brief Open media file or stream. Any media should be playable and opened.
-
         \param media object (VlcMedia *)
     */
     void open(VlcMedia *media);
@@ -108,7 +98,6 @@ public:
 
     /*!
         \brief Get the current movie time (in ms).
-
         \return the movie time (in ms), or -1 if there is no media (const int)
     */
     int time() const;
@@ -122,8 +111,13 @@ public:
     void setVideoWidgetId(const WId &id);
 
     /*!
-        \brief Get current video widget ID.
+        \brief Get current player state.
+        \return current player state (const Vlc::State)
+    */
+    Vlc::State state() const;
 
+    /*!
+        \brief Get current video widget ID.
         \return current video widget ID (const WId)
     */
     WId videoWidgetId() const;
@@ -148,30 +142,35 @@ public slots:
 
 signals:
     /*!
-        \brief Signal sending VLC-Qt playing and buffering status
+        \brief Signal for sending current state
+        \param Vlc::State current player state
+    */
+    void currentState(const Vlc::State &);
 
+    /*!
+        \deprecated
+        \brief Signal sending VLC-Qt playing and buffering status
         \param bool true if player is playing any media
         \param bool true if player is buffering
     */
-    void playing(const bool,
-                 const bool);
+    void playing(const bool &,
+                 const bool &);
 
     /*!
-        Signal sending VLC-Qt audio status
+        \brief Signal sending VLC-Qt audio status
         \param bool true if media has audio
     */
-    void hasAudio(const bool);
+    void hasAudio(const bool &);
 
     /*!
         \brief Signal sending VLC-Qt video status
-
         \param bool true if media has video
     */
-    void hasVideo(const bool);
+    void hasVideo(const bool &);
 
 
 private slots:
-    void checkPlayingState();
+    void emitStatus();
 
 private:
     libvlc_media_player_t *_vlcMediaPlayer;

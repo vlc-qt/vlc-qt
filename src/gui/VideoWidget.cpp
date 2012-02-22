@@ -214,9 +214,7 @@ void VlcVideoWidget::setDefaultDeinterlacing(const Vlc::Deinterlacing &deinterla
 
 void VlcVideoWidget::enableDefaultSettings()
 {
-    _currentAspectRatio = defaultAspectRatio();
-    _currentCropRatio = defaultCropRatio();
-    _currentDeinterlacing = defaultDeinterlacing();
+    initDefaultSettings();
 
     enablePreviousSettings();
 }
@@ -226,13 +224,15 @@ void VlcVideoWidget::enablePreviousSettings()
     _timerSettings->start(500);
 }
 
+void VlcVideoWidget::initDefaultSettings()
+{
+    _currentAspectRatio = defaultAspectRatio();
+    _currentCropRatio = defaultCropRatio();
+    _currentDeinterlacing = defaultDeinterlacing();
+}
+
 void VlcVideoWidget::applyPreviousSettings()
 {
-    if (!_currentAspectRatio && !_currentCropRatio && !_currentDeinterlacing) {
-        _timerSettings->stop();
-        return;
-    }
-
     bool ratio = false, crop = false;
     if (_vlcVideo->aspectRatio() != _currentAspectRatio) {
         _vlcVideo->setAspectRatio(_currentAspectRatio);

@@ -54,7 +54,7 @@ void VlcVideoControl::updateSubtitleActions() {
     _actionSubList.clear();
     _mapSub.clear();
 
-    if (!_vlcMediaPlayer->isActive()) {
+    if (!(_vlcMediaPlayer->state() == Vlc::Playing || _vlcMediaPlayer->state() == Vlc::Paused)) {
         emit actions(_actionSubList, Vlc::Subtitles);
         emit subtitleTracks(_actionSubList);
         return;
@@ -121,7 +121,7 @@ void VlcVideoControl::updateVideoActions() {
     _actionVideoList.clear();
     _mapVideo.clear();
 
-    if (!_vlcMediaPlayer->isActive()) {
+    if (!(_vlcMediaPlayer->state() == Vlc::Playing || _vlcMediaPlayer->state() == Vlc::Paused)) {
         emit actions(_actionVideoList, Vlc::VideoTrack);
         emit videoTracks(_actionVideoList);
         return;

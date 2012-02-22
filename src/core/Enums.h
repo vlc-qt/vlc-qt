@@ -27,6 +27,7 @@
 */
 namespace Vlc
 {
+	// Enums
 	/*!
 		\enum ActionsType
 		\brief Actions types identifiers
@@ -70,6 +71,22 @@ namespace Vlc
 		R_1_1
 	};
 
+	/*!
+		\enum State
+		\brief VLC-Qt playback states
+	*/
+	enum State {
+		Idle,
+		Opening,
+		Buffering,
+		Playing,
+		Paused,
+		Stopped,
+		Ended,
+		Error
+	};
+
+    // Functions
     /*!
         \brief Deinterlacing modes strings
         \return deinterlacing strings (QStringList)

@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ VlcMediaPlayer::VlcMediaPlayer(VlcInstance *instance)
     _vlcVideo = new VlcVideo(this);
 
     _check = new QTimer(this);
-    connect(_check, SIGNAL(timeout()), this, SLOT(checkPlayingState()));
+    connect(_check, SIGNAL(timeout()), this, SLOT(emitStatus()));
     _check->start(300);
 }
 
@@ -71,49 +71,32 @@ VlcVideo *VlcMediaPlayer::video()
     return _vlcVideo;
 }
 
-void VlcMediaPlayer::checkPlayingState()
+void VlcMediaPlayer::emitStatus()
 {
-    if(!isActive()) {
-        emit playing(false, false);
-        emit hasAudio(false);
-        emit hasVideo(false);
-
-        return;
-    }
-
-    bool play;
-    bool buffering;
+    Vlc::State s = state();
     bool audio_count;
     bool video_count;
 
-    play = libvlc_media_player_get_state(_vlcMediaPlayer) == libvlc_Playing;
-    buffering = libvlc_media_player_get_state(_vlcMediaPlayer) == libvlc_Buffering;
-    audio_count = _vlcAudio->trackCount() > 0;
-    video_count = _vlcVideo->trackCount() > 0;
+    if (s == Vlc::Buffering ||
+        s == Vlc::Playing ||
+        s == Vlc::Paused) {
+        audio_count = _vlcAudio->trackCount() > 0;
+        video_count = _vlcVideo->trackCount() > 0;
+    } else {
+        audio_count = false;
+        video_count = false;
+    }
 
     VlcError::errmsg();
 
-    emit playing(play, buffering);
+    emit currentState(s);
     emit hasAudio(audio_count);
     emit hasVideo(video_count);
-}
 
-bool VlcMediaPlayer::isActive() const
-{
-    // It's possible that the vlc doesn't play anything
-    // so check before
-    if (!libvlc_media_player_get_media(_vlcMediaPlayer))
-        return false;
-
-    libvlc_state_t state;
-    state = libvlc_media_player_get_state(_vlcMediaPlayer);
-
-    VlcError::errmsg();
-
-    if(state == libvlc_NothingSpecial || state == libvlc_Stopped || state == libvlc_Ended || state == libvlc_Error)
-        return false;
-    else
-        return true;
+    // Deprecated
+    bool play = s == Vlc::Playing;
+    bool buffering = s == Vlc::Buffering;
+    emit playing(play, buffering);
 }
 
 int VlcMediaPlayer::lenght() const
@@ -136,7 +119,7 @@ void VlcMediaPlayer::open(VlcMedia *media)
 
 void VlcMediaPlayer::play()
 {
-    if(!_vlcMediaPlayer)
+    if (!_vlcMediaPlayer)
         return;
 
     libvlc_media_player_play(_vlcMediaPlayer);
@@ -146,10 +129,10 @@ void VlcMediaPlayer::play()
 
 void VlcMediaPlayer::pause()
 {
-    if(!_vlcMediaPlayer)
+    if (!_vlcMediaPlayer)
         return;
 
-    if(libvlc_media_player_can_pause(_vlcMediaPlayer) == 1)
+    if (libvlc_media_player_can_pause(_vlcMediaPlayer))
         libvlc_media_player_pause(_vlcMediaPlayer);
 
     VlcError::errmsg();
@@ -180,9 +163,24 @@ void VlcMediaPlayer::setVideoWidgetId(const WId &id)
     }
 }
 
+Vlc::State VlcMediaPlayer::state() const
+{
+    // It's possible that the vlc doesn't play anything
+    // so check before
+    if (!libvlc_media_player_get_media(_vlcMediaPlayer))
+        return Vlc::Idle;
+
+    libvlc_state_t state;
+    state = libvlc_media_player_get_state(_vlcMediaPlayer);
+
+    VlcError::errmsg();
+
+    return Vlc::State(state);
+}
+
 void VlcMediaPlayer::stop()
 {
-    if(!_vlcMediaPlayer)
+    if (!_vlcMediaPlayer)
         return;
 
     libvlc_media_player_stop(_vlcMediaPlayer);

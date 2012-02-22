@@ -73,7 +73,7 @@ void VlcAudioControl::updateActions()
 {
     clean();
 
-    if (!_vlcMediaPlayer->isActive()) {
+    if (!(_vlcMediaPlayer->state() == Vlc::Playing || _vlcMediaPlayer->state() == Vlc::Paused)) {
         emit actions(_actionList, Vlc::AudioTrack);
         emit audioTracks(_actionList);
         return;

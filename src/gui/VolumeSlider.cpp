@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -91,12 +91,14 @@ void VlcVolumeSlider::setMediaPlayer(VlcMediaPlayer *player)
 
 void VlcVolumeSlider::mute()
 {
-    if(!_vlcMediaPlayer->isActive())
+    if (!(_vlcMediaPlayer->state() == Vlc::Buffering ||
+        _vlcMediaPlayer->state() == Vlc::Playing ||
+        _vlcMediaPlayer->state() == Vlc::Paused))
         return;
 
     bool mute = _vlcAudio->getMute();
 
-    if(mute) {
+    if (mute) {
         _timer->start(100);
         _slider->setDisabled(false);
         _label->setDisabled(false);
@@ -118,10 +120,10 @@ void VlcVolumeSlider::setVolume(const int &volume)
 
 void VlcVolumeSlider::updateVolume()
 {
-    if(!_vlcMediaPlayer->isActive())
-        return;
-
-    _vlcAudio->setVolume(_currentVolume);
+    if (_vlcMediaPlayer->state() == Vlc::Buffering ||
+        _vlcMediaPlayer->state() == Vlc::Playing ||
+        _vlcMediaPlayer->state() == Vlc::Paused)
+        _vlcAudio->setVolume(_currentVolume);
 }
 
 int VlcVolumeSlider::volume() const
@@ -131,12 +133,12 @@ int VlcVolumeSlider::volume() const
 
 void VlcVolumeSlider::volumeControl(const bool &up)
 {
-    if(up) {
-        if(_currentVolume != 200) {
+    if (up) {
+        if (_currentVolume != 200) {
             setVolume(_currentVolume + 1);
         }
     } else {
-        if(_currentVolume != 0) {
+        if (_currentVolume != 0) {
             setVolume(_currentVolume - 1);
         }
     }

@@ -201,6 +201,13 @@ public slots:
     void enablePreviousSettings();
 
     /*!
+        \brief Initialize default video settings
+
+        Set but not apply crop, ratio, deinterlacing filter
+    */
+    void initDefaultSettings();
+
+    /*!
         \brief Set aspect ratio
         \param ratio aspect ratio (const Vlc::Ratio)
     */
