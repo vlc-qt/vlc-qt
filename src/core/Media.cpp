@@ -40,8 +40,13 @@ VlcMedia::VlcMedia(const QString &localPath,
                    VlcInstance *instance)
     : QObject(instance)
 {
+    QString path = localPath;
+#if defined(Q_WS_WIN)
+    path.replace("/", "\\");
+#endif
+
     // Create a new libvlc media descriptor from local path
-    _vlcMedia = libvlc_media_new_path(instance->core(), localPath.toAscii().data());
+    _vlcMedia = libvlc_media_new_path(instance->core(), path.toAscii().data());
 
     VlcError::errmsg();
 
