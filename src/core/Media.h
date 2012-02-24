@@ -41,23 +41,26 @@ public:
     /*!
         \brief VlcMedia constructor.
 
-        This constructor creates a new media instance from a media URL.
+        This constructor creates a new media instance from a media location.
 
-        \param location URL of the media (QUrl)
+        \param location location of the media (QString)
+        \param localFile true, if media is local file (bool)
         \param instance main libvlc instance (VlcInstance *)
     */
-    VlcMedia(const QUrl &location,
+    VlcMedia(const QString &location,
+             const bool &localFile,
              VlcInstance *instance);
 
     /*!
         \brief VlcMedia constructor.
 
-        This constructor creates a new media instance from a local media path.
+        This constructor creates a new media instance from a remote media location.
+        Provided for convenience.
 
-        \param localPath local media path (QString)
+        \param location remote location of the media (QString)
         \param instance main libvlc instance (VlcInstance *)
     */
-    VlcMedia(const QString &localPath,
+    VlcMedia(const QString &location,
              VlcInstance *instance);
 
     /*!

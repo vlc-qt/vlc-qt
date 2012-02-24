@@ -24,33 +24,40 @@
 #include "core/Instance.h"
 #include "core/Media.h"
 
-VlcMedia::VlcMedia(const QUrl &location,
+VlcMedia::VlcMedia(const QString &location,
+                   const bool &localFile,
                    VlcInstance *instance)
     : QObject(instance)
 {
-    // Create a new libvlc media descriptor from location (URL)
-    _vlcMedia = libvlc_media_new_location(instance->core(), location.toString().toAscii().data());
-
-    VlcError::errmsg();
-
-    qDebug() << "libvlc" << "Media URL:" << location;
-}
-
-VlcMedia::VlcMedia(const QString &localPath,
-                   VlcInstance *instance)
-    : QObject(instance)
-{
-    QString path = localPath;
+    QString l = location;
 #if defined(Q_WS_WIN)
-    path.replace("/", "\\");
+    if (localFile)
+        path.replace("/", "\\");
 #endif
 
-    // Create a new libvlc media descriptor from local path
-    _vlcMedia = libvlc_media_new_path(instance->core(), path.toAscii().data());
+    // Create a new libvlc media descriptor from location
+    if (localFile)
+        _vlcMedia = libvlc_media_new_path(instance->core(), l.toAscii().data());
+    else
+        _vlcMedia = libvlc_media_new_location(instance->core(), l.toAscii().data());
 
     VlcError::errmsg();
 
-    qDebug() << "libvlc" << "Local media path:" << localPath;
+    qDebug() << "libvlc" << "Media:" << location << "Local:" << localFile;
+}
+
+VlcMedia::VlcMedia(const QString &location,
+                   VlcInstance *instance)
+    : QObject(instance)
+{
+    QString l = location;
+
+    // Create a new libvlc media descriptor from location
+    _vlcMedia = libvlc_media_new_location(instance->core(), l.toAscii().data());
+
+    VlcError::errmsg();
+
+    qDebug() << "libvlc" << "Media:" << location << "Local:" << false;
 }
 
 VlcMedia::VlcMedia(libvlc_media_t *media)

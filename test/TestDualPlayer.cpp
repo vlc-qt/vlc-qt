@@ -81,7 +81,7 @@ void TestDualPlayer::open1()
     if (file.isEmpty())
         return;
 
-    _media1 = new VlcMedia(file, _instance);
+    _media1 = new VlcMedia(file, true, _instance);
 
     _player1->open(_media1);
 }
@@ -96,7 +96,7 @@ void TestDualPlayer::open2()
     if (file.isEmpty())
         return;
 
-    _media2 = new VlcMedia(file, _instance);
+    _media2 = new VlcMedia(file, true, _instance);
 
     _player2->open(_media2);
 }

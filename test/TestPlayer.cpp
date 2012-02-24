@@ -67,7 +67,7 @@ void TestPlayer::openLocal()
     if (file.isEmpty())
         return;
 
-    _media = new VlcMedia(file, _instance);
+    _media = new VlcMedia(file, true, _instance);
 
     _player->open(_media);
 }
@@ -80,7 +80,7 @@ void TestPlayer::openUrl()
     if (url.isEmpty())
         return;
 
-    _media = new VlcMedia(QUrl(url), _instance);
+    _media = new VlcMedia(url, _instance);
 
     _player->open(_media);
 }
