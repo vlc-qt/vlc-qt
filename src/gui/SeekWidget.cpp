@@ -26,9 +26,30 @@
 VlcSeekWidget::VlcSeekWidget(VlcMediaPlayer *player,
                              QWidget *parent)
     : QWidget(parent),
-      _vlcMediaPlayer(player),
-      _autoHide(false)
+      _vlcMediaPlayer(player)
 {
+    initSeekWidget();
+}
+
+VlcSeekWidget::VlcSeekWidget(QWidget *parent)
+    : QWidget(parent),
+      _vlcMediaPlayer(0)
+{
+    initSeekWidget();
+}
+
+VlcSeekWidget::~VlcSeekWidget()
+{
+    delete _seek;
+    delete _labelElapsed;
+    delete _labelFull;
+    delete _timer;
+}
+
+void VlcSeekWidget::initSeekWidget()
+{
+    _autoHide = false;
+
     _seek = new QSlider(this);
     _seek->setOrientation(Qt::Horizontal);
     _seek->setMaximum(0);
@@ -52,42 +73,6 @@ VlcSeekWidget::VlcSeekWidget(VlcMediaPlayer *player,
     connect(_seek, SIGNAL(sliderReleased()), this, SLOT(changeTime()));
 
     _timer->start(400);
-}
-
-VlcSeekWidget::VlcSeekWidget(QWidget *parent)
-    : QWidget(parent),
-      _vlcMediaPlayer(0),
-      _autoHide(false)
-{
-    _seek = new QSlider(this);
-    _seek->setOrientation(Qt::Horizontal);
-    _seek->setMaximum(0);
-    _seek->setPageStep(1000);
-
-    _labelElapsed = new QLabel(this);
-    _labelElapsed->setText("00:00:00");
-
-    _labelFull = new QLabel(this);
-    _labelFull->setText("00:00:00");
-
-    QHBoxLayout *layout = new QHBoxLayout;
-    layout->addWidget(_labelElapsed);
-    layout->addWidget(_seek);
-    layout->addWidget(_labelFull);
-    setLayout(layout);
-
-    _timer = new QTimer(this);
-
-    connect(_timer, SIGNAL(timeout()), this, SLOT(updateTime()));
-    connect(_seek, SIGNAL(sliderReleased()), this, SLOT(changeTime()));
-}
-
-VlcSeekWidget::~VlcSeekWidget()
-{
-    delete _seek;
-    delete _labelElapsed;
-    delete _labelFull;
-    delete _timer;
 }
 
 void VlcSeekWidget::setMediaPlayer(VlcMediaPlayer *player)

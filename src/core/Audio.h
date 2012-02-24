@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ public:
 
         \param player media player (VlcMediaPlayer *)
     */
-    VlcAudio(VlcMediaPlayer *player);
+    explicit VlcAudio(VlcMediaPlayer *player);
 
     /*!
         \brief VlcAudio destructor
@@ -52,56 +52,48 @@ public:
 
     /*!
         \brief Get current mute status.
-
         \return current mute status (const bool)
     */
     bool getMute() const;
 
     /*!
         \brief Set current audio level.
-
         \param volume new audio level (int)
     */
     void setVolume(const int &volume);
 
     /*!
         \brief Set current audio track.
-
         \param track new audio track (int)
     */
     void setTrack(const int &track);
 
     /*!
         \brief Toggle mute status.
-
         \return new mute status (const bool)
     */
     bool toggleMute() const;
 
     /*!
         \brief Get current audio track.
-
         \return the number of current audio track, or -1 if none (const int)
     */
     int track() const;
 
     /*!
         \brief Get number of available audio tracks.
-
         \return the number of available audio tracks, or -1 if unavailable (const int)
     */
     int trackCount() const;
 
     /*!
         \brief Get the description of available audio tracks.
-
         \return list with description of available audio tracks (const QStringList)
     */
     QStringList trackDescription() const;
 
     /*!
         \brief Get current audio level.
-
         \return current audio level, -1 if media is not playing (const int)
     */
     int volume() const;

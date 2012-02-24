@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ VlcAudio::~VlcAudio() { }
 bool VlcAudio::getMute() const
 {
     bool mute = false;
-    if(_vlcMediaPlayer) {
+    if (_vlcMediaPlayer) {
         mute = libvlc_audio_get_mute(_vlcMediaPlayer);
         VlcError::errmsg();
     }
@@ -41,9 +41,9 @@ bool VlcAudio::getMute() const
 
 void VlcAudio::setVolume(const int &volume)
 {
-    if(_vlcMediaPlayer) {
+    if (_vlcMediaPlayer) {
         // Don't change if volume is the same
-        if(volume != VlcAudio::volume()) {
+        if (volume != VlcAudio::volume()) {
             libvlc_audio_set_volume(_vlcMediaPlayer, volume);
             VlcError::errmsg();
         }
@@ -52,7 +52,7 @@ void VlcAudio::setVolume(const int &volume)
 
 void VlcAudio::setTrack(const int &track)
 {
-    if(_vlcMediaPlayer) {
+    if (_vlcMediaPlayer) {
         libvlc_audio_set_track(_vlcMediaPlayer, track);
         VlcError::errmsg();
     }
@@ -60,7 +60,7 @@ void VlcAudio::setTrack(const int &track)
 
 bool VlcAudio::toggleMute() const
 {
-    if(_vlcMediaPlayer) {
+    if (_vlcMediaPlayer) {
         libvlc_audio_toggle_mute(_vlcMediaPlayer);
         VlcError::errmsg();
     }
@@ -71,7 +71,7 @@ bool VlcAudio::toggleMute() const
 int VlcAudio::track() const
 {
     int track = -1;
-    if(_vlcMediaPlayer) {
+    if (_vlcMediaPlayer) {
         track = libvlc_audio_get_track(_vlcMediaPlayer);
         VlcError::errmsg();
     }
@@ -82,7 +82,7 @@ int VlcAudio::track() const
 int VlcAudio::trackCount() const
 {
     int count = -1;
-    if(_vlcMediaPlayer) {
+    if (_vlcMediaPlayer) {
         count = libvlc_audio_get_track_count(_vlcMediaPlayer);
         VlcError::errmsg();
     }
@@ -94,14 +94,14 @@ QStringList VlcAudio::trackDescription() const
 {
     QStringList descriptions;
 
-    if(_vlcMediaPlayer) {
+    if (_vlcMediaPlayer) {
         libvlc_track_description_t *desc;
         desc = libvlc_audio_get_track_description(_vlcMediaPlayer);
         VlcError::errmsg();
 
         descriptions << QString().fromUtf8(desc->psz_name);
-        if(trackCount() > 1) {
-            for(int i = 1; i < trackCount(); i++) {
+        if (trackCount() > 1) {
+            for (int i = 1; i < trackCount(); i++) {
                 desc = desc->p_next;
                 descriptions << QString().fromUtf8(desc->psz_name);
             }
@@ -114,7 +114,7 @@ QStringList VlcAudio::trackDescription() const
 int VlcAudio::volume() const
 {
     int volume = -1;
-    if(_vlcMediaPlayer) {
+    if (_vlcMediaPlayer) {
         libvlc_audio_get_volume(_vlcMediaPlayer);
         VlcError::errmsg();
     }

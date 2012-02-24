@@ -47,9 +47,9 @@ public:
         \param localFile true, if media is local file (bool)
         \param instance main libvlc instance (VlcInstance *)
     */
-    VlcMedia(const QString &location,
-             const bool &localFile,
-             VlcInstance *instance);
+    explicit VlcMedia(const QString &location,
+                      const bool &localFile,
+                      VlcInstance *instance);
 
     /*!
         \brief VlcMedia constructor.
@@ -60,8 +60,8 @@ public:
         \param location remote location of the media (QString)
         \param instance main libvlc instance (VlcInstance *)
     */
-    VlcMedia(const QString &location,
-             VlcInstance *instance);
+    explicit VlcMedia(const QString &location,
+                      VlcInstance *instance);
 
     /*!
         \brief VlcMedia constructor.
@@ -84,6 +84,10 @@ public:
     libvlc_media_t *core();
 
 private:
+    void initMedia(const QString &location,
+                   const bool &localFile,
+                   VlcInstance *instance);
+
     libvlc_media_t * _vlcMedia;
 
 };

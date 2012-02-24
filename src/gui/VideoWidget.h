@@ -50,14 +50,14 @@ public:
         \param player media player (VlcMediaPlayer *)
         \param parent video widget's parent GUI widget (QWidget)
     */
-    VlcVideoWidget(VlcMediaPlayer *player,
-                   QWidget *parent = 0);
+    explicit VlcVideoWidget(VlcMediaPlayer *player,
+                            QWidget *parent = 0);
 
     /*!
         \brief VlcVideoWidget constructor
         \param parent video widget's parent GUI widget (QWidget)
     */
-    VlcVideoWidget(QWidget *parent = 0);
+    explicit VlcVideoWidget(QWidget *parent = 0);
 
     /*!
         \brief VlcVideoWidget destructor
@@ -231,6 +231,8 @@ private slots:
     void applyPreviousSettings();
 
 private:
+    void initVideoWidget();
+
     VlcVideo *_vlcVideo;
 
     QWidget *_widget;

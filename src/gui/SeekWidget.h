@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -39,37 +39,25 @@ Q_OBJECT
 public:
     /*!
         \brief VlcSeekWidget constructor
-
         \param player media player (VlcMediaPlayer *)
         \param parent seek widget's parent GUI widget (QWidget *)
     */
-    VlcSeekWidget(VlcMediaPlayer *player,
-                  QWidget *parent = 0);
+    explicit VlcSeekWidget(VlcMediaPlayer *player,
+                           QWidget *parent = 0);
 
     /*!
         \brief VlcSeekWidget constructor
-
         \param parent seek widget's parent GUI widget (QWidget *)
     */
-    VlcSeekWidget(QWidget *parent = 0);
+    explicit VlcSeekWidget(QWidget *parent = 0);
 
     /*!
         \brief VlcSeekWidget destructor
     */
     ~VlcSeekWidget();
 
-
-    /*!
-        \brief Set media player if initialised without it
-
-        \param player media player (VlcMediaPlayer *)
-    */
-    void setMediaPlayer(VlcMediaPlayer *player);
-
-public:
     /*!
         \brief Get auto-hide option.
-
         \return auto-hide option status, true if enabled (bool)
     */
     bool autoHide() const { return _autoHide; }
@@ -83,11 +71,19 @@ public:
     */
     void setAutoHide(const bool &autoHide) { _autoHide = autoHide; }
 
+    /*!
+        \brief Set media player if initialised without it
+        \param player media player (VlcMediaPlayer *)
+    */
+    void setMediaPlayer(VlcMediaPlayer *player);
+
 private slots:
     void changeTime();
     void updateTime();
 
 private:
+    void initSeekWidget();
+
     VlcMediaPlayer *_vlcMediaPlayer;
 
     bool _autoHide;

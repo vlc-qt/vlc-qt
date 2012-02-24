@@ -46,9 +46,9 @@ public:
         \param language default subtitle language (QString)
         \param parent video controller's parent object (QObject)
     */
-    VlcVideoControl(VlcMediaPlayer *player,
-                    const QString &language = 0,
-                    QObject *parent = 0);
+    explicit VlcVideoControl(VlcMediaPlayer *player,
+                             const QString &language = 0,
+                             QObject *parent = 0);
 
     /*!
         \brief VideoControl destructor

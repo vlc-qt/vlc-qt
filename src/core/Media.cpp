@@ -29,35 +29,14 @@ VlcMedia::VlcMedia(const QString &location,
                    VlcInstance *instance)
     : QObject(instance)
 {
-    QString l = location;
-#if defined(Q_WS_WIN)
-    if (localFile)
-        l.replace("/", "\\");
-#endif
-
-    // Create a new libvlc media descriptor from location
-    if (localFile)
-        _vlcMedia = libvlc_media_new_path(instance->core(), l.toAscii().data());
-    else
-        _vlcMedia = libvlc_media_new_location(instance->core(), l.toAscii().data());
-
-    VlcError::errmsg();
-
-    qDebug() << "libvlc" << "Media:" << location << "Local:" << localFile;
+    initMedia(location, localFile, instance);
 }
 
 VlcMedia::VlcMedia(const QString &location,
                    VlcInstance *instance)
     : QObject(instance)
 {
-    QString l = location;
-
-    // Create a new libvlc media descriptor from location
-    _vlcMedia = libvlc_media_new_location(instance->core(), l.toAscii().data());
-
-    VlcError::errmsg();
-
-    qDebug() << "libvlc" << "Media:" << location << "Local:" << false;
+    initMedia(location, false, instance);
 }
 
 VlcMedia::VlcMedia(libvlc_media_t *media)
@@ -78,4 +57,25 @@ VlcMedia::~VlcMedia()
 libvlc_media_t *VlcMedia::core()
 {
     return _vlcMedia;
+}
+
+void VlcMedia::initMedia(const QString &location,
+                         const bool &localFile,
+                         VlcInstance *instance)
+{
+    QString l = location;
+#if defined(Q_WS_WIN)
+    if (localFile)
+        l.replace("/", "\\");
+#endif
+
+    // Create a new libvlc media descriptor from location
+    if (localFile)
+        _vlcMedia = libvlc_media_new_path(instance->core(), l.toAscii().data());
+    else
+        _vlcMedia = libvlc_media_new_location(instance->core(), l.toAscii().data());
+
+    VlcError::errmsg();
+
+    qDebug() << "libvlc" << "Media:" << location << "Local:" << localFile;
 }

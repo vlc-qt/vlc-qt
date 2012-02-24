@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -44,15 +44,14 @@ public:
         \param player media player (VlcMediaPlayer *)
         \param parent volume slider's parent GUI widget (QWidget)
     */
-    VlcVolumeSlider(VlcMediaPlayer *player,
-                    QWidget *parent = 0);
+    explicit VlcVolumeSlider(VlcMediaPlayer *player,
+                             QWidget *parent = 0);
 
     /*!
         \brief VlcVolumeSlider constructor
-
         \param parent volume slider's parent GUI widget (QWidget)
     */
-    VlcVolumeSlider(QWidget *parent = 0);
+    explicit VlcVolumeSlider(QWidget *parent = 0);
 
     /*!
         \brief VlcVolumeSlider destructor
@@ -62,7 +61,6 @@ public:
 
     /*!
         \brief Set media player if initialised without it
-
         \param player media player (VlcMediaPlayer *)
     */
     void setMediaPlayer(VlcMediaPlayer *player);
@@ -75,14 +73,12 @@ public slots:
 
     /*!
         \brief Set volume for current media
-
         \param volume number from 0 to 200 (int)
     */
     void setVolume(const int &volume);
 
     /*!
         \brief Get volume for current media
-
         \return volume number from 0 to 200 (const int)
     */
     int volume() const;
@@ -119,6 +115,8 @@ private slots:
     void updateVolume();
 
 private:
+    void initVolumeSlider();
+
     VlcAudio *_vlcAudio;
     VlcMediaPlayer *_vlcMediaPlayer;
 

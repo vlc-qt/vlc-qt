@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ class TestDualPlayer : public QMainWindow
 {
 Q_OBJECT
 public:
-    TestDualPlayer(QWidget *parent = 0);
+    explicit TestDualPlayer(QWidget *parent = 0);
     ~TestDualPlayer();
 
 private slots:

@@ -46,9 +46,9 @@ public:
         \param language default audio language (QString)
         \param parent audio controller's parent object (QObject *)
     */
-    VlcAudioControl(VlcMediaPlayer *player,
-                    const QString &language = 0,
-                    QObject *parent = 0);
+    explicit VlcAudioControl(VlcMediaPlayer *player,
+                             const QString &language = 0,
+                             QObject *parent = 0);
 
     /*!
         \brief AudioControl destructor

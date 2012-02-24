@@ -47,8 +47,7 @@ VlcAudioControl::~VlcAudioControl()
 
 void VlcAudioControl::clean()
 {
-    foreach (QAction * action, _actionList)
-        delete action;
+    qDeleteAll(_actionList);
     _actionList.clear();
     _map.clear();
 }

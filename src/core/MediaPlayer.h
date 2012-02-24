@@ -51,7 +51,7 @@ public:
 
         \param instance instance object (VlcInstance *)
     */
-    VlcMediaPlayer(VlcInstance *instance);
+    explicit VlcMediaPlayer(VlcInstance *instance);
 
     /*!
         VlcMediaPlayer destructor

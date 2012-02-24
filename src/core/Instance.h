@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -42,8 +42,8 @@ public:
         \param args libvlc arguments (QStringList)
         \param parent Instance's parent object (QObject *)
     */
-    VlcInstance(const QStringList &args,
-                QObject *parent = NULL);
+    explicit VlcInstance(const QStringList &args,
+                         QObject *parent = NULL);
 
     /*!
         VlcInstance destructor
@@ -52,35 +52,30 @@ public:
 
     /*!
         \brief Returns libvlc instance object.
-
         \return libvlc instance (libvlc_instance_t *)
     */
     libvlc_instance_t *core();
 
     /*!
         \brief VLC-QT version info
-
         \return a string containing the VLC-Qt version (QString)
     */
     static QString libVersion();
 
     /*!
         \brief libvlc version info
-
         \return a string containing the libvlc version (QString)
     */
     static QString version();
 
     /*!
         \brief libvlc compiler info
-
         \return a string containing the compiler version (QString)
     */
     static QString compiler();
 
     /*!
         \brief libvlc changeset info
-
         \return a string containing the changeset (QString)
     */
     static QString changeset();

@@ -33,7 +33,7 @@ class TestPlayer : public QMainWindow
 {
 Q_OBJECT
 public:
-    TestPlayer(QWidget *parent = 0);
+    explicit TestPlayer(QWidget *parent = 0);
     ~TestPlayer();
 
 private slots:

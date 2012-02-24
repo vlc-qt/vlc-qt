@@ -39,35 +39,9 @@ VlcVideoWidget::VlcVideoWidget(VlcMediaPlayer *player,
 #else
       QWidget(parent),
 #endif
-      _vlcVideo(player->video()),
-      _widget(0),
-      _hide(true),
-      _defaultAspectRatio(Vlc::Original),
-      _defaultCropRatio(Vlc::Original),
-      _defaultDeinterlacing(Vlc::Disabled),
-      _currentAspectRatio(Vlc::Original),
-      _currentCropRatio(Vlc::Original),
-      _currentDeinterlacing(Vlc::Disabled)
+      _vlcVideo(player->video())
 {
-    setMouseTracking(true);
-
-#if defined(Q_WS_MAC)
-    NSView *video = [[NSView alloc] init];
-    setCocoaView(video);
-    [video release];
-#else
-    _widget = new QWidget(this);
-    _widget->setMouseTracking(true);
-
-    QHBoxLayout *layout = new QHBoxLayout;
-    layout->addWidget(_widget);
-    setLayout(layout);
-#endif
-
-    _timerMouse = new QTimer(this);
-    connect(_timerMouse, SIGNAL(timeout()), this, SLOT(hideMouse()));
-    _timerSettings = new QTimer(this);
-    connect(_timerSettings, SIGNAL(timeout()), this, SLOT(applyPreviousSettings()));
+    initVideoWidget();
 }
 
 VlcVideoWidget::VlcVideoWidget(QWidget *parent)
@@ -77,17 +51,29 @@ VlcVideoWidget::VlcVideoWidget(QWidget *parent)
 #else
       QWidget(parent),
 #endif
-      _vlcVideo(0),
-      _widget(0),
-      _hide(true),
-      _defaultAspectRatio(Vlc::Original),
-      _defaultCropRatio(Vlc::Original),
-      _defaultDeinterlacing(Vlc::Disabled),
-      _currentAspectRatio(Vlc::Original),
-      _currentCropRatio(Vlc::Original),
-      _currentDeinterlacing(Vlc::Disabled)
+      _vlcVideo(0)
+{
+    initVideoWidget();
+}
+
+VlcVideoWidget::~VlcVideoWidget()
+{
+    delete _timerMouse;
+    delete _timerSettings;
+    delete _widget;
+}
+
+void VlcVideoWidget::initVideoWidget()
 {
     setMouseTracking(true);
+
+    _hide = true;
+    _defaultAspectRatio = Vlc::Original;
+    _defaultCropRatio = Vlc::Original;
+    _defaultDeinterlacing = Vlc::Disabled;
+    _currentAspectRatio = Vlc::Original;
+    _currentCropRatio = Vlc::Original;
+    _currentDeinterlacing = Vlc::Disabled;
 
 #if defined(Q_WS_MAC)
     NSView *video = [[NSView alloc] init];
@@ -108,18 +94,10 @@ VlcVideoWidget::VlcVideoWidget(QWidget *parent)
     connect(_timerSettings, SIGNAL(timeout()), this, SLOT(applyPreviousSettings()));
 }
 
-VlcVideoWidget::~VlcVideoWidget()
-{
-    delete _timerMouse;
-    delete _timerSettings;
-    delete _widget;
-}
-
 void VlcVideoWidget::setMediaPlayer(VlcMediaPlayer *player)
 {
     _vlcVideo = player->video();
 }
-
 
 //Events:
 void VlcVideoWidget::mouseDoubleClickEvent(QMouseEvent *event)

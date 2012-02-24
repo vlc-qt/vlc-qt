@@ -46,7 +46,7 @@ public:
 
         \param player media player (VlcMediaPlayer *)
     */
-    VlcVideo(VlcMediaPlayer *player);
+    explicit VlcVideo(VlcMediaPlayer *player);
 
     /*!
         \brief VlcVideo destructor

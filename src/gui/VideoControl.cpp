@@ -49,8 +49,7 @@ VlcVideoControl::~VlcVideoControl()
 }
 
 void VlcVideoControl::updateSubtitleActions() {
-    foreach (QAction *action, _actionSubList)
-        delete action;
+    qDeleteAll(_actionSubList);
     _actionSubList.clear();
     _mapSub.clear();
 
@@ -116,8 +115,7 @@ void VlcVideoControl::loadSubtitle(const QString &subtitle)
 }
 
 void VlcVideoControl::updateVideoActions() {
-    foreach (QAction *action, _actionVideoList)
-        delete action;
+    qDeleteAll(_actionVideoList);
     _actionVideoList.clear();
     _mapVideo.clear();
 

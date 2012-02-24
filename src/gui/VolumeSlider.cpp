@@ -29,6 +29,26 @@ VlcVolumeSlider::VlcVolumeSlider(VlcMediaPlayer *player,
       _vlcAudio(player->audio()),
       _vlcMediaPlayer(player)
 {
+    initVolumeSlider();
+}
+
+VlcVolumeSlider::VlcVolumeSlider(QWidget *parent)
+    : QWidget(parent),
+      _vlcAudio(0),
+      _vlcMediaPlayer(0)
+{
+    initVolumeSlider();
+}
+
+VlcVolumeSlider::~VlcVolumeSlider()
+{
+    delete _slider;
+    delete _label;
+    delete _timer;
+}
+
+void VlcVolumeSlider::initVolumeSlider()
+{
     _slider = new QSlider(this);
     _slider->setOrientation(Qt::Horizontal);
     _slider->setMaximum(200);
@@ -48,37 +68,6 @@ VlcVolumeSlider::VlcVolumeSlider(VlcMediaPlayer *player,
     connect(_slider, SIGNAL(valueChanged(int)), this, SLOT(setVolume(int)));
 
     _timer->start(100);
-}
-
-VlcVolumeSlider::VlcVolumeSlider(QWidget *parent)
-    : QWidget(parent),
-      _vlcAudio(0),
-      _vlcMediaPlayer(0)
-{
-    _slider = new QSlider(this);
-    _slider->setOrientation(Qt::Horizontal);
-    _slider->setMaximum(200);
-
-    _label = new QLabel(this);
-    _label->setMinimumWidth(20);
-    _label->setText(QString().number(0));
-
-    QHBoxLayout *layout = new QHBoxLayout;
-    layout->addWidget(_slider);
-    layout->addWidget(_label);
-    setLayout(layout);
-
-    _timer = new QTimer(this);
-
-    connect(_timer, SIGNAL(timeout()), this, SLOT(updateVolume()));
-    connect(_slider, SIGNAL(valueChanged(int)), this, SLOT(setVolume(int)));
-}
-
-VlcVolumeSlider::~VlcVolumeSlider()
-{
-    delete _slider;
-    delete _label;
-    delete _timer;
 }
 
 void VlcVolumeSlider::setMediaPlayer(VlcMediaPlayer *player)
