@@ -32,7 +32,7 @@ VlcMedia::VlcMedia(const QString &location,
     QString l = location;
 #if defined(Q_WS_WIN)
     if (localFile)
-        path.replace("/", "\\");
+        l.replace("/", "\\");
 #endif
 
     // Create a new libvlc media descriptor from location
