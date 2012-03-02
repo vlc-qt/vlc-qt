@@ -66,8 +66,6 @@ void VlcVolumeSlider::initVolumeSlider()
 
     connect(_timer, SIGNAL(timeout()), this, SLOT(updateVolume()));
     connect(_slider, SIGNAL(valueChanged(int)), this, SLOT(setVolume(int)));
-
-    _timer->start(100);
 }
 
 void VlcVolumeSlider::setMediaPlayer(VlcMediaPlayer *player)
@@ -78,16 +76,24 @@ void VlcVolumeSlider::setMediaPlayer(VlcMediaPlayer *player)
     _timer->start(100);
 }
 
-void VlcVolumeSlider::mute()
+bool VlcVolumeSlider::mute() const
+{
+    if (!(_vlcMediaPlayer->state() == Vlc::Buffering ||
+        _vlcMediaPlayer->state() == Vlc::Playing ||
+        _vlcMediaPlayer->state() == Vlc::Paused))
+        return false;
+    else
+        return _vlcAudio->getMute();
+}
+
+void VlcVolumeSlider::setMute(const bool &enabled)
 {
     if (!(_vlcMediaPlayer->state() == Vlc::Buffering ||
         _vlcMediaPlayer->state() == Vlc::Playing ||
         _vlcMediaPlayer->state() == Vlc::Paused))
         return;
 
-    bool mute = _vlcAudio->getMute();
-
-    if (mute) {
+    if (!enabled) {
         _timer->start(100);
         _slider->setDisabled(false);
         _label->setDisabled(false);
@@ -102,9 +108,14 @@ void VlcVolumeSlider::mute()
 
 void VlcVolumeSlider::setVolume(const int &volume)
 {
+    if (_currentVolume == volume)
+        return;
+
     _currentVolume = volume;
     _slider->setValue(_currentVolume);
     _label->setText(QString().number(_currentVolume));
+
+    emit newVolume(_currentVolume);
 }
 
 void VlcVolumeSlider::updateVolume()

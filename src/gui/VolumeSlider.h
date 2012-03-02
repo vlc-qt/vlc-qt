@@ -67,9 +67,16 @@ public:
 
 public slots:
     /*!
-        \brief Toggle mute
+        \brief Mute status
+        \return bool current mute status (const bool)
     */
-    void mute();
+    bool mute() const;
+
+    /*!
+        \brief Toggle mute
+        \param enabled new mutte status (bool)
+    */
+    void setMute(const bool &enabled);
 
     /*!
         \brief Set volume for current media
@@ -110,6 +117,12 @@ public slots:
     */
     void volumeUp() { volumeControl(true); }
 
+signals:
+    /*!
+        \brief Signal for new volume
+        \param int new volume (int)
+    */
+    void newVolume(const int &);
 
 private slots:
     void updateVolume();
