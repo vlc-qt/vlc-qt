@@ -23,6 +23,8 @@
 #include <QtCore/QString>
 #include <QtCore/QUrl>
 
+#include "Enums.h"
+
 class VlcInstance;
 
 struct libvlc_media_t;
@@ -82,6 +84,44 @@ public:
         \return libvlc media item (libvlc_media_t *)
     */
     libvlc_media_t *core();
+
+    /*!
+        \brief Record
+
+        Apply recording options with desired mux but without transcoding.
+
+        \param name output file name (QString)
+        \param path output path (QString)
+        \param mux output mux (Vlc::Mux)
+        \return QString output file
+    */
+    QString record(const QString &name,
+                   const QString &path,
+                   const Vlc::Mux &mux = Vlc::MP4) const;
+
+    /*!
+        \brief Record
+
+        Apply recording options with desired mux and transcoding (experimental).
+
+        \param name output file name (QString)
+        \param path output path (QString)
+        \param mux output mux (Vlc::Mux)
+        \param audioCodec audio codex (Vlc::AudioCodec)
+        \param videoCodec video codex (Vlc::VideoCodec)
+        \return QString output file
+    */
+    QString record(const QString &name,
+                   const QString &path,
+                   const Vlc::Mux &mux,
+                   const Vlc::AudioCodec &audioCodec,
+                   const Vlc::VideoCodec &videoCodec) const;
+
+    /*!
+        \brief Set media option
+        \param option media option (QString)
+    */
+    void setOption(const QString &option);
 
 private:
     void initMedia(const QString &location,

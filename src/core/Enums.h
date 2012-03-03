@@ -40,6 +40,18 @@ namespace Vlc
 	};
 
 	/*!
+		\enum AudioCodec
+		\brief Audio codecs list
+	*/
+	enum AudioCodec {
+		MPEG2Audio,
+		MP3,
+		MPEG4Audio,
+		Vorbis,
+		Flac
+	};
+
+	/*!
 		\enum Deinterlacing
 		\brief Supported deinterlacing modes
 	*/
@@ -51,6 +63,18 @@ namespace Vlc
 		Bob,
 		Linear,
 		X
+	};
+
+	/*!
+		\enum Mux
+		\brief Recording output file mux
+	*/
+	enum Mux {
+		TS,
+		PS,
+		MP4,
+		OGG,
+		AVI
 	};
 
 	/*!
@@ -86,12 +110,35 @@ namespace Vlc
 		Error
 	};
 
+	/*!
+		\enum VideoCodec
+		\brief Video codecs list
+	*/
+	enum VideoCodec {
+		MPEG2Video,
+		MPEG4Video,
+		x264,
+		Theora
+	};
+
     // Functions
+    /*!
+        \brief Audio codecs strings
+        \return audio codecs strings (QStringList)
+    */
+    QStringList audioCodec();
+
     /*!
         \brief Deinterlacing modes strings
         \return deinterlacing strings (QStringList)
     */
     QStringList deinterlacing();
+
+    /*!
+        \brief Mux strings
+        \return mux strings (QStringList)
+    */
+    QStringList mux();
 
     /*!
         \brief Aspect and crop ratios strings
@@ -104,6 +151,12 @@ namespace Vlc
         \return ratios strings (QStringList)
     */
     QStringList ratioHuman();
+
+    /*!
+        \brief Video codecs strings
+        \return video codecs strings (QStringList)
+    */
+    QStringList videoCodec();
 }
 
 #endif // VLCQT_ENUMS_H_

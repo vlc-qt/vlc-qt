@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Recorder Test</string>
+   <string>Recorder/VLM Test</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../data/logo.qrc">
@@ -25,6 +25,20 @@
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="buttonPlay">
+     <property name="text">
+      <string>Start</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="buttonStop">
+     <property name="text">
+      <string>Stop</string>
      </property>
     </widget>
    </item>

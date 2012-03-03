@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2010 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -30,18 +30,9 @@ namespace VlcCommon
 {
 	/*!
 		\brief Common libvlc arguments
-
 		\return libvlc arguments (QStringList)
 	*/
 	QStringList args();
-
-	/*!
-		\brief Recorder libvlc arguments
-
-		\param file full output file path (QString)
-		\return libvlc arguments (QStringList)
-	*/
-	QStringList recorderArgs(const QString &file);
-};
+}
 
 #endif // VLCQT_COMMON_H_

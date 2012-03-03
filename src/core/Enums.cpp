@@ -18,6 +18,18 @@
 
 #include "core/Enums.h"
 
+QStringList Vlc::audioCodec()
+{
+    QStringList list;
+    list << "mpga"
+         << "mp3"
+         << "mp4a"
+         << "vorb"
+         << "flac";
+
+    return list;
+}
+
 QStringList Vlc::deinterlacing()
 {
     QStringList list;
@@ -28,6 +40,18 @@ QStringList Vlc::deinterlacing()
          << "bob"
          << "linear"
          << "x";
+
+    return list;
+}
+
+QStringList Vlc::mux()
+{
+    QStringList list;
+    list << "ts"
+         << "ps"
+         << "mp4"
+         << "ogg"
+         << "avi";
 
     return list;
 }
@@ -64,6 +88,17 @@ QStringList Vlc::ratioHuman()
          << "5:4"
          << "5:3"
          << "1:1";
+
+    return list;
+}
+
+QStringList Vlc::videoCodec()
+{
+    QStringList list;
+    list << "mpgv"
+         << "mp4v"
+         << "x264"
+         << "theora";
 
     return list;
 }

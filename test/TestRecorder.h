@@ -36,8 +36,14 @@ public:
     explicit TestRecorder(QWidget *parent = 0);
     ~TestRecorder();
 
+private slots:
+    void play();
+    void stop();
+
 private:
     Ui::TestRecorder *ui;
+
+    QTimer *_timer;
 
     VlcInstance *_instance;
     VlcMedia *_media;

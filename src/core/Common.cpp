@@ -34,15 +34,3 @@ QStringList VlcCommon::args()
 
 	return args;
 }
-
-QStringList VlcCommon::recorderArgs(const QString &file)
-{
-	QStringList args;
-
-	args << "--demux"
-		 << "dump"
-		 << "--demuxdump-file"
-		 << file;
-
-	return args;
-}

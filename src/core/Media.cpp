@@ -79,3 +79,52 @@ void VlcMedia::initMedia(const QString &location,
 
     qDebug() << "libvlc" << "Media:" << location << "Local:" << localFile;
 }
+
+QString VlcMedia::record(const QString &name,
+                         const QString &path,
+                         const Vlc::Mux &mux) const
+{
+    QString l = path + "/" + name;
+#if defined(Q_WS_WIN)
+    if (localFile)
+        l.replace("/", "\\");
+#endif
+
+    QString option = ":sout=#std{access=file,mux=%1,dst='%2'}}";
+    option = option.arg(Vlc::mux()[mux], l + "." + Vlc::mux()[mux]);
+
+    libvlc_media_add_option(_vlcMedia, option.toAscii().data());
+
+    VlcError::errmsg();
+
+    return path + "/" + name + "." + Vlc::mux()[mux];
+}
+
+QString VlcMedia::record(const QString &name,
+                         const QString &path,
+                         const Vlc::Mux &mux,
+                         const Vlc::AudioCodec &audioCodec,
+                         const Vlc::VideoCodec &videoCodec) const
+{
+    QString l = path + "/" + name;
+#if defined(Q_WS_WIN)
+    if (localFile)
+        l.replace("/", "\\");
+#endif
+
+    QString option = ":sout=#transcode{vcodec=%1,acodec=%2,scale=1,vb=2000,deinterlace,audio-sync}:std{access=file,mux=%3,dst='%4'}}";
+    option = option.arg(Vlc::videoCodec()[videoCodec], Vlc::audioCodec()[audioCodec], Vlc::mux()[mux], l + "." + Vlc::mux()[mux]);
+
+    libvlc_media_add_option(_vlcMedia, option.toAscii().data());
+
+    VlcError::errmsg();
+
+    return path + "/" + name + "." + Vlc::mux()[mux];
+}
+
+void VlcMedia::setOption(const QString &option)
+{
+    libvlc_media_add_option(_vlcMedia, option.toAscii().data());
+
+    VlcError::errmsg();
+}
