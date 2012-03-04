@@ -1,6 +1,6 @@
 #############################################################################
 # VLC-Qt - Qt and libvlc connector library
-# Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+# Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -93,34 +93,8 @@ ENDIF(GIT)
 ADD_SUBDIRECTORY(src) 
 ADD_SUBDIRECTORY(pkgconfig)
 ADD_SUBDIRECTORY(doc)
-
-# Windows
 IF(MINGW)
-    STRING(REGEX REPLACE "\\\\" "/" LIBVLC_INCLUDE_DIR "${LIBVLC_INCLUDE_DIR}")
-
-    STRING(REGEX REPLACE "sdk/include" "" LIBVLC_BIN_DIR "${LIBVLC_INCLUDE_DIR}")
-    STRING(REGEX REPLACE "include" "bin" LIBVLC_BIN_DIR "${LIBVLC_BIN_DIR}")
-
-    SET(Qt_Libs
-        ${QT_BIN_DIR}/QtCore4.dll
-        ${QT_BIN_DIR}/QtGui4.dll
-    )
-    SET(Vlc_Libs
-        ${LIBVLC_BIN_DIR}/libvlc.dll
-        ${LIBVLC_BIN_DIR}/libvlccore.dll
-    )
-    FILE(GLOB Vlc_Plugins ${LIBVLC_BIN_DIR}/plugins/*.dll)
-ENDIF(MINGW)
-
-
-################
-# Installation #
-################
-# Windows Extra
-IF(MINGW)
-    INSTALL(FILES ${Qt_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
-    INSTALL(FILES ${Vlc_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
-    INSTALL(FILES ${Vlc_Plugins} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin/plugins")
+    ADD_SUBDIRECTORY(windows)
 ENDIF(MINGW)
 
 

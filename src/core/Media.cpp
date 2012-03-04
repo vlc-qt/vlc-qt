@@ -86,8 +86,7 @@ QString VlcMedia::record(const QString &name,
 {
     QString l = path + "/" + name;
 #if defined(Q_WS_WIN)
-    if (localFile)
-        l.replace("/", "\\");
+    l.replace("/", "\\");
 #endif
 
     QString option = ":sout=#std{access=file,mux=%1,dst='%2'}}";
@@ -108,8 +107,7 @@ QString VlcMedia::record(const QString &name,
 {
     QString l = path + "/" + name;
 #if defined(Q_WS_WIN)
-    if (localFile)
-        l.replace("/", "\\");
+    l.replace("/", "\\");
 #endif
 
     QString option = ":sout=#transcode{vcodec=%1,acodec=%2,scale=1,vb=2000,deinterlace,audio-sync}:std{access=file,mux=%3,dst='%4'}}";
