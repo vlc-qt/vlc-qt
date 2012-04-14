@@ -86,6 +86,27 @@ public:
     libvlc_media_t *core();
 
     /*!
+        \brief Current media location
+
+        \return QString media location
+    */
+    QString currentLocation() const;
+
+    /*!
+        \brief Duplicate to file
+
+        Duplicate video stream with desired mux.
+
+        \param name output file name (QString)
+        \param path output path (QString)
+        \param mux output mux (Vlc::Mux)
+        \return QString output file
+    */
+    QString duplicate(const QString &name,
+                      const QString &path,
+                      const Vlc::Mux &mux) const;
+
+    /*!
         \brief Record
 
         Apply recording options with desired mux but without transcoding.
@@ -97,7 +118,7 @@ public:
     */
     QString record(const QString &name,
                    const QString &path,
-                   const Vlc::Mux &mux = Vlc::MP4) const;
+                   const Vlc::Mux &mux) const;
 
     /*!
         \brief Record
@@ -129,7 +150,7 @@ private:
                    VlcInstance *instance);
 
     libvlc_media_t * _vlcMedia;
-
+    QString _currentLocation;
 };
 
 #endif // VLCQT_MEDIA_H_

@@ -112,7 +112,8 @@ private:
     VlcMediaPlayer *_vlcMediaPlayer;
     VlcVideo *_vlcVideo;
 
-    QTimer *_timer;
+    QTimer *_timerSubtitles;
+    QTimer *_timerVideo;
 
     QList<QAction *> _actionSubList;
     QMap<QString, int> _mapSub;

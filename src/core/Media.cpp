@@ -63,6 +63,7 @@ void VlcMedia::initMedia(const QString &location,
                          const bool &localFile,
                          VlcInstance *instance)
 {
+    _currentLocation = location;
     QString l = location;
 #if defined(Q_WS_WIN)
     if (localFile)
@@ -80,6 +81,33 @@ void VlcMedia::initMedia(const QString &location,
     qDebug() << "libvlc" << "Media:" << location << "Local:" << localFile;
 }
 
+QString VlcMedia::currentLocation() const
+{
+    return _currentLocation;
+}
+
+QString VlcMedia::duplicate(const QString &name,
+                            const QString &path,
+                            const Vlc::Mux &mux) const
+{
+    QString l = path + "/" + name;
+#if defined(Q_WS_WIN)
+    l.replace("/", "\\");
+#endif
+
+    QString option1 = ":sout-all";
+
+    QString option2 = ":sout=#duplicate{dst=display,dst=\"std{access=file,mux=%1,dst='%2'}\"}";
+    option2 = option2.arg(Vlc::mux()[mux], l + "." + Vlc::mux()[mux]);
+
+    libvlc_media_add_option(_vlcMedia, option1.toAscii().data());
+    libvlc_media_add_option(_vlcMedia, option2.toAscii().data());
+
+    VlcError::errmsg();
+
+    return path + "/" + name + "." + Vlc::mux()[mux];
+}
+
 QString VlcMedia::record(const QString &name,
                          const QString &path,
                          const Vlc::Mux &mux) const
@@ -89,10 +117,13 @@ QString VlcMedia::record(const QString &name,
     l.replace("/", "\\");
 #endif
 
-    QString option = ":sout=#std{access=file,mux=%1,dst='%2'}}";
-    option = option.arg(Vlc::mux()[mux], l + "." + Vlc::mux()[mux]);
+    QString option1 = ":sout-all";
 
-    libvlc_media_add_option(_vlcMedia, option.toAscii().data());
+    QString option2 = ":sout=#std{access=file,mux=%1,dst='%2'}}";
+    option2 = option2.arg(Vlc::mux()[mux], l + "." + Vlc::mux()[mux]);
+
+    libvlc_media_add_option(_vlcMedia, option1.toAscii().data());
+    libvlc_media_add_option(_vlcMedia, option2.toAscii().data());
 
     VlcError::errmsg();
 
@@ -110,10 +141,13 @@ QString VlcMedia::record(const QString &name,
     l.replace("/", "\\");
 #endif
 
-    QString option = ":sout=#transcode{vcodec=%1,acodec=%2,scale=1,vb=2000,deinterlace,audio-sync}:std{access=file,mux=%3,dst='%4'}}";
-    option = option.arg(Vlc::videoCodec()[videoCodec], Vlc::audioCodec()[audioCodec], Vlc::mux()[mux], l + "." + Vlc::mux()[mux]);
+    QString option1 = ":sout-all";
 
-    libvlc_media_add_option(_vlcMedia, option.toAscii().data());
+    QString option2 = ":sout=#transcode{vcodec=%1,acodec=%2,scale=1,vb=2000,deinterlace,audio-sync}:std{access=file,mux=%3,dst='%4'}}";
+    option2 = option2.arg(Vlc::videoCodec()[videoCodec], Vlc::audioCodec()[audioCodec], Vlc::mux()[mux], l + "." + Vlc::mux()[mux]);
+
+    libvlc_media_add_option(_vlcMedia, option1.toAscii().data());
+    libvlc_media_add_option(_vlcMedia, option2.toAscii().data());
 
     VlcError::errmsg();
 

@@ -36,7 +36,7 @@ VlcAudioControl::VlcAudioControl(VlcMediaPlayer *player,
     _timer = new QTimer(this);
     connect(_timer, SIGNAL(timeout()), this, SLOT(updateActions()));
 
-    _timer->start(2000);
+    _timer->start(1000);
 }
 
 
@@ -54,7 +54,7 @@ void VlcAudioControl::clean()
 
 void VlcAudioControl::reset()
 {
-    _timer->start(2000);
+    _timer->start(1000);
 }
 
 void VlcAudioControl::update()
@@ -87,6 +87,7 @@ void VlcAudioControl::updateActions()
     } else {
         emit actions(_actionList, Vlc::AudioTrack);
         emit audioTracks(_actionList);
+        _timer->start(1000);
         return;
     }
 

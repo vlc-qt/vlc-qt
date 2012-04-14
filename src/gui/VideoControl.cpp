@@ -36,16 +36,19 @@ VlcVideoControl::VlcVideoControl(VlcMediaPlayer *player,
     if (!language.isNull() && !language.isEmpty())
         _preferedLanguage = language.split(" / ");
 
-    _timer = new QTimer(this);
-    connect(_timer, SIGNAL(timeout()), this, SLOT(updateSubtitleActions()));
-    connect(_timer, SIGNAL(timeout()), this, SLOT(updateVideoActions()));
+    _timerSubtitles = new QTimer(this);
+    connect(_timerSubtitles, SIGNAL(timeout()), this, SLOT(updateSubtitleActions()));
+    _timerVideo = new QTimer(this);
+    connect(_timerVideo, SIGNAL(timeout()), this, SLOT(updateVideoActions()));
 
-    _timer->start(2000);
+    _timerSubtitles->start(1000);
+    _timerVideo->start(1000);
 }
 
 VlcVideoControl::~VlcVideoControl()
 {
-    delete _timer;
+    delete _timerSubtitles;
+    delete _timerVideo;
 }
 
 void VlcVideoControl::updateSubtitleActions() {
@@ -68,6 +71,7 @@ void VlcVideoControl::updateSubtitleActions() {
     } else {
         emit actions(_actionSubList, Vlc::Subtitles);
         emit subtitleTracks(_actionSubList);
+        _timerSubtitles->start(1000);
         return;
     }
 
@@ -90,7 +94,7 @@ void VlcVideoControl::updateSubtitleActions() {
     emit actions(_actionSubList, Vlc::Subtitles);
     emit subtitleTracks(_actionSubList);
 
-    _timer->start(60000);
+    _timerSubtitles->start(60000);
 }
 
 void VlcVideoControl::updateSubtitles()
@@ -111,7 +115,7 @@ void VlcVideoControl::loadSubtitle(const QString &subtitle)
 
     _vlcVideo->setSubtitleFile(subtitle);
 
-    _timer->start(1000);
+    _timerSubtitles->start(1000);
 }
 
 void VlcVideoControl::updateVideoActions() {
@@ -135,6 +139,7 @@ void VlcVideoControl::updateVideoActions() {
     } else {
         emit actions(_actionVideoList, Vlc::VideoTrack);
         emit videoTracks(_actionVideoList);
+        _timerVideo->start(1000);
         return;
     }
 
@@ -148,7 +153,7 @@ void VlcVideoControl::updateVideoActions() {
     emit actions(_actionVideoList, Vlc::VideoTrack);
     emit videoTracks(_actionVideoList);
 
-    _timer->start(60000);
+    _timerVideo->start(60000);
 }
 
 void VlcVideoControl::updateVideo()
@@ -164,7 +169,8 @@ void VlcVideoControl::updateVideo()
 
 void VlcVideoControl::reset()
 {
-    _timer->start(2000);
+    _timerSubtitles->start(1000);
+    _timerVideo->start(1000);
     _manualLanguage = false;
 }
 
