@@ -105,7 +105,7 @@ QString VlcMedia::duplicate(const QString &name,
 
     VlcError::errmsg();
 
-    return path + "/" + name + "." + Vlc::mux()[mux];
+    return l + "." + Vlc::mux()[mux];
 }
 
 QString VlcMedia::record(const QString &name,
@@ -127,7 +127,7 @@ QString VlcMedia::record(const QString &name,
 
     VlcError::errmsg();
 
-    return path + "/" + name + "." + Vlc::mux()[mux];
+    return l + "." + Vlc::mux()[mux];
 }
 
 QString VlcMedia::record(const QString &name,
@@ -151,7 +151,7 @@ QString VlcMedia::record(const QString &name,
 
     VlcError::errmsg();
 
-    return path + "/" + name + "." + Vlc::mux()[mux];
+    return l + "." + Vlc::mux()[mux];
 }
 
 void VlcMedia::setOption(const QString &option)
