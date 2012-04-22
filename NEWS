@@ -1,6 +1,8 @@
-0.6 (git)
+0.6.0 (git)
   * Multiple instances and players support
+  * Basic recording support
   * Examples for new VLC-Qt based projects
+  * Improved Windows support
   * Basic Mac OS X support
   * Various bugfixes and improvements
 

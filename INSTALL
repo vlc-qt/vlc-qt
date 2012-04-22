@@ -11,7 +11,7 @@ The latest version of Qt4, libvlc and CMake is prefered.
 - cmake >=2.6 (http://www.cmake.org)
 - Qt development package >=4.6 (http://qt.nokia.com)
 - libvlc-dev >=1.1 (http://www.videolan.org)
-- doxygen (www.doxygen.org, Optional for documentation)
+- doxygen (www.doxygen.org, optional for documentation)
 
 
 Runtime dependencies:
@@ -42,7 +42,7 @@ Installation
 Windows users
 =============
 Compilation process should not differ too much.
-Installation should be made manually!
+Installation will copy all necessary files to the set location.
 
 
 Troubleshooting:
