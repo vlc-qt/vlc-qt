@@ -17,7 +17,12 @@
 *****************************************************************************/
 
 #include <QtCore/QCoreApplication>
-#include <QtGui/QApplication>
+
+#if defined(Qt5)
+    #include <QtWidgets/QApplication>
+#elif defined(Qt4)
+    #include <QtGui/QApplication>
+#endif
 
 #include "TestMain.h"
 

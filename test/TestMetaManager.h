@@ -19,7 +19,11 @@
 #ifndef VLCQT_TEST_METAMANAGER_H_
 #define VLCQT_TEST_METAMANAGER_H_
 
-#include <QtGui/QDialog>
+#if defined(Qt5)
+    #include <QtWidgets/QDialog>
+#elif defined(Qt4)
+    #include <QtGui/QDialog>
+#endif
 
 class VlcInstance;
 class VlcMedia;

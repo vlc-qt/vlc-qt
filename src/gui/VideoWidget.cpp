@@ -16,14 +16,23 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include <QtGui/QApplication>
-#include <QtGui/QDesktopWidget>
-#include <QtGui/QHBoxLayout>
+#include <QtCore/QTimer>
 #include <QtGui/QMouseEvent>
-#include <QtGui/QToolBar>
+
+#if defined(Qt5)
+    #include <QtWidgets/QApplication>
+    #include <QtWidgets/QDesktopWidget>
+    #include <QtWidgets/QHBoxLayout>
+    #include <QtWidgets/QToolBar>
+#elif defined(Qt4)
+    #include <QtGui/QApplication>
+    #include <QtGui/QDesktopWidget>
+    #include <QtGui/QHBoxLayout>
+    #include <QtGui/QToolBar>
+#endif
 
 #if defined(Q_WS_MAC)
- #import <Cocoa/Cocoa.h>
+    #import <Cocoa/Cocoa.h>
 #endif
 
 #include "core/Error.h"

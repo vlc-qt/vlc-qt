@@ -17,7 +17,17 @@
 *****************************************************************************/
 
 #include <QtCore/QTime>
-#include <QtGui/QHBoxLayout>
+#include <QtCore/QTimer>
+
+#if defined(Qt5)
+    #include <QtWidgets/QHBoxLayout>
+    #include <QtWidgets/QLabel>
+    #include <QtWidgets/QSlider>
+#elif defined(Qt4)
+    #include <QtGui/QHBoxLayout>
+    #include <QtGui/QLabel>
+    #include <QtGui/QSlider>
+#endif
 
 #include "core/Error.h"
 #include "core/MediaPlayer.h"
