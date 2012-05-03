@@ -1,11 +1,16 @@
-libvlc-qt (0.6.0~gitDATE.REV-1~natty) natty; urgency=low
+libvlc-qt (0.6.0-1~precise) precise; urgency=low
 
-  * Daily build from Git
+  * Multiple instances and players support
+  * Basic recording support
+  * Examples for new VLC-Qt based projects
+  * Improved Windows support
+  * Basic Mac OS X support
+  * Various bugfixes and improvements
 
- -- Tadej Novak <tadej@tano.si>  Thu, 15 Sep 2011 00:00:00 +0200
+ -- Tadej Novak <tadej@tano.si>  Thu, 03 May 2012 20:07:36 +0200
 
 
-libvlc-qt (0.5.1-1~ppa1~natty) natty; urgency=low
+libvlc-qt (0.5.1-1~ppa1~precise) precise; urgency=low
 
   * Pkgconfig support
   * Changes in audio/video controllers
@@ -14,7 +19,7 @@ libvlc-qt (0.5.1-1~ppa1~natty) natty; urgency=low
  -- Tadej Novak <tadej@tano.si>  Mon, 27 Jun 2011 10:43:59 +0200
 
 
-libvlc-qt (0.5.0-1~ppa1~natty) natty; urgency=low
+libvlc-qt (0.5.0-1~ppa1~precise) precise; urgency=low
 
   * Auto-hide option for seek widget
   * Update for Audio and Video control classes
@@ -26,7 +31,7 @@ libvlc-qt (0.5.0-1~ppa1~natty) natty; urgency=low
  -- Tadej Novak <tadej@tano.si>  Sun, 03 Apr 2011 16:17:32 +0200
 
 
-libvlc-qt (0.4.0-1~ppa1~natty) natty; urgency=low
+libvlc-qt (0.4.0-1~ppa1~precise) precise; urgency=low
 
   * QVlc project is now separated from Tano and now known as VLC-Qt.
   * Only libvlc 1.1 and later are supported.
