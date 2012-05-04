@@ -94,7 +94,7 @@ void VlcMediaPlayer::emitStatus()
 
     emit currentState(s);
     emit hasAudio(audio_count);
-    emit hasVideo(video_count);
+    emit hasVideo(video_count && _currentWId);
 
     // Deprecated
     bool play = s == Vlc::Playing;
@@ -125,19 +125,19 @@ void VlcMediaPlayer::play()
     if (!_vlcMediaPlayer)
         return;
 
-    WId id;
-    if (_videoWidget)
-        id = _videoWidget->request();
-    else
-        id = 0;
+    if (_videoWidget) {
+        _currentWId = _videoWidget->request();
+    } else {
+        _currentWId = 0;
+    }
 
     /* Get our media instance to use our window */
 #if defined(Q_WS_WIN)
-    libvlc_media_player_set_hwnd(_vlcMediaPlayer, id);
+    libvlc_media_player_set_hwnd(_vlcMediaPlayer, _currentWId);
 #elif defined(Q_WS_MAC)
-    libvlc_media_player_set_nsobject(_vlcMediaPlayer, (void *)id);
+    libvlc_media_player_set_nsobject(_vlcMediaPlayer, (void *)_currentWId);
 #elif defined(Q_WS_X11)
-    libvlc_media_player_set_xwindow(_vlcMediaPlayer, id);
+    libvlc_media_player_set_xwindow(_vlcMediaPlayer, _currentWId);
 #endif
 
     libvlc_media_player_play(_vlcMediaPlayer);
@@ -190,6 +190,7 @@ void VlcMediaPlayer::stop()
 
     if (_videoWidget)
         _videoWidget->release();
+    _currentWId = 0;
 
     libvlc_media_player_stop(_vlcMediaPlayer);
 

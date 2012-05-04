@@ -94,6 +94,10 @@ void VlcVideoWidget::initVideoWidget()
     _layout = new QHBoxLayout(this);
     _layout->setContentsMargins(0, 0, 0, 0);
     _video = 0;
+
+    QPalette plt = palette();
+    plt.setColor(QPalette::Window, Qt::black);
+    setPalette(plt);
 #endif
 
     _timerMouse = new QTimer(this);
@@ -279,6 +283,7 @@ WId VlcVideoWidget::request()
     plt.setColor(QPalette::Window, Qt::black);
     _video->setPalette(plt);
     _video->setAutoFillBackground(true);
+    _video->setMouseTracking(true);
     /* Indicates that the widget wants to draw directly onto the screen.
        Widgets with this attribute set do not participate in composition
        management */

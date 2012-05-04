@@ -180,6 +180,7 @@ private:
     VlcVideo *_vlcVideo;
 
     VlcVideoWidget *_videoWidget;
+    WId _currentWId;
 
     QTimer *_check;
 };
