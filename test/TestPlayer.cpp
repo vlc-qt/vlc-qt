@@ -36,7 +36,7 @@ TestPlayer::TestPlayer(QWidget *parent)
 
     _instance = new VlcInstance(VlcCommon::args(), this);
     _player = new VlcMediaPlayer(_instance);
-    _player->setVideoWidgetId(ui->video->widgetId());
+    _player->setVideoWidget(ui->video);
 
     ui->video->setMediaPlayer(_player);
     ui->volume->setMediaPlayer(_player);

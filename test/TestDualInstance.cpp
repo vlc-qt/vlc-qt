@@ -36,7 +36,7 @@ TestDualInstance::TestDualInstance(QWidget *parent)
 
     _instance1 = new VlcInstance(VlcCommon::args(), this);
     _player1 = new VlcMediaPlayer(_instance1);
-    _player1->setVideoWidgetId(ui->video1->widgetId());
+    _player1->setVideoWidget(ui->video1);
 
     ui->video1->setMediaPlayer(_player1);
     ui->volume1->setMediaPlayer(_player1);
@@ -49,7 +49,7 @@ TestDualInstance::TestDualInstance(QWidget *parent)
 
     _instance2 = new VlcInstance(VlcCommon::args(), this);
     _player2 = new VlcMediaPlayer(_instance2);
-    _player2->setVideoWidgetId(ui->video2->widgetId());
+    _player2->setVideoWidget(ui->video2);
 
     ui->video2->setMediaPlayer(_player2);
     ui->volume2->setMediaPlayer(_player2);

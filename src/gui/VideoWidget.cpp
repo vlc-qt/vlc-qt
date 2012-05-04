@@ -23,7 +23,10 @@
 #include <QtGui/QToolBar>
 
 #if defined(Q_WS_MAC)
- #import <Cocoa/Cocoa.h>
+    #import <Cocoa/Cocoa.h>
+#elif defined(Q_WS_X11)
+    #include <X11/Xlib.h>
+    #include <qx11info_x11.h>
 #endif
 
 #include "core/Error.h"
@@ -37,7 +40,7 @@ VlcVideoWidget::VlcVideoWidget(VlcMediaPlayer *player,
 #if defined(Q_WS_MAC)
       QMacCocoaViewContainer(0, parent),
 #else
-      QWidget(parent),
+      QFrame(parent),
 #endif
       _vlcVideo(player->video())
 {
@@ -49,7 +52,7 @@ VlcVideoWidget::VlcVideoWidget(QWidget *parent)
 #if defined(Q_WS_MAC)
       QMacCocoaViewContainer(0, parent),
 #else
-      QWidget(parent),
+      QFrame(parent),
 #endif
       _vlcVideo(0)
 {
@@ -58,9 +61,17 @@ VlcVideoWidget::VlcVideoWidget(QWidget *parent)
 
 VlcVideoWidget::~VlcVideoWidget()
 {
+    release();
+
     delete _timerMouse;
     delete _timerSettings;
-    delete _widget;
+
+#if !defined(Q_WS_MAC)
+    delete _layout;
+
+    /* Ensure we are not leaking the video output. This would crash. */
+    Q_ASSERT(!_video);
+#endif
 }
 
 void VlcVideoWidget::initVideoWidget()
@@ -80,12 +91,9 @@ void VlcVideoWidget::initVideoWidget()
     setCocoaView(video);
     [video release];
 #else
-    _widget = new QWidget(this);
-    _widget->setMouseTracking(true);
-
-    QHBoxLayout *layout = new QHBoxLayout;
-    layout->addWidget(_widget);
-    setLayout(layout);
+    _layout = new QHBoxLayout(this);
+    _layout->setContentsMargins(0, 0, 0, 0);
+    _video = 0;
 #endif
 
     _timerMouse = new QTimer(this);
@@ -156,7 +164,7 @@ void VlcVideoWidget::toggleFullscreen()
         flags |= Qt::Window;
         flags ^= Qt::SubWindow;
         setWindowFlags(flags);
-#ifdef Q_WS_X11
+#if defined(Q_WS_X11)
         // This works around a bug with Compiz
         // as the window must be visible before we can set the state
         show();
@@ -245,4 +253,54 @@ void VlcVideoWidget::setDeinterlacing(const Vlc::Deinterlacing &deinterlacing)
 {
     _currentDeinterlacing = deinterlacing;
     _vlcVideo->setDeinterlace(deinterlacing);
+}
+
+void VlcVideoWidget::sync()
+{
+#if defined(Q_WS_X11)
+    /* Make sure the X server has processed all requests.
+     * This protects other threads using distinct connections from getting
+     * the video widget window in an inconsistent states. */
+    XSync(QX11Info::display(), False);
+#endif
+}
+
+WId VlcVideoWidget::request()
+{
+#if defined(Q_WS_MAC)
+    return WId(cocoaView());
+#endif
+
+    if (_video)
+        return 0;
+
+    _video = new QWidget();
+    QPalette plt = palette();
+    plt.setColor(QPalette::Window, Qt::black);
+    _video->setPalette(plt);
+    _video->setAutoFillBackground(true);
+    /* Indicates that the widget wants to draw directly onto the screen.
+       Widgets with this attribute set do not participate in composition
+       management */
+    /* This is currently disabled on X11 as it does not seem to improve
+     * performance, but causes the video widget to be transparent... */
+#ifndef Q_WS_X11
+    _video->setAttribute( Qt::WA_PaintOnScreen, true );
+#endif
+
+    _layout->addWidget(_video);
+
+    sync();
+    return _video->winId();
+}
+
+void VlcVideoWidget::release()
+{
+    if (_video) {
+        _layout->removeWidget(_video);
+        _video->deleteLater();
+        _video = NULL;
+    }
+
+    updateGeometry();
 }

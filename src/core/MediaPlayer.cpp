@@ -26,6 +26,7 @@
 #include "core/Media.h"
 #include "core/MediaPlayer.h"
 #include "core/Video.h"
+#include "gui/VideoWidget.h"
 
 VlcMediaPlayer::VlcMediaPlayer(VlcInstance *instance)
     : QObject(instance)
@@ -40,6 +41,8 @@ VlcMediaPlayer::VlcMediaPlayer(VlcInstance *instance)
 
     _vlcAudio = new VlcAudio(this);
     _vlcVideo = new VlcVideo(this);
+
+    _videoWidget = 0;
 
     _check = new QTimer(this);
     connect(_check, SIGNAL(timeout()), this, SLOT(emitStatus()));
@@ -122,6 +125,21 @@ void VlcMediaPlayer::play()
     if (!_vlcMediaPlayer)
         return;
 
+    WId id;
+    if (_videoWidget)
+        id = _videoWidget->request();
+    else
+        id = 0;
+
+    /* Get our media instance to use our window */
+#if defined(Q_WS_WIN)
+    libvlc_media_player_set_hwnd(_vlcMediaPlayer, id);
+#elif defined(Q_WS_MAC)
+    libvlc_media_player_set_nsobject(_vlcMediaPlayer, (void *)id);
+#elif defined(Q_WS_X11)
+    libvlc_media_player_set_xwindow(_vlcMediaPlayer, id);
+#endif
+
     libvlc_media_player_play(_vlcMediaPlayer);
 
     VlcError::errmsg();
@@ -145,22 +163,9 @@ void VlcMediaPlayer::setTime(const int &time)
     VlcError::errmsg();
 }
 
-void VlcMediaPlayer::setVideoWidgetId(const WId &id)
+void VlcMediaPlayer::setVideoWidget(VlcVideoWidget *widget)
 {
-    _widgetId = id;
-
-    /* Get our media instance to use our window */
-    if (_vlcMediaPlayer) {
-#if defined(Q_WS_WIN)
-        libvlc_media_player_set_hwnd(_vlcMediaPlayer, _widgetId);
-#elif defined(Q_WS_MAC)
-        libvlc_media_player_set_nsobject(_vlcMediaPlayer, (void *)_widgetId);
-#else // Q_WS_X11
-        libvlc_media_player_set_xwindow(_vlcMediaPlayer, _widgetId);
-#endif // Q_WS_*
-
-        VlcError::errmsg();
-    }
+    _videoWidget = widget;
 }
 
 Vlc::State VlcMediaPlayer::state() const
@@ -183,6 +188,9 @@ void VlcMediaPlayer::stop()
     if (!_vlcMediaPlayer)
         return;
 
+    if (_videoWidget)
+        _videoWidget->release();
+
     libvlc_media_player_stop(_vlcMediaPlayer);
 
     VlcError::errmsg();
@@ -197,7 +205,7 @@ int VlcMediaPlayer::time() const
     return time;
 }
 
-WId VlcMediaPlayer::videoWidgetId() const
+VlcVideoWidget *VlcMediaPlayer::videoWidget()
 {
-    return _widgetId;
+    return _videoWidget;
 }

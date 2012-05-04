@@ -35,7 +35,7 @@ DemoPlayer::DemoPlayer(QWidget *parent)
 
   _instance = new VlcInstance(VlcCommon::args(), this);
   _player = new VlcMediaPlayer(_instance);
-  _player->setVideoWidgetId(ui->video->widgetId());
+  _player->setVideoWidget(ui->video);
 
   ui->video->setMediaPlayer(_player);
   ui->volume->setMediaPlayer(_player);
@@ -50,9 +50,9 @@ DemoPlayer::DemoPlayer(QWidget *parent)
 DemoPlayer::~DemoPlayer()
 {
     delete ui;
-    delete _instance;
     delete _media;
     delete _player;
+    delete _instance;
 }
 
 void DemoPlayer::open()

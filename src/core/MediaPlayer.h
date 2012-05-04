@@ -30,6 +30,7 @@ class VlcAudio;
 class VlcInstance;
 class VlcMedia;
 class VlcVideo;
+class VlcVideoWidget;
 
 struct libvlc_media_player_t;
 
@@ -102,13 +103,13 @@ public:
     */
     int time() const;
 
-    /*! \brief Set video widget ID.
+    /*! \brief Set video widget.
 
-        Set video widget ID to be able to play video inside Qt interface.
+        Set video widget to be able to play video inside Qt interface.
 
-        \param id video widget ID (WId)
+        \param widget video widget (VlcVideoWidget *)
     */
-    void setVideoWidgetId(const WId &id);
+    void setVideoWidget(VlcVideoWidget *widget);
 
     /*!
         \brief Get current player state.
@@ -117,10 +118,10 @@ public:
     Vlc::State state() const;
 
     /*!
-        \brief Get current video widget ID.
-        \return current video widget ID (const WId)
+        \brief Get current video widget.
+        \return current video widget (VlcVideoWidget *)
     */
-    WId videoWidgetId() const;
+    VlcVideoWidget *videoWidget();
 
 
 public slots:
@@ -178,7 +179,7 @@ private:
     VlcAudio *_vlcAudio;
     VlcVideo *_vlcVideo;
 
-    WId _widgetId;
+    VlcVideoWidget *_videoWidget;
 
     QTimer *_check;
 };

@@ -20,9 +20,9 @@
 #define VLCQT_VIDEOWIDGET_H_
 
 #include <QtCore/QTimer>
-#include <QtGui/QWidget>
+#include <QtGui/QFrame>
 #if defined(Q_WS_MAC)
- #include <QMacCocoaViewContainer>
+    #include <QMacCocoaViewContainer>
 #endif
 
 #include "Enums.h"
@@ -40,7 +40,7 @@ class VlcVideo;
 #if defined(Q_WS_MAC)
 class VlcVideoWidget : public QMacCocoaViewContainer
 #else
-class VlcVideoWidget : public QWidget
+class VlcVideoWidget : public QFrame
 #endif
 {
 Q_OBJECT
@@ -125,15 +125,18 @@ public:
     void setMediaPlayer(VlcMediaPlayer *player);
 
     /*!
-        \brief Get unique video widget ID to set it in the instance
-        \return widget ID (const WId)
+        \brief Request new video frame.
+
+        Request new video frame and its widget ID to set it in the instance.
+        \return widget ID (WId)
         \sa VlcMediaPlayer::VlcMediaPlayer()
     */
-#if defined(Q_WS_MAC)
-    inline WId widgetId() const { return WId(cocoaView()); }
-#else
-    inline WId widgetId() const { return _widget->winId(); }
-#endif
+    WId request();
+
+    /*!
+        \brief Release current video frame.
+    */
+    void release();
 
 protected:
     void mouseDoubleClickEvent(QMouseEvent *event);
@@ -232,10 +235,15 @@ private slots:
 
 private:
     void initVideoWidget();
+    void sync();
 
     VlcVideo *_vlcVideo;
 
-    QWidget *_widget;
+#if !defined(Q_WS_MAC)
+    QWidget *_video;
+    QLayout *_layout;
+#endif
+
     QTimer *_timerMouse;
     QTimer *_timerSettings;
 
