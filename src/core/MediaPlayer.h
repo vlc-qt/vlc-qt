@@ -22,7 +22,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QString>
 #include <QtCore/QTimer>
-#include <QtGui/QWidget>
+
+#include <QWidget>
 
 #include "Enums.h"
 

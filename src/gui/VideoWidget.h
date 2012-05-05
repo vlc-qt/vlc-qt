@@ -20,12 +20,16 @@
 #define VLCQT_VIDEOWIDGET_H_
 
 #include <QtCore/QTimer>
-#include <QtGui/QFrame>
+
+#include <QFrame>
+
 #if defined(Q_WS_MAC)
     #include <QMacCocoaViewContainer>
 #endif
 
 #include "Enums.h"
+
+class QTimer;
 
 class VlcMediaPlayer;
 class VlcVideo;

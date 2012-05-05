@@ -16,8 +16,13 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include <QtGui/QFileDialog>
-#include <QtGui/QInputDialog>
+#if defined(Qt5)
+    #include <QtWidgets/QFileDialog>
+    #include <QtWidgets/QInputDialog>
+#elif defined(Qt4)
+    #include <QtGui/QFileDialog>
+    #include <QtGui/QInputDialog>
+#endif
 
 #include "core/Common.h"
 #include "core/Instance.h"

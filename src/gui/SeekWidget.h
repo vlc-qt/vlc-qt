@@ -19,10 +19,11 @@
 #ifndef VLCQT_SEEKWIDGET_H_
 #define VLCQT_SEEKWIDGET_H_
 
-#include <QtCore/QTimer>
-#include <QtGui/QLabel>
-#include <QtGui/QSlider>
-#include <QtGui/QWidget>
+#include <QWidget>
+
+class QLabel;
+class QSlider;
+class QTimer;
 
 class VlcMediaPlayer;
 

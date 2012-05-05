@@ -48,13 +48,49 @@ SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -W")
 
 SET(CMAKE_VERBOSE_MAKEFILE ON)
 
-# Add required libraries
-FIND_PACKAGE(Qt4 REQUIRED)
+# Qt5 support
+OPTION(WITH_QT5 "Build with Qt5" OFF)
+MESSAGE("\nVLC-Qt: Build with Qt5: ${WITH_QT5}\n")
+
+IF(WITH_QT5)
+    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+
+    # Qt5 dirs
+    INCLUDE(Qt5)
+    QT5_FIND_LIBRARY_DIR(QT_LIBRARY_DIR)
+
+    SET(Qt5Core_DIR "${QT_LIBRARY_DIR}/cmake/Qt5Core")
+    SET(Qt5Gui_DIR "${QT_LIBRARY_DIR}/cmake/Qt5Gui")
+    SET(Qt5Widgets_DIR "${QT_LIBRARY_DIR}/cmake/Qt5Widgets")
+ENDIF(WITH_QT5)
+
+# Search for Qt and other libraries
+IF(WITH_QT5)
+    SET(QT_MIN_VERSION "5.0.0")
+    ADD_DEFINITIONS(-DQt5)
+ELSE(WITH_QT5)
+    SET(QT_MIN_VERSION "4.6.0")
+    ADD_DEFINITIONS(-DQt4)
+ENDIF(WITH_QT5)
+
+# Qt
+IF(WITH_QT5)
+    FIND_PACKAGE(Qt5Core REQUIRED)
+    FIND_PACKAGE(Qt5Gui REQUIRED)
+    FIND_PACKAGE(Qt5Widgets REQUIRED)
+ELSE(WITH_QT5)
+    FIND_PACKAGE(Qt4 REQUIRED)
+ENDIF(WITH_QT5)
+
+# Add additional required libraries
 FIND_PACKAGE(LIBVLC REQUIRED)
 
-# Set Qt4 bin dir to find QtCore4.dll and other libs to install
-STRING(REGEX REPLACE "([^ ]+)[/\\].*" "\\1" QT_BIN_DIR_TMP "${QT_QMAKE_EXECUTABLE}")
-STRING(REGEX REPLACE "\\\\" "/" QT_BIN_DIR "${QT_BIN_DIR_TMP}")  # Replace back slashes to slashes
+# Set Qt bin dir to find QtCoreX.dll and other libs to install
+IF(MINGW)
+    STRING(REGEX REPLACE "([^ ]+)[/\\].*" "\\1" QT_BIN_DIR_TMP "${QT_QMAKE_EXECUTABLE}")
+    STRING(REGEX REPLACE "\\\\" "/" QT_BIN_DIR "${QT_BIN_DIR_TMP}")  # Replace back slashes to slashes
+ENDIF(MINGW)
 
 ###########
 # Version #
@@ -66,7 +102,7 @@ STRING_SPLIT(VLCQT_VERSION_LIST "." ${VLCQT_VERSION})
 LIST(GET VLCQT_VERSION_LIST 0 VLCQT_VERSION_MAJOR)
 LIST(GET VLCQT_VERSION_LIST 1 VLCQT_VERSION_MINOR)
 LIST(GET VLCQT_VERSION_LIST 2 VLCQT_VERSION_BUGFIX)
-MESSAGE("You are compiling libvlc-qt ${VLCQT_VERSION_MAJOR}.${VLCQT_VERSION_MINOR}.${VLCQT_VERSION_BUGFIX}")
+MESSAGE("\nVLC-Qt: You are compiling libvlc-qt ${VLCQT_VERSION_MAJOR}.${VLCQT_VERSION_MINOR}.${VLCQT_VERSION_BUGFIX}\n")
 
 # Find Git Version Patch
 FIND_PROGRAM(GIT git)
@@ -101,8 +137,8 @@ ENDIF(MINGW)
 #########
 # Tests #
 #########
-OPTION(BUILD_TESTS "Build Tests" OFF)
-MESSAGE("Build Tests: ${BUILD_TESTS}")
+OPTION(BUILD_TESTS "Build tests" OFF)
+MESSAGE("\nVLC-Qt: Build tests: ${BUILD_TESTS}\n")
 
 IF(${BUILD_TESTS})
     ADD_SUBDIRECTORY(test)

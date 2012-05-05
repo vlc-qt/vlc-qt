@@ -16,6 +16,14 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
+#include <QtCore/QTimer>
+
+#if defined(Qt5)
+    #include <QtWidgets/QAction>
+#elif defined(Qt4)
+    #include <QtGui/QAction>
+#endif
+
 #include "core/Audio.h"
 #include "core/MediaPlayer.h"
 #include "gui/AudioControl.h"

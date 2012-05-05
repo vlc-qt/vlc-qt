@@ -21,10 +21,11 @@
 
 #include <QtCore/QList>
 #include <QtCore/QMap>
-#include <QtCore/QTimer>
-#include <QtGui/QAction>
 
 #include "Enums.h"
+
+class QAction;
+class QTimer;
 
 class VlcAudio;
 class VlcMediaPlayer;

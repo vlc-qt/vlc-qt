@@ -17,7 +17,7 @@
 *****************************************************************************/
 
 #include <QtCore/QDebug>
-#include <QtGui/QMessageBox>
+#include <QtCore/QStringList>
 
 #include <vlc/vlc.h>
 

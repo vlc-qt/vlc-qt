@@ -19,7 +19,11 @@
 #ifndef VLCQT_TEST_PLAYER_H_
 #define VLCQT_TEST_PLAYER_H_
 
-#include <QtGui/QMainWindow>
+#if defined(Qt5)
+    #include <QtWidgets/QMainWindow>
+#elif defined(Qt4)
+    #include <QtGui/QMainWindow>
+#endif
 
 namespace Ui {
     class TestPlayer;

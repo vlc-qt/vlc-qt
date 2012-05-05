@@ -17,7 +17,12 @@
 *****************************************************************************/
 
 #include <QtCore/QDebug>
-#include <QtGui/QFileDialog>
+
+#if defined(Qt5)
+    #include <QtWidgets/QFileDialog>
+#elif defined(Qt4)
+    #include <QtGui/QFileDialog>
+#endif
 
 #include "core/Common.h"
 #include "core/Instance.h"
