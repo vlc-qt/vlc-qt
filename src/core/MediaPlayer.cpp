@@ -132,13 +132,15 @@ void VlcMediaPlayer::play()
     }
 
     /* Get our media instance to use our window */
+    if (_currentWId) {
 #if defined(Q_WS_WIN)
-    libvlc_media_player_set_hwnd(_vlcMediaPlayer, _currentWId);
+        libvlc_media_player_set_hwnd(_vlcMediaPlayer, _currentWId);
 #elif defined(Q_WS_MAC)
-    libvlc_media_player_set_nsobject(_vlcMediaPlayer, (void *)_currentWId);
+        libvlc_media_player_set_nsobject(_vlcMediaPlayer, (void *)_currentWId);
 #elif defined(Q_WS_X11)
-    libvlc_media_player_set_xwindow(_vlcMediaPlayer, _currentWId);
+        libvlc_media_player_set_xwindow(_vlcMediaPlayer, _currentWId);
 #endif
+    }
 
     libvlc_media_player_play(_vlcMediaPlayer);
 
