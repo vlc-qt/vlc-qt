@@ -31,7 +31,7 @@
     #include <QtGui/QToolBar>
 #endif
 
-#if defined(Q_WS_MAC)
+#if defined(Q_OS_MAC)
     #import <Cocoa/Cocoa.h>
 #elif defined(Q_WS_X11)
     #include <X11/Xlib.h>
@@ -46,7 +46,7 @@
 VlcVideoWidget::VlcVideoWidget(VlcMediaPlayer *player,
                                QWidget *parent)
     :
-#if defined(Q_WS_MAC)
+#if defined(Q_OS_MAC)
       QMacCocoaViewContainer(0, parent),
 #else
       QFrame(parent),
@@ -58,7 +58,7 @@ VlcVideoWidget::VlcVideoWidget(VlcMediaPlayer *player,
 
 VlcVideoWidget::VlcVideoWidget(QWidget *parent)
     :
-#if defined(Q_WS_MAC)
+#if defined(Q_OS_MAC)
       QMacCocoaViewContainer(0, parent),
 #else
       QFrame(parent),
@@ -75,7 +75,7 @@ VlcVideoWidget::~VlcVideoWidget()
     delete _timerMouse;
     delete _timerSettings;
 
-#if !defined(Q_WS_MAC)
+#if !defined(Q_OS_MAC)
     delete _layout;
 
     /* Ensure we are not leaking the video output. This would crash. */
@@ -95,7 +95,7 @@ void VlcVideoWidget::initVideoWidget()
     _currentCropRatio = Vlc::Original;
     _currentDeinterlacing = Vlc::Disabled;
 
-#if defined(Q_WS_MAC)
+#if defined(Q_OS_MAC)
     NSView *video = [[NSView alloc] init];
     setCocoaView(video);
     [video release];
@@ -280,7 +280,7 @@ void VlcVideoWidget::sync()
 
 WId VlcVideoWidget::request()
 {
-#if defined(Q_WS_MAC)
+#if defined(Q_OS_MAC)
     return WId(cocoaView());
 #endif
 

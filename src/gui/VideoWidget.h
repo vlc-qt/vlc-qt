@@ -23,7 +23,7 @@
 
 #include <QFrame>
 
-#if defined(Q_WS_MAC)
+#if defined(Q_OS_MAC)
     #include <QMacCocoaViewContainer>
 #endif
 
@@ -41,7 +41,7 @@ class VlcVideo;
     This is one of VLC-Qt GUI classes.
     It provides video display and mouse control.
 */
-#if defined(Q_WS_MAC)
+#if defined(Q_OS_MAC)
 class VlcVideoWidget : public QMacCocoaViewContainer
 #else
 class VlcVideoWidget : public QFrame
@@ -243,7 +243,7 @@ private:
 
     VlcVideo *_vlcVideo;
 
-#if !defined(Q_WS_MAC)
+#if !defined(Q_OS_MAC)
     QWidget *_video;
     QLayout *_layout;
 #endif

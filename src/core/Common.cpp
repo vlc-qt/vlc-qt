@@ -27,7 +27,7 @@ QStringList VlcCommon::args()
 		 << "--reset-plugins-cache"
 		 << "--no-stats"
 		 << "--no-osd"
-#if defined(Q_WS_MAC)
+#if defined(Q_OS_MAC)
 		 << "--vout=macosx"
 #endif
 		 << "--no-video-title-show";

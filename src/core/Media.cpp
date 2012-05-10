@@ -65,7 +65,7 @@ void VlcMedia::initMedia(const QString &location,
 {
     _currentLocation = location;
     QString l = location;
-#if defined(Q_WS_WIN)
+#if defined(Q_OS_WIN32)
     if (localFile)
         l.replace("/", "\\");
 #endif
@@ -91,7 +91,7 @@ QString VlcMedia::duplicate(const QString &name,
                             const Vlc::Mux &mux) const
 {
     QString l = path + "/" + name;
-#if defined(Q_WS_WIN)
+#if defined(Q_OS_WIN32)
     l.replace("/", "\\");
 #endif
 
@@ -113,7 +113,7 @@ QString VlcMedia::record(const QString &name,
                          const Vlc::Mux &mux) const
 {
     QString l = path + "/" + name;
-#if defined(Q_WS_WIN)
+#if defined(Q_OS_WIN32)
     l.replace("/", "\\");
 #endif
 
@@ -137,7 +137,7 @@ QString VlcMedia::record(const QString &name,
                          const Vlc::VideoCodec &videoCodec) const
 {
     QString l = path + "/" + name;
-#if defined(Q_WS_WIN)
+#if defined(Q_OS_WIN32)
     l.replace("/", "\\");
 #endif
 
