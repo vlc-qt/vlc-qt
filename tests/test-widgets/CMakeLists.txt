@@ -1,6 +1,6 @@
 #############################################################################
 # VLC-Qt - Qt and libvlc connector library
-# Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+# Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,13 +16,13 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #############################################################################
 
-PROJECT(test-vlc-qt)
+PROJECT(test-vlcqt-widgets)
 
 ###################
 # List of sources #
 ###################
 # Define the UI source files
-SET(Test_UIs
+SET(Test_Widgets_UIs
     TestDual.ui
     TestMain.ui
     TestMetaManager.ui
@@ -31,7 +31,7 @@ SET(Test_UIs
 )
 
 # Define the MOC source files
-SET(Test_MOCs
+SET(Test_Widgets_MOCs
     TestDualInstance.h
     TestDualPlayer.h
     TestMain.h
@@ -41,7 +41,7 @@ SET(Test_MOCs
 )
 
 # Define the C++ source files
-SET(Test_Srcs
+SET(Test_Widgets_Srcs
     main.cpp
     TestDualInstance.cpp
     TestDualPlayer.cpp
@@ -57,11 +57,11 @@ SET(Test_Srcs
 ################
 # This scripts run the user interface compiler uic and the meta object compiler moc.
 IF(WITH_QT5)
-    QT5_WRAP_UI(Test_UIC_Srcs ${Test_UIs})
-    QT5_WRAP_CPP(Test_MOC_Srcs ${Test_MOCs})
+    QT5_WRAP_UI(Test_Widgets_UIC_Srcs ${Test_Widgets_UIs})
+    QT5_WRAP_CPP(Test_Widgets_MOC_Srcs ${Test_Widgets_MOCs})
 ELSE(WITH_QT5)
-    QT4_WRAP_UI(Test_UIC_Srcs ${Test_UIs})
-    QT4_WRAP_CPP(Test_MOC_Srcs ${Test_MOCs})
+    QT4_WRAP_UI(Test_Widgets_UIC_Srcs ${Test_Widgets_UIs})
+    QT4_WRAP_CPP(Test_Widgets_MOC_Srcs ${Test_Widgets_MOCs})
 ENDIF(WITH_QT5)
 
 # This line adds the include path of the Qt
@@ -83,27 +83,25 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_SOURCE_DIR}/src/gui
     ${CMAKE_BINARY_DIR}/test
 )
-INCLUDE_DIRECTORIES(${LIBVLC_INCLUDE_DIR})
 
 # This line tells cmake to create the Test program.
-ADD_EXECUTABLE(test-vlc-qt ${Test_UIC_Srcs} ${Test_Srcs} ${Test_MOC_Srcs})
+ADD_EXECUTABLE(${PROJECT_NAME} ${Test_Widgets_UIC_Srcs} ${Test_Widgets_Srcs} ${Test_Widgets_MOC_Srcs})
 
 # Here the needed Qt Libraries are added to the link command.
 IF(WITH_QT5)
     IF(MINGW)
-        TARGET_LINK_LIBRARIES(test-vlc-qt
+        TARGET_LINK_LIBRARIES(${PROJECT_NAME}
                               ${Qt5Core_LIBRARIES} ${Qt5Gui_LIBRARIES} ${Qt5Widgets_LIBRARIES}
-                              ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY}
                               ${CMAKE_BINARY_DIR}/src/libvlc-qt.dll.a
         )
     ELSEIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-        TARGET_LINK_LIBRARIES(test-vlc-qt
+        TARGET_LINK_LIBRARIES(${PROJECT_NAME}
                               ${Qt5Core_LIBRARIES} ${Qt5Gui_LIBRARIES} ${Qt5Widgets_LIBRARIES}
                               ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY}
                               ${CMAKE_BINARY_DIR}/src/libvlc-qt.dylib
         )
     ELSE(MINGW)
-        TARGET_LINK_LIBRARIES(test-vlc-qt
+        TARGET_LINK_LIBRARIES(${PROJECT_NAME}
                               ${Qt5Core_LIBRARIES} ${Qt5Gui_LIBRARIES} ${Qt5Widgets_LIBRARIES}
                               ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY}
                               ${CMAKE_BINARY_DIR}/src/libvlc-qt.so
@@ -111,19 +109,18 @@ IF(WITH_QT5)
     ENDIF(MINGW)
 ELSE(WITH_QT5)
     IF(MINGW)
-        TARGET_LINK_LIBRARIES(test-vlc-qt
+        TARGET_LINK_LIBRARIES(${PROJECT_NAME}
                               ${QT_LIBRARIES}
-                              ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY}
                               ${CMAKE_BINARY_DIR}/src/libvlc-qt.dll.a
         )
     ELSEIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-        TARGET_LINK_LIBRARIES(test-vlc-qt
+        TARGET_LINK_LIBRARIES(${PROJECT_NAME}
                               ${QT_LIBRARIES}
                               ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY}
                               ${CMAKE_BINARY_DIR}/src/libvlc-qt.dylib
         )
     ELSE(MINGW)
-        TARGET_LINK_LIBRARIES(test-vlc-qt
+        TARGET_LINK_LIBRARIES(${PROJECT_NAME}
                               ${QT_LIBRARIES}
                               ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY}
                               ${CMAKE_BINARY_DIR}/src/libvlc-qt.so
@@ -135,4 +132,4 @@ ENDIF(WITH_QT5)
 ################
 # Installation #
 ################
-INSTALL(TARGETS test-vlc-qt RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
+INSTALL(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)

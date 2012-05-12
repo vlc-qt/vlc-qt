@@ -104,7 +104,7 @@ public:
     */
     QString duplicate(const QString &name,
                       const QString &path,
-                      const Vlc::Mux &mux) const;
+                      const Vlc::Mux &mux);
 
     /*!
         \brief Record
@@ -118,7 +118,7 @@ public:
     */
     QString record(const QString &name,
                    const QString &path,
-                   const Vlc::Mux &mux) const;
+                   const Vlc::Mux &mux);
 
     /*!
         \brief Record
@@ -136,13 +136,20 @@ public:
                    const QString &path,
                    const Vlc::Mux &mux,
                    const Vlc::AudioCodec &audioCodec,
-                   const Vlc::VideoCodec &videoCodec) const;
+                   const Vlc::VideoCodec &videoCodec);
 
     /*!
         \brief Set media option
         \param option media option (QString)
     */
     void setOption(const QString &option);
+
+    /*!
+        \brief Set media options
+        \param options media options (QStringList)
+    */
+    void setOptions(const QStringList &options);
+
 
 private:
     void initMedia(const QString &location,

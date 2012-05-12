@@ -1,6 +1,6 @@
 #############################################################################
 # VLC-Qt - Qt and libvlc connector library
-# Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+# Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ CONFIGURE_FILE(
 # List of sources #
 ###################
 # Define the C++ source files
-SET(VLCQT_SRCS
+SET(VLCQT_CORE_SRCS
     core/Audio.cpp
     core/Common.cpp
     core/Enums.cpp
@@ -39,7 +39,9 @@ SET(VLCQT_SRCS
     core/MediaPlayer.cpp
     core/MetaManager.cpp
     core/Video.cpp
+)
 
+SET(VLCQT_GUI_SRCS
     gui/AudioControl.cpp
     gui/SeekWidget.cpp
     gui/VideoControl.cpp
@@ -47,14 +49,20 @@ SET(VLCQT_SRCS
     gui/VolumeSlider.cpp
 )
 
+SET(VLCQT_QML_SRCS
+    qml/QMLVideoPlayer.cpp
+)
+
 # Define the MOC source files
-SET(VLCQT_MOCS
+SET(VLCQT_CORE_MOCS
     core/Audio.h
     core/Instance.h
     core/Media.h
     core/MediaPlayer.h
     core/Video.h
+)
 
+SET(VLCQT_GUI_MOCS
     gui/AudioControl.h
     gui/SeekWidget.h
     gui/VideoControl.h
@@ -62,17 +70,37 @@ SET(VLCQT_MOCS
     gui/VolumeSlider.h
 )
 
-# Define the Include files
-SET(VLCQT_HEADERS
-    ${VLCQT_MOCS}
-
-    core/Common.h
-    core/Enums.h
-    core/Error.h
-    core/MetaManager.h
-
-    ${CMAKE_BINARY_DIR}/src/Config.h
+SET(VLCQT_QML_MOCS
+    qml/QMLVideoPlayer.h
 )
+
+# Define the Include files
+IF(WITH_QT5)
+    SET(VLCQT_HEADERS
+        ${VLCQT_CORE_MOCS}
+        ${VLCQT_GUI_MOCS}
+        ${VLCQT_QML_MOCS}
+
+        core/Common.h
+        core/Enums.h
+        core/Error.h
+        core/MetaManager.h
+
+        ${CMAKE_BINARY_DIR}/src/Config.h
+    )
+ELSE(WITH_QT5)
+    SET(VLCQT_HEADERS
+        ${VLCQT_CORE_MOCS}
+        ${VLCQT_GUI_MOCS}
+
+        core/Common.h
+        core/Enums.h
+        core/Error.h
+        core/MetaManager.h
+
+        ${CMAKE_BINARY_DIR}/src/Config.h
+    )
+ENDIF(WITH_QT5)
 
 # Define the resource files
 SET(VLCQT_RESOURCES
@@ -91,16 +119,17 @@ IF(WITH_QT5)
         ${Qt5Widgets_INCLUDE_DIRS}
     )
 ELSE(WITH_QT5)
+    SET(QT_USE_QTDECLARATIVE True)
     INCLUDE(${QT_USE_FILE})
 ENDIF(WITH_QT5)
 
 # This scripts run the resource compiler rcc and the meta object compiler moc.
 IF(WITH_QT5)
     QT5_ADD_RESOURCES(VLCQT_RESOURCES_SRCS ${VLCQT_RESOURCES})
-    QT5_WRAP_CPP(VLCQT_MOCS_SRCS ${VLCQT_MOCS})
+    QT5_WRAP_CPP(VLCQT_MOCS_SRCS ${VLCQT_CORE_MOCS} ${VLCQT_GUI_MOCS})
 ELSE(WITH_QT5)
     QT4_ADD_RESOURCES(VLCQT_RESOURCES_SRCS ${VLCQT_RESOURCES})
-    QT4_WRAP_CPP(VLCQT_MOCS_SRCS ${VLCQT_MOCS})
+    QT4_WRAP_CPP(VLCQT_MOCS_SRCS ${VLCQT_CORE_MOCS} ${VLCQT_GUI_MOCS} ${VLCQT_QML_MOCS})
 ENDIF(WITH_QT5)
 
 INCLUDE_DIRECTORIES(${LIBVLC_INCLUDE_DIR})
@@ -113,7 +142,15 @@ INCLUDE_DIRECTORIES(
 )
 
 # Create the library.
-ADD_LIBRARY(${VLCQT_SHARED} SHARED ${VLCQT_SRCS} ${VLCQT_MOCS_SRCS} ${VLCQT_RESOURCES_SRCS})
+IF(WITH_QT5)
+    ADD_LIBRARY(${VLCQT_SHARED} SHARED
+                ${VLCQT_CORE_SRCS} ${VLCQT_GUI_SRCS}
+                ${VLCQT_MOCS_SRCS} ${VLCQT_RESOURCES_SRCS})
+ELSE(WITH_QT5)
+    ADD_LIBRARY(${VLCQT_SHARED} SHARED
+                ${VLCQT_CORE_SRCS} ${VLCQT_GUI_SRCS} ${VLCQT_QML_SRCS}
+                ${VLCQT_MOCS_SRCS} ${VLCQT_RESOURCES_SRCS})
+ENDIF(WITH_QT5)
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     SET_TARGET_PROPERTIES(${VLCQT_SHARED} PROPERTIES VERSION ${VLCQT_VERSION}

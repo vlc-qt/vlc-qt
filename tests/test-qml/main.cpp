@@ -16,51 +16,32 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_TEST_MAIN_H_
-#define VLCQT_TEST_MAIN_H_
+#include <QtCore/QCoreApplication>
+#include <QtDeclarative/QDeclarativeEngine>
 
 #if defined(Qt5)
-    #include <QtWidgets/QMainWindow>
+    #include <QtWidgets/QApplication>
 #elif defined(Qt4)
-    #include <QtGui/QMainWindow>
+    #include <QtGui/QApplication>
 #endif
 
-namespace Ui
+#include "qml/QMLVideoPlayer.h"
+
+#include "qmlapplicationviewer/qmlapplicationviewer.h"
+
+int main(int argc, char *argv[])
 {
-    class TestMain;
+    QScopedPointer<QApplication> app(createApplication(argc, argv));
+    QCoreApplication::setApplicationName("Test QML");
+
+    qmlRegisterType<VlcQMLVideoPlayer>("VLCQt", 0, 6, "VlcVideoPlayer");
+
+    QmlApplicationViewer viewer;
+    viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
+    viewer.setMainQmlFile("qml/video.qml");
+    viewer.setResizeMode(QDeclarativeView::SizeViewToRootObject);
+    viewer.showExpanded();
+
+    return app->exec();
 }
 
-class TestDualInstance;
-class TestDualPlayer;
-class TestPlayer;
-
-struct libvlc_instance_t;
-struct libvlc_media_player_t;
-
-class TestMain : public QMainWindow
-{
-Q_OBJECT
-public:
-    explicit TestMain(QWidget *parent = 0);
-    ~TestMain();
-
-private slots:
-    void dualInstance();
-    void dualPlayer();
-    void lib();
-    void metaManager();
-    void player();
-    void recorder();
-
-private:
-    Ui::TestMain *ui;
-
-    TestDualInstance *_testDualInstance;
-    TestDualPlayer *_testDualPlayer;
-    TestPlayer *_testPlayer;
-
-    libvlc_instance_t *_instance;
-    libvlc_media_player_t *_player;
-};
-
-#endif // VLCQT_TEST_MAIN_H_

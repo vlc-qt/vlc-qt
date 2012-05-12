@@ -14,18 +14,11 @@
    <string>VLC-Qt Test</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../data/logo.qrc">
+   <iconset resource="../../data/logo.qrc">
     <normaloff>:/vlc-qt/icons/48x48/vlc-qt.png</normaloff>:/vlc-qt/icons/48x48/vlc-qt.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <widget class="QPushButton" name="buttonLib">
-      <property name="text">
-       <string>Core Library Test</string>
-      </property>
-     </widget>
-    </item>
     <item>
      <widget class="QPushButton" name="buttonPlayer">
       <property name="text">
@@ -82,7 +75,7 @@
      <x>0</x>
      <y>0</y>
      <width>400</width>
-     <height>23</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -101,7 +94,7 @@
   </action>
  </widget>
  <resources>
-  <include location="../data/logo.qrc"/>
+  <include location="../../data/logo.qrc"/>
  </resources>
  <connections>
   <connection>
