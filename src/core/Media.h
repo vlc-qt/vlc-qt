@@ -93,20 +93,6 @@ public:
     QString currentLocation() const;
 
     /*!
-        \brief Duplicate to file
-
-        Duplicate video stream with desired mux.
-
-        \param name output file name (QString)
-        \param path output path (QString)
-        \param mux output mux (Vlc::Mux)
-        \return QString output file
-    */
-    QString duplicate(const QString &name,
-                      const QString &path,
-                      const Vlc::Mux &mux);
-
-    /*!
         \brief Record
 
         Apply recording options with desired mux but without transcoding.
@@ -114,11 +100,13 @@ public:
         \param name output file name (QString)
         \param path output path (QString)
         \param mux output mux (Vlc::Mux)
+        \param duplicate also duplicate on screen (bool)
         \return QString output file
     */
     QString record(const QString &name,
                    const QString &path,
-                   const Vlc::Mux &mux);
+                   const Vlc::Mux &mux,
+                   const bool &duplicate = false);
 
     /*!
         \brief Record
@@ -128,15 +116,44 @@ public:
         \param name output file name (QString)
         \param path output path (QString)
         \param mux output mux (Vlc::Mux)
-        \param audioCodec audio codex (Vlc::AudioCodec)
-        \param videoCodec video codex (Vlc::VideoCodec)
+        \param audioCodec audio codec (Vlc::AudioCodec)
+        \param videoCodec video codec (Vlc::VideoCodec)
+        \param duplicate also duplicate on screen (bool)
         \return QString output file
     */
     QString record(const QString &name,
                    const QString &path,
                    const Vlc::Mux &mux,
                    const Vlc::AudioCodec &audioCodec,
-                   const Vlc::VideoCodec &videoCodec);
+                   const Vlc::VideoCodec &videoCodec,
+                   const bool &duplicate = false);
+
+    /*!
+        \brief Record
+
+        Apply recording options with desired mux, transcoding
+        and some other options (experimental).
+
+        \param name output file name (QString)
+        \param path output path (QString)
+        \param mux output mux (Vlc::Mux)
+        \param audioCodec audio codec (Vlc::AudioCodec)
+        \param videoCodec video codec (Vlc::VideoCodec)
+        \param bitrate video bitrate (int)
+        \param fps frames per second (int)
+        \param scale video scale (int)
+        \param duplicate also duplicate on screen (bool)
+        \return QString output file
+    */
+    QString record(const QString &name,
+                   const QString &path,
+                   const Vlc::Mux &mux,
+                   const Vlc::AudioCodec &audioCodec,
+                   const Vlc::VideoCodec &videoCodec,
+                   const int &bitrate,
+                   const int &fps,
+                   const int &scale,
+                   const bool &duplicate = false);
 
     /*!
         \brief Set media option

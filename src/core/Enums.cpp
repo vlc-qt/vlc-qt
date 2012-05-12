@@ -21,7 +21,8 @@
 QStringList Vlc::audioCodec()
 {
     QStringList list;
-    list << "mpga"
+    list << "none"
+         << "mpga"
          << "mp3"
          << "mp4a"
          << "vorb"
@@ -95,7 +96,8 @@ QStringList Vlc::ratioHuman()
 QStringList Vlc::videoCodec()
 {
     QStringList list;
-    list << "mpgv"
+    list << "none"
+         << "mpgv"
          << "mp4v"
          << "x264"
          << "theora";

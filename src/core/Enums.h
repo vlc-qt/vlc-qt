@@ -44,6 +44,7 @@ namespace Vlc
 		\brief Audio codecs list
 	*/
 	enum AudioCodec {
+		NoAudio,
 		MPEG2Audio,
 		MP3,
 		MPEG4Audio,
@@ -115,6 +116,7 @@ namespace Vlc
 		\brief Video codecs list
 	*/
 	enum VideoCodec {
+		NoVideo,
 		MPEG2Video,
 		MPEG4Video,
 		x264,

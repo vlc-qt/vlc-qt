@@ -86,41 +86,28 @@ QString VlcMedia::currentLocation() const
     return _currentLocation;
 }
 
-QString VlcMedia::duplicate(const QString &name,
-                            const QString &path,
-                            const Vlc::Mux &mux)
-{
-    QString l = path + "/" + name;
-#if defined(Q_OS_WIN32)
-    l.replace("/", "\\");
-#endif
-
-    QString option1 = ":sout-all";
-
-    QString option2 = ":sout=#duplicate{dst=display,dst=\"std{access=file,mux=%1,dst='%2'}\"}";
-    option2 = option2.arg(Vlc::mux()[mux], l + "." + Vlc::mux()[mux]);
-
-    setOption(option1);
-    setOption(option2);
-
-    VlcError::errmsg();
-
-    return l + "." + Vlc::mux()[mux];
-}
-
 QString VlcMedia::record(const QString &name,
                          const QString &path,
-                         const Vlc::Mux &mux)
+                         const Vlc::Mux &mux,
+                         const bool &duplicate)
 {
+    QString option1, option2, parameters;
     QString l = path + "/" + name;
 #if defined(Q_OS_WIN32)
     l.replace("/", "\\");
 #endif
 
-    QString option1 = ":sout-all";
+    parameters = "std{access=file,mux=%1,dst='%2'}}";
+    parameters = parameters.arg(Vlc::mux()[mux], l + "." + Vlc::mux()[mux]);
 
-    QString option2 = ":sout=#std{access=file,mux=%1,dst='%2'}}";
-    option2 = option2.arg(Vlc::mux()[mux], l + "." + Vlc::mux()[mux]);
+    if (duplicate) {
+        option2 = ":sout=#duplicate{dst=display,dst=\"%1\"}";
+    } else {
+        option2 = ":sout=#%1";
+    }
+
+    option1 = ":sout-all";
+    option2 = option2.arg(parameters);
 
     setOption(option1);
     setOption(option2);
@@ -134,17 +121,62 @@ QString VlcMedia::record(const QString &name,
                          const QString &path,
                          const Vlc::Mux &mux,
                          const Vlc::AudioCodec &audioCodec,
-                         const Vlc::VideoCodec &videoCodec)
+                         const Vlc::VideoCodec &videoCodec,
+                         const bool &duplicate)
 {
+    QString option1, option2, parameters;
     QString l = path + "/" + name;
 #if defined(Q_OS_WIN32)
     l.replace("/", "\\");
 #endif
 
-    QString option1 = ":sout-all";
+    parameters = "transcode{vcodec=%1,acodec=%2}:std{access=file,mux=%3,dst='%4'}}";
+    parameters = parameters.arg(Vlc::videoCodec()[videoCodec], Vlc::audioCodec()[audioCodec], Vlc::mux()[mux], l + "." + Vlc::mux()[mux]);
 
-    QString option2 = ":sout=#transcode{vcodec=%1,acodec=%2,scale=1,vb=2000,deinterlace,audio-sync}:std{access=file,mux=%3,dst='%4'}}";
-    option2 = option2.arg(Vlc::videoCodec()[videoCodec], Vlc::audioCodec()[audioCodec], Vlc::mux()[mux], l + "." + Vlc::mux()[mux]);
+    if (duplicate) {
+        option2 = ":sout=#duplicate{dst=display,dst=\"%1\"}";
+    } else {
+        option2 = ":sout=#%1";
+    }
+
+    option1 = ":sout-all";
+    option2 = option2.arg(parameters);
+
+    setOption(option1);
+    setOption(option2);
+
+    VlcError::errmsg();
+
+    return l + "." + Vlc::mux()[mux];
+}
+
+QString VlcMedia::record(const QString &name,
+                         const QString &path,
+                         const Vlc::Mux &mux,
+                         const Vlc::AudioCodec &audioCodec,
+                         const Vlc::VideoCodec &videoCodec,
+                         const int &bitrate,
+                         const int &fps,
+                         const int &scale,
+                         const bool &duplicate)
+{
+    QString option1, option2, parameters;
+    QString l = path + "/" + name;
+#if defined(Q_OS_WIN32)
+    l.replace("/", "\\");
+#endif
+
+    parameters = "transcode{vcodec=%1,vb=%2,fps=%3,scale=%4,acodec=%5}:std{access=file,mux=%6,dst='%7'}}";
+    parameters = parameters.arg(Vlc::videoCodec()[videoCodec], QString::number(bitrate), QString::number(fps), QString::number(scale), Vlc::audioCodec()[audioCodec], Vlc::mux()[mux], l + "." + Vlc::mux()[mux]);
+
+    if (duplicate) {
+        option2 = ":sout=#duplicate{dst=display,dst=\"%1\"}";
+    } else {
+        option2 = ":sout=#%1";
+    }
+
+    option1 = ":sout-all";
+    option2 = option2.arg(parameters);
 
     setOption(option1);
     setOption(option2);
