@@ -54,7 +54,7 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_SOURCE_DIR}/src/core
     ${CMAKE_SOURCE_DIR}/src/gui
     ${CMAKE_SOURCE_DIR}/src/qml
-    ${CMAKE_BINARY_DIR}/test
+    ${CMAKE_BINARY_DIR}/tests/test-qml
 )
 
 # This line adds the include path of the Qt

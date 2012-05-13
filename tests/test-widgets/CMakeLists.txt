@@ -81,7 +81,7 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_SOURCE_DIR}/src
     ${CMAKE_SOURCE_DIR}/src/core
     ${CMAKE_SOURCE_DIR}/src/gui
-    ${CMAKE_BINARY_DIR}/test
+    ${CMAKE_BINARY_DIR}/tests/test-widgets
 )
 
 # This line tells cmake to create the Test program.
