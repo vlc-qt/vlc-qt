@@ -105,9 +105,19 @@ public slots:
     void next();
 
     /*!
+        \brief Starts playing media list.
+    */
+    void play();
+
+    /*!
         \brief Starts playing previous item in the list.
     */
     void previous();
+
+    /*!
+        \brief Stops playing
+    */
+    void stop();
 
 
 private:

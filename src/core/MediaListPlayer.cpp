@@ -70,9 +70,23 @@ void VlcMediaListPlayer::next()
     VlcError::errmsg();
 }
 
+void VlcMediaListPlayer::play()
+{
+    libvlc_media_list_player_play(_vlcMediaListPlayer);
+
+    VlcError::errmsg();
+}
+
 void VlcMediaListPlayer::previous()
 {
     libvlc_media_list_player_previous(_vlcMediaListPlayer);
+
+    VlcError::errmsg();
+}
+
+void VlcMediaListPlayer::stop()
+{
+    libvlc_media_list_player_stop(_vlcMediaListPlayer);
 
     VlcError::errmsg();
 }
