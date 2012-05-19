@@ -86,6 +86,31 @@ QString VlcMedia::currentLocation() const
     return _currentLocation;
 }
 
+QString VlcMedia::merge(const QString &name,
+                        const QString &path,
+                        const Vlc::Mux &mux)
+{
+    QString option1, option2, parameters;
+    QString l = path + "/" + name;
+#if defined(Q_OS_WIN32)
+    l.replace("/", "\\");
+#endif
+
+    parameters = "gather:std{access=file,mux=%1,dst='%2'}";
+    parameters = parameters.arg(Vlc::mux()[mux], l + "." + Vlc::mux()[mux]);
+
+    option1 = ":sout-keep";
+    option2 = ":sout=#%1";
+    option2 = option2.arg(parameters);
+
+    setOption(option1);
+    setOption(option2);
+
+    VlcError::errmsg();
+
+    return l + "." + Vlc::mux()[mux];
+}
+
 QString VlcMedia::record(const QString &name,
                          const QString &path,
                          const Vlc::Mux &mux,
@@ -97,7 +122,7 @@ QString VlcMedia::record(const QString &name,
     l.replace("/", "\\");
 #endif
 
-    parameters = "std{access=file,mux=%1,dst='%2'}}";
+    parameters = "std{access=file,mux=%1,dst='%2'}";
     parameters = parameters.arg(Vlc::mux()[mux], l + "." + Vlc::mux()[mux]);
 
     if (duplicate) {
@@ -130,7 +155,7 @@ QString VlcMedia::record(const QString &name,
     l.replace("/", "\\");
 #endif
 
-    parameters = "transcode{vcodec=%1,acodec=%2}:std{access=file,mux=%3,dst='%4'}}";
+    parameters = "transcode{vcodec=%1,acodec=%2}:std{access=file,mux=%3,dst='%4'}";
     parameters = parameters.arg(Vlc::videoCodec()[videoCodec], Vlc::audioCodec()[audioCodec], Vlc::mux()[mux], l + "." + Vlc::mux()[mux]);
 
     if (duplicate) {
@@ -166,7 +191,7 @@ QString VlcMedia::record(const QString &name,
     l.replace("/", "\\");
 #endif
 
-    parameters = "transcode{vcodec=%1,vb=%2,fps=%3,scale=%4,acodec=%5}:std{access=file,mux=%6,dst='%7'}}";
+    parameters = "transcode{vcodec=%1,vb=%2,fps=%3,scale=%4,acodec=%5}:std{access=file,mux=%6,dst='%7'}";
     parameters = parameters.arg(Vlc::videoCodec()[videoCodec], QString::number(bitrate), QString::number(fps), QString::number(scale), Vlc::audioCodec()[audioCodec], Vlc::mux()[mux], l + "." + Vlc::mux()[mux]);
 
     if (duplicate) {

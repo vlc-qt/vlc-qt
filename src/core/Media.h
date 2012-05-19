@@ -93,6 +93,20 @@ public:
     QString currentLocation() const;
 
     /*!
+        \brief Merge
+
+        Apply merge options with desired mux but without transcoding.
+
+        \param name output file name (QString)
+        \param path output path (QString)
+        \param mux output mux (Vlc::Mux)
+        \return QString output file
+    */
+    QString merge(const QString &name,
+                  const QString &path,
+                  const Vlc::Mux &mux);
+
+    /*!
         \brief Record
 
         Apply recording options with desired mux but without transcoding.
