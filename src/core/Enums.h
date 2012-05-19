@@ -79,6 +79,16 @@ namespace Vlc
 	};
 
 	/*!
+		\enum PlaybackMode
+		\brief Playlist playback mode
+	*/
+	enum PlaybackMode {
+		DefaultPlayback,
+		Loop,
+		Repeat
+	};
+
+	/*!
 		\enum Ratio
 		\brief Supported aspect and crop ratios
 	*/

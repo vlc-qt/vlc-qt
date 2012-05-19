@@ -57,6 +57,8 @@ VlcMediaPlayer::~VlcMediaPlayer()
     delete _vlcVideo;
 
     libvlc_media_player_release(_vlcMediaPlayer);
+
+    VlcError::errmsg();
 }
 
 libvlc_media_player_t *VlcMediaPlayer::core()

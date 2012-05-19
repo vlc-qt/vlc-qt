@@ -36,6 +36,8 @@ SET(VLCQT_CORE_SRCS
     core/Error.cpp
     core/Instance.cpp
     core/Media.cpp
+    core/MediaList.cpp
+    core/MediaListPlayer.cpp
     core/MediaPlayer.cpp
     core/MetaManager.cpp
     core/Video.cpp
@@ -58,6 +60,8 @@ SET(VLCQT_CORE_MOCS
     core/Audio.h
     core/Instance.h
     core/Media.h
+    core/MediaList.h
+    core/MediaListPlayer.h
     core/MediaPlayer.h
     core/Video.h
 )
