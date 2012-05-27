@@ -1,0 +1,7 @@
+# Possible build dirs:
+build*
+qt5-build*
+
+# Project files
+CMakeLists.txt.user
+

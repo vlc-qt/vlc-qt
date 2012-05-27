@@ -1,7 +1,7 @@
 Source: libvlc-qt
 Priority: extra
 Maintainer: Tadej Novak <tadej@tano.si>
-Build-Depends: debhelper (>= 7), cmake, libqt4-dev (>=4.6.0), libvlc-dev (>=1.1.0), vlc (>=1.1.0)
+Build-Depends: debhelper (>= 7), cmake, libqt4-dev (>=4.6.0), libvlc-dev (>=1.1.0), vlc (>=1.1.0), libx11-dev
 Standards-Version: 3.9.1
 Section: libs
 Homepage: http://projects.tano.si
