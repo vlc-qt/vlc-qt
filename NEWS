@@ -1,3 +1,7 @@
+0.6.1 (2012-05-27)
+  * Updated VideoWidget to remove X11 compositing problems
+  * Qt5 improved support
+
 0.6.0 (2012-05-03)
   * Multiple instances and players support
   * Basic recording support
