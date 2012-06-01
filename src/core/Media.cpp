@@ -86,6 +86,34 @@ QString VlcMedia::currentLocation() const
     return _currentLocation;
 }
 
+QString VlcMedia::duplicate(const QString &name,
+                            const QString &path,
+                            const Vlc::Mux &mux)
+{
+    return record(name, path, mux);
+}
+
+QString VlcMedia::duplicate(const QString &name,
+                            const QString &path,
+                            const Vlc::Mux &mux,
+                            const Vlc::AudioCodec &audioCodec,
+                            const Vlc::VideoCodec &videoCodec)
+{
+    return record(name, path, mux, audioCodec, videoCodec);
+}
+
+QString VlcMedia::duplicate(const QString &name,
+                            const QString &path,
+                            const Vlc::Mux &mux,
+                            const Vlc::AudioCodec &audioCodec,
+                            const Vlc::VideoCodec &videoCodec,
+                            const int &bitrate,
+                            const int &fps,
+                            const int &scale)
+{
+    return record(name, path, mux, audioCodec, videoCodec, bitrate, fps, scale);
+}
+
 QString VlcMedia::merge(const QString &name,
                         const QString &path,
                         const Vlc::Mux &mux)

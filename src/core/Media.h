@@ -93,6 +93,67 @@ public:
     QString currentLocation() const;
 
     /*!
+        \brief Duplicate (provided for convenience)
+
+        Apply duplicate options with desired mux but without transcoding.
+
+        \param name output file name (QString)
+        \param path output path (QString)
+        \param mux output mux (Vlc::Mux)
+        \return QString output file
+        \sa record()
+    */
+    QString duplicate(const QString &name,
+                      const QString &path,
+                      const Vlc::Mux &mux);
+
+    /*!
+        \brief Duplicate (provided for convenience)
+
+        Apply duplicate options with desired mux and transcoding (experimental).
+
+        \param name output file name (QString)
+        \param path output path (QString)
+        \param mux output mux (Vlc::Mux)
+        \param audioCodec audio codec (Vlc::AudioCodec)
+        \param videoCodec video codec (Vlc::VideoCodec)
+        \return QString output file
+        \sa record()
+    */
+    QString duplicate(const QString &name,
+                      const QString &path,
+                      const Vlc::Mux &mux,
+                      const Vlc::AudioCodec &audioCodec,
+                      const Vlc::VideoCodec &videoCodec);
+
+    /*!
+        \brief Duplicate (provided for convenience)
+
+        Apply duplicate options with desired mux, transcoding
+        and some other options (experimental).
+
+        \param name output file name (QString)
+        \param path output path (QString)
+        \param mux output mux (Vlc::Mux)
+        \param audioCodec audio codec (Vlc::AudioCodec)
+        \param videoCodec video codec (Vlc::VideoCodec)
+        \param bitrate video bitrate (int)
+        \param fps frames per second (int)
+        \param scale video scale (int)
+        \return QString output file
+        \sa record()
+    */
+    QString duplicate(const QString &name,
+                      const QString &path,
+                      const Vlc::Mux &mux,
+                      const Vlc::AudioCodec &audioCodec,
+                      const Vlc::VideoCodec &videoCodec,
+                      const int &bitrate,
+                      const int &fps,
+                      const int &scale);
+
+
+    /*!
         \brief Merge
 
         Apply merge options with desired mux but without transcoding.
