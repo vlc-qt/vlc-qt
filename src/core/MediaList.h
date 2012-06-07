@@ -28,6 +28,7 @@
 class VlcInstance;
 class VlcMedia;
 
+struct libvlc_media_t;
 struct libvlc_media_list_t;
 
 /*!
@@ -55,10 +56,30 @@ public:
     ~VlcMediaList();
 
     /*!
+        \brief Operator []
+        This is an overloaded function. Same as at(i).
+        \param i item index
+    */
+    VlcMedia* operator[] (int i) const;
+
+    /*!
         \brief libvlc media list item
         \return libvlc media list item (libvlc_media_list_t *)
     */
     libvlc_media_list_t *core();
+
+    /*!
+        \brief Add media item to the list
+        \param media media item
+    */
+    void addMedia(VlcMedia *media);
+
+    /*!
+        \brief Get media item at selected index
+        \param index item position
+        \return media item (VlcMedia)
+    */
+    VlcMedia *at(const int &index);
 
     /*!
         \brief libvlc media list item
@@ -67,10 +88,18 @@ public:
     int count();
 
     /*!
-        \brief Add media item to the list
+        \brief Index of media item
         \param media media item
+        \return media item index (int)
     */
-    void addMedia(VlcMedia *media);
+    int indexOf(VlcMedia *media);
+
+    /*!
+        \brief Index of media item (core)
+        \param media media item
+        \return media item index (int)
+    */
+    int indexOf(libvlc_media_t *media);
 
     /*!
         \brief Insert media item at the specific position of the list.
@@ -92,6 +121,7 @@ private:
     void unlock();
 
     libvlc_media_list_t * _vlcMediaList;
+    QList<VlcMedia *> _list;
 };
 
 #endif // VLCQT_MEDIALIST_H_
