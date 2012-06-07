@@ -41,11 +41,6 @@ VlcMediaList::~VlcMediaList()
     VlcError::errmsg();
 }
 
-VlcMedia* VlcMediaList::operator[] (int i) const
-{
-    return _list.at(i);
-}
-
 libvlc_media_list_t *VlcMediaList::core()
 {
     return _vlcMediaList;

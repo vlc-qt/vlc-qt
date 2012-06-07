@@ -56,13 +56,6 @@ public:
     ~VlcMediaList();
 
     /*!
-        \brief Operator []
-        This is an overloaded function. Same as at(i).
-        \param i item index
-    */
-    VlcMedia* operator[] (int i) const;
-
-    /*!
         \brief libvlc media list item
         \return libvlc media list item (libvlc_media_list_t *)
     */
