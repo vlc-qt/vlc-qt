@@ -33,6 +33,7 @@ class VlcMedia;
 class VlcVideo;
 class VlcVideoWidget;
 
+struct libvlc_media_t;
 struct libvlc_media_player_t;
 
 /*!
@@ -83,6 +84,18 @@ public:
         \return the movie lenght (in ms), or -1 if there is no media (const int)
     */
     int lenght() const;
+
+    /*!
+        \brief Get current media object
+        \return media object (VlcMedia *)
+    */
+    VlcMedia *currentMedia();
+
+    /*!
+        \brief Get current media core object
+        \return media core object (libvlc_media_t *)
+    */
+    libvlc_media_t *currentMediaCore();
 
     /*!
         \brief Open media file or stream. Any media should be playable and opened.
@@ -176,6 +189,8 @@ private slots:
 
 private:
     libvlc_media_player_t *_vlcMediaPlayer;
+
+    VlcMedia *_media;
 
     VlcAudio *_vlcAudio;
     VlcVideo *_vlcVideo;

@@ -74,14 +74,32 @@ public:
     libvlc_media_list_player_t *core();
 
     /*!
+        \brief Get current media list
+        \return current media list (VlcMediaList *)
+    */
+    VlcMediaList *currentMediaList();
+
+    /*!
+        \brief Get current media player core
+        \return current media player core (VlcMediaPlayer *)
+    */
+    VlcMediaPlayer *currentMediaPlayer();
+
+    /*!
+        \brief Get playback mode
+        \return playback mode
+    */
+    Vlc::PlaybackMode playbackMode() const;
+
+    /*!
         \brief Set media list to play
-        \param list media list object
+        \param list media list object (VlcMediaList *)
     */
     void setMediaList(VlcMediaList *list);
 
     /*!
         \brief Set media player
-        \param player media player object
+        \param player media player object (VlcMediaPlayer *)
     */
     void setMediaPlayer(VlcMediaPlayer *player);
 
@@ -122,6 +140,11 @@ public slots:
 
 private:
     libvlc_media_list_player_t *_vlcMediaListPlayer;
+
+    VlcMediaList *_list;
+    VlcMediaPlayer *_player;
+
+    Vlc::PlaybackMode _mode;
 };
 
 #endif // VLCQT_MEDIALISTPLAYER_H_

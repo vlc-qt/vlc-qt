@@ -27,7 +27,10 @@
 #include "core/MediaPlayer.h"
 
 VlcMediaListPlayer::VlcMediaListPlayer(VlcInstance *instance)
-    : QObject(instance)
+    : QObject(instance),
+      _list(0),
+      _player(0),
+      _mode(Vlc::DefaultPlayback)
 {
     _vlcMediaListPlayer = libvlc_media_list_player_new(instance->core());
 
@@ -56,6 +59,16 @@ libvlc_media_list_player_t *VlcMediaListPlayer::core()
     return _vlcMediaListPlayer;
 }
 
+VlcMediaList *VlcMediaListPlayer::currentMediaList()
+{
+    return _list;
+}
+
+VlcMediaPlayer *VlcMediaListPlayer::currentMediaPlayer()
+{
+    return _player;
+}
+
 void VlcMediaListPlayer::itemAt(const int &index)
 {
     libvlc_media_list_player_play_item_at_index(_vlcMediaListPlayer, index);
@@ -77,6 +90,11 @@ void VlcMediaListPlayer::play()
     VlcError::errmsg();
 }
 
+Vlc::PlaybackMode VlcMediaListPlayer::playbackMode() const
+{
+    return _mode;
+}
+
 void VlcMediaListPlayer::previous()
 {
     libvlc_media_list_player_previous(_vlcMediaListPlayer);
@@ -93,6 +111,7 @@ void VlcMediaListPlayer::stop()
 
 void VlcMediaListPlayer::setMediaList(VlcMediaList *list)
 {
+    _list = list;
     libvlc_media_list_player_set_media_list(_vlcMediaListPlayer, list->core());
 
     VlcError::errmsg();
@@ -100,6 +119,7 @@ void VlcMediaListPlayer::setMediaList(VlcMediaList *list)
 
 void VlcMediaListPlayer::setMediaPlayer(VlcMediaPlayer *player)
 {
+    _player = player;
     libvlc_media_list_player_set_media_player(_vlcMediaListPlayer, player->core());
 
     VlcError::errmsg();
@@ -107,5 +127,6 @@ void VlcMediaListPlayer::setMediaPlayer(VlcMediaPlayer *player)
 
 void VlcMediaListPlayer::setPlaybackMode(const Vlc::PlaybackMode &mode)
 {
+    _mode = mode;
     libvlc_media_list_player_set_playback_mode(_vlcMediaListPlayer, libvlc_playback_mode_t(mode));
 }

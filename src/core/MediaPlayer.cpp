@@ -43,6 +43,7 @@ VlcMediaPlayer::VlcMediaPlayer(VlcInstance *instance)
     _vlcVideo = new VlcVideo(this);
 
     _videoWidget = 0;
+    _media = 0;
 
     _check = new QTimer(this);
     connect(_check, SIGNAL(timeout()), this, SLOT(emitStatus()));
@@ -113,8 +114,23 @@ int VlcMediaPlayer::lenght() const
     return lenght;
 }
 
+VlcMedia *VlcMediaPlayer::currentMedia()
+{
+    return _media;
+}
+
+libvlc_media_t *VlcMediaPlayer::currentMediaCore()
+{
+    libvlc_media_t *media = libvlc_media_player_get_media(_vlcMediaPlayer);
+
+    VlcError::errmsg();
+
+    return media;
+}
+
 void VlcMediaPlayer::open(VlcMedia *media)
 {
+    _media = media;
     libvlc_media_player_set_media(_vlcMediaPlayer, media->core());
 
     VlcError::errmsg();
