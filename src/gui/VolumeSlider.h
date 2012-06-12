@@ -125,11 +125,20 @@ signals:
     */
     void newVolume(const int &);
 
+protected:
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+
 private slots:
     void updateVolume();
 
 private:
     void initVolumeSlider();
+
+    bool _lock;
+
+    void lock();
+    void unlock();
 
     VlcAudio *_vlcAudio;
     VlcMediaPlayer *_vlcMediaPlayer;

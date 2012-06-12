@@ -20,6 +20,7 @@
 #define VLCQT_VIDEO_H_
 
 #include <QtCore/QList>
+#include <QtCore/QSize>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 
@@ -108,6 +109,12 @@ public:
     void setTrack(const int &track);
 
     /*!
+        \brief Get current video size. (currently primary only)
+        \return size of the video (QSize)
+    */
+    QSize size() const;
+
+    /*!
         \brief Get current video subtitle.
         \return the number of current video subtitle, or -1 if none (const int)
     */
@@ -124,6 +131,13 @@ public:
         \return list with description of available video subtitles (const QStringList)
     */
     QStringList subtitleDescription() const;
+
+    /*!
+        \brief Take a snapshot of current video (currently primary only)
+        \param path output path (QString)
+        \return true if successfull (bool)
+    */
+    bool takeSnapshot(const QString &path) const;
 
     /*!
         \brief Get current teletext page requested.

@@ -17,6 +17,7 @@
 *****************************************************************************/
 
 #include <QtCore/QTimer>
+#include <QtGui/QMouseEvent>
 
 #if defined(Qt5)
     #include <QtWidgets/QHBoxLayout>
@@ -59,6 +60,8 @@ VlcVolumeSlider::~VlcVolumeSlider()
 
 void VlcVolumeSlider::initVolumeSlider()
 {
+    _lock = false;
+
     _slider = new QSlider(this);
     _slider->setOrientation(Qt::Horizontal);
     _slider->setMaximum(200);
@@ -76,6 +79,20 @@ void VlcVolumeSlider::initVolumeSlider()
 
     connect(_timer, SIGNAL(timeout()), this, SLOT(updateVolume()));
     connect(_slider, SIGNAL(valueChanged(int)), this, SLOT(setVolume(int)));
+}
+
+void VlcVolumeSlider::mousePressEvent(QMouseEvent *event)
+{
+    event->ignore();
+
+    lock();
+}
+
+void VlcVolumeSlider::mouseReleaseEvent(QMouseEvent *event)
+{
+    event->ignore();
+
+    unlock();
 }
 
 void VlcVolumeSlider::setMediaPlayer(VlcMediaPlayer *player)
@@ -121,15 +138,25 @@ void VlcVolumeSlider::setVolume(const int &volume)
     if (_currentVolume == volume)
         return;
 
+    lock();
+
     _currentVolume = volume;
     _slider->setValue(_currentVolume);
     _label->setText(QString().number(_currentVolume));
 
     emit newVolume(_currentVolume);
+
+    unlock();
 }
 
 void VlcVolumeSlider::updateVolume()
 {
+    if (_lock)
+        return;
+
+    if (!_vlcMediaPlayer)
+        return;
+
     if (_vlcMediaPlayer->state() == Vlc::Buffering ||
         _vlcMediaPlayer->state() == Vlc::Playing ||
         _vlcMediaPlayer->state() == Vlc::Paused)
@@ -152,4 +179,14 @@ void VlcVolumeSlider::volumeControl(const bool &up)
             setVolume(_currentVolume - 1);
         }
     }
+}
+
+void VlcVolumeSlider::lock()
+{
+    _lock = true;
+}
+
+void VlcVolumeSlider::unlock()
+{
+    _lock = false;
 }
