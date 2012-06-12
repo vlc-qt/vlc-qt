@@ -106,6 +106,19 @@ void VlcVideo::setTrack(const int &track)
     }
 }
 
+QSize VlcVideo::size() const
+{
+    unsigned x;
+    unsigned y;
+
+    if (_vlcMediaPlayer) {
+        libvlc_video_get_size(_vlcMediaPlayer, 0, &x, &y);
+        VlcError::errmsg();
+    }
+
+    return QSize(x, y);
+}
+
 int VlcVideo::subtitle() const
 {
     int subtitle = -1;
@@ -147,6 +160,17 @@ QStringList VlcVideo::subtitleDescription() const
     }
 
     return descriptions;
+}
+
+bool VlcVideo::takeSnapshot(const QString &path) const
+{
+    bool success = false;
+    if (_vlcMediaPlayer) {
+        success = libvlc_video_take_snapshot(_vlcMediaPlayer, 0, path.toAscii().data(), 0, 0) + 1;
+        VlcError::errmsg();
+    }
+
+    return success;
 }
 
 int VlcVideo::teletextPage() const
