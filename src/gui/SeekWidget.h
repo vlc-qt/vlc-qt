@@ -22,7 +22,7 @@
 #include <QWidget>
 
 class QLabel;
-class QSlider;
+class QProgressBar;
 class QTimer;
 
 class VlcMediaPlayer;
@@ -78,17 +78,26 @@ public:
     */
     void setMediaPlayer(VlcMediaPlayer *player);
 
+protected:
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+    void wheelEvent(QWheelEvent *event);
+
 private slots:
-    void changeTime();
     void updateTime();
 
 private:
     void initSeekWidget();
 
+    void lock();
+    void unlock();
+
+    bool _lock;
+
     VlcMediaPlayer *_vlcMediaPlayer;
 
     bool _autoHide;
-    QSlider *_seek;
+    QProgressBar *_seek;
     QLabel *_labelElapsed;
     QLabel *_labelFull;
     QTimer *_timer;
