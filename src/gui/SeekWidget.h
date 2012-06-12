@@ -19,6 +19,7 @@
 #ifndef VLCQT_SEEKWIDGET_H_
 #define VLCQT_SEEKWIDGET_H_
 
+#include <QtCore/QPoint>
 #include <QWidget>
 
 class QLabel;
@@ -79,6 +80,7 @@ public:
     void setMediaPlayer(VlcMediaPlayer *player);
 
 protected:
+    void mouseMoveEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void wheelEvent(QWheelEvent *event);
@@ -88,6 +90,7 @@ private slots:
 
 private:
     void initSeekWidget();
+    void updateEvent(const QPoint &pos);
 
     void lock();
     void unlock();

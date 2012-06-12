@@ -87,6 +87,16 @@ void VlcSeekWidget::initSeekWidget()
     _timer->start(100);
 }
 
+void VlcSeekWidget::mouseMoveEvent(QMouseEvent *event)
+{
+    event->ignore();
+
+    if (!_lock)
+        return;
+
+    updateEvent(event->pos());
+}
+
 void VlcSeekWidget::mousePressEvent(QMouseEvent *event)
 {
     event->ignore();
@@ -98,17 +108,7 @@ void VlcSeekWidget::mouseReleaseEvent(QMouseEvent *event)
 {
     event->ignore();
 
-    if (!_vlcMediaPlayer->core())
-        return;
-
-    if (event->pos().x() < _seek->pos().x() || event->pos().x() > _seek->pos().x() + _seek->width())
-        return;
-
-    float click = event->pos().x() - _seek->pos().x();
-    float op = _seek->maximum()/_seek->width();
-    float newValue = click * op;
-
-    _vlcMediaPlayer->setTime(newValue);
+    updateEvent(event->pos());
 
     unlock();
 }
@@ -131,6 +131,22 @@ void VlcSeekWidget::setMediaPlayer(VlcMediaPlayer *player)
     _vlcMediaPlayer = player;
 
     _timer->start(100);
+}
+
+void VlcSeekWidget::updateEvent(const QPoint &pos)
+{
+    if (!_vlcMediaPlayer->core())
+        return;
+
+    if (pos.x() < _seek->pos().x() || pos.x() > _seek->pos().x() + _seek->width())
+        return;
+
+    float click = pos.x() - _seek->pos().x();
+    float op = _seek->maximum()/_seek->width();
+    float newValue = click * op;
+
+    _vlcMediaPlayer->setTime(newValue);
+    _seek->setValue(newValue);
 }
 
 void VlcSeekWidget::updateTime()
