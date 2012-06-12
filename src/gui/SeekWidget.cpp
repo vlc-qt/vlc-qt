@@ -117,7 +117,7 @@ void VlcSeekWidget::wheelEvent(QWheelEvent *event)
 {
     event->ignore();
 
-    if (!_vlcMediaPlayer->core())
+    if (!_vlcMediaPlayer)
         return;
 
     if (event->delta() > 0)
@@ -135,7 +135,7 @@ void VlcSeekWidget::setMediaPlayer(VlcMediaPlayer *player)
 
 void VlcSeekWidget::updateEvent(const QPoint &pos)
 {
-    if (!_vlcMediaPlayer->core())
+    if (!_vlcMediaPlayer)
         return;
 
     if (pos.x() < _seek->pos().x() || pos.x() > _seek->pos().x() + _seek->width())
@@ -152,6 +152,9 @@ void VlcSeekWidget::updateEvent(const QPoint &pos)
 void VlcSeekWidget::updateTime()
 {
     if (_lock)
+        return;
+
+    if (!_vlcMediaPlayer)
         return;
 
     if (_vlcMediaPlayer->state() == Vlc::Buffering ||
