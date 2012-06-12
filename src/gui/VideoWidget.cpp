@@ -135,7 +135,7 @@ void VlcVideoWidget::mouseMoveEvent(QMouseEvent *event)
     }
 
     if (isFullScreen() && _hide) {
-        qApp->setOverrideCursor(Qt::ArrowCursor);
+        qApp->restoreOverrideCursor();
 
         _timerMouse->start(1000);
     }
@@ -146,7 +146,7 @@ void VlcVideoWidget::mousePressEvent(QMouseEvent *event)
     event->ignore();
 
     if (event->button() == Qt::RightButton) {
-        qApp->setOverrideCursor(Qt::ArrowCursor);
+        qApp->restoreOverrideCursor();
         emit rightClick(event->globalPos());
     }
 }
@@ -191,7 +191,7 @@ void VlcVideoWidget::toggleFullscreen()
         flags ^= (Qt::Window | Qt::SubWindow);
         setWindowFlags(flags);
         setWindowState( windowState() ^ Qt::WindowFullScreen );
-        qApp->setOverrideCursor(Qt::ArrowCursor);
+        qApp->restoreOverrideCursor();
         show();
     }
 }
