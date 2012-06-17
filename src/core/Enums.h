@@ -122,6 +122,17 @@ namespace Vlc
 	};
 
 	/*!
+		\enum TrackType
+		\brief Media track type
+	*/
+	enum TrackType {
+		UnknownType,
+		Audio,
+		Video,
+		Text
+	};
+
+	/*!
 		\enum VideoCodec
 		\brief Video codecs list
 	*/
