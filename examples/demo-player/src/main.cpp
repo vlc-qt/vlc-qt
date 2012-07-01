@@ -1,5 +1,5 @@
 /****************************************************************************
-* VLC-Qt CMake Demo
+* VLC-Qt Demo Player
 * Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -16,35 +16,18 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef DEMOPLAYER_H_
-#define DEMOPLAYER_H_
+#include <QtCore/QCoreApplication>
+#include <QtGui/QApplication>
 
-#include <QtGui/QMainWindow>
+#include "DemoPlayer.h"
 
-namespace Ui {
-    class DemoPlayer;
-}
-
-class VlcInstance;
-class VlcMedia;
-class VlcMediaPlayer;
-
-class DemoPlayer : public QMainWindow
+int main(int argc, char *argv[])
 {
-Q_OBJECT
-public:
-    explicit DemoPlayer(QWidget *parent = 0);
-    ~DemoPlayer();
+    QApplication app(argc, argv);
+    QCoreApplication::setApplicationName("VLC-Qt Demo Player");
 
-private slots:
-    void open();
+    DemoPlayer mainWindow;
+    mainWindow.show();
 
-private:
-    Ui::DemoPlayer *ui;
-
-    VlcInstance *_instance;
-    VlcMedia *_media;
-    VlcMediaPlayer *_player;
-};
-
-#endif // DEMOPLAYER_H_
+    return app.exec();
+}

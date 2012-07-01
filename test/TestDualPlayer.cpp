@@ -63,16 +63,21 @@ TestDualPlayer::TestDualPlayer(QWidget *parent)
     connect(ui->open2, SIGNAL(clicked()), this, SLOT(open2()));
     connect(ui->pause2, SIGNAL(clicked()), _player2, SLOT(pause()));
     connect(ui->stop2, SIGNAL(clicked()), _player2, SLOT(stop()));
+
+    ui->group1->setTitle("Player 1");
+    ui->group2->setTitle("Player 2");
+
+    setWindowTitle("Dual Player Test");
 }
 
 TestDualPlayer::~TestDualPlayer()
 {
-    delete ui;
-    delete _instance;
-    delete _player1;
     delete _media1;
-    delete _player2;
+    delete _player1;
     delete _media2;
+    delete _player2;
+    delete _instance;
+    delete ui;
 }
 
 void TestDualPlayer::open1()

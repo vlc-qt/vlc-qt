@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>TestPlayer</class>
- <widget class="QMainWindow" name="TestPlayer">
+ <class>DemoPlayer</class>
+ <widget class="QMainWindow" name="DemoPlayer">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,11 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Basic Player Test</string>
-  </property>
-  <property name="windowIcon">
-   <iconset resource="../data/logo.qrc">
-    <normaloff>:/vlc-qt/icons/48x48/vlc-qt.png</normaloff>:/vlc-qt/icons/48x48/vlc-qt.png</iconset>
+   <string>Demo Player</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
@@ -134,7 +130,7 @@
   <customwidget>
    <class>VlcVideoWidget</class>
    <extends>QWidget</extends>
-   <header>../src/gui/VideoWidget.h</header>
+   <header>vlc-qt/VideoWidget.h</header>
    <container>1</container>
    <slots>
     <signal>fullscreen()</signal>
@@ -144,7 +140,7 @@
   <customwidget>
    <class>VlcVolumeSlider</class>
    <extends>QWidget</extends>
-   <header>../src/gui/VolumeSlider.h</header>
+   <header>vlc-qt/VolumeSlider.h</header>
    <container>1</container>
    <slots>
     <slot>mute()</slot>
@@ -155,18 +151,16 @@
   <customwidget>
    <class>VlcSeekWidget</class>
    <extends>QWidget</extends>
-   <header>../src/gui/SeekWidget.h</header>
+   <header>vlc-qt/SeekWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../data/logo.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>actionClose</sender>
    <signal>triggered()</signal>
-   <receiver>TestPlayer</receiver>
+   <receiver>DemoPlayer</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>300</height>
+    <height>250</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,50 +18,43 @@
     <normaloff>:/vlc-qt/icons/48x48/vlc-qt.png</normaloff>:/vlc-qt/icons/48x48/vlc-qt.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <widget class="QPushButton" name="buttonLib">
-      <property name="text">
-       <string>Core Library Test</string>
-      </property>
-     </widget>
-    </item>
-    <item>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="1" column="0" colspan="2">
      <widget class="QPushButton" name="buttonPlayer">
       <property name="text">
-       <string>Player Test</string>
+       <string>Basic Player Test</string>
       </property>
      </widget>
     </item>
-    <item>
+    <item row="2" column="0">
      <widget class="QPushButton" name="buttonDualInstance">
       <property name="text">
        <string>Dual Instance Test</string>
       </property>
      </widget>
     </item>
-    <item>
+    <item row="2" column="1">
      <widget class="QPushButton" name="buttonDualPlayer">
       <property name="text">
        <string>Dual Player Test</string>
       </property>
      </widget>
     </item>
-    <item>
+    <item row="3" column="0" colspan="2">
      <widget class="QPushButton" name="buttonMetaManager">
       <property name="text">
        <string>Meta Manager Test</string>
       </property>
      </widget>
     </item>
-    <item>
+    <item row="4" column="0" colspan="2">
      <widget class="QPushButton" name="buttonRecorder">
       <property name="text">
        <string>Recorder Test</string>
       </property>
      </widget>
     </item>
-    <item>
+    <item row="5" column="0" colspan="2">
      <spacer name="verticalSpacer">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
@@ -74,6 +67,13 @@
       </property>
      </spacer>
     </item>
+    <item row="0" column="0" colspan="2">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Select your test below:</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -82,7 +82,7 @@
      <x>0</x>
      <y>0</y>
      <width>400</width>
-     <height>23</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

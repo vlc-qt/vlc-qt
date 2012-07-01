@@ -1,0 +1,14 @@
+VLC-Qt Demo Player
+===================================
+This example is compatible with CMake and qmake.
+
+If you want to use CMake, you can delete
+    demo-player.pro
+    src/src.pro
+
+If you want to use qmake, you can delete
+    CMakeLists.txt
+    cmake_uninstall.cmake.in
+    cmake/*
+    src/CMakeLists.txt
+

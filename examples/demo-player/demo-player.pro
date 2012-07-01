@@ -1,6 +1,6 @@
 #############################################################################
-# VLC-Qt qmake Demo
-# Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+# VLC-Qt Demo Player
+# Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,19 +16,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #############################################################################
 
-QT       += core gui
+TEMPLATE = subdirs
 
-TARGET = demo-qmake
-TEMPLATE = app
-
-
-SOURCES += main.cpp\
-        DemoPlayer.cpp
-
-HEADERS  += DemoPlayer.h
-
-FORMS    += DemoPlayer.ui
-
-LIBS     += -L/home/tadej/workspace/install/lib -lvlc-qt # Edit for your configuration
-
-INCLUDEPATH += /home/tadej/workspace/install/include # Edit for your configuration
+SUBDIRS += \
+    src

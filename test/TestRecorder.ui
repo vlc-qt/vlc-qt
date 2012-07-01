@@ -6,36 +6,130 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>500</width>
+    <height>350</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Recorder/VLM Test</string>
+   <string>Recorder Test</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../data/logo.qrc">
     <normaloff>:/vlc-qt/icons/48x48/vlc-qt.png</normaloff>:/vlc-qt/icons/48x48/vlc-qt.png</iconset>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Please, see console output for test results!</string>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0" colspan="2">
+    <widget class="QGroupBox" name="groupMedia">
+     <property name="title">
+      <string>Media</string>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="1" colspan="2">
+       <widget class="QLineEdit" name="editUrl">
+        <property name="text">
+         <string>http://192.168.1.50:1234/udp/232.4.1.1:5002</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="editPath"/>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="labelUrl">
+        <property name="text">
+         <string>Media URL:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="labelPath">
+        <property name="text">
+         <string>Output path:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QToolButton" name="buttonBrowse">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1" colspan="2">
+       <widget class="QLineEdit" name="editName">
+        <property name="text">
+         <string>Test</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="labelName">
+        <property name="text">
+         <string>Output name:</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
-   <item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QGroupBox" name="groupSettings">
+     <property name="title">
+      <string>Settings</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="1" column="1">
+       <widget class="QComboBox" name="comboMux"/>
+      </item>
+      <item row="2" column="1">
+       <widget class="QComboBox" name="comboVideo"/>
+      </item>
+      <item row="3" column="1">
+       <widget class="QComboBox" name="comboAudio"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="labelMux">
+        <property name="text">
+         <string>Mux:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="labelVideo">
+        <property name="text">
+         <string>Video codec</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="labelAudio">
+        <property name="text">
+         <string>Audio codec</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="0">
     <widget class="QPushButton" name="buttonPlay">
      <property name="text">
       <string>Start</string>
      </property>
     </widget>
    </item>
-   <item>
+   <item row="4" column="0" colspan="2">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Please, see console output for test results!
+Test duration is 10s.</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
     <widget class="QPushButton" name="buttonStop">
      <property name="text">
       <string>Stop</string>

@@ -34,9 +34,6 @@ class TestDualInstance;
 class TestDualPlayer;
 class TestPlayer;
 
-struct libvlc_instance_t;
-struct libvlc_media_player_t;
-
 class TestMain : public QMainWindow
 {
 Q_OBJECT
@@ -47,7 +44,6 @@ public:
 private slots:
     void dualInstance();
     void dualPlayer();
-    void lib();
     void metaManager();
     void player();
     void recorder();
@@ -58,9 +54,6 @@ private:
     TestDualInstance *_testDualInstance;
     TestDualPlayer *_testDualPlayer;
     TestPlayer *_testPlayer;
-
-    libvlc_instance_t *_instance;
-    libvlc_media_player_t *_player;
 };
 
 #endif // VLCQT_TEST_MAIN_H_

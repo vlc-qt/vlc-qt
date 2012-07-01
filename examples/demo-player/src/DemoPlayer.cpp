@@ -1,5 +1,5 @@
 /****************************************************************************
-* VLC-Qt - Qt and libvlc connector library
+* VLC-Qt Demo Player
 * Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -16,25 +16,20 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#if defined(Qt5)
-    #include <QtWidgets/QFileDialog>
-    #include <QtWidgets/QInputDialog>
-#elif defined(Qt4)
-    #include <QtGui/QFileDialog>
-    #include <QtGui/QInputDialog>
-#endif
+#include <QtGui/QFileDialog>
+#include <QtGui/QInputDialog>
 
-#include "core/Common.h"
-#include "core/Instance.h"
-#include "core/Media.h"
-#include "core/MediaPlayer.h"
+#include <vlc-qt/Common.h>
+#include <vlc-qt/Instance.h>
+#include <vlc-qt/Media.h>
+#include <vlc-qt/MediaPlayer.h>
 
-#include "TestPlayer.h"
-#include "ui_TestPlayer.h"
+#include "DemoPlayer.h"
+#include "ui_DemoPlayer.h"
 
-TestPlayer::TestPlayer(QWidget *parent)
+DemoPlayer::DemoPlayer(QWidget *parent)
     : QMainWindow(parent),
-      ui(new Ui::TestPlayer),
+      ui(new Ui::DemoPlayer),
       _media(0)
 {
     ui->setupUi(this);
@@ -58,7 +53,7 @@ TestPlayer::TestPlayer(QWidget *parent)
     connect(ui->stop, SIGNAL(clicked()), _player, SLOT(stop()));
 }
 
-TestPlayer::~TestPlayer()
+DemoPlayer::~DemoPlayer()
 {
     delete _player;
     delete _media;
@@ -66,7 +61,7 @@ TestPlayer::~TestPlayer()
     delete ui;
 }
 
-void TestPlayer::openLocal()
+void DemoPlayer::openLocal()
 {
     QString file =
             QFileDialog::getOpenFileName(this, tr("Open file"),
@@ -81,7 +76,7 @@ void TestPlayer::openLocal()
     _player->open(_media);
 }
 
-void TestPlayer::openUrl()
+void DemoPlayer::openUrl()
 {
     QString url =
             QInputDialog::getText(this, tr("Open Url"), tr("Enter the URL you want to play"));
