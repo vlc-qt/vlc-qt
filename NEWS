@@ -1,3 +1,9 @@
+0.6.2 (git)
+  * New take snapshot and size functions for video
+  * New seek widget
+  * [FIX] #6: Window-resize cursor
+  * Updated examples and tests
+
 0.6.1 (2012-05-27)
   * Updated VideoWidget to remove X11 compositing problems
   * Qt5 improved support
