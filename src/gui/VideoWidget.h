@@ -123,6 +123,24 @@ public:
     void setDefaultDeinterlacing(const Vlc::Deinterlacing &deinterlacing);
 
     /*!
+        \brief Get current scale ratio setting
+        \return current scale ratio (const Vlc::Scale)
+    */
+    inline Vlc::Scale currentScale() const { return _currentScale; }
+
+    /*!
+        \brief Get default scale ratio setting
+        \return default scale ratio (const Vlc::Scale)
+    */
+    inline Vlc::Scale defaultScale() const { return _defaultScale; }
+
+    /*!
+        \brief Set default scale ratio setting
+        \param scale default scale ratio (const Vlc::Scale)
+    */
+    void setDefaultScale(const Vlc::Scale &scale);
+
+    /*!
         \brief Set media player if initialised without it
         \param player media player (VlcMediaPlayer *)
     */
@@ -196,21 +214,21 @@ public slots:
     /*!
         \brief Enable default video settings
 
-        crop, ratio, deinterlacing filter
+        crop, ratio, deinterlacing filter, scale
     */
     void enableDefaultSettings();
 
     /*!
         \brief Enable previous video settings
 
-        crop, ratio, deinterlacing filter
+        crop, ratio, deinterlacing filter, scale
     */
     void enablePreviousSettings();
 
     /*!
         \brief Initialize default video settings
 
-        Set but not apply crop, ratio, deinterlacing filter
+        Set but not apply crop, ratio, deinterlacing filter, scale
     */
     void initDefaultSettings();
 
@@ -231,6 +249,12 @@ public slots:
         \param ratio crop ratio (const Vlc::Deinterlacing)
     */
     void setDeinterlacing(const Vlc::Deinterlacing &deinterlacing);
+
+    /*!
+        \brief Set scale ratio
+        \param scale scale ratio (const Vlc::Scale)
+    */
+    void setScale(const Vlc::Scale &scale);
 
 
 private slots:
@@ -256,10 +280,12 @@ private:
     Vlc::Ratio _defaultAspectRatio;
     Vlc::Ratio _defaultCropRatio;
     Vlc::Deinterlacing _defaultDeinterlacing;
+    Vlc::Scale _defaultScale;
 
     Vlc::Ratio _currentAspectRatio;
     Vlc::Ratio _currentCropRatio;
     Vlc::Deinterlacing _currentDeinterlacing;
+    Vlc::Scale _currentScale;
 };
 
 #endif // VLCQ_VIDEOWIDGET_H_

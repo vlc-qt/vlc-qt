@@ -91,9 +91,11 @@ void VlcVideoWidget::initVideoWidget()
     _defaultAspectRatio = Vlc::Original;
     _defaultCropRatio = Vlc::Original;
     _defaultDeinterlacing = Vlc::Disabled;
+    _defaultScale = Vlc::NoScale;
     _currentAspectRatio = Vlc::Original;
     _currentCropRatio = Vlc::Original;
     _currentDeinterlacing = Vlc::Disabled;
+    _currentScale = Vlc::NoScale;
 
 #if defined(Q_OS_MAC)
     NSView *video = [[NSView alloc] init];
@@ -211,6 +213,11 @@ void VlcVideoWidget::setDefaultDeinterlacing(const Vlc::Deinterlacing &deinterla
     _defaultDeinterlacing = deinterlacing;
 }
 
+void VlcVideoWidget::setDefaultScale(const Vlc::Scale &scale)
+{
+    _defaultScale = scale;
+}
+
 void VlcVideoWidget::enableDefaultSettings()
 {
     initDefaultSettings();
@@ -228,11 +235,12 @@ void VlcVideoWidget::initDefaultSettings()
     _currentAspectRatio = defaultAspectRatio();
     _currentCropRatio = defaultCropRatio();
     _currentDeinterlacing = defaultDeinterlacing();
+    _currentScale = defaultScale();
 }
 
 void VlcVideoWidget::applyPreviousSettings()
 {
-    bool ratio = false, crop = false;
+    bool ratio = false, crop = false, scale = false;
     if (_vlcVideo->aspectRatio() != _currentAspectRatio) {
         _vlcVideo->setAspectRatio(_currentAspectRatio);
     } else {
@@ -243,10 +251,15 @@ void VlcVideoWidget::applyPreviousSettings()
     } else {
         crop = true;
     }
+    if (_vlcVideo->scale() != _currentScale) {
+        _vlcVideo->setScale(_currentScale);
+    } else {
+        scale = true;
+    }
 
     _vlcVideo->setDeinterlace(_currentDeinterlacing);
 
-    if (ratio && crop)
+    if (ratio && crop && scale)
         _timerSettings->stop();
 }
 
@@ -266,6 +279,12 @@ void VlcVideoWidget::setDeinterlacing(const Vlc::Deinterlacing &deinterlacing)
 {
     _currentDeinterlacing = deinterlacing;
     _vlcVideo->setDeinterlace(deinterlacing);
+}
+
+void VlcVideoWidget::setScale(const Vlc::Scale &scale)
+{
+    _currentScale = scale;
+    _vlcVideo->setScale(scale);
 }
 
 void VlcVideoWidget::sync()

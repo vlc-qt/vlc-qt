@@ -50,6 +50,17 @@ Vlc::Ratio VlcVideo::cropGeometry() const
     return Vlc::Ratio(Vlc::ratio().indexOf(crop));
 }
 
+Vlc::Scale VlcVideo::scale() const
+{
+    float scale = 0;
+    if (_vlcMediaPlayer) {
+        scale = libvlc_video_get_scale(_vlcMediaPlayer);
+        VlcError::errmsg();
+    }
+
+    return Vlc::Scale(Vlc::scale().indexOf(scale));
+}
+
 void VlcVideo::setAspectRatio(const Vlc::Ratio &ratio)
 {
     if (_vlcMediaPlayer) {
@@ -70,6 +81,14 @@ void VlcVideo::setDeinterlace(const Vlc::Deinterlacing &filter)
 {
     if (_vlcMediaPlayer) {
         libvlc_video_set_deinterlace(_vlcMediaPlayer, Vlc::deinterlacing()[filter].toAscii().data());
+        VlcError::errmsg();
+    }
+}
+
+void VlcVideo::setScale(const Vlc::Scale &scale)
+{
+    if (_vlcMediaPlayer) {
+        libvlc_video_set_scale(_vlcMediaPlayer, Vlc::scale()[scale]);
         VlcError::errmsg();
     }
 }

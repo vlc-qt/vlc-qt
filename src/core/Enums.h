@@ -115,6 +115,25 @@ namespace Vlc
     };
 
     /*!
+        \enum Scale
+        \brief Supported scales
+    */
+    enum Scale {
+        NoScale,
+        S_1_05,
+        S_1_1,
+        S_1_2,
+        S_1_3,
+        S_1_4,
+        S_1_5,
+        S_1_6,
+        S_1_7,
+        S_1_8,
+        S_1_9,
+        S_2_0
+    };
+
+    /*!
         \enum State
         \brief VLC-Qt playback states
     */
@@ -211,6 +230,12 @@ namespace Vlc
         \return ratios strings (QStringList)
     */
     QStringList ratioHuman();
+
+    /*!
+        \brief Scale floats
+        \return scale floats (QList<float>)
+    */
+    QList<float> scale();
 
     /*!
         \brief Video codecs strings

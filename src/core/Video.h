@@ -62,9 +62,15 @@ public:
 
     /*!
         \brief Get current crop filter geometry.
-        \return current crop filter geometry or NULL if not set (const Vlc::Ratio)
+        \return current crop filter geometry or NULL if not specified (const Vlc::Ratio)
     */
     Vlc::Ratio cropGeometry() const;
+
+    /*!
+        \brief Get current scale ratio.
+        \return current scale ratio or NULL if not specified (const Vlc::Scale)
+    */
+    Vlc::Scale scale() const;
 
     /*!
         \brief Set new video aspect ratio.
@@ -83,6 +89,12 @@ public:
         \param filter type of deinterlace filter or NULL to reset to default (Vlc::Deinterlacing)
     */
     void setDeinterlace(const Vlc::Deinterlacing &filter);
+
+    /*!
+        \brief Set new scale ratio.
+        \param scale scale ratio or NULL to reset to default (Vlc::Scale)
+    */
+    void setScale(const Vlc::Scale &scale);
 
     /*!
         \brief Set current video subtitle.
