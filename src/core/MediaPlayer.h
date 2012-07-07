@@ -163,15 +163,6 @@ signals:
     void currentState(const Vlc::State &);
 
     /*!
-        \deprecated
-        \brief Signal sending VLC-Qt playing and buffering status
-        \param bool true if player is playing any media
-        \param bool true if player is buffering
-    */
-    void playing(const bool &,
-                 const bool &);
-
-    /*!
         \brief Signal sending VLC-Qt audio status
         \param bool true if media has audio
     */

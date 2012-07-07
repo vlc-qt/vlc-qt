@@ -98,11 +98,6 @@ void VlcMediaPlayer::emitStatus()
     emit currentState(s);
     emit hasAudio(audio_count);
     emit hasVideo(video_count && _currentWId);
-
-    // Deprecated
-    bool play = s == Vlc::Playing;
-    bool buffering = s == Vlc::Buffering;
-    emit playing(play, buffering);
 }
 
 int VlcMediaPlayer::lenght() const
