@@ -31,6 +31,24 @@ QStringList Vlc::audioCodec()
     return list;
 }
 
+QStringList Vlc::audioOutput()
+{
+    QStringList list;
+
+    list << "default";
+
+    return list;
+}
+
+QStringList Vlc::audioOutputHuman()
+{
+    QStringList list;
+
+    list << "default";
+
+    return list;
+}
+
 QStringList Vlc::deinterlacing()
 {
     QStringList list;
@@ -104,3 +122,42 @@ QStringList Vlc::videoCodec()
 
     return list;
 }
+
+QStringList Vlc::videoOutput()
+{
+    QStringList list;
+
+#if defined(Q_OS_LINUX)
+    list << "x11"
+         << "xvideo"
+         << "glx";
+#elif defined(Q_OS_WIN)
+    list << "directx"
+         << "direct3d"
+         << "opengl";
+#endif
+
+    list << "default";
+
+    return list;
+}
+
+QStringList Vlc::videoOutputHuman()
+{
+    QStringList list;
+
+#if defined(Q_OS_LINUX)
+    list << "X11"
+         << "XVideo"
+         << "OpenGL";
+#elif defined(Q_OS_WIN)
+    list << "DirectX"
+         << "Direct3D"
+         << "OpenGL";
+#endif
+
+    list << "default";
+
+    return list;
+}
+
