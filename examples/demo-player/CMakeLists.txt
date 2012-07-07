@@ -1,6 +1,6 @@
 #############################################################################
-# VLC-Qt CMake Demo
-# Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+# VLC-Qt Demo Player
+# Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #############################################################################
 
-PROJECT(demo-cmake)
+PROJECT(demo-player)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 CONFIGURE_FILE(

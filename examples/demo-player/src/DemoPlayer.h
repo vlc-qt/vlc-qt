@@ -1,5 +1,5 @@
 /****************************************************************************
-* VLC-Qt CMake Demo
+* VLC-Qt Demo Player
 * Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -37,7 +37,8 @@ public:
     ~DemoPlayer();
 
 private slots:
-    void open();
+    void openLocal();
+    void openUrl();
 
 private:
     Ui::DemoPlayer *ui;

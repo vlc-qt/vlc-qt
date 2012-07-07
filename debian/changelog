@@ -1,3 +1,15 @@
+libvlc-qt (0.6.2-1~precise) precise; urgency=low
+
+  * New take snapshot and size functions for video
+  * New seek widget
+  * [FIX] #6: Window-resize cursor
+  * Updated examples and tests
+  * MSVC linking support
+  * Windows SDK based on VLC 2.0.2 and Qt 4.8.1
+
+ -- Tadej Novak <tadej@tano.si>  Mon, 02 Jul 2012 11:10:27 +0200
+
+
 libvlc-qt (0.6.1-1~precise) precise; urgency=low
 
   * Updated VideoWidget to remove X11 compositing problems

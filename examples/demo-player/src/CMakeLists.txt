@@ -1,6 +1,6 @@
 #############################################################################
-# VLC-Qt CMake Demo
-# Copyright (C) 2011 Tadej Novak <tadej@tano.si>
+# VLC-Qt Demo Player
+# Copyright (C) 2012 Tadej Novak <tadej@tano.si>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ SET(Project_UIs
 )
 
 # Define the MOC source files
-SET(Project_MOCs	# List of classes which Qt needs to produce MOCs for them (in order for events, signals, slots and other macros to work
+SET(Project_MOCs
 	DemoPlayer.h
 )
 
@@ -47,7 +47,10 @@ QT4_WRAP_CPP(Project_MOC_Srcs ${Project_MOCs})
 #####################
 # This needs to be added in order for #include to work inside .cpp files
 INCLUDE_DIRECTORIES(${LIBVLCQT_INCLUDE_DIR})
-INCLUDE_DIRECTORIES("${CMAKE_BINARY_DIR}/src")
+INCLUDE_DIRECTORIES(
+    ${CMAKE_SOURCE_DIR}/src
+    ${CMAKE_BINARY_DIR}/src
+)
 
 # This line adds the include path of the Qt
 # directory to the compiler include path

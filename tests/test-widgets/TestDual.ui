@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>640</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,14 +25,28 @@
        <string>Instance 1</string>
       </property>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="1" column="0">
+       <item row="1" column="0" colspan="2">
         <widget class="VlcVideoWidget" name="video1" native="true"/>
        </item>
-       <item row="4" column="0">
-        <widget class="VlcVolumeSlider" name="volume1" native="true"/>
+       <item row="4" column="0" colspan="2">
+        <widget class="VlcVolumeSlider" name="volume1" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
-       <item row="5" column="0">
-        <widget class="VlcSeekWidget" name="seek1" native="true"/>
+       <item row="5" column="0" colspan="2">
+        <widget class="VlcSeekWidget" name="seek1" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
        <item row="2" column="0">
         <widget class="QPushButton" name="pause1">
@@ -44,17 +58,17 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
-        <widget class="QPushButton" name="stop1">
-         <property name="text">
-          <string>Stop 1</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
+       <item row="0" column="0" colspan="2">
         <widget class="QPushButton" name="open1">
          <property name="text">
           <string>Open 1</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QPushButton" name="stop1">
+         <property name="text">
+          <string>Stop 1</string>
          </property>
         </widget>
        </item>
@@ -67,14 +81,28 @@
        <string>Instance 2</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="1" column="0">
+       <item row="1" column="0" colspan="2">
         <widget class="VlcVideoWidget" name="video2" native="true"/>
        </item>
-       <item row="4" column="0">
-        <widget class="VlcVolumeSlider" name="volume2" native="true"/>
+       <item row="4" column="0" colspan="2">
+        <widget class="VlcVolumeSlider" name="volume2" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
-       <item row="5" column="0">
-        <widget class="VlcSeekWidget" name="seek2" native="true"/>
+       <item row="5" column="0" colspan="2">
+        <widget class="VlcSeekWidget" name="seek2" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
        <item row="2" column="0">
         <widget class="QPushButton" name="pause2">
@@ -86,17 +114,17 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
-        <widget class="QPushButton" name="stop2">
-         <property name="text">
-          <string>Stop 2</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
+       <item row="0" column="0" colspan="2">
         <widget class="QPushButton" name="open2">
          <property name="text">
           <string>Open 2</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QPushButton" name="stop2">
+         <property name="text">
+          <string>Stop 2</string>
          </property>
         </widget>
        </item>
@@ -104,23 +132,6 @@
      </widget>
     </item>
    </layout>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>800</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuFile">
-    <property name="title">
-     <string>File</string>
-    </property>
-    <addaction name="actionClose"/>
-   </widget>
-   <addaction name="menuFile"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionClose">

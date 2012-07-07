@@ -41,6 +41,7 @@ public:
     ~TestRecorder();
 
 private slots:
+    void browse();
     void play();
     void stop();
 

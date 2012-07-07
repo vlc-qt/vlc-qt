@@ -17,32 +17,43 @@
 *****************************************************************************/
 
 #include <QtCore/QDebug>
+#include <QtCore/QDir>
+
+#if defined(Qt5)
+    #include <QtWidgets/QFileDialog>
+#elif defined(Qt4)
+    #include <QtGui/QFileDialog>
+#endif
 
 #include "core/Common.h"
 #include "core/Instance.h"
 #include "core/Media.h"
 #include "core/MediaPlayer.h"
 
-#include <vlc/vlc.h>
-
 #include "TestRecorder.h"
 #include "ui_TestRecorder.h"
 
 TestRecorder::TestRecorder(QWidget *parent)
     : QDialog(parent),
-    ui(new Ui::TestRecorder)
+      ui(new Ui::TestRecorder),
+      _media(0)
 {
     ui->setupUi(this);
 
     _instance = new VlcInstance(VlcCommon::args(), this);
     _player = new VlcMediaPlayer(_instance);
-    _media = new VlcMedia("http://192.168.1.50:1234/udp/232.4.1.1:5002", _instance);
-    _media->record("test", "/home/tadej/Video/Tano", Vlc::MP4);
 
     _timer = new QTimer(this);
     _timer->setSingleShot(true);
 
+    ui->editPath->setText(QDir::homePath() + "/Videos");
+
+    ui->comboAudio->addItems(Vlc::audioCodec());
+    ui->comboMux->addItems(Vlc::mux());
+    ui->comboVideo->addItems(Vlc::videoCodec());
+
     connect(_timer, SIGNAL(timeout()), this, SLOT(stop()));
+    connect(ui->buttonBrowse, SIGNAL(clicked()), this, SLOT(browse()));
     connect(ui->buttonPlay, SIGNAL(clicked()), this, SLOT(play()));
     connect(ui->buttonStop, SIGNAL(clicked()), this, SLOT(stop()));
 }
@@ -56,9 +67,28 @@ TestRecorder::~TestRecorder()
     delete _instance;
 }
 
+void TestRecorder::browse()
+{
+    QString path =
+            QFileDialog::getExistingDirectory(this, QObject::tr("Open directory"),
+                                              ui->editPath->text(),
+                                              QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+
+    ui->editPath->setText(path);
+}
+
 void TestRecorder::play()
 {
     qDebug() << "Start";
+
+    if (_media)
+        delete _media;
+
+    _media = new VlcMedia(ui->editUrl->text(), _instance);
+    _media->record(ui->editName->text(), ui->editPath->text(),
+                   Vlc::Mux(ui->comboMux->currentIndex()),
+                   Vlc::AudioCodec(ui->comboAudio->currentIndex()),
+                   Vlc::VideoCodec(ui->comboVideo->currentIndex()));
 
     _player->open(_media);
     _timer->start(10000);

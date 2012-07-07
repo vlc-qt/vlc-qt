@@ -1,3 +1,11 @@
+0.6.2 (2012-07-02)
+  * New take snapshot and size functions for video
+  * New seek widget
+  * [FIX] #6: Window-resize cursor
+  * Updated examples and tests
+  * MSVC linking support
+  * Windows SDK based on VLC 2.0.2 and Qt 4.8.1
+
 0.6.1 (2012-05-27)
   * Updated VideoWidget to remove X11 compositing problems
   * Qt5 improved support
