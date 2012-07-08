@@ -180,7 +180,7 @@ namespace Vlc
         X11,
         XVideo,
         GLX,
-#elif defined(Q_OS_WIN)
+#elif defined(Q_OS_WIN32)
         DirectX,
         Direct3D,
         OpenGL,

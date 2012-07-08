@@ -150,7 +150,7 @@ QStringList Vlc::videoOutput()
     list << "x11"
          << "xvideo"
          << "glx";
-#elif defined(Q_OS_WIN)
+#elif defined(Q_OS_WIN32)
     list << "directx"
          << "direct3d"
          << "opengl";
@@ -169,7 +169,7 @@ QStringList Vlc::videoOutputHuman()
     list << "X11"
          << "XVideo"
          << "OpenGL";
-#elif defined(Q_OS_WIN)
+#elif defined(Q_OS_WIN32)
     list << "DirectX"
          << "Direct3D"
          << "OpenGL";
