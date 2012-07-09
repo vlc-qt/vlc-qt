@@ -131,6 +131,16 @@ void VlcMediaPlayer::emitStatus()
     emit hasVideo(video_count && _currentWId);
 }
 
+bool VlcMediaPlayer::hasVout() const
+{
+    bool status = false;
+    if (_vlcMediaPlayer) {
+        status = libvlc_media_player_has_vout(_vlcMediaPlayer);
+    }
+
+    return status;
+}
+
 int VlcMediaPlayer::lenght() const
 {
     libvlc_time_t lenght = libvlc_media_player_get_length(_vlcMediaPlayer);

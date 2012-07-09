@@ -67,6 +67,16 @@ public:
     Vlc::Ratio cropGeometry() const;
 
     /*!
+        \brief Hide logo.
+    */
+    void hideLogo();
+
+    /*!
+        \brief Hide marquee.
+    */
+    void hideMarquee();
+
+    /*!
         \brief Get current scale ratio.
         \return current scale ratio or NULL if not specified (const Vlc::Scale)
     */
@@ -119,6 +129,33 @@ public:
         \param track new video track (int)
     */
     void setTrack(const int &track);
+
+    /*!
+        \brief Show logo.
+        \param file logo file (QString)
+        \param x x-coordinate (int)
+        \param y y-coordinate (int)
+        \param opacity logo opacity (int)
+    */
+    void showLogo(const QString &file,
+                  const int &x,
+                  const int &y,
+                  const int &opacity = 255);
+
+    /*!
+        \brief Show logo.
+        \param file logo file (QString)
+        \param x x-coordinate (int)
+        \param y y-coordinate (int)
+        \param opacity logo opacity (int)
+    */
+    void showMarquee(const QString &text,
+                     const int &x,
+                     const int &y,
+                     const int &timeout = 0,
+                     const int &opacity = 255,
+                     const int &size = -1,
+                     const int &color = 0xFFFFFF);
 
     /*!
         \brief Get current video size. (currently primary only)

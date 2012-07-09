@@ -128,6 +128,12 @@ public:
     void setVideoWidget(VlcVideoWidget *widget);
 
     /*!
+        \brief Get video output status
+        \return video output status (const bool)
+    */
+    bool hasVout() const;
+
+    /*!
         \brief Get current player state.
         \return current player state (const Vlc::State)
     */
