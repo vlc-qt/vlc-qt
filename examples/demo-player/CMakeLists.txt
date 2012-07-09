@@ -37,6 +37,8 @@ IF(MINGW)
     STRING(REGEX REPLACE "\\\\" "/" MINGW_BIN_DIR "${MINGW_BIN_DIR_TMP}") # Replace back slashes to slashes
 ENDIF(MINGW)
 
+SET(QT_MIN_VERSION "4.8.0")
+
 # Add required libraries
 FIND_PACKAGE(Qt4 REQUIRED)
 FIND_PACKAGE(LIBVLCQT REQUIRED)

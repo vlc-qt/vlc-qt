@@ -23,8 +23,10 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
     QCoreApplication::setApplicationName("VLC-Qt Demo Player");
+    QCoreApplication::setAttribute(Qt::AA_X11InitThreads);
+
+    QApplication app(argc, argv);
 
     DemoPlayer mainWindow;
     mainWindow.show();
