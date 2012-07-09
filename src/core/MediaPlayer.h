@@ -33,6 +33,8 @@ class VlcMedia;
 class VlcVideo;
 class VlcVideoWidget;
 
+struct libvlc_event_t;
+struct libvlc_event_manager_t;
 struct libvlc_media_t;
 struct libvlc_media_player_t;
 
@@ -174,12 +176,23 @@ signals:
     */
     void hasVideo(const bool &);
 
+    /*!
+        \brief Signal sent when video output is available
+    */
+    void vout();
+
 
 private slots:
     void emitStatus();
 
 private:
+    static void libvlc_callback(const libvlc_event_t *event,
+                                void *data);
+
+    void createCoreConnections();
+
     libvlc_media_player_t *_vlcMediaPlayer;
+    libvlc_event_manager_t *_vlcMediaPlayerEvent;
 
     VlcMedia *_media;
 

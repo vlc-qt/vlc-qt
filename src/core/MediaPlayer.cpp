@@ -32,6 +32,7 @@ VlcMediaPlayer::VlcMediaPlayer(VlcInstance *instance)
     : QObject(instance)
 {
     _vlcMediaPlayer = libvlc_media_player_new(instance->core());
+    _vlcMediaPlayerEvent = libvlc_media_player_event_manager(_vlcMediaPlayer);
 
     /* Disable mouse and keyboard events */
     libvlc_video_set_key_input(_vlcMediaPlayer, false);
@@ -48,6 +49,8 @@ VlcMediaPlayer::VlcMediaPlayer(VlcInstance *instance)
     _check = new QTimer(this);
     connect(_check, SIGNAL(timeout()), this, SLOT(emitStatus()));
     _check->start(300);
+
+    createCoreConnections();
 }
 
 VlcMediaPlayer::~VlcMediaPlayer()
@@ -75,6 +78,34 @@ VlcAudio *VlcMediaPlayer::audio()
 VlcVideo *VlcMediaPlayer::video()
 {
     return _vlcVideo;
+}
+
+void VlcMediaPlayer::createCoreConnections()
+{
+    QList<libvlc_event_e> list;
+    list << libvlc_MediaPlayerMediaChanged
+         << libvlc_MediaPlayerNothingSpecial
+         << libvlc_MediaPlayerOpening
+         << libvlc_MediaPlayerBuffering
+         << libvlc_MediaPlayerPlaying
+         << libvlc_MediaPlayerPaused
+         << libvlc_MediaPlayerStopped
+         << libvlc_MediaPlayerForward
+         << libvlc_MediaPlayerBackward
+         << libvlc_MediaPlayerEndReached
+         << libvlc_MediaPlayerEncounteredError
+         << libvlc_MediaPlayerTimeChanged
+         << libvlc_MediaPlayerPositionChanged
+         << libvlc_MediaPlayerSeekableChanged
+         << libvlc_MediaPlayerPausableChanged
+         << libvlc_MediaPlayerTitleChanged
+         << libvlc_MediaPlayerSnapshotTaken
+         << libvlc_MediaPlayerLengthChanged
+         << libvlc_MediaPlayerVout;
+
+    foreach(libvlc_event_e event, list) {
+        libvlc_event_attach(_vlcMediaPlayerEvent, event, libvlc_callback, this);
+    }
 }
 
 void VlcMediaPlayer::emitStatus()
@@ -224,4 +255,38 @@ int VlcMediaPlayer::time() const
 VlcVideoWidget *VlcMediaPlayer::videoWidget()
 {
     return _videoWidget;
+}
+
+void VlcMediaPlayer::libvlc_callback(const libvlc_event_t *event,
+                                     void *data)
+{
+    VlcMediaPlayer *core = (VlcMediaPlayer *)data;
+
+    switch(event->type)
+    {
+    case libvlc_MediaPlayerMediaChanged:
+    case libvlc_MediaPlayerNothingSpecial:
+    case libvlc_MediaPlayerOpening:
+    case libvlc_MediaPlayerBuffering:
+    case libvlc_MediaPlayerPlaying:
+    case libvlc_MediaPlayerPaused:
+    case libvlc_MediaPlayerStopped:
+    case libvlc_MediaPlayerForward:
+    case libvlc_MediaPlayerBackward:
+    case libvlc_MediaPlayerEndReached:
+    case libvlc_MediaPlayerEncounteredError:
+    case libvlc_MediaPlayerTimeChanged:
+    case libvlc_MediaPlayerPositionChanged:
+    case libvlc_MediaPlayerSeekableChanged:
+    case libvlc_MediaPlayerPausableChanged:
+    case libvlc_MediaPlayerTitleChanged:
+    case libvlc_MediaPlayerSnapshotTaken:
+    case libvlc_MediaPlayerLengthChanged:
+        break;
+    case libvlc_MediaPlayerVout:
+        emit core->vout();
+        break;
+    default:
+        break;
+    }
 }
