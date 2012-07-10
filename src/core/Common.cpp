@@ -20,17 +20,20 @@
 
 QStringList VlcCommon::args()
 {
-	QStringList args;
+    QStringList args;
 
-	args << "--intf=dummy"
-		 << "--no-media-library"
-		 << "--reset-plugins-cache"
-		 << "--no-stats"
-		 << "--no-osd"
+    args << "--intf=dummy"
+         << "--no-media-library"
+         << "--no-one-instance"
+         << "--no-plugins-cache"
+         << "--no-stats"
+         << "--no-osd"
+         << "--no-loop"
+         << "--no-video-title-show"
 #if defined(Q_OS_MAC)
-		 << "--vout=macosx"
+         << "--vout=macosx"
 #endif
-		 << "--no-video-title-show";
+         << "--drop-late-frames";
 
-	return args;
+    return args;
 }
