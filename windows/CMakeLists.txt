@@ -61,7 +61,12 @@ IF(MINGW)
 
     SET(Qt_Libs
         ${QT_BIN_DIR}/QtCore4.dll
+        ${QT_BIN_DIR}/QtDeclarative4.dll
         ${QT_BIN_DIR}/QtGui4.dll
+        ${QT_BIN_DIR}/QtNetwork4.dll
+        ${QT_BIN_DIR}/QtScript4.dll
+        ${QT_BIN_DIR}/QtSql4.dll
+        ${QT_BIN_DIR}/QtXmlPatterns4.dll
     )
     SET(Vlc_Libs
         ${LIBVLC_BIN_DIR}/libvlc.dll
