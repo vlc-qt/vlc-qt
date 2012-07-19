@@ -279,11 +279,19 @@ void VlcMediaPlayer::libvlc_callback(const libvlc_event_t *event,
     case libvlc_MediaPlayerOpening:
     case libvlc_MediaPlayerBuffering:
     case libvlc_MediaPlayerPlaying:
+        emit core->playing();
+        break;
     case libvlc_MediaPlayerPaused:
+        emit core->paused();
+        break;
     case libvlc_MediaPlayerStopped:
+        emit core->stopped();
+        break;
     case libvlc_MediaPlayerForward:
     case libvlc_MediaPlayerBackward:
     case libvlc_MediaPlayerEndReached:
+        emit core->end();
+        break;
     case libvlc_MediaPlayerEncounteredError:
     case libvlc_MediaPlayerTimeChanged:
     case libvlc_MediaPlayerPositionChanged:

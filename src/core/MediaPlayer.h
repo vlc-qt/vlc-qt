@@ -171,6 +171,11 @@ signals:
     void currentState(const Vlc::State &);
 
     /*!
+        \brief Signal sent when end reached
+    */
+    void end();
+
+    /*!
         \brief Signal sending VLC-Qt audio status
         \param bool true if media has audio
     */
@@ -181,6 +186,21 @@ signals:
         \param bool true if media has video
     */
     void hasVideo(const bool &);
+
+    /*!
+        \brief Signal sent when paused
+    */
+    void paused();
+
+    /*!
+        \brief Signal sent when playing
+    */
+    void playing();
+
+    /*!
+        \brief Signal sent when stopped
+    */
+    void stopped();
 
     /*!
         \brief Signal sent when video output is available

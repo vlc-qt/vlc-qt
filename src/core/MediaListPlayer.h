@@ -45,7 +45,7 @@ public:
     /*!
         \brief VlcMediaListPlayer constructor.
 
-        Create VlcMediaListPlayer without defined core.
+        Create VlcMediaListPlayer without new core.
 
         \param instance instance object
     */
@@ -80,10 +80,10 @@ public:
     VlcMediaList *currentMediaList();
 
     /*!
-        \brief Get current media player core
-        \return current media player core (VlcMediaPlayer *)
+        \brief Get media player core
+        \return media player core (VlcMediaPlayer *)
     */
-    VlcMediaPlayer *currentMediaPlayer();
+    VlcMediaPlayer *mediaPlayer();
 
     /*!
         \brief Get playback mode
@@ -96,12 +96,6 @@ public:
         \param list media list object (VlcMediaList *)
     */
     void setMediaList(VlcMediaList *list);
-
-    /*!
-        \brief Set media player
-        \param player media player object (VlcMediaPlayer *)
-    */
-    void setMediaPlayer(VlcMediaPlayer *player);
 
     /*!
         \brief Set playback mode

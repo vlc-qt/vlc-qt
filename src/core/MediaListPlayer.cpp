@@ -29,20 +29,26 @@
 VlcMediaListPlayer::VlcMediaListPlayer(VlcInstance *instance)
     : QObject(instance),
       _list(0),
-      _player(0),
       _mode(Vlc::DefaultPlayback)
 {
+    _player = new VlcMediaPlayer(instance);
+
     _vlcMediaListPlayer = libvlc_media_list_player_new(instance->core());
+    libvlc_media_list_player_set_media_player(_vlcMediaListPlayer, _player->core());
 
     VlcError::errmsg();
 }
 
 VlcMediaListPlayer::VlcMediaListPlayer(VlcMediaPlayer *player,
                                        VlcInstance *instance)
-    : QObject(instance)
+    : QObject(instance),
+      _list(0),
+      _mode(Vlc::DefaultPlayback)
 {
+    _player = player;
+
     _vlcMediaListPlayer = libvlc_media_list_player_new(instance->core());
-    setMediaPlayer(player);
+    libvlc_media_list_player_set_media_player(_vlcMediaListPlayer, _player->core());
 
     VlcError::errmsg();
 }
@@ -64,7 +70,7 @@ VlcMediaList *VlcMediaListPlayer::currentMediaList()
     return _list;
 }
 
-VlcMediaPlayer *VlcMediaListPlayer::currentMediaPlayer()
+VlcMediaPlayer *VlcMediaListPlayer::mediaPlayer()
 {
     return _player;
 }
@@ -113,14 +119,6 @@ void VlcMediaListPlayer::setMediaList(VlcMediaList *list)
 {
     _list = list;
     libvlc_media_list_player_set_media_list(_vlcMediaListPlayer, list->core());
-
-    VlcError::errmsg();
-}
-
-void VlcMediaListPlayer::setMediaPlayer(VlcMediaPlayer *player)
-{
-    _player = player;
-    libvlc_media_list_player_set_media_player(_vlcMediaListPlayer, player->core());
 
     VlcError::errmsg();
 }
