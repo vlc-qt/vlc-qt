@@ -63,6 +63,12 @@ IF(WITH_QT5)
     SET(Qt5Core_DIR "${QT_LIBRARY_DIR}/cmake/Qt5Core")
     SET(Qt5Gui_DIR "${QT_LIBRARY_DIR}/cmake/Qt5Gui")
     SET(Qt5Widgets_DIR "${QT_LIBRARY_DIR}/cmake/Qt5Widgets")
+
+    SET(WITH_QML OFF)
+ELSE(WITH_QT5)
+    # QML support
+    OPTION(WITH_QML "Build with QML" OFF)
+    MESSAGE("\nVLC-Qt: Build with QML: ${WITH_QML}\n")
 ENDIF(WITH_QT5)
 
 # Search for Qt and other libraries
