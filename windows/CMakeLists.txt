@@ -61,8 +61,10 @@ IF(MINGW)
 
     SET(Qt_Libs
         ${QT_BIN_DIR}/QtCore4.dll
-        ${QT_BIN_DIR}/QtDeclarative4.dll
         ${QT_BIN_DIR}/QtGui4.dll
+    )
+    SET(Qt_Libs_QML
+        ${QT_BIN_DIR}/QtDeclarative4.dll
         ${QT_BIN_DIR}/QtNetwork4.dll
         ${QT_BIN_DIR}/QtScript4.dll
         ${QT_BIN_DIR}/QtSql4.dll
@@ -80,6 +82,9 @@ ENDIF(MINGW)
 ################
 IF(MINGW)
     INSTALL(FILES ${Qt_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+    IF(WITH_QML)
+        INSTALL(FILES ${Qt_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+    ENDIF(WITH_QML)
     INSTALL(FILES ${Vlc_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
     VLC_INSTALL_PLUGINS(${Vlc_Plugins_Type})
 ENDIF(MINGW)
