@@ -176,6 +176,11 @@ signals:
     void end();
 
     /*!
+        \brief Signal sent on error
+    */
+    void error();
+
+    /*!
         \brief Signal sending VLC-Qt audio status
         \param bool true if media has audio
     */
@@ -198,14 +203,27 @@ signals:
     void playing();
 
     /*!
+        \brief Signal sent on position change
+        \param float position
+    */
+    void positionChanged(const float &);
+
+    /*!
         \brief Signal sent when stopped
     */
     void stopped();
 
     /*!
-        \brief Signal sent when video output is available
+        \brief Signal sent on time change
+        \param int time
     */
-    void vout();
+    void timeChanged(const int &);
+
+    /*!
+        \brief Signal sent when video output is available
+        \param int vout count
+    */
+    void vout(const int &);
 
 
 private slots:
@@ -216,6 +234,7 @@ private:
                                 void *data);
 
     void createCoreConnections();
+    void removeCoreConnections();
 
     libvlc_media_player_t *_vlcMediaPlayer;
     libvlc_event_manager_t *_vlcMediaPlayerEvent;

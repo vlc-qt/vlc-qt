@@ -55,6 +55,8 @@ VlcMediaPlayer::VlcMediaPlayer(VlcInstance *instance)
 
 VlcMediaPlayer::~VlcMediaPlayer()
 {
+    removeCoreConnections();
+
     delete _check;
 
     delete _vlcAudio;
@@ -105,6 +107,34 @@ void VlcMediaPlayer::createCoreConnections()
 
     foreach(libvlc_event_e event, list) {
         libvlc_event_attach(_vlcMediaPlayerEvent, event, libvlc_callback, this);
+    }
+}
+
+void VlcMediaPlayer::removeCoreConnections()
+{
+    QList<libvlc_event_e> list;
+    list << libvlc_MediaPlayerMediaChanged
+         << libvlc_MediaPlayerNothingSpecial
+         << libvlc_MediaPlayerOpening
+         << libvlc_MediaPlayerBuffering
+         << libvlc_MediaPlayerPlaying
+         << libvlc_MediaPlayerPaused
+         << libvlc_MediaPlayerStopped
+         << libvlc_MediaPlayerForward
+         << libvlc_MediaPlayerBackward
+         << libvlc_MediaPlayerEndReached
+         << libvlc_MediaPlayerEncounteredError
+         << libvlc_MediaPlayerTimeChanged
+         << libvlc_MediaPlayerPositionChanged
+         << libvlc_MediaPlayerSeekableChanged
+         << libvlc_MediaPlayerPausableChanged
+         << libvlc_MediaPlayerTitleChanged
+         << libvlc_MediaPlayerSnapshotTaken
+         << libvlc_MediaPlayerLengthChanged
+         << libvlc_MediaPlayerVout;
+
+    foreach(libvlc_event_e event, list) {
+        libvlc_event_detach(_vlcMediaPlayerEvent, event, libvlc_callback, this);
     }
 }
 
@@ -293,8 +323,14 @@ void VlcMediaPlayer::libvlc_callback(const libvlc_event_t *event,
         emit core->end();
         break;
     case libvlc_MediaPlayerEncounteredError:
+        emit core->error();
+        break;
     case libvlc_MediaPlayerTimeChanged:
+        emit core->timeChanged(event->u.media_player_time_changed.new_time);
+        break;
     case libvlc_MediaPlayerPositionChanged:
+        emit core->positionChanged(event->u.media_player_position_changed.new_position);
+        break;
     case libvlc_MediaPlayerSeekableChanged:
     case libvlc_MediaPlayerPausableChanged:
     case libvlc_MediaPlayerTitleChanged:
@@ -302,7 +338,7 @@ void VlcMediaPlayer::libvlc_callback(const libvlc_event_t *event,
     case libvlc_MediaPlayerLengthChanged:
         break;
     case libvlc_MediaPlayerVout:
-        emit core->vout();
+        emit core->vout(event->u.media_player_vout.new_count);
         break;
     default:
         break;
