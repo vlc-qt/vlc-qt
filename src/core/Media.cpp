@@ -23,6 +23,7 @@
 #include "core/Error.h"
 #include "core/Instance.h"
 #include "core/Media.h"
+#include "internal/Encoding.h"
 
 VlcMedia::VlcMedia(const QString &location,
                    const bool &localFile,
@@ -72,13 +73,13 @@ void VlcMedia::initMedia(const QString &location,
 
     // Create a new libvlc media descriptor from location
     if (localFile)
-        _vlcMedia = libvlc_media_new_path(instance->core(), l.toAscii().data());
+        _vlcMedia = libvlc_media_new_path(instance->core(), VlcInternal::Encoding::fromUtf8C(l));
     else
-        _vlcMedia = libvlc_media_new_location(instance->core(), l.toAscii().data());
+        _vlcMedia = libvlc_media_new_location(instance->core(), VlcInternal::Encoding::fromUtf8C(l));
 
     VlcError::errmsg();
 
-    qDebug() << "libvlc" << "Media:" << location << "Local:" << localFile;
+    qDebug() << "libvlc" << "Media:" << VlcInternal::Encoding::fromUtf8(l) << "Local:" << localFile;
 }
 
 QString VlcMedia::currentLocation() const
@@ -241,7 +242,7 @@ QString VlcMedia::record(const QString &name,
 
 void VlcMedia::setOption(const QString &option)
 {
-    libvlc_media_add_option(_vlcMedia, option.toAscii().data());
+    libvlc_media_add_option(_vlcMedia, VlcInternal::Encoding::fromUtf8C(option));
 
     VlcError::errmsg();
 }
@@ -249,10 +250,8 @@ void VlcMedia::setOption(const QString &option)
 void VlcMedia::setOptions(const QStringList &options)
 {
     foreach(QString option, options) {
-        libvlc_media_add_option(_vlcMedia, option.toAscii().data());
+        setOption(option);
     }
-
-    VlcError::errmsg();
 }
 
 Vlc::TrackType VlcMedia::trackType()

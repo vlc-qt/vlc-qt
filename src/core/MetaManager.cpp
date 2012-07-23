@@ -20,6 +20,7 @@
 
 #include "core/Media.h"
 #include "core/MetaManager.h"
+#include "internal/Encoding.h"
 
 VlcMetaManager::VlcMetaManager(VlcMedia *media)
     : _media(media)
@@ -37,7 +38,7 @@ QString VlcMetaManager::title() const
 
 void VlcMetaManager::setTitle(const QString &title)
 {
-    libvlc_media_set_meta(_media->core(), libvlc_meta_Title, title.toAscii().data());
+    libvlc_media_set_meta(_media->core(), libvlc_meta_Title, VlcInternal::Encoding::fromUtf8C(title));
 }
 
 QString VlcMetaManager::artist() const
@@ -48,7 +49,7 @@ QString VlcMetaManager::artist() const
 
 void VlcMetaManager::setArtist(const QString &artist)
 {
-    libvlc_media_set_meta(_media->core(), libvlc_meta_Artist, artist.toAscii().data());
+    libvlc_media_set_meta(_media->core(), libvlc_meta_Artist, VlcInternal::Encoding::fromUtf8C(artist));
 }
 
 QString VlcMetaManager::genre() const
@@ -59,7 +60,7 @@ QString VlcMetaManager::genre() const
 
 void VlcMetaManager::setGenre(const QString &genre)
 {
-    libvlc_media_set_meta(_media->core(), libvlc_meta_Genre, genre.toAscii().data());
+    libvlc_media_set_meta(_media->core(), libvlc_meta_Genre, VlcInternal::Encoding::fromUtf8C(genre));
 }
 
 QString VlcMetaManager::copyright() const
@@ -70,7 +71,7 @@ QString VlcMetaManager::copyright() const
 
 void VlcMetaManager::setCopyright(const QString &copyright)
 {
-    libvlc_media_set_meta(_media->core(), libvlc_meta_Copyright, copyright.toAscii().data());
+    libvlc_media_set_meta(_media->core(), libvlc_meta_Copyright, VlcInternal::Encoding::fromUtf8C(copyright));
 }
 
 QString VlcMetaManager::album() const
@@ -81,7 +82,7 @@ QString VlcMetaManager::album() const
 
 void VlcMetaManager::setAlbum(const QString &album)
 {
-    libvlc_media_set_meta(_media->core(), libvlc_meta_Album, album.toAscii().data());
+    libvlc_media_set_meta(_media->core(), libvlc_meta_Album, VlcInternal::Encoding::fromUtf8C(album));
 }
 
 int VlcMetaManager::number() const
@@ -92,7 +93,7 @@ int VlcMetaManager::number() const
 
 void VlcMetaManager::setNumber(const int &number)
 {
-    libvlc_media_set_meta(_media->core(), libvlc_meta_TrackNumber, QString().number(number).toAscii().data());
+    libvlc_media_set_meta(_media->core(), libvlc_meta_TrackNumber, QString().number(number).toStdString().c_str());
 }
 
 QString VlcMetaManager::description() const
@@ -103,7 +104,7 @@ QString VlcMetaManager::description() const
 
 void VlcMetaManager::setDescription(const QString &description)
 {
-    libvlc_media_set_meta(_media->core(), libvlc_meta_Description, description.toAscii().data());
+    libvlc_media_set_meta(_media->core(), libvlc_meta_Description, VlcInternal::Encoding::fromUtf8C(description));
 }
 
 QString VlcMetaManager::rating() const
@@ -120,7 +121,7 @@ int VlcMetaManager::year() const
 
 void VlcMetaManager::setYear(const int &year)
 {
-    libvlc_media_set_meta(_media->core(), libvlc_meta_Date, QString().number(year).toAscii().data());
+    libvlc_media_set_meta(_media->core(), libvlc_meta_Date, QString().number(year).toStdString().c_str());
 }
 
 QString VlcMetaManager::setting() const
@@ -143,7 +144,7 @@ QString VlcMetaManager::language() const
 
 void VlcMetaManager::setLanguage(const QString &language)
 {
-    libvlc_media_set_meta(_media->core(), libvlc_meta_Language, language.toAscii().data());
+    libvlc_media_set_meta(_media->core(), libvlc_meta_Language, VlcInternal::Encoding::fromUtf8C(language));
 }
 
 QString VlcMetaManager::publisher() const
@@ -154,7 +155,7 @@ QString VlcMetaManager::publisher() const
 
 void VlcMetaManager::setPublisher(const QString &publisher)
 {
-    libvlc_media_set_meta(_media->core(), libvlc_meta_Publisher, publisher.toAscii().data());
+    libvlc_media_set_meta(_media->core(), libvlc_meta_Publisher, VlcInternal::Encoding::fromUtf8C(publisher));
 }
 
 QString VlcMetaManager::encoder() const
@@ -165,7 +166,7 @@ QString VlcMetaManager::encoder() const
 
 void VlcMetaManager::setEncoder(const QString &encoder)
 {
-    libvlc_media_set_meta(_media->core(), libvlc_meta_EncodedBy, encoder.toAscii().data());
+    libvlc_media_set_meta(_media->core(), libvlc_meta_EncodedBy, VlcInternal::Encoding::fromUtf8C(encoder));
 }
 
 QString VlcMetaManager::artwork() const

@@ -24,6 +24,7 @@
 #include "Config.h"
 #include "core/Error.h"
 #include "core/Instance.h"
+#include "internal/Encoding.h"
 
 VlcInstance::VlcInstance(const QStringList &args,
                          QObject *parent)
@@ -104,5 +105,7 @@ void VlcInstance::setUserAgent(const QString &application,
 {
     QString applicationOutput = application + " " + version;
     QString httpOutput = application + "/" + version + " " + "libvlc-qt" + "/" + libVersion(); // "AppName/1.2.3 libvlc-qt/1.2.3"
-    libvlc_set_user_agent(_vlcInstance, applicationOutput.toAscii().data(), httpOutput.toAscii().data());
+    libvlc_set_user_agent(_vlcInstance,
+                          VlcInternal::Encoding::fromUtf8C(applicationOutput),
+                          VlcInternal::Encoding::fromUtf8C(httpOutput));
 }
