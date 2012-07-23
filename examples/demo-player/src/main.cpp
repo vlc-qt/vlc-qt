@@ -17,6 +17,7 @@
 *****************************************************************************/
 
 #include <QtCore/QCoreApplication>
+#include <QtCore/QTextCodec>
 #include <QtGui/QApplication>
 
 #include "DemoPlayer.h"
@@ -25,6 +26,8 @@ int main(int argc, char *argv[])
 {
     QCoreApplication::setApplicationName("VLC-Qt Demo Player");
     QCoreApplication::setAttribute(Qt::AA_X11InitThreads);
+
+    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
 
     QApplication app(argc, argv);
 

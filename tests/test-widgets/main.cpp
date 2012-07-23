@@ -17,6 +17,7 @@
 *****************************************************************************/
 
 #include <QtCore/QCoreApplication>
+#include <QtCore/QTextCodec>
 
 #if defined(Qt5)
     #include <QtWidgets/QApplication>
@@ -30,6 +31,8 @@ int main(int argc, char *argv[])
 {
     QCoreApplication::setApplicationName("Test Widgets");
     QCoreApplication::setAttribute(Qt::AA_X11InitThreads);
+
+    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
 
     QApplication app(argc, argv);
 
