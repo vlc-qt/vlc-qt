@@ -105,7 +105,7 @@ void VlcMediaPlayer::createCoreConnections()
          << libvlc_MediaPlayerLengthChanged
          << libvlc_MediaPlayerVout;
 
-    foreach(libvlc_event_e event, list) {
+    foreach(const libvlc_event_e &event, list) {
         libvlc_event_attach(_vlcMediaPlayerEvent, event, libvlc_callback, this);
     }
 }
@@ -133,7 +133,7 @@ void VlcMediaPlayer::removeCoreConnections()
          << libvlc_MediaPlayerLengthChanged
          << libvlc_MediaPlayerVout;
 
-    foreach(libvlc_event_e event, list) {
+    foreach(const libvlc_event_e &event, list) {
         libvlc_event_detach(_vlcMediaPlayerEvent, event, libvlc_callback, this);
     }
 }

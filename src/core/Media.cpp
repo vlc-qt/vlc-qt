@@ -248,7 +248,7 @@ void VlcMedia::setOption(const QString &option)
 
 void VlcMedia::setOptions(const QStringList &options)
 {
-    foreach(QString option, options) {
+    foreach(const QString &option, options) {
         libvlc_media_add_option(_vlcMedia, option.toAscii().data());
     }
 

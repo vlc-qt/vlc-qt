@@ -136,7 +136,7 @@ QStringList Vlc::videoCodec()
     list << "none"
          << "mpgv"
          << "mp4v"
-         << "x264"
+         << "h264"
          << "theora";
 
     return list;

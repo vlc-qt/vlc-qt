@@ -104,7 +104,7 @@ void VlcAudioControl::updateActions()
         connect(action, SIGNAL(triggered()), this, SLOT(update()));
 
         if (!_manualLanguage) {
-            foreach (QString language, _preferedLanguage) {
+            foreach (const QString &language, _preferedLanguage) {
                 if (action->text().contains(language, Qt::CaseInsensitive)) {
                     action->trigger();
                     _manualLanguage = true;

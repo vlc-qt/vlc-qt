@@ -167,7 +167,7 @@ namespace Vlc
         NoVideo,
         MPEG2Video,
         MPEG4Video,
-        x264,
+        H264,
         Theora
     };
 
