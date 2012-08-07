@@ -193,6 +193,12 @@ signals:
     void hasVideo(const bool &);
 
     /*!
+        \brief Signal sent on length change
+        \param int length
+    */
+    void lengthChanged(const int &);
+
+    /*!
         \brief Signal sent when paused
     */
     void paused();

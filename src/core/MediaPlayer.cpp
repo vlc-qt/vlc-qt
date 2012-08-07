@@ -336,6 +336,7 @@ void VlcMediaPlayer::libvlc_callback(const libvlc_event_t *event,
     case libvlc_MediaPlayerTitleChanged:
     case libvlc_MediaPlayerSnapshotTaken:
     case libvlc_MediaPlayerLengthChanged:
+        emit core->lengthChanged(event->u.media_player_length_changed.new_length);
         break;
     case libvlc_MediaPlayerVout:
         emit core->vout(event->u.media_player_vout.new_count);
