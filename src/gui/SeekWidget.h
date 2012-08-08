@@ -71,7 +71,7 @@ public:
 
         \param autoHide new auto-hide option (bool)
     */
-    void setAutoHide(const bool &autoHide) { _autoHide = autoHide; }
+    void setAutoHide(const bool &autoHide);
 
     /*!
         \brief Set media player if initialised without it
@@ -86,7 +86,9 @@ protected:
     void wheelEvent(QWheelEvent *event);
 
 private slots:
-    void updateTime();
+    void end();
+    void updateCurrentTime(const int &time);
+    void updateFullTime(const int &time);
 
 private:
     void initSeekWidget();
@@ -103,7 +105,6 @@ private:
     QProgressBar *_seek;
     QLabel *_labelElapsed;
     QLabel *_labelFull;
-    QTimer *_timer;
 };
 
 #endif // VLCQT_SEEKWIDGET_H_
