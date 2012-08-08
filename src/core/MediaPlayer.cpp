@@ -32,7 +32,7 @@ VlcMediaPlayer::VlcMediaPlayer(VlcInstance *instance)
     : QObject(instance)
 {
     _vlcMediaPlayer = libvlc_media_player_new(instance->core());
-    _vlcMediaPlayerEvent = libvlc_media_player_event_manager(_vlcMediaPlayer);
+    _vlcEvents = libvlc_media_player_event_manager(_vlcMediaPlayer);
 
     /* Disable mouse and keyboard events */
     libvlc_video_set_key_input(_vlcMediaPlayer, false);
@@ -46,18 +46,14 @@ VlcMediaPlayer::VlcMediaPlayer(VlcInstance *instance)
     _videoWidget = 0;
     _media = 0;
 
-    _check = new QTimer(this);
-    connect(_check, SIGNAL(timeout()), this, SLOT(emitStatus()));
-    _check->start(300);
-
     createCoreConnections();
+
+    VlcError::errmsg();
 }
 
 VlcMediaPlayer::~VlcMediaPlayer()
 {
     removeCoreConnections();
-
-    delete _check;
 
     delete _vlcAudio;
     delete _vlcVideo;
@@ -106,7 +102,7 @@ void VlcMediaPlayer::createCoreConnections()
          << libvlc_MediaPlayerVout;
 
     foreach(const libvlc_event_e &event, list) {
-        libvlc_event_attach(_vlcMediaPlayerEvent, event, libvlc_callback, this);
+        libvlc_event_attach(_vlcEvents, event, libvlc_callback, this);
     }
 }
 
@@ -134,31 +130,8 @@ void VlcMediaPlayer::removeCoreConnections()
          << libvlc_MediaPlayerVout;
 
     foreach(const libvlc_event_e &event, list) {
-        libvlc_event_detach(_vlcMediaPlayerEvent, event, libvlc_callback, this);
+        libvlc_event_detach(_vlcEvents, event, libvlc_callback, this);
     }
-}
-
-void VlcMediaPlayer::emitStatus()
-{
-    Vlc::State s = state();
-    bool audio_count;
-    bool video_count;
-
-    if (s == Vlc::Buffering ||
-        s == Vlc::Playing ||
-        s == Vlc::Paused) {
-        audio_count = _vlcAudio->trackCount() > 0;
-        video_count = _vlcVideo->trackCount() > 0;
-    } else {
-        audio_count = false;
-        video_count = false;
-    }
-
-    VlcError::errmsg();
-
-    emit currentState(s);
-    emit hasAudio(audio_count);
-    emit hasVideo(video_count && _currentWId);
 }
 
 bool VlcMediaPlayer::hasVout() const
@@ -305,9 +278,16 @@ void VlcMediaPlayer::libvlc_callback(const libvlc_event_t *event,
     switch(event->type)
     {
     case libvlc_MediaPlayerMediaChanged:
+        emit core->mediaChanged(event->u.media_player_media_changed.new_media);
+        break;
     case libvlc_MediaPlayerNothingSpecial:
+        emit core->nothingSpecial();
+        break;
     case libvlc_MediaPlayerOpening:
+        emit core->opening();
+        break;
     case libvlc_MediaPlayerBuffering:
+        emit core->buffering(event->u.media_player_buffering.new_cache);
     case libvlc_MediaPlayerPlaying:
         emit core->playing();
         break;
@@ -318,7 +298,11 @@ void VlcMediaPlayer::libvlc_callback(const libvlc_event_t *event,
         emit core->stopped();
         break;
     case libvlc_MediaPlayerForward:
+        emit core->forward();
+        break;
     case libvlc_MediaPlayerBackward:
+        emit core->backward();
+        break;
     case libvlc_MediaPlayerEndReached:
         emit core->end();
         break;
@@ -332,9 +316,17 @@ void VlcMediaPlayer::libvlc_callback(const libvlc_event_t *event,
         emit core->positionChanged(event->u.media_player_position_changed.new_position);
         break;
     case libvlc_MediaPlayerSeekableChanged:
+        emit core->seekableChanged(event->u.media_player_seekable_changed.new_seekable);
+        break;
     case libvlc_MediaPlayerPausableChanged:
+        emit core->pausableChanged(event->u.media_player_pausable_changed.new_pausable);
+        break;
     case libvlc_MediaPlayerTitleChanged:
+        emit core->titleChanged(event->u.media_player_title_changed.new_title);
+        break;
     case libvlc_MediaPlayerSnapshotTaken:
+        emit core->snapshotTaken(event->u.media_player_snapshot_taken.psz_filename);
+        break;
     case libvlc_MediaPlayerLengthChanged:
         emit core->lengthChanged(event->u.media_player_length_changed.new_length);
         break;

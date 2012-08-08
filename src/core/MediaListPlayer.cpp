@@ -34,7 +34,10 @@ VlcMediaListPlayer::VlcMediaListPlayer(VlcInstance *instance)
     _player = new VlcMediaPlayer(instance);
 
     _vlcMediaListPlayer = libvlc_media_list_player_new(instance->core());
+    _vlcEvents = libvlc_media_list_player_event_manager(_vlcMediaListPlayer);
     libvlc_media_list_player_set_media_player(_vlcMediaListPlayer, _player->core());
+
+    createCoreConnections();
 
     VlcError::errmsg();
 }
@@ -50,11 +53,15 @@ VlcMediaListPlayer::VlcMediaListPlayer(VlcMediaPlayer *player,
     _vlcMediaListPlayer = libvlc_media_list_player_new(instance->core());
     libvlc_media_list_player_set_media_player(_vlcMediaListPlayer, _player->core());
 
+    createCoreConnections();
+
     VlcError::errmsg();
 }
 
 VlcMediaListPlayer::~VlcMediaListPlayer()
 {
+    removeCoreConnections();
+
     libvlc_media_list_player_release(_vlcMediaListPlayer);
 
     VlcError::errmsg();
@@ -73,6 +80,30 @@ VlcMediaList *VlcMediaListPlayer::currentMediaList()
 VlcMediaPlayer *VlcMediaListPlayer::mediaPlayer()
 {
     return _player;
+}
+
+void VlcMediaListPlayer::createCoreConnections()
+{
+    QList<libvlc_event_e> list;
+    list << libvlc_MediaListPlayerPlayed
+         << libvlc_MediaListPlayerNextItemSet
+         << libvlc_MediaListPlayerStopped;
+
+    foreach(const libvlc_event_e &event, list) {
+        libvlc_event_attach(_vlcEvents, event, libvlc_callback, this);
+    }
+}
+
+void VlcMediaListPlayer::removeCoreConnections()
+{
+    QList<libvlc_event_e> list;
+    list << libvlc_MediaListPlayerPlayed
+         << libvlc_MediaListPlayerNextItemSet
+         << libvlc_MediaListPlayerStopped;
+
+    foreach(const libvlc_event_e &event, list) {
+        libvlc_event_detach(_vlcEvents, event, libvlc_callback, this);
+    }
 }
 
 void VlcMediaListPlayer::itemAt(const int &index)
@@ -127,4 +158,25 @@ void VlcMediaListPlayer::setPlaybackMode(const Vlc::PlaybackMode &mode)
 {
     _mode = mode;
     libvlc_media_list_player_set_playback_mode(_vlcMediaListPlayer, libvlc_playback_mode_t(mode));
+}
+
+void VlcMediaListPlayer::libvlc_callback(const libvlc_event_t *event,
+                                         void *data)
+{
+    VlcMediaListPlayer *core = (VlcMediaListPlayer *)data;
+
+    switch(event->type)
+    {
+    case libvlc_MediaListPlayerPlayed:
+        emit core->played();
+        break;
+    case libvlc_MediaListPlayerNextItemSet:
+        emit core->nextItemSet(event->u.media_list_player_next_item_set.item);
+        break;
+    case libvlc_MediaListPlayerStopped:
+        emit core->stopped();
+        break;
+    default:
+        break;
+    }
 }

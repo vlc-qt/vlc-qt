@@ -165,10 +165,15 @@ public slots:
 
 signals:
     /*!
-        \brief Signal for sending current state
-        \param Vlc::State current player state
+        \brief Signal sent on backward
     */
-    void currentState(const Vlc::State &);
+    void backward();
+
+    /*!
+        \brief Signal sent on buffering
+        \param float buffer
+    */
+    void buffering(const float &);
 
     /*!
         \brief Signal sent when end reached
@@ -181,22 +186,37 @@ signals:
     void error();
 
     /*!
-        \brief Signal sending VLC-Qt audio status
-        \param bool true if media has audio
+        \brief Signal sent on forward
     */
-    void hasAudio(const bool &);
-
-    /*!
-        \brief Signal sending VLC-Qt video status
-        \param bool true if media has video
-    */
-    void hasVideo(const bool &);
+    void forward();
 
     /*!
         \brief Signal sent on length change
         \param int length
     */
     void lengthChanged(const int &);
+
+    /*!
+        \brief Signal sent on media change
+        \param libvlc_media_t * media
+    */
+    void mediaChanged(libvlc_media_t *);
+
+    /*!
+        \brief Signal sent nothing speciall happened
+    */
+    void nothingSpecial();
+
+    /*!
+        \brief Signal sent when opening
+    */
+    void opening();
+
+    /*!
+        \brief Signal sent on pausable change
+        \param bool pausable
+    */
+    void pausableChanged(const bool &);
 
     /*!
         \brief Signal sent when paused
@@ -215,6 +235,18 @@ signals:
     void positionChanged(const float &);
 
     /*!
+        \brief Signal sent on seekable change
+        \param bool seekable
+    */
+    void seekableChanged(const bool &);
+
+    /*!
+        \brief Signal sent on snapshot taken
+        \param QString filename
+    */
+    void snapshotTaken(const QString &);
+
+    /*!
         \brief Signal sent when stopped
     */
     void stopped();
@@ -226,14 +258,17 @@ signals:
     void timeChanged(const int &);
 
     /*!
+        \brief Signal sent on title change
+        \param int title
+    */
+    void titleChanged(const int &);
+
+    /*!
         \brief Signal sent when video output is available
         \param int vout count
     */
     void vout(const int &);
 
-
-private slots:
-    void emitStatus();
 
 private:
     static void libvlc_callback(const libvlc_event_t *event,
@@ -243,7 +278,7 @@ private:
     void removeCoreConnections();
 
     libvlc_media_player_t *_vlcMediaPlayer;
-    libvlc_event_manager_t *_vlcMediaPlayerEvent;
+    libvlc_event_manager_t *_vlcEvents;
 
     VlcMedia *_media;
 
@@ -252,8 +287,6 @@ private:
 
     VlcVideoWidget *_videoWidget;
     WId _currentWId;
-
-    QTimer *_check;
 };
 
 #endif // VLCQT_MEDIAPLAYER_H_

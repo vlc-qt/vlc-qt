@@ -28,6 +28,8 @@
 class VlcInstance;
 class VlcMedia;
 
+struct libvlc_event_t;
+struct libvlc_event_manager_t;
 struct libvlc_media_t;
 struct libvlc_media_list_t;
 
@@ -109,11 +111,53 @@ public:
     void removeMedia(const int &index);
 
 
+signals:
+    /*!
+        \brief Signal sent on item added
+        \param libvlc_media_t * item
+        \param int index
+    */
+    void itemAdded(libvlc_media_t *,
+                   const int &);
+
+    /*!
+        \brief Signal sent when item will be added
+        \param libvlc_media_t * item
+        \param int index
+    */
+    void willAddItem(libvlc_media_t *,
+                     const int &);
+
+    /*!
+        \brief Signal sent on item deleted
+        \param libvlc_media_t * item
+        \param int index
+    */
+    void itemDeleted(libvlc_media_t *,
+                     const int &);
+
+    /*!
+        \brief Signal sent when item will be deleted
+        \param libvlc_media_t * item
+        \param int index
+    */
+    void willDeleteItem(libvlc_media_t *,
+                        const int &);
+
+
 private:
     void lock();
     void unlock();
 
+    static void libvlc_callback(const libvlc_event_t *event,
+                                void *data);
+
+    void createCoreConnections();
+    void removeCoreConnections();
+
     libvlc_media_list_t * _vlcMediaList;
+    libvlc_event_manager_t *_vlcEvents;
+
     QList<VlcMedia *> _list;
 };
 

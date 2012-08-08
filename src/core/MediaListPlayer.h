@@ -28,6 +28,9 @@ class VlcInstance;
 class VlcMediaList;
 class VlcMediaPlayer;
 
+struct libvlc_event_t;
+struct libvlc_event_manager_t;
+struct libvlc_media_t;
 struct libvlc_media_list_player_t;
 
 /*!
@@ -132,8 +135,33 @@ public slots:
     void stop();
 
 
+signals:
+    /*!
+        \brief Signal sent when played
+    */
+    void played();
+
+    /*!
+        \brief Signal sent on next item set
+        \param libvlc_media_t * media
+    */
+    void nextItemSet(libvlc_media_t *);
+
+    /*!
+        \brief Signal sent when stopped
+    */
+    void stopped();
+
+
 private:
+    static void libvlc_callback(const libvlc_event_t *event,
+                                void *data);
+
+    void createCoreConnections();
+    void removeCoreConnections();
+
     libvlc_media_list_player_t *_vlcMediaListPlayer;
+    libvlc_event_manager_t *_vlcEvents;
 
     VlcMediaList *_list;
     VlcMediaPlayer *_player;

@@ -75,6 +75,30 @@ namespace Vlc
     };
 
     /*!
+        \enum Meta
+        \brief Supported meta types
+    */
+    enum Meta {
+        Title,
+        Artist,
+        Genre,
+        Copyright,
+        Album,
+        TrackNumber,
+        Description,
+        Rating,
+        Date,
+        Setting,
+        URL,
+        Language,
+        NowPlaying,
+        Publisher,
+        EncodedBy,
+        ArtworkURL,
+        TrackID
+    };
+
+    /*!
         \enum Mux
         \brief Recording output file mux
     */

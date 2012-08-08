@@ -27,6 +27,8 @@
 
 class VlcInstance;
 
+struct libvlc_event_t;
+struct libvlc_event_manager_t;
 struct libvlc_media_t;
 
 /*!
@@ -249,12 +251,58 @@ public:
     Vlc::TrackType trackType();
 
 
+signals:
+    /*!
+        \brief Signal sent on meta change
+        \param libvlc_meta_t * meta
+    */
+    void metaChanged(const Vlc::Meta &);
+
+    /*!
+        \brief Signal sent on subitem added
+        \param libvlc_media_t * subitem
+    */
+    void subitemAdded(libvlc_media_t *);
+
+    /*!
+        \brief Signal sent on duration change
+        \param int duration
+    */
+    void durationChanged(const int &);
+
+    /*!
+        \brief Signal sent on parsed change
+        \param int status
+    */
+    void parsedChanged(const int &);
+
+    /*!
+        \brief Signal sent on freed
+        \param libvlc_media_t * media
+    */
+    void freed(libvlc_media_t *);
+
+    /*!
+        \brief Signal sent on state change
+        \param Vlc::State state
+    */
+    void stateChanged(const Vlc::State &);
+
+
 private:
     void initMedia(const QString &location,
                    const bool &localFile,
                    VlcInstance *instance);
 
+    static void libvlc_callback(const libvlc_event_t *event,
+                                void *data);
+
+    void createCoreConnections();
+    void removeCoreConnections();
+
     libvlc_media_t * _vlcMedia;
+    libvlc_event_manager_t *_vlcEvents;
+
     QString _currentLocation;
 };
 

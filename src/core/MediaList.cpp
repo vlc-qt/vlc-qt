@@ -27,6 +27,9 @@ VlcMediaList::VlcMediaList(VlcInstance *instance)
     : QObject(instance)
 {
     _vlcMediaList = libvlc_media_list_new(instance->core());
+    _vlcEvents = libvlc_media_list_event_manager(_vlcMediaList);
+
+    createCoreConnections();
 
     VlcError::errmsg();
 }
@@ -36,6 +39,8 @@ VlcMediaList::~VlcMediaList()
     foreach(VlcMedia *m, _list)
         delete m;
 
+    removeCoreConnections();
+
     libvlc_media_list_release(_vlcMediaList);
 
     VlcError::errmsg();
@@ -44,6 +49,32 @@ VlcMediaList::~VlcMediaList()
 libvlc_media_list_t *VlcMediaList::core()
 {
     return _vlcMediaList;
+}
+
+void VlcMediaList::createCoreConnections()
+{
+    QList<libvlc_event_e> list;
+    list << libvlc_MediaListItemAdded
+         << libvlc_MediaListWillAddItem
+         << libvlc_MediaListItemDeleted
+         << libvlc_MediaListWillDeleteItem;
+
+    foreach(const libvlc_event_e &event, list) {
+        libvlc_event_attach(_vlcEvents, event, libvlc_callback, this);
+    }
+}
+
+void VlcMediaList::removeCoreConnections()
+{
+    QList<libvlc_event_e> list;
+    list << libvlc_MediaListItemAdded
+         << libvlc_MediaListWillAddItem
+         << libvlc_MediaListItemDeleted
+         << libvlc_MediaListWillDeleteItem;
+
+    foreach(const libvlc_event_e &event, list) {
+        libvlc_event_detach(_vlcEvents, event, libvlc_callback, this);
+    }
 }
 
 void VlcMediaList::addMedia(VlcMedia *media)
@@ -119,4 +150,28 @@ void VlcMediaList::lock()
 void VlcMediaList::unlock()
 {
     libvlc_media_list_unlock(_vlcMediaList);
+}
+
+void VlcMediaList::libvlc_callback(const libvlc_event_t *event,
+                               void *data)
+{
+    VlcMediaList *core = (VlcMediaList *)data;
+
+    switch(event->type)
+    {
+    case libvlc_MediaListItemAdded:
+        emit core->itemAdded(event->u.media_list_item_added.item, event->u.media_list_item_added.index);
+        break;
+    case libvlc_MediaListWillAddItem:
+        emit core->willAddItem(event->u.media_list_will_add_item.item, event->u.media_list_will_add_item.index);
+        break;
+    case libvlc_MediaListItemDeleted:
+        emit core->itemDeleted(event->u.media_list_item_deleted.item, event->u.media_list_item_deleted.index);
+        break;
+    case libvlc_MediaListWillDeleteItem:
+        emit core->willDeleteItem(event->u.media_list_will_delete_item.item, event->u.media_list_will_delete_item.index);
+        break;
+    default:
+        break;
+    }
 }

@@ -49,6 +49,8 @@ VlcMedia::VlcMedia(libvlc_media_t *media)
 
 VlcMedia::~VlcMedia()
 {
+    removeCoreConnections();
+
     libvlc_media_release(_vlcMedia);
 
     VlcError::errmsg();
@@ -76,9 +78,43 @@ void VlcMedia::initMedia(const QString &location,
     else
         _vlcMedia = libvlc_media_new_location(instance->core(), l.toAscii().data());
 
+    _vlcEvents = libvlc_media_event_manager(_vlcMedia);
+
+    createCoreConnections();
+
     VlcError::errmsg();
 
     qDebug() << "libvlc" << "Media:" << location << "Local:" << localFile;
+}
+
+void VlcMedia::createCoreConnections()
+{
+    QList<libvlc_event_e> list;
+    list << libvlc_MediaMetaChanged
+         << libvlc_MediaSubItemAdded
+         << libvlc_MediaDurationChanged
+         << libvlc_MediaParsedChanged
+         << libvlc_MediaFreed
+         << libvlc_MediaStateChanged;
+
+    foreach(const libvlc_event_e &event, list) {
+        libvlc_event_attach(_vlcEvents, event, libvlc_callback, this);
+    }
+}
+
+void VlcMedia::removeCoreConnections()
+{
+    QList<libvlc_event_e> list;
+    list << libvlc_MediaMetaChanged
+         << libvlc_MediaSubItemAdded
+         << libvlc_MediaDurationChanged
+         << libvlc_MediaParsedChanged
+         << libvlc_MediaFreed
+         << libvlc_MediaStateChanged;
+
+    foreach(const libvlc_event_e &event, list) {
+        libvlc_event_detach(_vlcEvents, event, libvlc_callback, this);
+    }
 }
 
 QString VlcMedia::currentLocation() const
@@ -280,4 +316,34 @@ Vlc::TrackType VlcMedia::trackType()
         return Vlc::Text;
     else
         return Vlc::UnknownType;
+}
+
+void VlcMedia::libvlc_callback(const libvlc_event_t *event,
+                               void *data)
+{
+    VlcMedia *core = (VlcMedia *)data;
+
+    switch(event->type)
+    {
+    case libvlc_MediaMetaChanged:
+        emit core->metaChanged(Vlc::Meta(event->u.media_meta_changed.meta_type));
+        break;
+    case libvlc_MediaSubItemAdded:
+        emit core->subitemAdded(event->u.media_subitem_added.new_child);
+        break;
+    case libvlc_MediaDurationChanged:
+        emit core->durationChanged(event->u.media_duration_changed.new_duration);
+        break;
+    case libvlc_MediaParsedChanged:
+        emit core->parsedChanged(event->u.media_parsed_changed.new_status);
+        break;
+    case libvlc_MediaFreed:
+        emit core->freed(event->u.media_freed.md);
+        break;
+    case libvlc_MediaStateChanged:
+        emit core->stateChanged(Vlc::State(event->u.media_state_changed.new_state));
+        break;
+    default:
+        break;
+    }
 }
