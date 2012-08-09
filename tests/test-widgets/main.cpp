@@ -32,7 +32,9 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("Test Widgets");
     QCoreApplication::setAttribute(Qt::AA_X11InitThreads);
 
+#if defined(Qt4)
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+#endif
 
     QApplication app(argc, argv);
 

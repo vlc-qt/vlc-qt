@@ -35,7 +35,9 @@ int main(int argc, char *argv[])
     QScopedPointer<QApplication> app(createApplication(argc, argv));
     QCoreApplication::setApplicationName("Test QML");
 
+#if defined(Qt4)
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+#endif
 
     qmlRegisterType<VlcQMLVideoPlayer>("VLCQt", 0, 6, "VlcVideoPlayer");
 
