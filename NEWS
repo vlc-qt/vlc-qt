@@ -1,3 +1,6 @@
+0.7.0 (git)
+  * Re-licensed under GNU Lesser General Public License v3
+
 0.6.2 (2012-07-02)
   * New take snapshot and size functions for video
   * New seek widget

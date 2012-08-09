@@ -14,5 +14,5 @@ Copyright:
 License:
 
 VLC-Qt and the Debian packaging are (C) 2010-2012, Tadej Novak <tadej@tano.si>
-and are licensed under the GPL version 3, see `/usr/share/common-licenses/GPL-3'
-or `LICENSE.GPL' provided with the source package.
+and are licensed under the LGPL version 3, see `/usr/share/common-licenses/LGPL-3'
+or `LICENSE.LGPL' provided with the source package.
