@@ -205,6 +205,7 @@ void VlcSeekWidget::updateFullTime(const int &time)
         setVisible(!_autoHide);
     } else {
         _seek->setMaximum(time);
+        setVisible(true);
     }
 }
 
