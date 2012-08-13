@@ -243,7 +243,7 @@ namespace Vlc
         \brief Mux strings
         \return mux strings (QStringList)
     */
-    __declspec(dllexport) QStringList mux();
+    VLCQT_EXPORT QStringList mux();
 
     /*!
         \brief Aspect and crop ratios strings
