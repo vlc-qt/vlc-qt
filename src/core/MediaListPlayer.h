@@ -23,6 +23,7 @@
 #include <QtCore/QString>
 
 #include "Enums.h"
+#include "SharedExport.h"
 
 class VlcInstance;
 class VlcMediaList;
@@ -41,7 +42,7 @@ struct libvlc_media_list_player_t;
     It provides internal playlist support.
     Requires a valid VlcMediaPlayer.
 */
-class VlcMediaListPlayer : public QObject
+class VLCQT_EXPORT VlcMediaListPlayer : public QObject
 {
 Q_OBJECT
 public:

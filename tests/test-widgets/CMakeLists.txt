@@ -100,6 +100,12 @@ IF(WITH_QT5)
                               ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY}
                               ${CMAKE_BINARY_DIR}/src/libvlc-qt.dylib
         )
+	ELSEIF(MSVC)
+        TARGET_LINK_LIBRARIES(${PROJECT_NAME}
+                              ${Qt5Core_LIBRARIES} ${Qt5Gui_LIBRARIES} ${Qt5Widgets_LIBRARIES}
+                              ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY}
+                              ${CMAKE_BINARY_DIR}/src/vlc-qt.lib
+		)
     ELSE(MINGW)
         TARGET_LINK_LIBRARIES(${PROJECT_NAME}
                               ${Qt5Core_LIBRARIES} ${Qt5Gui_LIBRARIES} ${Qt5Widgets_LIBRARIES}
@@ -118,6 +124,12 @@ ELSE(WITH_QT5)
                               ${QT_LIBRARIES}
                               ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY}
                               ${CMAKE_BINARY_DIR}/src/libvlc-qt.dylib
+        )
+    ELSE(MSVC)
+        TARGET_LINK_LIBRARIES(${PROJECT_NAME}
+                              ${QT_LIBRARIES}
+                              ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY}
+                              ${CMAKE_BINARY_DIR}/src/vlc-qt.lib
         )
     ELSE(MINGW)
         TARGET_LINK_LIBRARIES(${PROJECT_NAME}

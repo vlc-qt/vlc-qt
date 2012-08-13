@@ -22,6 +22,8 @@
 #include <QtCore/QPoint>
 #include <QWidget>
 
+#include "SharedExport.h"
+
 class QLabel;
 class QProgressBar;
 class QTimer;
@@ -35,7 +37,7 @@ class VlcMediaPlayer;
     This is one of VLC-Qt GUI classes.
     It provides only a display of elapsed time and full time of the media.
 */
-class VlcSeekWidget : public QWidget
+class VLCQT_EXPORT VlcSeekWidget : public QWidget
 {
 Q_OBJECT
 public:

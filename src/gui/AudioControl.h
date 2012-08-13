@@ -23,6 +23,7 @@
 #include <QtCore/QMap>
 
 #include "Enums.h"
+#include "SharedExport.h"
 
 class QAction;
 class QTimer;
@@ -37,7 +38,7 @@ class VlcMediaPlayer;
     This is one of VLC-Qt control classes.
     It provides audio tracks management.
 */
-class VlcAudioControl : public QObject
+class VLCQT_EXPORT VlcAudioControl : public QObject
 {
 Q_OBJECT
 public:
