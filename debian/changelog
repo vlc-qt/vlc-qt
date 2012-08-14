@@ -1,4 +1,11 @@
-libvlc-qt (0.6.2-1~precise) precise; urgency=low
+libvlc-qt (0.7.0~git20120810.cb8ff01-1~quantal) quantal; urgency=low
+
+  * Test build
+
+ -- Tadej Novak <tadej@tano.si>  Fri, 10 Aug 2012 16:09:13 +0200
+
+
+libvlc-qt (0.6.2-1~quantal) quantal; urgency=low
 
   * New take snapshot and size functions for video
   * New seek widget
@@ -10,7 +17,7 @@ libvlc-qt (0.6.2-1~precise) precise; urgency=low
  -- Tadej Novak <tadej@tano.si>  Mon, 02 Jul 2012 11:10:27 +0200
 
 
-libvlc-qt (0.6.1-1~precise) precise; urgency=low
+libvlc-qt (0.6.1-1~quantal) quantal; urgency=low
 
   * Updated VideoWidget to remove X11 compositing problems
   * Qt5 improved support
@@ -18,7 +25,7 @@ libvlc-qt (0.6.1-1~precise) precise; urgency=low
  -- Tadej Novak <tadej@tano.si>  Sun, 27 May 2012 18:36:53 +0200
 
 
-libvlc-qt (0.6.0-1~precise) precise; urgency=low
+libvlc-qt (0.6.0-1~quantal) quantal; urgency=low
 
   * Multiple instances and players support
   * Basic recording support
@@ -30,7 +37,7 @@ libvlc-qt (0.6.0-1~precise) precise; urgency=low
  -- Tadej Novak <tadej@tano.si>  Thu, 03 May 2012 20:07:36 +0200
 
 
-libvlc-qt (0.5.1-1~ppa1~precise) precise; urgency=low
+libvlc-qt (0.5.1-1~ppa1~quantal) quantal; urgency=low
 
   * Pkgconfig support
   * Changes in audio/video controllers
@@ -39,7 +46,7 @@ libvlc-qt (0.5.1-1~ppa1~precise) precise; urgency=low
  -- Tadej Novak <tadej@tano.si>  Mon, 27 Jun 2011 10:43:59 +0200
 
 
-libvlc-qt (0.5.0-1~ppa1~precise) precise; urgency=low
+libvlc-qt (0.5.0-1~ppa1~quantal) quantal; urgency=low
 
   * Auto-hide option for seek widget
   * Update for Audio and Video control classes
@@ -51,7 +58,7 @@ libvlc-qt (0.5.0-1~ppa1~precise) precise; urgency=low
  -- Tadej Novak <tadej@tano.si>  Sun, 03 Apr 2011 16:17:32 +0200
 
 
-libvlc-qt (0.4.0-1~ppa1~precise) precise; urgency=low
+libvlc-qt (0.4.0-1~ppa1~quantal) quantal; urgency=low
 
   * QVlc project is now separated from Tano and now known as VLC-Qt.
   * Only libvlc 1.1 and later are supported.

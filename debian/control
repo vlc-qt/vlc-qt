@@ -1,7 +1,7 @@
 Source: libvlc-qt
 Priority: extra
 Maintainer: Tadej Novak <tadej@tano.si>
-Build-Depends: debhelper (>= 7), cmake, libqt4-dev (>=4.6.0), libvlc-dev (>=1.1.0), vlc (>=1.1.0), libx11-dev
+Build-Depends: debhelper (>= 7), cmake, libqt4-dev (>=4.8.0), libvlc-dev (>=2.0.0), vlc (>=2.0.0), libx11-dev
 Standards-Version: 3.9.1
 Section: libs
 Homepage: http://projects.tano.si
@@ -9,7 +9,7 @@ Homepage: http://projects.tano.si
 Package: libvlc-qt-dev
 Section: libdevel
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libvlc-qt0 (= ${binary:Version}), libvlc-dev (>=1.1.0)
+Depends: ${shlibs:Depends}, ${misc:Depends}, libvlc-qt0 (= ${binary:Version}), libvlc-dev (>=2.0.0)
 Replaces: libqvlc-dev
 Description: VLC-Qt - Qt and libvlc connector library [devel]
  VLC-Qt is a free library used to connect Qt and libvlc libraries.
@@ -36,7 +36,7 @@ Description: VLC-Qt - Qt and libvlc connector library [debug]
 Package: libvlc-qt0
 Section: libs
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libqt4-core (>=4.6.0), libqt4-gui (>=4.6.0), vlc (>=1.1.0), vlc-plugin-pulse (>=1.1.0), vlc-plugin-zvbi (>=1.1.0)
+Depends: ${shlibs:Depends}, ${misc:Depends}, libqt4-core (>=4.8.0), libqt4-gui (>=4.8.0), vlc (>=2.0.0), vlc-plugin-pulse (>=2.0.0), vlc-plugin-zvbi (>=2.0.0)
 Replaces: libqvlc0
 Description: VLC-Qt - Qt and libvlc connector library
  VLC-Qt is a free library used to connect Qt and libvlc libraries.
