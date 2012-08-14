@@ -125,7 +125,7 @@ ELSE(WITH_QT5)
                               ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY}
                               ${CMAKE_BINARY_DIR}/src/libvlc-qt.dylib
         )
-    ELSE(MSVC)
+    ELSEIF(MSVC)
         TARGET_LINK_LIBRARIES(${PROJECT_NAME}
                               ${QT_LIBRARIES}
                               ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY}
