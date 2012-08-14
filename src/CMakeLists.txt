@@ -90,7 +90,7 @@ SET(VLCQT_HEADERS
     core/Enums.h
     core/Error.h
     core/MetaManager.h
-	core/SharedExport.h
+    core/SharedExport.h
 
     ${CMAKE_BINARY_DIR}/src/Config.h
 )
@@ -200,11 +200,11 @@ ENDIF(WITH_QT5)
 
 # On Mac OS X, the VideoWidget uses Objective-C and Cocoa
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-	SET_SOURCE_FILES_PROPERTIES(gui/VideoWidget.cpp PROPERTIES COMPILE_FLAGS "-x objective-c++")
-	FIND_PATH(COCOA_INCLUDE_DIR Cocoa/Cocoa.h)
-	FIND_LIBRARY(COCOA_LIBRARY Cocoa)
-	SET(EXTRA_LIBS ${COCOA_LIBRARY})
-	TARGET_LINK_LIBRARIES(${VLCQT_SHARED} ${COCOA_LIBRARY})
+    SET_SOURCE_FILES_PROPERTIES(gui/VideoWidget.cpp PROPERTIES COMPILE_FLAGS "-x objective-c++")
+    FIND_PATH(COCOA_INCLUDE_DIR Cocoa/Cocoa.h)
+    FIND_LIBRARY(COCOA_LIBRARY Cocoa)
+    SET(EXTRA_LIBS ${COCOA_LIBRARY})
+    TARGET_LINK_LIBRARIES(${VLCQT_SHARED} ${COCOA_LIBRARY})
 ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 
 

@@ -76,7 +76,7 @@ IF(WITH_QT5)
                               ${Qt5Core_LIBRARIES} ${Qt5Gui_LIBRARIES} ${Qt5Widgets_LIBRARIES}
                               ${CMAKE_BINARY_DIR}/src/libvlc-qt.dll.a
         )
-	ELSEIF(MSVC)
+    ELSEIF(MSVC)
         TARGET_LINK_LIBRARIES(${PROJECT_NAME}
                               ${Qt5Core_LIBRARIES} ${Qt5Gui_LIBRARIES} ${Qt5Widgets_LIBRARIES}
                               ${CMAKE_BINARY_DIR}/src/vlc-qt.lib

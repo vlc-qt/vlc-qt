@@ -105,7 +105,7 @@ ENDIF(MINGW)
 
 # msubttypes
 if(MSVC)
-	SET (MSINTTYPES_PATH CACHE STRING "Directory to mstypes library containing inttypes.h and stdint.h")
+    SET (MSINTTYPES_PATH CACHE STRING "Directory to mstypes library containing inttypes.h and stdint.h")
 endif(MSVC)
 
 ###########
