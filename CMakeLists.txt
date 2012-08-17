@@ -46,9 +46,9 @@ ENDIF(MINGW)
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wall")
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
 
-if(MINGW)
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -W")
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -W")
+IF(MINGW)
+    SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -W")
+    SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -W")
 ENDIF(MINGW)
 
 SET(CMAKE_VERBOSE_MAKEFILE ON)
@@ -98,15 +98,15 @@ ENDIF(WITH_QT5)
 FIND_PACKAGE(LIBVLC REQUIRED)
 
 # Set Qt bin dir to find QtCoreX.dll and other libs to install
-IF(MINGW)
+IF(MINGW OR MSVC)
     STRING(REGEX REPLACE "([^ ]+)[/\\].*" "\\1" QT_BIN_DIR_TMP "${QT_QMAKE_EXECUTABLE}")
     STRING(REGEX REPLACE "\\\\" "/" QT_BIN_DIR "${QT_BIN_DIR_TMP}")  # Replace back slashes to slashes
-ENDIF(MINGW)
+ENDIF(MINGW OR MSVC)
 
 # msubttypes
-if(MSVC)
-    SET (MSINTTYPES_PATH CACHE STRING "Directory to mstypes library containing inttypes.h and stdint.h")
-endif(MSVC)
+IF(MSVC)
+    SET(MSINTTYPES_PATH CACHE STRING "Directory to mstypes library containing inttypes.h and stdint.h")
+ENDIF(MSVC)
 
 ###########
 # Version #
@@ -143,9 +143,9 @@ ENDIF(GIT)
 ADD_SUBDIRECTORY(src) 
 ADD_SUBDIRECTORY(pkgconfig)
 ADD_SUBDIRECTORY(doc)
-IF(MINGW)
+IF(MINGW OR MSVC)
     ADD_SUBDIRECTORY(windows)
-ENDIF(MINGW)
+ENDIF(MINGW OR MSVC)
 
 
 #########
