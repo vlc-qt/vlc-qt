@@ -22,6 +22,8 @@
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 
+#include "SharedExport.h"
+
 /*!
 	\namespace VlcCommon Common.h vlc-qt/Common.h
 	\brief Common functions
@@ -32,7 +34,7 @@ namespace VlcCommon
 		\brief Common libvlc arguments
 		\return libvlc arguments (QStringList)
 	*/
-	QStringList args();
+    VLCQT_EXPORT QStringList args();
 }
 
 #endif // VLCQT_COMMON_H_

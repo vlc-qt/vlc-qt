@@ -23,6 +23,7 @@
 #include <QtCore/QMap>
 
 #include "Enums.h"
+#include "SharedExport.h"
 
 class QAction;
 class QTimer;
@@ -37,7 +38,7 @@ class VlcVideo;
     This is one of VLC-Qt control classes.
     It provides video and subtitle tracks management.
 */
-class VlcVideoControl : public QObject
+class VLCQT_EXPORT VlcVideoControl : public QObject
 {
 Q_OBJECT
 public:

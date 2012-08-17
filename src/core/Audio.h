@@ -22,6 +22,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QStringList>
 
+#include "SharedExport.h"
+
 class VlcMediaPlayer;
 
 struct libvlc_media_player_t;
@@ -32,7 +34,7 @@ struct libvlc_media_player_t;
 
     A group of audio controls functions.
 */
-class VlcAudio : public QObject
+class VLCQT_EXPORT VlcAudio : public QObject
 {
 Q_OBJECT
 public:

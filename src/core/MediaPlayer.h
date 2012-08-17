@@ -26,6 +26,7 @@
 #include <QWidget>
 
 #include "Enums.h"
+#include "SharedExport.h"
 
 class VlcAudio;
 class VlcInstance;
@@ -45,7 +46,7 @@ struct libvlc_media_player_t;
     A basic MediaPlayer manager for VLC-Qt library.
     It provides main playback controls.
 */
-class VlcMediaPlayer : public QObject
+class VLCQT_EXPORT VlcMediaPlayer : public QObject
 {
 Q_OBJECT
 public:

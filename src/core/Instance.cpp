@@ -16,6 +16,8 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
+#include <vector>
+
 #include <QtCore/QDebug>
 #include <QtCore/QStringList>
 
@@ -31,15 +33,13 @@ VlcInstance::VlcInstance(const QStringList &args,
       _vlcInstance(0)
 {
     // Convert arguments to required format
-    std::string stdStrings[args.size()];
-    const char *vlcArgs[args.size()];
+    std::vector<const char *> vlcArgs(args.size());
     for(int i = 0; i < args.size(); i++) {
-        stdStrings[i] = args[i].toStdString();
-        vlcArgs[i] = stdStrings[i].c_str();
+        vlcArgs[i] = args[i].toStdString().c_str();
     }
 
     // Create new libvlc instance
-    _vlcInstance = libvlc_new(sizeof(vlcArgs) / sizeof(*vlcArgs), vlcArgs);
+    _vlcInstance = libvlc_new(args.size(), &vlcArgs[0]);
 
     VlcError::errmsg();
 
