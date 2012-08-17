@@ -43,8 +43,13 @@ IF(MINGW)
 ENDIF(MINGW)
 
 # Show all warnings
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wall -W")
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -W")
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wall")
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
+
+if(MINGW)
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -W")
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -W")
+ENDIF(MINGW)
 
 SET(CMAKE_VERBOSE_MAKEFILE ON)
 
@@ -97,6 +102,11 @@ IF(MINGW)
     STRING(REGEX REPLACE "([^ ]+)[/\\].*" "\\1" QT_BIN_DIR_TMP "${QT_QMAKE_EXECUTABLE}")
     STRING(REGEX REPLACE "\\\\" "/" QT_BIN_DIR "${QT_BIN_DIR_TMP}")  # Replace back slashes to slashes
 ENDIF(MINGW)
+
+# msubttypes
+if(MSVC)
+    SET (MSINTTYPES_PATH CACHE STRING "Directory to mstypes library containing inttypes.h and stdint.h")
+endif(MSVC)
 
 ###########
 # Version #

@@ -23,12 +23,14 @@
 #include <QtCore/QTimer>
 #include <QtDeclarative/QDeclarativeItem>
 
+#include "SharedExport.h"
+
 class VlcAudio;
 class VlcInstance;
 class VlcMedia;
 class VlcMediaPlayer;
 
-class VlcQMLVideoPlayer : public QDeclarativeItem
+class VLCQT_EXPORT VlcQMLVideoPlayer : public QDeclarativeItem
 {
 Q_OBJECT
 public:

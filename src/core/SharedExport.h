@@ -16,34 +16,15 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_ERROR_H_
-#define VLCQT_ERROR_H_
+#ifndef VLCQT_SHARED_EXPORT_H
+#define VLCQT_SHARED_EXPORT_H
 
-#include "SharedExport.h"
+#include <QtCore/qglobal.h>
 
-/*!
-	\class VlcError Error.h vlc-qt/Error.h
-	\brief Error handler
+#if defined(VLCQT_LIBRARY)
+#  define VLCQT_EXPORT Q_DECL_EXPORT
+#else
+#  define VLCQT_EXPORT Q_DECL_IMPORT
+#endif
 
-	A basic error handler for VLC-Qt library.
-*/
-class VLCQT_EXPORT VlcError
-{
-public:
-	/*!
-		\brief A human-readable error message for the last libvlc error in the calling thread.
-
-		The resulting string is valid until another error occurs.
-		\warning There may be no output, if there is no error.
-	*/
-	static void errmsg();
-
-	/*!
-		\brief Clears the libvlc error status for the current thread.
-
-		This is optional. By default, the error status is automatically overriden when a new error occurs, and destroyed when the thread exits.
-	*/
-	static void clearerr();
-};
-
-#endif // VLCQT_ERROR_H_
+#endif // SHARED_EXPORT_H
