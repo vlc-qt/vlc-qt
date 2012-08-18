@@ -72,6 +72,12 @@ ELSE(WITH_QT5)
     INCLUDE(${QT_USE_FILE})
 ENDIF(WITH_QT5)
 
+# This line sets the required Qt libraries
+IF(WITH_QT5)
+    SET(VLCQT_QTLIB ${Qt5Core_LIBRARIES} ${Qt5Gui_LIBRARIES} ${Qt5Widgets_LIBRARIES})
+ELSE(WITH_QT5)
+    SET(VLCQT_QTLIB ${QT_LIBRARIES})
+ENDIF(WITH_QT5)
 
 #####################
 # Compiler settings #
@@ -87,59 +93,8 @@ INCLUDE_DIRECTORIES(
 # This line tells cmake to create the Test program.
 ADD_EXECUTABLE(${PROJECT_NAME} ${Test_Widgets_UIC_Srcs} ${Test_Widgets_Srcs} ${Test_Widgets_MOC_Srcs})
 
-# Here the needed Qt Libraries are added to the link command.
-IF(WITH_QT5)
-    IF(MINGW)
-        TARGET_LINK_LIBRARIES(${PROJECT_NAME}
-                              ${Qt5Core_LIBRARIES} ${Qt5Gui_LIBRARIES} ${Qt5Widgets_LIBRARIES}
-                              ${CMAKE_BINARY_DIR}/src/libvlc-qt.dll.a
-        )
-    ELSEIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-        TARGET_LINK_LIBRARIES(${PROJECT_NAME}
-                              ${Qt5Core_LIBRARIES} ${Qt5Gui_LIBRARIES} ${Qt5Widgets_LIBRARIES}
-                              ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY}
-                              ${CMAKE_BINARY_DIR}/src/libvlc-qt.dylib
-        )
-    ELSEIF(MSVC)
-        TARGET_LINK_LIBRARIES(${PROJECT_NAME}
-                              ${Qt5Core_LIBRARIES} ${Qt5Gui_LIBRARIES} ${Qt5Widgets_LIBRARIES}
-                              ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY}
-                              ${CMAKE_BINARY_DIR}/src/vlc-qt.lib
-        )
-    ELSE(MINGW)
-        TARGET_LINK_LIBRARIES(${PROJECT_NAME}
-                              ${Qt5Core_LIBRARIES} ${Qt5Gui_LIBRARIES} ${Qt5Widgets_LIBRARIES}
-                              ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY}
-                              ${CMAKE_BINARY_DIR}/src/libvlc-qt.so
-        )
-    ENDIF(MINGW)
-ELSE(WITH_QT5)
-    IF(MINGW)
-        TARGET_LINK_LIBRARIES(${PROJECT_NAME}
-                              ${QT_LIBRARIES}
-                              ${CMAKE_BINARY_DIR}/src/libvlc-qt.dll.a
-        )
-    ELSEIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-        TARGET_LINK_LIBRARIES(${PROJECT_NAME}
-                              ${QT_LIBRARIES}
-                              ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY}
-                              ${CMAKE_BINARY_DIR}/src/libvlc-qt.dylib
-        )
-    ELSEIF(MSVC)
-        TARGET_LINK_LIBRARIES(${PROJECT_NAME}
-                              ${QT_LIBRARIES}
-                              ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY}
-                              ${CMAKE_BINARY_DIR}/src/vlc-qt.lib
-        )
-    ELSE(MINGW)
-        TARGET_LINK_LIBRARIES(${PROJECT_NAME}
-                              ${QT_LIBRARIES}
-                              ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY}
-                              ${CMAKE_BINARY_DIR}/src/libvlc-qt.so
-        )
-    ENDIF(MINGW)
-ENDIF(WITH_QT5)
-
+# Here the needed Libraries are added to the link command.
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${VLCQT_QTLIB} ${VLCQT_BINARY})
 
 ################
 # Installation #

@@ -108,6 +108,18 @@ IF(MSVC)
     SET(MSINTTYPES_PATH CACHE STRING "Directory to mstypes library containing inttypes.h and stdint.h")
 ENDIF(MSVC)
 
+# Link parameters
+IF(MINGW)
+    SET(VLCQT_BINARY ${CMAKE_BINARY_DIR}/src/libvlc-qt.dll.a)
+ELSEIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    SET(VLCQT_BINARY ${CMAKE_BINARY_DIR}/src/libvlc-qt.dylib)
+ELSEIF(MSVC)
+    SET(VLCQT_BINARY ${CMAKE_BINARY_DIR}/src/libvlc-qt.lib)
+ELSE(MINGW)
+    SET(VLCQT_BINARY ${CMAKE_BINARY_DIR}/src/libvlc-qt.so)
+ENDIF(MINGW)
+
+
 ###########
 # Version #
 ###########
