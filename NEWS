@@ -1,5 +1,17 @@
 0.7.0 (git)
   * Re-licensed under GNU Lesser General Public License v3
+  * Native MSVC support
+  * Basic QML Video Player
+  * New MediaList and MediaListPlayer
+  * Support for libvlc events
+  * Ability to access current media and other set objects
+  * Ability to check track type
+  * Enums for common audio/video outputs
+  * Logo and marquee support
+  * Scale video function
+  * Added and changed some common instance arguments
+  * Drop support for older versions of Qt and VLC
+    Supported are Qt 4.8 or later and VLC 2.0 or later.
 
 0.6.2 (2012-07-02)
   * New take snapshot and size functions for video
