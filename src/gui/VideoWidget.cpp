@@ -47,12 +47,15 @@ VlcVideoWidget::VlcVideoWidget(VlcMediaPlayer *player,
                                QWidget *parent)
     :
 #if defined(Q_OS_MAC)
-      QMacCocoaViewContainer(0, parent),
+      QMacCocoaViewContainer(0, parent)
 #else
-      QFrame(parent),
+      QFrame(parent)
 #endif
-      _vlcVideo(player->video())
 {
+    _vlcMediaPlayer = player;
+
+    connect(_vlcMediaPlayer, SIGNAL(vout(int)), this, SLOT(applyPreviousSettings()));
+
     initVideoWidget();
 }
 
@@ -63,7 +66,7 @@ VlcVideoWidget::VlcVideoWidget(QWidget *parent)
 #else
       QFrame(parent),
 #endif
-      _vlcVideo(0)
+      _vlcMediaPlayer(0)
 {
     initVideoWidget();
 }
@@ -73,7 +76,6 @@ VlcVideoWidget::~VlcVideoWidget()
     release();
 
     delete _timerMouse;
-    delete _timerSettings;
 
 #if !defined(Q_OS_MAC)
     delete _layout;
@@ -88,6 +90,7 @@ void VlcVideoWidget::initVideoWidget()
     setMouseTracking(true);
 
     _hide = true;
+    _enableSettings = false;
     _defaultAspectRatio = Vlc::Original;
     _defaultCropRatio = Vlc::Original;
     _defaultDeinterlacing = Vlc::Disabled;
@@ -113,13 +116,13 @@ void VlcVideoWidget::initVideoWidget()
 
     _timerMouse = new QTimer(this);
     connect(_timerMouse, SIGNAL(timeout()), this, SLOT(hideMouse()));
-    _timerSettings = new QTimer(this);
-    connect(_timerSettings, SIGNAL(timeout()), this, SLOT(applyPreviousSettings()));
 }
 
 void VlcVideoWidget::setMediaPlayer(VlcMediaPlayer *player)
 {
-    _vlcVideo = player->video();
+    _vlcMediaPlayer = player;
+
+    connect(_vlcMediaPlayer, SIGNAL(vout(int)), this, SLOT(applyPreviousSettings()));
 }
 
 //Events:
@@ -198,6 +201,26 @@ void VlcVideoWidget::toggleFullscreen()
     }
 }
 
+void VlcVideoWidget::setCurrentAspectRatio(const Vlc::Ratio &ratio)
+{
+    _currentAspectRatio = ratio;
+}
+
+void VlcVideoWidget::setCurrentCropRatio(const Vlc::Ratio &ratio)
+{
+    _currentCropRatio = ratio;
+}
+
+void VlcVideoWidget::setCurrentDeinterlacing(const Vlc::Deinterlacing &deinterlacing)
+{
+    _currentDeinterlacing = deinterlacing;
+}
+
+void VlcVideoWidget::setCurrentScale(const Vlc::Scale &scale)
+{
+    _currentScale = scale;
+}
+
 void VlcVideoWidget::setDefaultAspectRatio(const Vlc::Ratio &ratio)
 {
     _defaultAspectRatio = ratio;
@@ -227,7 +250,7 @@ void VlcVideoWidget::enableDefaultSettings()
 
 void VlcVideoWidget::enablePreviousSettings()
 {
-    _timerSettings->start(500);
+    _enableSettings = true;
 }
 
 void VlcVideoWidget::initDefaultSettings()
@@ -240,51 +263,50 @@ void VlcVideoWidget::initDefaultSettings()
 
 void VlcVideoWidget::applyPreviousSettings()
 {
-    bool ratio = false, crop = false, scale = false;
-    if (_vlcVideo->aspectRatio() != _currentAspectRatio) {
-        _vlcVideo->setAspectRatio(_currentAspectRatio);
-    } else {
-        ratio = true;
-    }
-    if (_vlcVideo->cropGeometry() != _currentCropRatio) {
-        _vlcVideo->setCropGeometry(_currentCropRatio);
-    } else {
-        crop = true;
-    }
-    if (_vlcVideo->scale() != _currentScale) {
-        _vlcVideo->setScale(_currentScale);
-    } else {
-        scale = true;
-    }
+    if (!_enableSettings)
+        return;
 
-    _vlcVideo->setDeinterlace(_currentDeinterlacing);
+    if (!_vlcMediaPlayer)
+        return;
 
-    if (ratio && crop && scale)
-        _timerSettings->stop();
+    _vlcMediaPlayer->video()->setAspectRatio(_currentAspectRatio);
+    _vlcMediaPlayer->video()->setCropGeometry(_currentCropRatio);
+    _vlcMediaPlayer->video()->setScale(_currentScale);
+    _vlcMediaPlayer->video()->setDeinterlace(_currentDeinterlacing);
+
+    _enableSettings = false;
 }
 
 void VlcVideoWidget::setAspectRatio(const Vlc::Ratio &ratio)
 {
-    _currentAspectRatio = ratio;
-    _vlcVideo->setAspectRatio(ratio);
+    if (_vlcMediaPlayer) {
+        _currentAspectRatio = ratio;
+        _vlcMediaPlayer->video()->setAspectRatio(ratio);
+    }
 }
 
 void VlcVideoWidget::setCropRatio(const Vlc::Ratio &ratio)
 {
-    _currentCropRatio = ratio;
-    _vlcVideo->setCropGeometry(ratio);
+    if (_vlcMediaPlayer) {
+        _currentCropRatio = ratio;
+        _vlcMediaPlayer->video()->setCropGeometry(ratio);
+    }
 }
 
 void VlcVideoWidget::setDeinterlacing(const Vlc::Deinterlacing &deinterlacing)
 {
-    _currentDeinterlacing = deinterlacing;
-    _vlcVideo->setDeinterlace(deinterlacing);
+    if (_vlcMediaPlayer) {
+        _currentDeinterlacing = deinterlacing;
+        _vlcMediaPlayer->video()->setDeinterlace(deinterlacing);
+    }
 }
 
 void VlcVideoWidget::setScale(const Vlc::Scale &scale)
 {
-    _currentScale = scale;
-    _vlcVideo->setScale(scale);
+    if (_vlcMediaPlayer) {
+        _currentScale = scale;
+        _vlcMediaPlayer->video()->setScale(scale);
+    }
 }
 
 void VlcVideoWidget::sync()

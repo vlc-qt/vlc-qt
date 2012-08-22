@@ -33,7 +33,6 @@
 class QTimer;
 
 class VlcMediaPlayer;
-class VlcVideo;
 
 /*!
     \class VlcVideoWidget VideoWidget.h vlc-qt/VideoWidget.h
@@ -82,6 +81,12 @@ public:
     inline Vlc::Ratio defaultAspectRatio() const { return _defaultAspectRatio; }
 
     /*!
+        \brief Set current aspect ratio setting
+        \param ratio current aspect ratio (const Vlc::Ratio)
+    */
+    void setCurrentAspectRatio(const Vlc::Ratio &ratio);
+
+    /*!
         \brief Set default aspect ratio setting
         \param ratio default aspect ratio (const Vlc::Ratio)
     */
@@ -98,6 +103,12 @@ public:
         \return default crop ratio (const Vlc::Ratio)
     */
     inline Vlc::Ratio defaultCropRatio() const { return _defaultCropRatio; }
+
+    /*!
+        \brief Set current crop ratio setting
+        \param ratio current crop ratio (const Vlc::Ratio)
+    */
+    void setCurrentCropRatio(const Vlc::Ratio &ratio);
 
     /*!
         \brief Set default crop ratio setting
@@ -118,6 +129,12 @@ public:
     inline Vlc::Deinterlacing defaultDeinterlacing() const { return _defaultDeinterlacing; }
 
     /*!
+        \brief Set current deinterlacing filter setting
+        \param ratio current deinterlacing filter (const Vlc::Deinterlacing)
+    */
+    void setCurrentDeinterlacing(const Vlc::Deinterlacing &deinterlacing);
+
+    /*!
         \brief Set default deinterlacing filter setting
         \param ratio default deinterlacing filter (const Vlc::Deinterlacing)
     */
@@ -134,6 +151,12 @@ public:
         \return default scale ratio (const Vlc::Scale)
     */
     inline Vlc::Scale defaultScale() const { return _defaultScale; }
+
+    /*!
+        \brief Set current scale ratio setting
+        \param scale current scale ratio (const Vlc::Scale)
+    */
+    void setCurrentScale(const Vlc::Scale &scale);
 
     /*!
         \brief Set default scale ratio setting
@@ -266,7 +289,7 @@ private:
     void initVideoWidget();
     void sync();
 
-    VlcVideo *_vlcVideo;
+    VlcMediaPlayer *_vlcMediaPlayer;
 
 #if !defined(Q_OS_MAC)
     QWidget *_video;
@@ -274,9 +297,9 @@ private:
 #endif
 
     QTimer *_timerMouse;
-    QTimer *_timerSettings;
 
     bool _hide;
+    bool _enableSettings;
 
     Vlc::Ratio _defaultAspectRatio;
     Vlc::Ratio _defaultCropRatio;
