@@ -48,6 +48,12 @@ SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
 
 SET(CMAKE_VERBOSE_MAKEFILE ON)
 
+# Statically link with libgcc
+IF(MINGW)
+    SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static-libgcc -static-libstdc++")
+    SET(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -static-libgcc -static-libstdc++")
+ENDIF(MINGW)
+
 # Qt5 support
 OPTION(WITH_QT5 "Build with Qt5" OFF)
 MESSAGE("\nVLC-Qt: Build with Qt5: ${WITH_QT5}\n")

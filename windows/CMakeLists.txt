@@ -25,15 +25,12 @@ SET(Vlc_Plugins_Type
     audio_mixer
     audio_output
     codec
-    control
     demux
-    media_library
     meta_engine
     misc
     mmx
     mmxext
     mux
-    notify
     packetizer
     services_discovery
     sse2
@@ -43,7 +40,6 @@ SET(Vlc_Plugins_Type
     video_chroma
     video_filter
     video_output
-    visualization
 )
 
 MACRO(VLC_INSTALL_PLUGINS)
@@ -74,6 +70,11 @@ IF(MINGW OR MSVC)
         ${LIBVLC_BIN_DIR}/libvlc.dll
         ${LIBVLC_BIN_DIR}/libvlccore.dll
     )
+    IF(MINGW)
+        SET(Extra_Libs
+            ${QT_BIN_DIR}/zlib1.dll
+        )
+    ENDIF(MINGW)
 ENDIF(MINGW OR MSVC)
 
 
@@ -86,5 +87,8 @@ IF(MINGW OR MSVC)
         INSTALL(FILES ${Qt_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
     ENDIF(WITH_QML)
     INSTALL(FILES ${Vlc_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+    IF(MINGW)
+        INSTALL(FILES ${Extra_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+    ENDIF(MINGW)
     VLC_INSTALL_PLUGINS(${Vlc_Plugins_Type})
 ENDIF(MINGW OR MSVC)
