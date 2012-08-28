@@ -22,6 +22,7 @@
 #include <vlc/vlc.h>
 
 #include "Config.h"
+#include "core/Enums.h"
 #include "core/Error.h"
 #include "core/Instance.h"
 
@@ -40,6 +41,9 @@ VlcInstance::VlcInstance(const QStringList &args,
 
     // Create new libvlc instance
     _vlcInstance = libvlc_new(sizeof(vlcArgs) / sizeof(*vlcArgs), vlcArgs);
+
+    qRegisterMetaType<Vlc::Meta>("Vlc::Meta");
+    qRegisterMetaType<Vlc::State>("Vlc::State");
 
     VlcError::errmsg();
 
