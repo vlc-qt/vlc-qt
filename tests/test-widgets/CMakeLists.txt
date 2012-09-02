@@ -30,16 +30,6 @@ SET(Test_Widgets_UIs
     TestRecorder.ui
 )
 
-# Define the MOC source files
-SET(Test_Widgets_MOCs
-    TestDualInstance.h
-    TestDualPlayer.h
-    TestMain.h
-    TestMetaManager.h
-    TestPlayer.h
-    TestRecorder.h
-)
-
 # Define the C++ source files
 SET(Test_Widgets_Srcs
     main.cpp
@@ -55,29 +45,13 @@ SET(Test_Widgets_Srcs
 ################
 # Qt settings #
 ################
-# This scripts run the user interface compiler uic and the meta object compiler moc.
+# This scripts run the user interface compiler uic.
 IF(WITH_QT5)
     QT5_WRAP_UI(Test_Widgets_UIC_Srcs ${Test_Widgets_UIs})
-    QT5_WRAP_CPP(Test_Widgets_MOC_Srcs ${Test_Widgets_MOCs})
 ELSE(WITH_QT5)
     QT4_WRAP_UI(Test_Widgets_UIC_Srcs ${Test_Widgets_UIs})
-    QT4_WRAP_CPP(Test_Widgets_MOC_Srcs ${Test_Widgets_MOCs})
 ENDIF(WITH_QT5)
 
-# This line adds the include path of the Qt
-# directory to the compiler include path
-IF(WITH_QT5)
-    INCLUDE_DIRECTORIES(${Qt5Core_INCLUDE_DIRS} ${Qt5Gui_INCLUDE_DIRS} ${Qt5Widgets_INCLUDE_DIRS})
-ELSE(WITH_QT5)
-    INCLUDE(${QT_USE_FILE})
-ENDIF(WITH_QT5)
-
-# This line sets the required Qt libraries
-IF(WITH_QT5)
-    SET(VLCQT_QTLIB ${Qt5Core_LIBRARIES} ${Qt5Gui_LIBRARIES} ${Qt5Widgets_LIBRARIES})
-ELSE(WITH_QT5)
-    SET(VLCQT_QTLIB ${QT_LIBRARIES})
-ENDIF(WITH_QT5)
 
 #####################
 # Compiler settings #
@@ -91,10 +65,15 @@ INCLUDE_DIRECTORIES(
 )
 
 # This line tells cmake to create the Test program.
-ADD_EXECUTABLE(${PROJECT_NAME} ${Test_Widgets_UIC_Srcs} ${Test_Widgets_Srcs} ${Test_Widgets_MOC_Srcs})
+ADD_EXECUTABLE(${PROJECT_NAME} ${Test_Widgets_UIC_Srcs} ${Test_Widgets_Srcs})
 
-# Here the needed Libraries are added to the link command.
-TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${VLCQT_QTLIB} ${VLCQT_BINARY})
+# Link the required libraries
+IF(WITH_QT5)
+    QT5_USE_MODULES(${PROJECT_NAME} Widgets)
+    TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${VLCQT_BINARY})
+ELSE(WITH_QT5)
+    TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${QT_LIBRARIES} ${VLCQT_BINARY})
+ENDIF(WITH_QT5)
 
 ################
 # Installation #
