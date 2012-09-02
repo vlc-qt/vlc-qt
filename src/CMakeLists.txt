@@ -21,6 +21,9 @@
 # Add definition for exporting symbols
 ADD_DEFINITIONS(-DVLCQT_LIBRARY)
 
+# Add definitions for shared library
+ADD_DEFINITIONS(-DQT_SHARED -D_REENTRANT)
+
 CONFIGURE_FILE(
     ${CMAKE_SOURCE_DIR}/src/Config.h.in
     ${CMAKE_BINARY_DIR}/src/Config.h
