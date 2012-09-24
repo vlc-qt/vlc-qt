@@ -32,15 +32,12 @@ VlcInstance::VlcInstance(const QStringList &args,
       _vlcInstance(0)
 {
     // Convert arguments to required format
-    std::string stdStrings[args.size()];
-    const char *vlcArgs[args.size()];
-    for(int i = 0; i < args.size(); i++) {
-        stdStrings[i] = args[i].toStdString();
-        vlcArgs[i] = stdStrings[i].c_str();
-    }
+    char **argv = (char **)malloc(sizeof(char **) * args.count());
+    for (int i = 0; i < args.count(); ++i)
+        argv[i] = (char *)qstrdup(args.at(i).toLocal8Bit().data());
 
     // Create new libvlc instance
-    _vlcInstance = libvlc_new(sizeof(vlcArgs) / sizeof(*vlcArgs), vlcArgs);
+    _vlcInstance = libvlc_new(args.count(), argv);
 
     qRegisterMetaType<Vlc::Meta>("Vlc::Meta");
     qRegisterMetaType<Vlc::State>("Vlc::State");

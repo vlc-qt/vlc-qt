@@ -83,10 +83,10 @@ public:
     VlcVideo *video();
 
     /*!
-        \brief Get the current movie lenght (in ms).
-        \return the movie lenght (in ms), or -1 if there is no media (const int)
+        \brief Get the current movie length (in ms).
+        \return the movie length (in ms), or -1 if there is no media (const int)
     */
-    int lenght() const;
+    int length() const;
 
     /*!
         \brief Get current media object
