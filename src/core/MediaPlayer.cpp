@@ -144,13 +144,13 @@ bool VlcMediaPlayer::hasVout() const
     return status;
 }
 
-int VlcMediaPlayer::lenght() const
+int VlcMediaPlayer::length() const
 {
-    libvlc_time_t lenght = libvlc_media_player_get_length(_vlcMediaPlayer);
+    libvlc_time_t length = libvlc_media_player_get_length(_vlcMediaPlayer);
 
     VlcError::errmsg();
 
-    return lenght;
+    return length;
 }
 
 VlcMedia *VlcMediaPlayer::currentMedia()
