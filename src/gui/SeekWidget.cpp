@@ -115,9 +115,9 @@ void VlcSeekWidget::wheelEvent(QWheelEvent *event)
         return;
 
     if (event->delta() > 0)
-        _vlcMediaPlayer->setTime(_vlcMediaPlayer->time() + _vlcMediaPlayer->lenght() * 0.01);
+        _vlcMediaPlayer->setTime(_vlcMediaPlayer->time() + _vlcMediaPlayer->length() * 0.01);
     else
-        _vlcMediaPlayer->setTime(_vlcMediaPlayer->time() - _vlcMediaPlayer->lenght() * 0.01);
+        _vlcMediaPlayer->setTime(_vlcMediaPlayer->time() - _vlcMediaPlayer->length() * 0.01);
 }
 
 void VlcSeekWidget::setAutoHide(const bool &autoHide)
