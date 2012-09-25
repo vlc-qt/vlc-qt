@@ -177,6 +177,14 @@ void VlcMediaPlayer::open(VlcMedia *media)
     play();
 }
 
+void VlcMediaPlayer::openOnly(VlcMedia *media)
+{
+    _media = media;
+    libvlc_media_player_set_media(_vlcMediaPlayer, media->core());
+
+    VlcError::errmsg();
+}
+
 void VlcMediaPlayer::play()
 {
     if (!_vlcMediaPlayer)
@@ -211,6 +219,17 @@ void VlcMediaPlayer::pause()
 
     if (libvlc_media_player_can_pause(_vlcMediaPlayer))
         libvlc_media_player_pause(_vlcMediaPlayer);
+
+    VlcError::errmsg();
+}
+
+void VlcMediaPlayer::resume()
+{
+    if (!_vlcMediaPlayer)
+        return;
+
+    if (libvlc_media_player_can_pause(_vlcMediaPlayer))
+        libvlc_media_player_set_pause(_vlcMediaPlayer, false);
 
     VlcError::errmsg();
 }
@@ -335,5 +354,10 @@ void VlcMediaPlayer::libvlc_callback(const libvlc_event_t *event,
         break;
     default:
         break;
+    }
+
+    if (event->type >= libvlc_MediaPlayerNothingSpecial &&
+        event->type <= libvlc_MediaPlayerEncounteredError) {
+        emit core->stateChanged();
     }
 }

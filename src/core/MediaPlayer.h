@@ -106,6 +106,12 @@ public:
     */
     void open(VlcMedia *media);
 
+    /*!
+        \brief Just opens the media file or stream, do not starts playing the media.
+        \param media object (VlcMedia *)
+    */
+    void openOnly(VlcMedia *media);
+
     /*! \brief Set the movie time (in ms).
 
         This has no effect if no media is being played. Not all formats and protocols support this.
@@ -157,6 +163,11 @@ public slots:
         \brief Pauses the playback of current media if possible
     */
     void pause();
+
+    /*!
+        \brief Resumes the playback of current media if possible
+    */
+    void resume();
 
     /*!
         \brief Stops playing current media
@@ -270,6 +281,10 @@ signals:
     */
     void vout(const int &);
 
+    /*!
+        \brief Signal sent when state of the player changed
+    */
+    void stateChanged();
 
 private:
     static void libvlc_callback(const libvlc_event_t *event,
