@@ -115,7 +115,7 @@ int VlcAudio::volume() const
 {
     int volume = -1;
     if (_vlcMediaPlayer) {
-        libvlc_audio_get_volume(_vlcMediaPlayer);
+        volume = libvlc_audio_get_volume(_vlcMediaPlayer);
         VlcError::errmsg();
     }
 
