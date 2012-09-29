@@ -1,0 +1,34 @@
+#!/bin/sh
+
+# Script used to generate the orig source tarball for libvlc-qt
+
+VLCQT_GIT_URL="git://github.com/ntadej/vlc-qt.git"
+VLCQT_VERSION="`cat VERSION | sed /^$/d`"
+
+rm -rf "libvlc-qt-${VLCQT_VERSION}"
+git clone "$VLCQT_GIT_URL" "libvlc-qt-${VLCQT_VERSION}"
+
+# Remove temp files and other cruft from source tarball
+# The find command snippet here was taken from debhelper's dh_clean command
+# with some modification to delete more unneeded files.
+echo "Removing temp files and other cruft from source tarball"
+find libvlc-qt-${VLCQT_VERSION} \( \( -type f -a \
+  \( -name '#*#' -o -name '.*~' -o -name '*~' -o -name DEADJOE \
+  -o -name '*.orig' -o -name '*.rej' -o -name '*.bak' \
+  -o -name '.*.orig' -o -name .*.rej -o -name '.SUMS' \
+  -o -name TAGS -o \( -path '*/.deps/*' -a -name '*.P' \) \
+  -o -name config.status -o -name config.cache -o -name config.log \
+  \) -exec rm -f "{}" \; \) -o \
+  \( -type d -a -name autom4te.cache -prune -exec rm -rf "{}" \; \) \)
+rm -rf libvlc-qt-${VLCQT_VERSION}/.git
+rm -f libvlc-qt-${VLCQT_VERSION}/.gitignore
+rm -rf libvlc-qt-${VLCQT_VERSION}/debian
+rm -rf libvlc-qt-${VLCQT_VERSION}/Autobuild
+rm -f libvlc-qt-${VLCQT_VERSION}/Autobuild.sh
+
+# Remove empty directories
+echo "Removing empty directories"
+find libvlc-qt-${VLCQT_VERSION} -type d -empty -delete
+
+tar --exclude-vcs -czf "libvlc-qt_${VLCQT_VERSION}.orig.tar.gz" \
+  "libvlc-qt-${VLCQT_VERSION}/"

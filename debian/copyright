@@ -1,17 +1,18 @@
-This package was debianized by Tadej Novak <tadej@tano.si> on
-Fri, 08 Oct 2010 14:55:34 +0200
+Copyright (C) 2010-2012 Tadej Novak
 
-It was downloaded from http://projects.tano.si
+This library is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published
+by the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-Upstream Author(s):
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU Lesser General Public License for more details.
 
-    Tadej Novak <tadej@tano.si>
+You should have received a copy of the GNU Lesser General Public License
+along with this library. If not, see <http://www.gnu.org/licenses/>.
 
-Copyright:
-
-    Copyright (C) 2010-2012 Tadej Novak
-
-License:
 
 VLC-Qt and the Debian packaging are (C) 2010-2012, Tadej Novak <tadej@tano.si>
 and are licensed under the LGPL version 3, see `/usr/share/common-licenses/LGPL-3'

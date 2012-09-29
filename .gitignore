@@ -1,7 +1,16 @@
 # Possible build dirs:
-build*
-qt5-build*
+build/
 
 # Project files
 CMakeLists.txt.user
 
+# Debian/build
+obj*
+debian/*debhelper*
+debian/*substvars*
+debian/files
+debian/libvlc-qt/
+debian/libvlc-qt1/
+debian/libvlc-qt-dbg/
+debian/libvlc-qt-dev/
+debian/tmp/
