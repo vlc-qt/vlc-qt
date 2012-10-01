@@ -152,6 +152,19 @@ public:
     */
     VlcVideoWidget *videoWidget();
 
+    /*!
+        \brief Get current video position.
+        \return current video position (float)
+    */
+    float position();
+
+    /*! \brief Set the movie position.
+
+        This has no effect if no media is being played. Not all formats and protocols support this.
+
+        \param pos the movie position (float)
+    */
+    void setPosition(const float &pos);
 
 public slots:
     /*!

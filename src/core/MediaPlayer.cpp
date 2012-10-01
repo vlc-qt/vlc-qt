@@ -361,3 +361,18 @@ void VlcMediaPlayer::libvlc_callback(const libvlc_event_t *event,
         emit core->stateChanged();
     }
 }
+
+float VlcMediaPlayer::position()
+{
+    if (!_vlcMediaPlayer)
+        return -1;
+
+    return libvlc_media_player_get_position(_vlcMediaPlayer);
+}
+
+void VlcMediaPlayer::setPosition(const float &pos)
+{
+    libvlc_media_player_set_position(_vlcMediaPlayer, pos);
+
+    VlcError::errmsg();
+}
