@@ -218,6 +218,17 @@ void VlcMediaPlayer::pause()
         return;
 
     if (libvlc_media_player_can_pause(_vlcMediaPlayer))
+        libvlc_media_player_set_pause(_vlcMediaPlayer, true);
+
+    VlcError::errmsg();
+}
+
+void VlcMediaPlayer::togglePause()
+{
+    if (!_vlcMediaPlayer)
+        return;
+
+    if (libvlc_media_player_can_pause(_vlcMediaPlayer))
         libvlc_media_player_pause(_vlcMediaPlayer);
 
     VlcError::errmsg();

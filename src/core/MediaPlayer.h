@@ -178,6 +178,11 @@ public slots:
     void pause();
 
     /*!
+        \brief Toggles pause of the playback of current media if possible
+    */
+    void togglePause();
+
+    /*!
         \brief Resumes the playback of current media if possible
     */
     void resume();
