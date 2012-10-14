@@ -218,6 +218,17 @@ void VlcMediaPlayer::pause()
         return;
 
     if (libvlc_media_player_can_pause(_vlcMediaPlayer))
+        libvlc_media_player_set_pause(_vlcMediaPlayer, true);
+
+    VlcError::errmsg();
+}
+
+void VlcMediaPlayer::togglePause()
+{
+    if (!_vlcMediaPlayer)
+        return;
+
+    if (libvlc_media_player_can_pause(_vlcMediaPlayer))
         libvlc_media_player_pause(_vlcMediaPlayer);
 
     VlcError::errmsg();
@@ -360,4 +371,19 @@ void VlcMediaPlayer::libvlc_callback(const libvlc_event_t *event,
         event->type <= libvlc_MediaPlayerEncounteredError) {
         emit core->stateChanged();
     }
+}
+
+float VlcMediaPlayer::position()
+{
+    if (!_vlcMediaPlayer)
+        return -1;
+
+    return libvlc_media_player_get_position(_vlcMediaPlayer);
+}
+
+void VlcMediaPlayer::setPosition(const float &pos)
+{
+    libvlc_media_player_set_position(_vlcMediaPlayer, pos);
+
+    VlcError::errmsg();
 }
