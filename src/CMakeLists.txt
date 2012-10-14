@@ -119,7 +119,7 @@ INCLUDE_DIRECTORIES(
 )
 
 IF(MSVC)
-    INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/windows/msvc)
+    INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/windows/msvc)
 ENDIF(MSVC)
 
 # Create the library.
