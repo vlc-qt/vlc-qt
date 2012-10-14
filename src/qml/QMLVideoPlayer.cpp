@@ -75,6 +75,8 @@ VlcQMLVideoPlayer::VlcQMLVideoPlayer(QDeclarativeItem *parent)
 
 VlcQMLVideoPlayer::~VlcQMLVideoPlayer()
 {
+    _player->stop();
+
     delete _frame;
     delete _timer;
 
