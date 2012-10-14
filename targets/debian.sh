@@ -12,7 +12,7 @@ build()
     echo >>${CHANGELOG}
     echo >>${CHANGELOG} " -- Tadej Novak <tadej@tano.si>  ${NOW}"
     
-    dpkg-buildpackage -b -us -uc -d
+    dpkg-buildpackage -b -us -uc ${DEVEL}
 
     for a in ../libvlc-qt*${VER}*.deb; do
 	versioned_artifact "$a" deb application/x-deb `basename $a`

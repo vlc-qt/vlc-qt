@@ -19,21 +19,27 @@
 
 set -eu
 
+DEVEL=""
 TARGET=""
-while getopts "ht:" OPTION
+while getopts "hdt:" OPTION
 do
   case $OPTION in
       h)
           echo "Quick build system for VLC-Qt library."
           echo ""
           echo "Use -t to specify target (in targets directory)"
-	  exit 0
-	  ;;
+          echo "Use -d to ignore dependency requests"
+          exit 0
+          ;;
+      d)
+          DEVEL="-d"
+          ;;
       t)
-	  TARGET="$OPTARG"
-	  ;;
+          TARGET="$OPTARG"
+          ;;
   esac
 done
+
 
 if [[ -z $TARGET ]]; then
     echo "Target (-t) not specified"

@@ -8,9 +8,9 @@ Build dependencies:
 The latest version of Qt4, libvlc and CMake is prefered.
 
 - g++ >=4, make (http://gcc.gnu.org, http://www.mingw.org)
-- cmake >=2.6 (http://www.cmake.org)
-- Qt development package >=4.6 (http://qt.nokia.com)
-- libvlc-dev >=1.1 (http://www.videolan.org)
+- cmake >=2.8.6 (http://www.cmake.org)
+- Qt development package >=4.8 (http://qt.nokia.com)
+- libvlc-dev >=2.0 (http://www.videolan.org)
 - doxygen (www.doxygen.org, optional for documentation)
 
 
