@@ -37,6 +37,14 @@ SET(VLCQT_WIDGETS_SRCS
     WidgetVolumeSlider.cpp
 )
 
+IF(MSVC)
+    SET(VLCQT_WIDGETS_EXTRAMOC
+        ../core/Audio.h
+        ../core/MediaPlayer.h
+        ../core/Video.h
+    )
+ENDIF(MSVC)
+
 # Define the Include files
 SET(VLCQT_WIDGETS_HEADERS
     ControlAudio.h
@@ -62,7 +70,7 @@ IF(MSVC)
 ENDIF(MSVC)
 
 # Create the library.
-ADD_LIBRARY(${VLCQT_WIDGETS_SHARED} SHARED ${VLCQT_WIDGETS_SRCS})
+ADD_LIBRARY(${VLCQT_WIDGETS_SHARED} SHARED ${VLCQT_WIDGETS_SRCS} ${VLCQT_WIDGETS_EXTRAMOC})
 
 # MSVC: Avoid Debug/Release/... subfolders
 IF(MSVC)
@@ -77,15 +85,16 @@ ENDIF(MSVC)
 # Linux: So version extensions
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     SET_TARGET_PROPERTIES(${VLCQT_WIDGETS_SHARED} PROPERTIES VERSION ${VLCQT_VERSION}
-                                          SOVERSION "${VLCQT_VERSION_MAJOR}.${VLCQT_VERSION_MINOR}"
+                                                  SOVERSION "${VLCQT_VERSION_MAJOR}.${VLCQT_VERSION_MINOR}"
     )
 ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
 # Link the required libraries
 IF(WITH_QT5)
     QT5_USE_MODULES(${VLCQT_WIDGETS_SHARED} Widgets)
+    TARGET_LINK_LIBRARIES(${VLCQT_WIDGETS_SHARED} ${VLCQT_BINARY})
 ELSE(WITH_QT5)
-    TARGET_LINK_LIBRARIES(${VLCQT_WIDGETS_SHARED} ${QT_LIBRARIES})
+    TARGET_LINK_LIBRARIES(${VLCQT_WIDGETS_SHARED} ${QT_LIBRARIES} ${VLCQT_BINARY})
 ENDIF(WITH_QT5)
 
 # On Mac OS X, the VideoWidget uses Objective-C and Cocoa

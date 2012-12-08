@@ -55,8 +55,10 @@ SET(CMAKE_AUTOMOC ON)
 SET(CMAKE_VERBOSE_MAKEFILE ON)
 
 # Show all warnings
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wall")
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
+IF(NOT MSVC)
+    SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wall")
+    SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
+ENDIF(NOT MSVC)
 
 # Make final release build smaller
 IF(CMAKE_COMPILER_IS_GNUCXX)
@@ -69,6 +71,10 @@ IF(MINGW)
     SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static-libgcc -static-libstdc++")
     SET(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -static-libgcc -static-libstdc++")
 ENDIF(MINGW)
+
+IF(MSVC)
+   ADD_DEFINITIONS("/W3 /D_CRT_SECURE_NO_WARNINGS /wd4005 /wd4996 /nologo")
+ENDIF(MSVC)
 
 # Select modules
 # Widgets
@@ -132,11 +138,6 @@ IF(MINGW OR MSVC)
     STRING(REGEX REPLACE "([^ ]+)[/\\].*" "\\1" QT_BIN_DIR_TMP "${QT_QMAKE_EXECUTABLE}")
     STRING(REGEX REPLACE "\\\\" "/" QT_BIN_DIR "${QT_BIN_DIR_TMP}")  # Replace back slashes to slashes
 ENDIF(MINGW OR MSVC)
-
-# msubttypes
-IF(MSVC)
-    SET(MSINTTYPES_PATH CACHE STRING "Directory to mstypes library containing inttypes.h and stdint.h")
-ENDIF(MSVC)
 
 # Link parameters
 IF(MINGW)

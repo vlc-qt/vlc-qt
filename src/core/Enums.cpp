@@ -114,18 +114,18 @@ QStringList Vlc::ratioHuman()
 QList<float> Vlc::scale()
 {
     QList<float> list;
-    list << 0
-         << 1.05
-         << 1.1
-         << 1.2
-         << 1.3
-         << 1.4
-         << 1.5
-         << 1.6
-         << 1.7
-         << 1.8
-         << 1.9
-         << 2.0;
+    list << (float) 0
+         << (float) 1.05
+         << (float) 1.1
+         << (float) 1.2
+         << (float) 1.3
+         << (float) 1.4
+         << (float) 1.5
+         << (float) 1.6
+         << (float) 1.7
+         << (float) 1.8
+         << (float) 1.9
+         << (float) 2.0;
 
     return list;
 }
