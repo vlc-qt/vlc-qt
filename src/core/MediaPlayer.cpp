@@ -26,7 +26,7 @@
 #include "core/Media.h"
 #include "core/MediaPlayer.h"
 #include "core/Video.h"
-#include "gui/VideoWidget.h"
+#include "core/VideoDelegate.h"
 
 VlcMediaPlayer::VlcMediaPlayer(VlcInstance *instance)
     : QObject(instance)
@@ -252,7 +252,7 @@ void VlcMediaPlayer::setTime(const int &time)
     VlcError::errmsg();
 }
 
-void VlcMediaPlayer::setVideoWidget(VlcVideoWidget *widget)
+void VlcMediaPlayer::setVideoWidget(VlcVideoDelegate *widget)
 {
     _videoWidget = widget;
 }
@@ -295,7 +295,7 @@ int VlcMediaPlayer::time() const
     return time;
 }
 
-VlcVideoWidget *VlcMediaPlayer::videoWidget()
+VlcVideoDelegate *VlcMediaPlayer::videoWidget()
 {
     return _videoWidget;
 }

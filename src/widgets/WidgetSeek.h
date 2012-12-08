@@ -16,8 +16,8 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_SEEKWIDGET_H_
-#define VLCQT_SEEKWIDGET_H_
+#ifndef VLCQT_WIDGETSEEK_H_
+#define VLCQT_WIDGETSEEK_H_
 
 #include <QtCore/QPoint>
 #include <QWidget>
@@ -31,34 +31,34 @@ class QTimer;
 class VlcMediaPlayer;
 
 /*!
-    \class VlcSeekWidget SeekWidget.h vlc-qt/SeekWidget.h
+    \class VlcWidgetSeek WidgetSeek.h vlc-qt/WidgetSeek.h
     \brief Seek widget
 
     This is one of VLC-Qt GUI classes.
     It provides only a display of elapsed time and full time of the media.
 */
-class VLCQT_EXPORT VlcSeekWidget : public QWidget
+class VLCQT_EXPORT VlcWidgetSeek : public QWidget
 {
 Q_OBJECT
 public:
     /*!
-        \brief VlcSeekWidget constructor
+        \brief VlcWidgetSeek constructor
         \param player media player (VlcMediaPlayer *)
         \param parent seek widget's parent GUI widget (QWidget *)
     */
-    explicit VlcSeekWidget(VlcMediaPlayer *player,
+    explicit VlcWidgetSeek(VlcMediaPlayer *player,
                            QWidget *parent = 0);
 
     /*!
-        \brief VlcSeekWidget constructor
+        \brief VlcWidgetSeek constructor
         \param parent seek widget's parent GUI widget (QWidget *)
     */
-    explicit VlcSeekWidget(QWidget *parent = 0);
+    explicit VlcWidgetSeek(QWidget *parent = 0);
 
     /*!
-        \brief VlcSeekWidget destructor
+        \brief VlcWidgetSeek destructor
     */
-    ~VlcSeekWidget();
+    ~VlcWidgetSeek();
 
     /*!
         \brief Get auto-hide option.
@@ -93,7 +93,7 @@ private slots:
     void updateFullTime(const int &time);
 
 private:
-    void initSeekWidget();
+    void initWidgetSeek();
     void updateEvent(const QPoint &pos);
 
     void lock();
@@ -109,4 +109,4 @@ private:
     QLabel *_labelFull;
 };
 
-#endif // VLCQT_SEEKWIDGET_H_
+#endif // VLCQT_WIDGETSEEK_H_

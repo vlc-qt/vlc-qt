@@ -27,9 +27,10 @@
 #include "core/Error.h"
 #include "core/MediaPlayer.h"
 #include "core/Video.h"
-#include "gui/VideoControl.h"
 
-VlcVideoControl::VlcVideoControl(VlcMediaPlayer *player,
+#include "widgets/ControlVideo.h"
+
+VlcControlVideo::VlcControlVideo(VlcMediaPlayer *player,
                                  const QString &language,
                                  QObject *parent)
     : QObject(parent),
@@ -53,13 +54,13 @@ VlcVideoControl::VlcVideoControl(VlcMediaPlayer *player,
     _timerVideo->start(1000);
 }
 
-VlcVideoControl::~VlcVideoControl()
+VlcControlVideo::~VlcControlVideo()
 {
     delete _timerSubtitles;
     delete _timerVideo;
 }
 
-void VlcVideoControl::updateSubtitleActions() {
+void VlcControlVideo::updateSubtitleActions() {
     qDeleteAll(_actionSubList);
     _actionSubList.clear();
     _mapSub.clear();
@@ -105,7 +106,7 @@ void VlcVideoControl::updateSubtitleActions() {
     _timerSubtitles->start(60000);
 }
 
-void VlcVideoControl::updateSubtitles()
+void VlcControlVideo::updateSubtitles()
 {
     QAction *action = qobject_cast<QAction *>(sender());
     if (!action)
@@ -116,7 +117,7 @@ void VlcVideoControl::updateSubtitles()
     _vlcVideo->setSubtitle(id);
 }
 
-void VlcVideoControl::loadSubtitle(const QString &subtitle)
+void VlcControlVideo::loadSubtitle(const QString &subtitle)
 {
     if (subtitle.isEmpty())
         return;
@@ -126,7 +127,7 @@ void VlcVideoControl::loadSubtitle(const QString &subtitle)
     _timerSubtitles->start(1000);
 }
 
-void VlcVideoControl::updateVideoActions() {
+void VlcControlVideo::updateVideoActions() {
     qDeleteAll(_actionVideoList);
     _actionVideoList.clear();
     _mapVideo.clear();
@@ -164,7 +165,7 @@ void VlcVideoControl::updateVideoActions() {
     _timerVideo->start(60000);
 }
 
-void VlcVideoControl::updateVideo()
+void VlcControlVideo::updateVideo()
 {
     QAction *action = qobject_cast<QAction *>(sender());
     if (!action)
@@ -175,14 +176,14 @@ void VlcVideoControl::updateVideo()
     _vlcVideo->setTrack(id);
 }
 
-void VlcVideoControl::reset()
+void VlcControlVideo::reset()
 {
     _timerSubtitles->start(1000);
     _timerVideo->start(1000);
     _manualLanguage = false;
 }
 
-void VlcVideoControl::setDefaultSubtitleLanguage(const QString &language)
+void VlcControlVideo::setDefaultSubtitleLanguage(const QString &language)
 {
     _preferedLanguage = language.split(" / ");
 }

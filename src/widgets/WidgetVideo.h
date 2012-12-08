@@ -16,8 +16,8 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_VIDEOWIDGET_H_
-#define VLCQT_VIDEOWIDGET_H_
+#ifndef VLCQT_WIDGETVIDEO_H_
+#define VLCQT_WIDGETVIDEO_H_
 
 #include <QtCore/QTimer>
 
@@ -29,44 +29,45 @@
 
 #include "Enums.h"
 #include "SharedExport.h"
+#include "VideoDelegate.h"
 
 class QTimer;
 
 class VlcMediaPlayer;
 
 /*!
-    \class VlcVideoWidget VideoWidget.h vlc-qt/VideoWidget.h
+    \class VlcWidgetVideo WidgetVideo.h vlc-qt/WidgetVideo.h
     \brief Video widget
 
     This is one of VLC-Qt GUI classes.
     It provides video display and mouse control.
 */
 #if defined(Q_OS_MAC)
-class VLCQT_EXPORT VlcVideoWidget : public QMacCocoaViewContainer
+class VLCQT_EXPORT VlcWidgetVideo : public QMacCocoaViewContainer, public VlcVideoDelegate
 #else
-class VLCQT_EXPORT VlcVideoWidget : public QFrame
+class VLCQT_EXPORT VlcWidgetVideo : public QFrame, public VlcVideoDelegate
 #endif
 {
 Q_OBJECT
 public:
     /*!
-        \brief VlcVideoWidget constructor
+        \brief VlcWidgetVideo constructor
         \param player media player (VlcMediaPlayer *)
         \param parent video widget's parent GUI widget (QWidget)
     */
-    explicit VlcVideoWidget(VlcMediaPlayer *player,
+    explicit VlcWidgetVideo(VlcMediaPlayer *player,
                             QWidget *parent = 0);
 
     /*!
-        \brief VlcVideoWidget constructor
+        \brief VlcWidgetVideo constructor
         \param parent video widget's parent GUI widget (QWidget)
     */
-    explicit VlcVideoWidget(QWidget *parent = 0);
+    explicit VlcWidgetVideo(QWidget *parent = 0);
 
     /*!
-        \brief VlcVideoWidget destructor
+        \brief VlcWidgetVideo destructor
     */
-    ~VlcVideoWidget();
+    ~VlcWidgetVideo();
 
     /*!
         \brief Get current aspect ratio setting
@@ -286,7 +287,7 @@ private slots:
     void applyPreviousSettings();
 
 private:
-    void initVideoWidget();
+    void initWidgetVideo();
     void sync();
 
     VlcMediaPlayer *_vlcMediaPlayer;
@@ -312,4 +313,4 @@ private:
     Vlc::Scale _currentScale;
 };
 
-#endif // VLCQ_VIDEOWIDGET_H_
+#endif // VLCQ_WIDGETVIDEO_H_

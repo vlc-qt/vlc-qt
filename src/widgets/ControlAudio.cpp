@@ -26,9 +26,10 @@
 
 #include "core/Audio.h"
 #include "core/MediaPlayer.h"
-#include "gui/AudioControl.h"
 
-VlcAudioControl::VlcAudioControl(VlcMediaPlayer *player,
+#include "widgets/ControlAudio.h"
+
+VlcControlAudio::VlcControlAudio(VlcMediaPlayer *player,
                                  const QString &language,
                                  QObject *parent)
     : QObject(parent),
@@ -48,24 +49,24 @@ VlcAudioControl::VlcAudioControl(VlcMediaPlayer *player,
 }
 
 
-VlcAudioControl::~VlcAudioControl()
+VlcControlAudio::~VlcControlAudio()
 {
     delete _timer;
 }
 
-void VlcAudioControl::clean()
+void VlcControlAudio::clean()
 {
     qDeleteAll(_actionList);
     _actionList.clear();
     _map.clear();
 }
 
-void VlcAudioControl::reset()
+void VlcControlAudio::reset()
 {
     _timer->start(1000);
 }
 
-void VlcAudioControl::update()
+void VlcControlAudio::update()
 {
     QAction *action = qobject_cast<QAction *>(sender());
     if (!action)
@@ -76,7 +77,7 @@ void VlcAudioControl::update()
     _vlcAudio->setTrack(id);
 }
 
-void VlcAudioControl::updateActions()
+void VlcControlAudio::updateActions()
 {
     clean();
 
@@ -121,7 +122,7 @@ void VlcAudioControl::updateActions()
     _timer->start(60000);
 }
 
-void VlcAudioControl::setDefaultAudioLanguage(const QString &language)
+void VlcControlAudio::setDefaultAudioLanguage(const QString &language)
 {
     _preferedLanguage = language.split(" / ");
 }

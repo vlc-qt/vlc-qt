@@ -32,7 +32,7 @@ class VlcAudio;
 class VlcInstance;
 class VlcMedia;
 class VlcVideo;
-class VlcVideoWidget;
+class VlcVideoDelegate;
 
 struct libvlc_event_t;
 struct libvlc_event_manager_t;
@@ -130,9 +130,9 @@ public:
 
         Set video widget to be able to play video inside Qt interface.
 
-        \param widget video widget (VlcVideoWidget *)
+        \param widget video widget (VlcVideoDelegate *)
     */
-    void setVideoWidget(VlcVideoWidget *widget);
+    void setVideoWidget(VlcVideoDelegate *widget);
 
     /*!
         \brief Get video output status
@@ -150,7 +150,7 @@ public:
         \brief Get current video widget.
         \return current video widget (VlcVideoWidget *)
     */
-    VlcVideoWidget *videoWidget();
+    VlcVideoDelegate *videoWidget();
 
     /*!
         \brief Get current video position.
@@ -319,7 +319,7 @@ private:
     VlcAudio *_vlcAudio;
     VlcVideo *_vlcVideo;
 
-    VlcVideoWidget *_videoWidget;
+    VlcVideoDelegate *_videoWidget;
     WId _currentWId;
 };
 

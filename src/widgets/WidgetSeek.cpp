@@ -33,31 +33,32 @@
 
 #include "core/Error.h"
 #include "core/MediaPlayer.h"
-#include "gui/SeekWidget.h"
 
-VlcSeekWidget::VlcSeekWidget(VlcMediaPlayer *player,
+#include "widgets/WidgetSeek.h"
+
+VlcWidgetSeek::VlcWidgetSeek(VlcMediaPlayer *player,
                              QWidget *parent)
     : QWidget(parent),
       _vlcMediaPlayer(player)
 {
-    initSeekWidget();
+    initWidgetSeek();
 }
 
-VlcSeekWidget::VlcSeekWidget(QWidget *parent)
+VlcWidgetSeek::VlcWidgetSeek(QWidget *parent)
     : QWidget(parent),
       _vlcMediaPlayer(0)
 {
-    initSeekWidget();
+    initWidgetSeek();
 }
 
-VlcSeekWidget::~VlcSeekWidget()
+VlcWidgetSeek::~VlcWidgetSeek()
 {
     delete _seek;
     delete _labelElapsed;
     delete _labelFull;
 }
 
-void VlcSeekWidget::initSeekWidget()
+void VlcWidgetSeek::initWidgetSeek()
 {
     _lock = false;
     _autoHide = false;
@@ -81,7 +82,7 @@ void VlcSeekWidget::initSeekWidget()
     setLayout(layout);
 }
 
-void VlcSeekWidget::mouseMoveEvent(QMouseEvent *event)
+void VlcWidgetSeek::mouseMoveEvent(QMouseEvent *event)
 {
     event->ignore();
 
@@ -91,14 +92,14 @@ void VlcSeekWidget::mouseMoveEvent(QMouseEvent *event)
     updateEvent(event->pos());
 }
 
-void VlcSeekWidget::mousePressEvent(QMouseEvent *event)
+void VlcWidgetSeek::mousePressEvent(QMouseEvent *event)
 {
     event->ignore();
 
     lock();
 }
 
-void VlcSeekWidget::mouseReleaseEvent(QMouseEvent *event)
+void VlcWidgetSeek::mouseReleaseEvent(QMouseEvent *event)
 {
     event->ignore();
 
@@ -107,7 +108,7 @@ void VlcSeekWidget::mouseReleaseEvent(QMouseEvent *event)
     unlock();
 }
 
-void VlcSeekWidget::wheelEvent(QWheelEvent *event)
+void VlcWidgetSeek::wheelEvent(QWheelEvent *event)
 {
     event->ignore();
 
@@ -120,14 +121,14 @@ void VlcSeekWidget::wheelEvent(QWheelEvent *event)
         _vlcMediaPlayer->setTime(_vlcMediaPlayer->time() - _vlcMediaPlayer->length() * 0.01);
 }
 
-void VlcSeekWidget::setAutoHide(const bool &autoHide)
+void VlcWidgetSeek::setAutoHide(const bool &autoHide)
 {
     _autoHide = autoHide;
 
     setVisible(!_autoHide);
 }
 
-void VlcSeekWidget::setMediaPlayer(VlcMediaPlayer *player)
+void VlcWidgetSeek::setMediaPlayer(VlcMediaPlayer *player)
 {
     if (_vlcMediaPlayer) {
         disconnect(_vlcMediaPlayer, SIGNAL(lengthChanged(int)), this, SLOT(updateFullTime(int)));
@@ -144,7 +145,7 @@ void VlcSeekWidget::setMediaPlayer(VlcMediaPlayer *player)
     connect(_vlcMediaPlayer, SIGNAL(stopped()), this, SLOT(end()));
 }
 
-void VlcSeekWidget::end()
+void VlcWidgetSeek::end()
 {
     QTime time = QTime(0,0,0,0);
     QString display = "mm:ss";
@@ -155,7 +156,7 @@ void VlcSeekWidget::end()
     _seek->setValue(0);
 }
 
-void VlcSeekWidget::updateEvent(const QPoint &pos)
+void VlcWidgetSeek::updateEvent(const QPoint &pos)
 {
     if (!_vlcMediaPlayer)
         return;
@@ -171,7 +172,7 @@ void VlcSeekWidget::updateEvent(const QPoint &pos)
     _seek->setValue(newValue);
 }
 
-void VlcSeekWidget::updateCurrentTime(const int &time)
+void VlcWidgetSeek::updateCurrentTime(const int &time)
 {
     if (_lock)
         return;
@@ -187,7 +188,7 @@ void VlcSeekWidget::updateCurrentTime(const int &time)
 }
 
 
-void VlcSeekWidget::updateFullTime(const int &time)
+void VlcWidgetSeek::updateFullTime(const int &time)
 {
     if (_lock)
         return;
@@ -209,12 +210,12 @@ void VlcSeekWidget::updateFullTime(const int &time)
     }
 }
 
-void VlcSeekWidget::lock()
+void VlcWidgetSeek::lock()
 {
     _lock = true;
 }
 
-void VlcSeekWidget::unlock()
+void VlcWidgetSeek::unlock()
 {
     _lock = false;
 }

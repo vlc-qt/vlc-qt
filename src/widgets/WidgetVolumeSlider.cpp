@@ -32,33 +32,33 @@
 #include "core/Audio.h"
 #include "core/Error.h"
 #include "core/MediaPlayer.h"
-#include "gui/VolumeSlider.h"
+#include "widgets/WidgetVolumeSlider.h"
 
-VlcVolumeSlider::VlcVolumeSlider(VlcMediaPlayer *player,
+VlcWidgetVolumeSlider::VlcWidgetVolumeSlider(VlcMediaPlayer *player,
                                  QWidget *parent)
     : QWidget(parent),
       _vlcAudio(player->audio()),
       _vlcMediaPlayer(player)
 {
-    initVolumeSlider();
+    initWidgetVolumeSlider();
 }
 
-VlcVolumeSlider::VlcVolumeSlider(QWidget *parent)
+VlcWidgetVolumeSlider::VlcWidgetVolumeSlider(QWidget *parent)
     : QWidget(parent),
       _vlcAudio(0),
       _vlcMediaPlayer(0)
 {
-    initVolumeSlider();
+    initWidgetVolumeSlider();
 }
 
-VlcVolumeSlider::~VlcVolumeSlider()
+VlcWidgetVolumeSlider::~VlcWidgetVolumeSlider()
 {
     delete _slider;
     delete _label;
     delete _timer;
 }
 
-void VlcVolumeSlider::initVolumeSlider()
+void VlcWidgetVolumeSlider::initWidgetVolumeSlider()
 {
     _lock = false;
 
@@ -81,21 +81,21 @@ void VlcVolumeSlider::initVolumeSlider()
     connect(_slider, SIGNAL(valueChanged(int)), this, SLOT(setVolume(int)));
 }
 
-void VlcVolumeSlider::mousePressEvent(QMouseEvent *event)
+void VlcWidgetVolumeSlider::mousePressEvent(QMouseEvent *event)
 {
     event->ignore();
 
     lock();
 }
 
-void VlcVolumeSlider::mouseReleaseEvent(QMouseEvent *event)
+void VlcWidgetVolumeSlider::mouseReleaseEvent(QMouseEvent *event)
 {
     event->ignore();
 
     unlock();
 }
 
-void VlcVolumeSlider::setMediaPlayer(VlcMediaPlayer *player)
+void VlcWidgetVolumeSlider::setMediaPlayer(VlcMediaPlayer *player)
 {
     _vlcAudio = player->audio();
     _vlcMediaPlayer = player;
@@ -103,7 +103,7 @@ void VlcVolumeSlider::setMediaPlayer(VlcMediaPlayer *player)
     _timer->start(100);
 }
 
-bool VlcVolumeSlider::mute() const
+bool VlcWidgetVolumeSlider::mute() const
 {
     if (!(_vlcMediaPlayer->state() == Vlc::Buffering ||
         _vlcMediaPlayer->state() == Vlc::Playing ||
@@ -113,7 +113,7 @@ bool VlcVolumeSlider::mute() const
         return _vlcAudio->getMute();
 }
 
-void VlcVolumeSlider::setMute(const bool &enabled)
+void VlcWidgetVolumeSlider::setMute(const bool &enabled)
 {
     if (!(_vlcMediaPlayer->state() == Vlc::Buffering ||
         _vlcMediaPlayer->state() == Vlc::Playing ||
@@ -133,7 +133,7 @@ void VlcVolumeSlider::setMute(const bool &enabled)
     _vlcAudio->toggleMute();
 }
 
-void VlcVolumeSlider::setVolume(const int &volume)
+void VlcWidgetVolumeSlider::setVolume(const int &volume)
 {
     if (_currentVolume == volume)
         return;
@@ -149,7 +149,7 @@ void VlcVolumeSlider::setVolume(const int &volume)
     unlock();
 }
 
-void VlcVolumeSlider::updateVolume()
+void VlcWidgetVolumeSlider::updateVolume()
 {
     if (_lock)
         return;
@@ -163,12 +163,12 @@ void VlcVolumeSlider::updateVolume()
         _vlcAudio->setVolume(_currentVolume);
 }
 
-int VlcVolumeSlider::volume() const
+int VlcWidgetVolumeSlider::volume() const
 {
     return _currentVolume;
 }
 
-void VlcVolumeSlider::volumeControl(const bool &up)
+void VlcWidgetVolumeSlider::volumeControl(const bool &up)
 {
     if (up) {
         if (_currentVolume != 200) {
@@ -181,12 +181,12 @@ void VlcVolumeSlider::volumeControl(const bool &up)
     }
 }
 
-void VlcVolumeSlider::lock()
+void VlcWidgetVolumeSlider::lock()
 {
     _lock = true;
 }
 
-void VlcVolumeSlider::unlock()
+void VlcWidgetVolumeSlider::unlock()
 {
     _lock = false;
 }

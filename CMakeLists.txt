@@ -26,6 +26,8 @@ ELSE(WITH_QT5)
 ENDIF(WITH_QT5)
 
 SET(VLCQT_SHARED ${PROJECT_NAME})
+SET(VLCQT_WIDGETS_SHARED ${PROJECT_NAME}-widgets)
+SET(VLCQT_QML_SHARED ${PROJECT_NAME}-qml)
 
 CONFIGURE_FILE(
     "${CMAKE_SOURCE_DIR}/cmake_uninstall.cmake.in"
@@ -68,9 +70,17 @@ IF(MINGW)
     SET(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -static-libgcc -static-libstdc++")
 ENDIF(MINGW)
 
+# Select modules
+# Widgets
+OPTION(WITH_WIDGETS "Build with Widgets" ON)
+MESSAGE("VLC-Qt: Build with Widgets: ${WITH_WIDGETS}")
+# QML
+OPTION(WITH_QML "Build with QML" OFF)
+MESSAGE("VLC-Qt: Build with QML: ${WITH_QML}")
+
 # Qt5 support
 OPTION(WITH_QT5 "Build with Qt5" OFF)
-MESSAGE("\nVLC-Qt: Build with Qt5: ${WITH_QT5}\n")
+MESSAGE("VLC-Qt: Build with Qt5: ${WITH_QT5}")
 
 IF(WITH_QT5)
     # Qt5 dirs
@@ -81,10 +91,6 @@ IF(WITH_QT5)
     SET(Qt5Widgets_DIR "${QT_LIBRARY_DIR}/cmake/Qt5Widgets")
 
     SET(WITH_QML OFF)
-ELSE(WITH_QT5)
-    # QML support
-    OPTION(WITH_QML "Build with QML" OFF)
-    MESSAGE("\nVLC-Qt: Build with QML: ${WITH_QML}\n")
 ENDIF(WITH_QT5)
 
 # Search for Qt and other libraries
@@ -134,13 +140,21 @@ ENDIF(MSVC)
 
 # Link parameters
 IF(MINGW)
-    SET(VLCQT_BINARY ${CMAKE_BINARY_DIR}/src/libvlc-qt.dll.a)
+    SET(VLCQT_BINARY ${CMAKE_BINARY_DIR}/src/core/libvlc-qt.dll.a)
+    SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/libvlc-qt-widgets.dll.a)
+    SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/libvlc-qt-qml.dll.a)
 ELSEIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    SET(VLCQT_BINARY ${CMAKE_BINARY_DIR}/src/libvlc-qt.dylib)
+    SET(VLCQT_BINARY ${CMAKE_BINARY_DIR}/src/core/libvlc-qt.dylib)
+    SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/libvlc-qt-widgets.dylib)
+    SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/libvlc-qt-qml.dylib)
 ELSEIF(MSVC)
-    SET(VLCQT_BINARY ${CMAKE_BINARY_DIR}/src/vlc-qt.lib)
+    SET(VLCQT_BINARY ${CMAKE_BINARY_DIR}/src/core/vlc-qt.lib)
+    SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/vlc-qt-widgets.lib)
+    SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/vlc-qt-qml.lib)
 ELSE(MINGW)
-    SET(VLCQT_BINARY ${CMAKE_BINARY_DIR}/src/libvlc-qt.so)
+    SET(VLCQT_BINARY ${CMAKE_BINARY_DIR}/src/core/libvlc-qt.so)
+    SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/libvlc-qt-widgets.so)
+    SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/libvlc-qt-qml.so)
 ENDIF(MINGW)
 
 

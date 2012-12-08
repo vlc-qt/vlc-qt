@@ -27,7 +27,8 @@
 #include "core/Instance.h"
 #include "core/Media.h"
 #include "core/MediaPlayer.h"
-#include "qml/QMLVideoPlayer.h"
+
+#include "qml/QmlVideoPlayer.h"
 
 // VLC display functions
 static void display(void *core, void *picture)
@@ -39,7 +40,7 @@ static void display(void *core, void *picture)
 
 static void *lock(void *core, void **planes)
 {
-    VlcQMLVideoPlayer *player = (VlcQMLVideoPlayer *)core;
+    VlcQmlVideoPlayer *player = (VlcQmlVideoPlayer *)core;
     player->_mutex.lock();
     *planes = player->_frame->bits();
     return NULL;
@@ -49,13 +50,13 @@ static void unlock(void *core, void *picture, void *const *planes)
 {
     Q_UNUSED(planes)
 
-    VlcQMLVideoPlayer *player = (VlcQMLVideoPlayer *)core;
+    VlcQmlVideoPlayer *player = (VlcQmlVideoPlayer *)core;
     player->_mutex.unlock();
 
     Q_ASSERT(picture == NULL);
 }
 
-VlcQMLVideoPlayer::VlcQMLVideoPlayer(QDeclarativeItem *parent)
+VlcQmlVideoPlayer::VlcQmlVideoPlayer(QDeclarativeItem *parent)
     : QDeclarativeItem(parent),
       _hasMedia(false)
 {
@@ -73,7 +74,7 @@ VlcQMLVideoPlayer::VlcQMLVideoPlayer(QDeclarativeItem *parent)
     _timer->start(40); // FPS: 25
 }
 
-VlcQMLVideoPlayer::~VlcQMLVideoPlayer()
+VlcQmlVideoPlayer::~VlcQmlVideoPlayer()
 {
     _player->stop();
 
@@ -86,7 +87,7 @@ VlcQMLVideoPlayer::~VlcQMLVideoPlayer()
     delete _instance;
 }
 
-void VlcQMLVideoPlayer::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)
+void VlcQmlVideoPlayer::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)
 {
     if (newGeometry == oldGeometry)    {
         QDeclarativeItem::geometryChanged(newGeometry, oldGeometry);
@@ -109,7 +110,7 @@ void VlcQMLVideoPlayer::geometryChanged(const QRectF &newGeometry, const QRectF 
 
 }
 
-void VlcQMLVideoPlayer::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void VlcQmlVideoPlayer::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     Q_UNUSED(option)
     Q_UNUSED(widget)
@@ -119,14 +120,14 @@ void VlcQMLVideoPlayer::paint(QPainter *painter, const QStyleOptionGraphicsItem 
     _mutex.unlock();
 }
 
-void VlcQMLVideoPlayer::close()
+void VlcQmlVideoPlayer::close()
 {
     _hasMedia = false;
 
     _player->stop();
 }
 
-void VlcQMLVideoPlayer::openFile(const QString &file)
+void VlcQmlVideoPlayer::openFile(const QString &file)
 {
     if (_media)
         delete _media;
@@ -136,7 +137,7 @@ void VlcQMLVideoPlayer::openFile(const QString &file)
     openInternal();
 }
 
-void VlcQMLVideoPlayer::openStream(const QString &stream)
+void VlcQmlVideoPlayer::openStream(const QString &stream)
 {
     if (_media)
         delete _media;
@@ -146,7 +147,7 @@ void VlcQMLVideoPlayer::openStream(const QString &stream)
     openInternal();
 }
 
-void VlcQMLVideoPlayer::openInternal()
+void VlcQmlVideoPlayer::openInternal()
 {
     _player->open(_media);
 
@@ -156,22 +157,22 @@ void VlcQMLVideoPlayer::openInternal()
     _hasMedia = true;
 }
 
-void VlcQMLVideoPlayer::pause()
+void VlcQmlVideoPlayer::pause()
 {
     _player->pause();
 }
 
-void VlcQMLVideoPlayer::play()
+void VlcQmlVideoPlayer::play()
 {
     _player->play();
 }
 
-void VlcQMLVideoPlayer::stop()
+void VlcQmlVideoPlayer::stop()
 {
     _player->stop();
 }
 
-void VlcQMLVideoPlayer::updateFrame()
+void VlcQmlVideoPlayer::updateFrame()
 {
     //Fix for cpu usage of calling update inside unlock.
     update(boundingRect());

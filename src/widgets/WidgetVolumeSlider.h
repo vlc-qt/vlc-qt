@@ -16,8 +16,8 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_VOLUMESLIDER_H_
-#define VLCQT_VOLUMESLIDER_H_
+#ifndef VLCQT_WIDGETVOLUMESLIDER_H_
+#define VLCQT_WIDGETVOLUMESLIDER_H_
 
 #include <QWidget>
 
@@ -31,35 +31,35 @@ class VlcAudio;
 class VlcMediaPlayer;
 
 /*!
-    \class VlcVolumeSlider VolumeSlider.h vlc-qt/VolumeSlider.h
+    \class VlcWidgetVolumeSlider WidgetVolumeSlider.h vlc-qt/WidgetVolumeSlider.h
     \brief Volume slider widget
 
     This is one of VLC-Qt GUI classes.
     It provides graphical volume control and also visual display of current volume.
 */
-class VLCQT_EXPORT VlcVolumeSlider : public QWidget
+class VLCQT_EXPORT VlcWidgetVolumeSlider : public QWidget
 {
 Q_OBJECT
 public:
     /*!
-        \brief VlcVolumeSlider constructor
+        \brief VlcWidgetVolumeSlider constructor
 
         \param player media player (VlcMediaPlayer *)
         \param parent volume slider's parent GUI widget (QWidget)
     */
-    explicit VlcVolumeSlider(VlcMediaPlayer *player,
+    explicit VlcWidgetVolumeSlider(VlcMediaPlayer *player,
                              QWidget *parent = 0);
 
     /*!
-        \brief VlcVolumeSlider constructor
+        \brief VlcWidgetVolumeSlider constructor
         \param parent volume slider's parent GUI widget (QWidget)
     */
-    explicit VlcVolumeSlider(QWidget *parent = 0);
+    explicit VlcWidgetVolumeSlider(QWidget *parent = 0);
 
     /*!
-        \brief VlcVolumeSlider destructor
+        \brief VlcWidgetVolumeSlider destructor
     */
-    ~VlcVolumeSlider();
+    ~VlcWidgetVolumeSlider();
 
 
     /*!
@@ -135,7 +135,7 @@ private slots:
     void updateVolume();
 
 private:
-    void initVolumeSlider();
+    void initWidgetVolumeSlider();
 
     bool _lock;
 
@@ -152,4 +152,4 @@ private:
     QTimer *_timer;
 };
 
-#endif // VLCQT_VOLUMESLIDER_H_
+#endif // VLCQT_WIDGETVOLUMESLIDER_H_

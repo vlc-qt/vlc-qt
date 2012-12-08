@@ -17,36 +17,18 @@
 *****************************************************************************/
 
 #include <QtCore/QCoreApplication>
-#include <QtDeclarative/QDeclarativeEngine>
 #include <QtCore/QTextCodec>
-
-#if defined(Qt5)
-    #include <QtWidgets/QApplication>
-#elif defined(Qt4)
-    #include <QtGui/QApplication>
-#endif
-
-#include "qml/QmlVideoPlayer.h"
-
-#include "qmlapplicationviewer/qmlapplicationviewer.h"
 
 int main(int argc, char *argv[])
 {
-    QScopedPointer<QApplication> app(createApplication(argc, argv));
-    QCoreApplication::setApplicationName("Test QML");
+    QCoreApplication::setApplicationName("Test Widgets");
+    QCoreApplication::setAttribute(Qt::AA_X11InitThreads);
 
 #if defined(Qt4)
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
 #endif
 
-    qmlRegisterType<VlcQmlVideoPlayer>("VLCQt", 0, 6, "VlcVideoPlayer");
+    QCoreApplication app(argc, argv);
 
-    QmlApplicationViewer viewer;
-    viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
-    viewer.setMainQmlFile("qml/video.qml");
-    viewer.setResizeMode(QDeclarativeView::SizeViewToRootObject);
-    viewer.showExpanded();
-
-    return app->exec();
+    return app.exec();
 }
-

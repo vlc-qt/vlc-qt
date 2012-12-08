@@ -16,8 +16,8 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_VIDEOCONTROL_H_
-#define VLCQT_VIDEOCONTROL_H_
+#ifndef VLCQT_CONTROLVIDEO_H_
+#define VLCQT_CONTROLVIDEO_H_
 
 #include <QtCore/QList>
 #include <QtCore/QMap>
@@ -32,13 +32,13 @@ class VlcMediaPlayer;
 class VlcVideo;
 
 /*!
-    \class VlcVideoControl VideoControl.h vlc-qt/VideoControl.h
+    \class VlcControlVideo ControlVideo.h vlc-qt/ControlVideo.h
     \brief Video control class
 
     This is one of VLC-Qt control classes.
     It provides video and subtitle tracks management.
 */
-class VLCQT_EXPORT VlcVideoControl : public QObject
+class VLCQT_EXPORT VlcControlVideo : public QObject
 {
 Q_OBJECT
 public:
@@ -48,14 +48,14 @@ public:
         \param language default subtitle language (QString)
         \param parent video controller's parent object (QObject)
     */
-    explicit VlcVideoControl(VlcMediaPlayer *player,
+    explicit VlcControlVideo(VlcMediaPlayer *player,
                              const QString &language = 0,
                              QObject *parent = 0);
 
     /*!
         \brief VideoControl destructor
     */
-    ~VlcVideoControl();
+    ~VlcControlVideo();
 
 
     /*!
@@ -127,4 +127,4 @@ private:
     QStringList _preferedLanguage;
 };
 
-#endif // VLCQT_VIDEOCONTROL_H_
+#endif // VLCQT_CONTROLVIDEO_H_

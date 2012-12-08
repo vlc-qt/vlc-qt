@@ -30,12 +30,12 @@ class VlcInstance;
 class VlcMedia;
 class VlcMediaPlayer;
 
-class VLCQT_EXPORT VlcQMLVideoPlayer : public QDeclarativeItem
+class VLCQT_EXPORT VlcQmlVideoPlayer : public QDeclarativeItem
 {
 Q_OBJECT
 public:
-	explicit VlcQMLVideoPlayer(QDeclarativeItem *parent = 0);
-	~VlcQMLVideoPlayer();
+    explicit VlcQmlVideoPlayer(QDeclarativeItem *parent = 0);
+    ~VlcQmlVideoPlayer();
 
 	Q_INVOKABLE void close();
 	Q_INVOKABLE void openFile(const QString &file);

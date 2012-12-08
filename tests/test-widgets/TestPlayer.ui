@@ -14,7 +14,7 @@
    <string>Basic Player Test</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../data/logo.qrc">
+   <iconset resource="../../data/logo.qrc">
     <normaloff>:/vlc-qt/icons/48x48/vlc-qt.png</normaloff>:/vlc-qt/icons/48x48/vlc-qt.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -34,7 +34,7 @@
      </widget>
     </item>
     <item row="1" column="0" colspan="2">
-     <widget class="VlcVideoWidget" name="video" native="true"/>
+     <widget class="VlcWidgetVideo" name="video" native="true"/>
     </item>
     <item row="3" column="1">
      <widget class="QPushButton" name="stop">
@@ -54,7 +54,7 @@
      </widget>
     </item>
     <item row="4" column="0" colspan="2">
-     <widget class="VlcVolumeSlider" name="volume" native="true">
+     <widget class="VlcWidgetVolumeSlider" name="volume" native="true">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
         <horstretch>0</horstretch>
@@ -64,7 +64,7 @@
      </widget>
     </item>
     <item row="5" column="0" colspan="2">
-     <widget class="VlcSeekWidget" name="seek" native="true">
+     <widget class="VlcWidgetSeek" name="seek" native="true">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
         <horstretch>0</horstretch>
@@ -81,7 +81,7 @@
      <x>0</x>
      <y>0</y>
      <width>640</width>
-     <height>27</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -132,9 +132,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>VlcVideoWidget</class>
+   <class>VlcWidgetVideo</class>
    <extends>QWidget</extends>
-   <header>../src/gui/VideoWidget.h</header>
+   <header>../src/widgets/WidgetVideo.h</header>
    <container>1</container>
    <slots>
     <signal>fullscreen()</signal>
@@ -142,9 +142,9 @@
    </slots>
   </customwidget>
   <customwidget>
-   <class>VlcVolumeSlider</class>
+   <class>VlcWidgetVolumeSlider</class>
    <extends>QWidget</extends>
-   <header>../src/gui/VolumeSlider.h</header>
+   <header>../src/widgets/WidgetVolumeSlider.h</header>
    <container>1</container>
    <slots>
     <slot>mute()</slot>
@@ -153,14 +153,14 @@
    </slots>
   </customwidget>
   <customwidget>
-   <class>VlcSeekWidget</class>
+   <class>VlcWidgetSeek</class>
    <extends>QWidget</extends>
-   <header>../src/gui/SeekWidget.h</header>
+   <header>../src/widgets/WidgetSeek.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../data/logo.qrc"/>
+  <include location="../../data/logo.qrc"/>
  </resources>
  <connections>
   <connection>

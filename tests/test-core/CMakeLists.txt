@@ -15,13 +15,40 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this library. If not, see <http://www.gnu.org/licenses/>.
 #############################################################################
-# Tests #
-#########
-ADD_SUBDIRECTORY(test-core)
 
-IF(WITH_WIDGETS)
-    ADD_SUBDIRECTORY(test-widgets)
-ENDIF(WITH_WIDGETS)
-IF(WITH_QML)
-    ADD_SUBDIRECTORY(test-qml)
-ENDIF(WITH_QML)
+PROJECT(test-vlcqt-core)
+
+###################
+# List of sources #
+###################
+# Define the C++ source files
+SET(Test_Core_Srcs
+    main.cpp
+)
+
+
+#####################
+# Compiler settings #
+#####################
+# This needs to be added in order for #include to work inside .cpp files
+INCLUDE_DIRECTORIES(
+    ${CMAKE_SOURCE_DIR}/src
+    ${CMAKE_SOURCE_DIR}/src/core
+    ${CMAKE_BINARY_DIR}/tests/test-core
+)
+
+# This line tells cmake to create the Test program.
+ADD_EXECUTABLE(${PROJECT_NAME} ${Test_Core_Srcs})
+
+# Link the required libraries
+IF(WITH_QT5)
+    QT5_USE_MODULES(${PROJECT_NAME} Core)
+    TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${VLCQT_BINARY})
+ELSE(WITH_QT5)
+    TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${QT_LIBRARIES} ${VLCQT_BINARY})
+ENDIF(WITH_QT5)
+
+################
+# Installation #
+################
+INSTALL(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)

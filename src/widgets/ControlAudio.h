@@ -16,8 +16,8 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_AUDIOCONTROL_H_
-#define VLCQT_AUDIOCONTROL_H_
+#ifndef VLCQT_CONTROLAUDIO_H_
+#define VLCQT_CONTROLAUDIO_H_
 
 #include <QtCore/QList>
 #include <QtCore/QMap>
@@ -32,30 +32,30 @@ class VlcAudio;
 class VlcMediaPlayer;
 
 /*!
-    \class VlcAudioControl AudioControl.h vlc-qt/AudioControl.h
+    \class VlcControlAudio ControAudiol.h vlc-qt/ControlAudio.h
     \brief Audio control class
 
     This is one of VLC-Qt control classes.
     It provides audio tracks management.
 */
-class VLCQT_EXPORT VlcAudioControl : public QObject
+class VLCQT_EXPORT VlcControlAudio : public QObject
 {
 Q_OBJECT
 public:
     /*!
-        \brief VlcAudioControl constructor
+        \brief VlcControlAudio constructor
         \param player media player (VlcMediaPlayer *)
         \param language default audio language (QString)
         \param parent audio controller's parent object (QObject *)
     */
-    explicit VlcAudioControl(VlcMediaPlayer *player,
+    explicit VlcControlAudio(VlcMediaPlayer *player,
                              const QString &language = 0,
                              QObject *parent = 0);
 
     /*!
         \brief AudioControl destructor
     */
-    ~VlcAudioControl();
+    ~VlcControlAudio();
 
 
     /*!
@@ -106,4 +106,4 @@ private:
     QStringList _preferedLanguage;
 };
 
-#endif // VLCQT_AUDIOCONTROL_H_
+#endif // VLCQT_CONTROLAUDIO_H_
