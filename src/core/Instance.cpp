@@ -105,5 +105,5 @@ void VlcInstance::setUserAgent(const QString &application,
 {
     QString applicationOutput = application + " " + version;
     QString httpOutput = application + "/" + version + " " + "libvlc-qt" + "/" + libVersion(); // "AppName/1.2.3 libvlc-qt/1.2.3"
-    libvlc_set_user_agent(_vlcInstance, applicationOutput.toAscii().data(), httpOutput.toAscii().data());
+    libvlc_set_user_agent(_vlcInstance, applicationOutput.toLocal8Bit().data(), httpOutput.toLocal8Bit().data());
 }

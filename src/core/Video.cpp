@@ -80,7 +80,7 @@ Vlc::Scale VlcVideo::scale() const
 void VlcVideo::setAspectRatio(const Vlc::Ratio &ratio)
 {
     if (_vlcMediaPlayer && libvlc_media_player_has_vout(_vlcMediaPlayer)) {
-        libvlc_video_set_aspect_ratio(_vlcMediaPlayer, Vlc::ratio()[ratio].toAscii().data());
+        libvlc_video_set_aspect_ratio(_vlcMediaPlayer, Vlc::ratio()[ratio].toLocal8Bit().data());
         VlcError::errmsg();
     }
 }
@@ -88,7 +88,7 @@ void VlcVideo::setAspectRatio(const Vlc::Ratio &ratio)
 void VlcVideo::setCropGeometry(const Vlc::Ratio &ratio)
 {
     if (_vlcMediaPlayer && libvlc_media_player_has_vout(_vlcMediaPlayer)) {
-        libvlc_video_set_crop_geometry(_vlcMediaPlayer, Vlc::ratio()[ratio].toAscii().data());
+        libvlc_video_set_crop_geometry(_vlcMediaPlayer, Vlc::ratio()[ratio].toLocal8Bit().data());
         VlcError::errmsg();
     }
 }
@@ -96,7 +96,7 @@ void VlcVideo::setCropGeometry(const Vlc::Ratio &ratio)
 void VlcVideo::setDeinterlace(const Vlc::Deinterlacing &filter)
 {
     if (_vlcMediaPlayer && libvlc_media_player_has_vout(_vlcMediaPlayer)) {
-        libvlc_video_set_deinterlace(_vlcMediaPlayer, Vlc::deinterlacing()[filter].toAscii().data());
+        libvlc_video_set_deinterlace(_vlcMediaPlayer, Vlc::deinterlacing()[filter].toLocal8Bit().data());
         VlcError::errmsg();
     }
 }
@@ -120,7 +120,7 @@ void VlcVideo::setSubtitle(const int &subtitle)
 void VlcVideo::setSubtitleFile(const QString &subtitle)
 {
     if (_vlcMediaPlayer && libvlc_media_player_has_vout(_vlcMediaPlayer)) {
-        libvlc_video_set_subtitle_file(_vlcMediaPlayer, subtitle.toAscii().data());
+        libvlc_video_set_subtitle_file(_vlcMediaPlayer, subtitle.toLocal8Bit().data());
         VlcError::errmsg();
     }
 }
@@ -147,7 +147,7 @@ void VlcVideo::showLogo(const QString &file,
                         const int &opacity)
 {
     if (_vlcMediaPlayer && libvlc_media_player_has_vout(_vlcMediaPlayer)) {
-        libvlc_video_set_logo_string(_vlcMediaPlayer, libvlc_logo_file, file.toAscii().data());
+        libvlc_video_set_logo_string(_vlcMediaPlayer, libvlc_logo_file, file.toLocal8Bit().data());
         libvlc_video_set_logo_int(_vlcMediaPlayer, libvlc_logo_x, x);
         libvlc_video_set_logo_int(_vlcMediaPlayer, libvlc_logo_y, y);
         libvlc_video_set_logo_int(_vlcMediaPlayer, libvlc_logo_opacity, opacity);
@@ -165,7 +165,7 @@ void VlcVideo::showMarquee(const QString &text,
                            const int &color)
 {
     if (_vlcMediaPlayer && libvlc_media_player_has_vout(_vlcMediaPlayer)) {
-        libvlc_video_set_marquee_string(_vlcMediaPlayer, libvlc_marquee_Text, text.toAscii().data());
+        libvlc_video_set_marquee_string(_vlcMediaPlayer, libvlc_marquee_Text, text.toLocal8Bit().data());
         libvlc_video_set_marquee_int(_vlcMediaPlayer, libvlc_marquee_X, x);
         libvlc_video_set_marquee_int(_vlcMediaPlayer, libvlc_marquee_Y, y);
         libvlc_video_set_marquee_int(_vlcMediaPlayer, libvlc_marquee_Timeout, timeout);
@@ -237,7 +237,7 @@ bool VlcVideo::takeSnapshot(const QString &path) const
 {
     bool success = false;
     if (_vlcMediaPlayer && libvlc_media_player_has_vout(_vlcMediaPlayer)) {
-        success = libvlc_video_take_snapshot(_vlcMediaPlayer, 0, path.toAscii().data(), 0, 0) + 1;
+        success = libvlc_video_take_snapshot(_vlcMediaPlayer, 0, path.toLocal8Bit().data(), 0, 0) + 1;
         VlcError::errmsg();
     }
 

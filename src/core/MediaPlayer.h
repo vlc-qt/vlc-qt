@@ -23,7 +23,7 @@
 #include <QtCore/QString>
 #include <QtCore/QTimer>
 
-#include <QWidget>
+#include <QtGui/qwindowdefs.h>
 
 #include "Enums.h"
 #include "SharedExport.h"

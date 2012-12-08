@@ -24,8 +24,6 @@
 
 #include "SharedExport.h"
 
-typedef unsigned long WId;
-
 class VlcMediaPlayer;
 
 /*!
