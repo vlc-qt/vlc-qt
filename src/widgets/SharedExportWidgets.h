@@ -16,25 +16,15 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_COMMON_H_
-#define VLCQT_COMMON_H_
+#ifndef VLCQT_SHARED_EXPORT_WIDGETS_H
+#define VLCQT_SHARED_EXPORT_WIDGETS_H
 
-#include <QtCore/QString>
-#include <QtCore/QStringList>
+#include <QtCore/qglobal.h>
 
-#include "SharedExportCore.h"
+#if defined(VLCQT_WIDGETS_LIBRARY)
+#  define VLCQT_WIDGETS_EXPORT Q_DECL_EXPORT
+#else
+#  define VLCQT_WIDGETS_EXPORT Q_DECL_IMPORT
+#endif
 
-/*!
-	\namespace VlcCommon Common.h vlc-qt/Common.h
-	\brief Common functions
-*/
-namespace VlcCommon
-{
-	/*!
-		\brief Common libvlc arguments
-		\return libvlc arguments (QStringList)
-	*/
-    VLCQT_CORE_EXPORT QStringList args();
-}
-
-#endif // VLCQT_COMMON_H_
+#endif // SHARED_EXPORT_WIDGETS_H

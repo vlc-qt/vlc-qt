@@ -24,7 +24,7 @@
 #include <QtCore/QUrl>
 
 #include "Enums.h"
-#include "SharedExport.h"
+#include "SharedExportCore.h"
 
 class VlcInstance;
 
@@ -39,7 +39,7 @@ struct libvlc_media_t;
     An abstract representation of a playable media.
     It consists of a media location and various optional meta data.
 */
-class VLCQT_EXPORT VlcMedia : public QObject
+class VLCQT_CORE_EXPORT VlcMedia : public QObject
 {
 Q_OBJECT
 public:

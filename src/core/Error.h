@@ -19,7 +19,7 @@
 #ifndef VLCQT_ERROR_H_
 #define VLCQT_ERROR_H_
 
-#include "SharedExport.h"
+#include "SharedExportCore.h"
 
 /*!
 	\class VlcError Error.h vlc-qt/Error.h
@@ -27,7 +27,7 @@
 
 	A basic error handler for VLC-Qt library.
 */
-class VLCQT_EXPORT VlcError
+class VLCQT_CORE_EXPORT VlcError
 {
 public:
 	/*!

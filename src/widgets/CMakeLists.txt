@@ -19,7 +19,7 @@
 #################
 
 # Add definition for exporting symbols
-ADD_DEFINITIONS(-DVLCQT_LIBRARY)
+ADD_DEFINITIONS(-DVLCQT_WIDGETS_LIBRARY)
 
 # Add definitions for shared library
 ADD_DEFINITIONS(-DQT_SHARED -D_REENTRANT)
@@ -37,18 +37,11 @@ SET(VLCQT_WIDGETS_SRCS
     WidgetVolumeSlider.cpp
 )
 
-IF(MSVC)
-    SET(VLCQT_WIDGETS_EXTRAMOC
-        ../core/Audio.h
-        ../core/MediaPlayer.h
-        ../core/Video.h
-    )
-ENDIF(MSVC)
-
 # Define the Include files
 SET(VLCQT_WIDGETS_HEADERS
     ControlAudio.h
     ControlVideo.h
+    SharedExportWidgets.h
     WidgetSeek.h
     WidgetVideo.h
     WidgetVolumeSlider.h
@@ -70,7 +63,7 @@ IF(MSVC)
 ENDIF(MSVC)
 
 # Create the library.
-ADD_LIBRARY(${VLCQT_WIDGETS_SHARED} SHARED ${VLCQT_WIDGETS_SRCS} ${VLCQT_WIDGETS_EXTRAMOC})
+ADD_LIBRARY(${VLCQT_WIDGETS_SHARED} SHARED ${VLCQT_WIDGETS_SRCS})
 
 # MSVC: Avoid Debug/Release/... subfolders
 IF(MSVC)

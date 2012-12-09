@@ -22,7 +22,7 @@
 #include <QtCore/QDate>
 #include <QtCore/QString>
 
-#include "SharedExport.h"
+#include "SharedExportCore.h"
 
 class VlcMedia;
 
@@ -32,7 +32,7 @@ class VlcMedia;
 
     A manager and editor of media's meta information.
 */
-class VLCQT_EXPORT VlcMetaManager
+class VLCQT_CORE_EXPORT VlcMetaManager
 {
 public:
     /*!

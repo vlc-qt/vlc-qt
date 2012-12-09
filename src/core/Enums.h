@@ -21,7 +21,7 @@
 
 #include <QtCore/QStringList>
 
-#include "SharedExport.h"
+#include "SharedExportCore.h"
 
 /*!
     \namespace Vlc Enums.h vlc-qt/Enums.h
@@ -219,67 +219,67 @@ namespace Vlc
         \brief Audio codecs strings
         \return audio codecs strings (QStringList)
     */
-    VLCQT_EXPORT QStringList audioCodec();
+    VLCQT_CORE_EXPORT QStringList audioCodec();
 
     /*!
         \brief Audio outputs strings
         \return audio outputs strings (QStringList)
     */
-    VLCQT_EXPORT QStringList audioOutput();
+    VLCQT_CORE_EXPORT QStringList audioOutput();
 
     /*!
         \brief Audio outputs strings in readable form
         \return audio outputs strings (QStringList)
     */
-    VLCQT_EXPORT QStringList audioOutputHuman();
+    VLCQT_CORE_EXPORT QStringList audioOutputHuman();
 
     /*!
         \brief Deinterlacing modes strings
         \return deinterlacing strings (QStringList)
     */
-    VLCQT_EXPORT QStringList deinterlacing();
+    VLCQT_CORE_EXPORT QStringList deinterlacing();
 
     /*!
         \brief Mux strings
         \return mux strings (QStringList)
     */
-    VLCQT_EXPORT QStringList mux();
+    VLCQT_CORE_EXPORT QStringList mux();
 
     /*!
         \brief Aspect and crop ratios strings
         \return ratios strings (QStringList)
     */
-    VLCQT_EXPORT QStringList ratio();
+    VLCQT_CORE_EXPORT QStringList ratio();
 
     /*!
         \brief Aspect and crop ratios strings in readable form
         \return ratios strings (QStringList)
     */
-    VLCQT_EXPORT QStringList ratioHuman();
+    VLCQT_CORE_EXPORT QStringList ratioHuman();
 
     /*!
         \brief Scale floats
         \return scale floats (QList<float>)
     */
-    VLCQT_EXPORT QList<float> scale();
+    VLCQT_CORE_EXPORT QList<float> scale();
 
     /*!
         \brief Video codecs strings
         \return video codecs strings (QStringList)
     */
-    VLCQT_EXPORT QStringList videoCodec();
+    VLCQT_CORE_EXPORT QStringList videoCodec();
 
     /*!
         \brief Video outputs strings
         \return video outputs strings (QStringList)
     */
-    VLCQT_EXPORT QStringList videoOutput();
+    VLCQT_CORE_EXPORT QStringList videoOutput();
 
     /*!
         \brief Video outputs strings in readable form
         \return video outputs strings (QStringList)
     */
-    VLCQT_EXPORT QStringList videoOutputHuman();
+    VLCQT_CORE_EXPORT QStringList videoOutputHuman();
 }
 
 #endif // VLCQT_ENUMS_H_

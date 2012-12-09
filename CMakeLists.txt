@@ -72,10 +72,6 @@ IF(MINGW)
     SET(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -static-libgcc -static-libstdc++")
 ENDIF(MINGW)
 
-IF(MSVC)
-   ADD_DEFINITIONS("/W3 /D_CRT_SECURE_NO_WARNINGS /wd4005 /wd4996 /nologo")
-ENDIF(MSVC)
-
 # Select modules
 # Widgets
 OPTION(WITH_WIDGETS "Build with Widgets" ON)

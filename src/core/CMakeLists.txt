@@ -19,7 +19,7 @@
 #################
 
 # Add definition for exporting symbols
-ADD_DEFINITIONS(-DVLCQT_LIBRARY)
+ADD_DEFINITIONS(-DVLCQT_CORE_LIBRARY)
 
 # Add definitions for shared library
 ADD_DEFINITIONS(-DQT_SHARED -D_REENTRANT)
@@ -56,7 +56,7 @@ SET(VLCQT_CORE_HEADERS
     MediaListPlayer.h
     MediaPlayer.h
     MetaManager.h
-    SharedExport.h
+    SharedExportCore.h
     Video.h
     VideoDelegate.h
 

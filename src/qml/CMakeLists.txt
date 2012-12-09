@@ -19,7 +19,7 @@
 #################
 
 # Add definition for exporting symbols
-ADD_DEFINITIONS(-DVLCQT_LIBRARY)
+ADD_DEFINITIONS(-DVLCQT_QML_LIBRARY)
 
 # Add definitions for shared library
 ADD_DEFINITIONS(-DQT_SHARED -D_REENTRANT)
@@ -36,6 +36,7 @@ SET(VLCQT_QML_SRCS
 # Define the Include files
 SET(VLCQT_QML_HEADERS
     QmlVideoPlayer.h
+    SharedExportQml.h
 )
 
 

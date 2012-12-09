@@ -22,7 +22,7 @@
 #include <QtCore/QObject>
 #include <QtGui/qwindowdefs.h>
 
-#include "SharedExport.h"
+#include "SharedExportCore.h"
 
 class VlcMediaPlayer;
 
@@ -32,7 +32,7 @@ class VlcMediaPlayer;
 
     This is a helper class, to separate core from display.
 */
-class VLCQT_EXPORT VlcVideoDelegate
+class VLCQT_CORE_EXPORT VlcVideoDelegate
 {
 public:
     /*!

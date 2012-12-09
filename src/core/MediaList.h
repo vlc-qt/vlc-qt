@@ -24,7 +24,7 @@
 #include <QtCore/QUrl>
 
 #include "Enums.h"
-#include "SharedExport.h"
+#include "SharedExportCore.h"
 
 class VlcInstance;
 class VlcMedia;
@@ -40,7 +40,7 @@ struct libvlc_media_list_t;
 
     VlcMediaList holds multiple VlcMedia items to play in sequence.
 */
-class VLCQT_EXPORT VlcMediaList : public QObject
+class VLCQT_CORE_EXPORT VlcMediaList : public QObject
 {
 Q_OBJECT
 public:

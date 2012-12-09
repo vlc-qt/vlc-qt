@@ -49,78 +49,84 @@ MACRO(VLC_INSTALL_PLUGINS)
     ENDFOREACH(type)
 ENDMACRO(VLC_INSTALL_PLUGINS)
 
-IF(MINGW OR MSVC)
-    STRING(REGEX REPLACE "\\\\" "/" LIBVLC_INCLUDE_DIR "${LIBVLC_INCLUDE_DIR}")
+STRING(REGEX REPLACE "\\\\" "/" LIBVLC_INCLUDE_DIR "${LIBVLC_INCLUDE_DIR}")
 
-    STRING(REGEX REPLACE "sdk/include" "" LIBVLC_BIN_DIR "${LIBVLC_INCLUDE_DIR}")
-    STRING(REGEX REPLACE "include" "bin" LIBVLC_BIN_DIR "${LIBVLC_BIN_DIR}")
+STRING(REGEX REPLACE "sdk/include" "" LIBVLC_BIN_DIR "${LIBVLC_INCLUDE_DIR}")
+STRING(REGEX REPLACE "include" "bin" LIBVLC_BIN_DIR "${LIBVLC_BIN_DIR}")
 
-    STRING(REGEX REPLACE "bin" "plugins" QT_PLUGINS_DIR "${QT_BIN_DIR}")
+STRING(REGEX REPLACE "bin" "plugins" QT_PLUGINS_DIR "${QT_BIN_DIR}")
 
-    SET(Qt4_Libs
-        ${QT_BIN_DIR}/QtCore4.dll
-        ${QT_BIN_DIR}/QtGui4.dll
-    )
-    SET(Qt5_Platform
-        ${QT_PLUGINS_DIR}/platforms/qminimal.dll
-        ${QT_PLUGINS_DIR}/platforms/windows.dll
-    )
-    SET(Qt5_Libs
-        ${QT_BIN_DIR}/Qt5Core.dll
-        ${QT_BIN_DIR}/Qt5Gui.dll
-        ${QT_BIN_DIR}/icudt49.dll
-        ${QT_BIN_DIR}/icuin49.dll
-        ${QT_BIN_DIR}/icuuc49.dll
-    )
-    SET(Qt5_Libs_Widgets
-        ${QT_BIN_DIR}/Qt5Widgets.dll
-        ${QT_BIN_DIR}/libEGL.dll
-        ${QT_BIN_DIR}/libGLESv2.dll
-    )
-    SET(Qt4_Libs_Qml
-        ${QT_BIN_DIR}/QtDeclarative4.dll
-        ${QT_BIN_DIR}/QtNetwork4.dll
-        ${QT_BIN_DIR}/QtScript4.dll
-        ${QT_BIN_DIR}/QtSql4.dll
-        ${QT_BIN_DIR}/QtXmlPatterns4.dll
-    )
-    SET(Qt5_Libs_Qml
+SET(Qt4_Libs
+    ${QT_BIN_DIR}/QtCore4.dll
+    ${QT_BIN_DIR}/QtGui4.dll
+)
 
+SET(Qt5_Platforms
+    ${QT_PLUGINS_DIR}/platforms/qminimal.dll
+    ${QT_PLUGINS_DIR}/platforms/windows.dll
+)
+
+SET(Qt5_Libs
+    ${QT_BIN_DIR}/Qt5Core.dll
+    ${QT_BIN_DIR}/Qt5Gui.dll
+    ${QT_BIN_DIR}/icudt49.dll
+    ${QT_BIN_DIR}/icuin49.dll
+    ${QT_BIN_DIR}/icuuc49.dll
+)
+
+SET(Qt5_Libs_Widgets
+    ${QT_BIN_DIR}/Qt5Widgets.dll
+    ${QT_BIN_DIR}/libEGL.dll
+    ${QT_BIN_DIR}/libGLESv2.dll
+)
+
+SET(Qt4_Libs_Qml
+    ${QT_BIN_DIR}/QtDeclarative4.dll
+    ${QT_BIN_DIR}/QtNetwork4.dll
+    ${QT_BIN_DIR}/QtScript4.dll
+    ${QT_BIN_DIR}/QtSql4.dll
+    ${QT_BIN_DIR}/QtXmlPatterns4.dll
+)
+
+SET(Qt5_Libs_Qml
+
+)
+
+SET(Vlc_Libs
+    ${LIBVLC_BIN_DIR}/libvlc.dll
+    ${LIBVLC_BIN_DIR}/libvlccore.dll
+)
+
+IF(MINGW)
+    SET(Extra_Libs
+        ${QT_BIN_DIR}/zlib1.dll
     )
-    SET(Vlc_Libs
-        ${LIBVLC_BIN_DIR}/libvlc.dll
-        ${LIBVLC_BIN_DIR}/libvlccore.dll
-    )
-    IF(MINGW)
-        SET(Extra_Libs
-            ${QT_BIN_DIR}/zlib1.dll
-        )
-    ENDIF(MINGW)
-ENDIF(MINGW OR MSVC)
+ENDIF(MINGW)
 
 
 ################
 # Installation #
 ################
-IF(MINGW OR MSVC)
-    IF(WITH_QT5)
-        INSTALL(FILES ${Qt5_Platform} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin/platforms")
-        INSTALL(FILES ${Qt5_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
-        IF(WITH_WIDGETS)
-            INSTALL(FILES ${Qt5_Libs_Widgets} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
-        ENDIF(WITH_WIDGETS)
-        IF(WITH_QML)
-            INSTALL(FILES ${Qt5_Libs_Qml} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
-        ENDIF(WITH_QML)
-    ELSE(WITH_QT5)
-        INSTALL(FILES ${Qt4_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
-        IF(WITH_QML)
-            INSTALL(FILES ${Q4t_Libs_Qml} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
-        ENDIF(WITH_QML)
-    ENDIF(WITH_QT5)
-    INSTALL(FILES ${Vlc_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
-    IF(MINGW)
-        INSTALL(FILES ${Extra_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
-    ENDIF(MINGW)
-    VLC_INSTALL_PLUGINS(${Vlc_Plugins_Type})
-ENDIF(MINGW OR MSVC)
+IF(WITH_QT5)
+    INSTALL(FILES ${Qt5_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+    INSTALL(FILES ${Qt5_Platforms} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin/platforms")
+    IF(WITH_WIDGETS)
+        INSTALL(FILES ${Qt5_Libs_Widgets} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+    ENDIF(WITH_WIDGETS)
+    IF(WITH_QML)
+        INSTALL(FILES ${Qt5_Libs_Qml} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+    ENDIF(WITH_QML)
+ELSE(WITH_QT5)
+    INSTALL(FILES ${Qt4_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+    IF(WITH_QML)
+        INSTALL(FILES ${Q4t_Libs_Qml} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+    ENDIF(WITH_QML)
+ENDIF(WITH_QT5)
+
+INSTALL(FILES ${Vlc_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+
+IF(MINGW)
+    INSTALL(FILES ${Extra_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+ENDIF(MINGW)
+
+VLC_INSTALL_PLUGINS(${Vlc_Plugins_Type})

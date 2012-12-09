@@ -16,15 +16,15 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_SHARED_EXPORT_H
-#define VLCQT_SHARED_EXPORT_H
+#ifndef VLCQT_SHARED_EXPORT_QML_H
+#define VLCQT_SHARED_EXPORT_QML_H
 
 #include <QtCore/qglobal.h>
 
-#if defined(VLCQT_LIBRARY)
-#  define VLCQT_EXPORT Q_DECL_EXPORT
+#if defined(VLCQT_QML_LIBRARY)
+#  define VLCQT_QML_EXPORT Q_DECL_EXPORT
 #else
-#  define VLCQT_EXPORT Q_DECL_IMPORT
+#  define VLCQT_QML_EXPORT Q_DECL_IMPORT
 #endif
 
-#endif // SHARED_EXPORT_H
+#endif // SHARED_EXPORT_QML_H

@@ -21,7 +21,7 @@
 
 #include <QtCore/QObject>
 
-#include "SharedExport.h"
+#include "SharedExportCore.h"
 
 struct libvlc_instance_t;
 
@@ -32,7 +32,7 @@ struct libvlc_instance_t;
     A basic Instance manager for VLC-Qt library.
     It provides main instance controls.
 */
-class VLCQT_EXPORT VlcInstance : public QObject
+class VLCQT_CORE_EXPORT VlcInstance : public QObject
 {
 Q_OBJECT
 public:

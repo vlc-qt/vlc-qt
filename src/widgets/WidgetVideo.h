@@ -28,7 +28,7 @@
 #endif
 
 #include "Enums.h"
-#include "SharedExport.h"
+#include "SharedExportWidgets.h"
 #include "VideoDelegate.h"
 
 class QTimer;
@@ -43,9 +43,9 @@ class VlcMediaPlayer;
     It provides video display and mouse control.
 */
 #if defined(Q_OS_MAC)
-class VLCQT_EXPORT VlcWidgetVideo : public QMacCocoaViewContainer, public VlcVideoDelegate
+class VLCQT_WIDGETS_EXPORT VlcWidgetVideo : public QMacCocoaViewContainer, public VlcVideoDelegate
 #else
-class VLCQT_EXPORT VlcWidgetVideo : public QFrame, public VlcVideoDelegate
+class VLCQT_WIDGETS_EXPORT VlcWidgetVideo : public QFrame, public VlcVideoDelegate
 #endif
 {
 Q_OBJECT
