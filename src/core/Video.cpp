@@ -233,6 +233,27 @@ QStringList VlcVideo::subtitleDescription() const
     return descriptions;
 }
 
+QList<int> VlcVideo::subtitleIds() const
+{
+    QList<int> ids;
+
+    if (_vlcMediaPlayer && libvlc_media_player_has_vout(_vlcMediaPlayer)) {
+        libvlc_track_description_t *desc;
+        desc = libvlc_video_get_spu_description(_vlcMediaPlayer);
+        VlcError::errmsg();
+
+        ids << desc->i_id;
+        if (subtitleCount() > 1) {
+            for(int i = 1; i < trackCount(); i++) {
+                desc = desc->p_next;
+                ids << desc->i_id;
+            }
+        }
+    }
+
+    return ids;
+}
+
 bool VlcVideo::takeSnapshot(const QString &path) const
 {
     bool success = false;

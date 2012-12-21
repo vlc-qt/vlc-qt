@@ -177,10 +177,16 @@ public:
     int subtitleCount() const;
 
     /*!
-        \brief Get the description of available video subtitles.
-        \return list with description of available video subtitles (const QStringList)
+        \brief Get the descriptions of available video subtitles.
+        \return list with descriptions of available video subtitles (const QStringList)
     */
     QStringList subtitleDescription() const;
+
+    /*!
+        \brief Get the ids of available video subtitles.
+        \return list with ids of available video subtitles (const QList<int>)
+    */
+    QList<int> subtitleIds() const;
 
     /*!
         \brief Take a snapshot of current video (currently primary only)

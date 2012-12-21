@@ -118,10 +118,12 @@ private:
     QTimer *_timerVideo;
 
     QList<QAction *> _actionSubList;
-    QMap<QString, int> _mapSub;
+    QMap<QString, int> _descSub;
+    QMap<int, int> _idSub;
 
     QList<QAction *> _actionVideoList;
-    QMap<QString, int> _mapVideo;
+    QMap<QString, int> _descVideo;
+    QMap<int, int> _idVideo;
 
     bool _manualLanguage;
     QStringList _preferedLanguage;

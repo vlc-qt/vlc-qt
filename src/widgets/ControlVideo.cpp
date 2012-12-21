@@ -37,9 +37,11 @@ VlcControlVideo::VlcControlVideo(VlcMediaPlayer *player,
       _vlcMediaPlayer(player),
       _vlcVideo(player->video()),
       _actionSubList(QList<QAction *>()),
-      _mapSub(QMap<QString, int>()),
+      _descSub(QMap<QString, int>()),
+      _idSub(QMap<int, int>()),
       _actionVideoList(QList<QAction *>()),
-      _mapVideo(QMap<QString, int>()),
+      _descVideo(QMap<QString, int>()),
+      _idVideo(QMap<int, int>()),
       _manualLanguage(false)
 {
     if (!language.isNull() && !language.isEmpty())
@@ -60,10 +62,12 @@ VlcControlVideo::~VlcControlVideo()
     delete _timerVideo;
 }
 
-void VlcControlVideo::updateSubtitleActions() {
+void VlcControlVideo::updateSubtitleActions()
+{
     qDeleteAll(_actionSubList);
     _actionSubList.clear();
-    _mapSub.clear();
+    _descSub.clear();
+    _idSub.clear();
 
     if (!(_vlcMediaPlayer->state() == Vlc::Playing || _vlcMediaPlayer->state() == Vlc::Paused)) {
         emit actions(_actionSubList, Vlc::Subtitles);
@@ -73,8 +77,10 @@ void VlcControlVideo::updateSubtitleActions() {
 
     if (_vlcVideo->subtitleCount() > 0) {
         QStringList desc = _vlcVideo->subtitleDescription();
+        QList<int> ids = _vlcVideo->subtitleIds();
         for (int i = 0; i < desc.size(); i++) {
-            _mapSub.insert(desc[i], i);
+            _descSub.insert(desc[i], ids[i]);
+            _idSub.insert(ids[i], i);
             _actionSubList << new QAction(desc[i], this);
         }
     } else {
@@ -98,7 +104,7 @@ void VlcControlVideo::updateSubtitleActions() {
         }
     }
 
-    _actionSubList[_vlcVideo->subtitle()]->setChecked(true);
+    _actionSubList[_idSub[_vlcVideo->subtitle()]]->setChecked(true);
 
     emit actions(_actionSubList, Vlc::Subtitles);
     emit subtitleTracks(_actionSubList);
@@ -112,7 +118,7 @@ void VlcControlVideo::updateSubtitles()
     if (!action)
         return;
 
-    int id = _mapSub.value(action->text());
+    int id = _descSub.value(action->text());
 
     _vlcVideo->setSubtitle(id);
 }
@@ -127,10 +133,12 @@ void VlcControlVideo::loadSubtitle(const QString &subtitle)
     _timerSubtitles->start(1000);
 }
 
-void VlcControlVideo::updateVideoActions() {
+void VlcControlVideo::updateVideoActions()
+{
     qDeleteAll(_actionVideoList);
     _actionVideoList.clear();
-    _mapVideo.clear();
+    _descVideo.clear();
+    _idVideo.clear();
 
     if (!(_vlcMediaPlayer->state() == Vlc::Playing || _vlcMediaPlayer->state() == Vlc::Paused)) {
         emit actions(_actionVideoList, Vlc::VideoTrack);
@@ -142,7 +150,8 @@ void VlcControlVideo::updateVideoActions() {
         QStringList desc = _vlcVideo->trackDescription();
         QList<int> ids = _vlcVideo->trackIds();
         for (int i = 0; i < desc.size(); i++) {
-            _mapVideo.insert(desc[i], ids[i]);
+            _descVideo.insert(desc[i], ids[i]);
+            _idVideo.insert(ids[i], i);
             _actionVideoList << new QAction(desc[i], this);
         }
     } else {
@@ -157,7 +166,7 @@ void VlcControlVideo::updateVideoActions() {
         connect(action, SIGNAL(triggered()), this, SLOT(updateVideo()));
     }
 
-    _actionVideoList[_vlcVideo->track()]->setChecked(true);
+    _actionVideoList[_idVideo[_vlcVideo->track()]]->setChecked(true);
 
     emit actions(_actionVideoList, Vlc::VideoTrack);
     emit videoTracks(_actionVideoList);
@@ -171,7 +180,7 @@ void VlcControlVideo::updateVideo()
     if (!action)
         return;
 
-    int id = _mapVideo.value(action->text());
+    int id = _descVideo.value(action->text());
 
     _vlcVideo->setTrack(id);
 }

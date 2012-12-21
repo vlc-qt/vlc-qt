@@ -100,7 +100,8 @@ private:
     QTimer *_timer;
 
     QList<QAction *> _actionList;
-    QMap<QString, int> _map;
+    QMap<QString, int> _desc;
+    QMap<int, int> _id;
 
     bool _manualLanguage;
     QStringList _preferedLanguage;

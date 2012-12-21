@@ -36,7 +36,8 @@ VlcControlAudio::VlcControlAudio(VlcMediaPlayer *player,
       _vlcAudio(player->audio()),
       _vlcMediaPlayer(player),
       _actionList(QList<QAction *>()),
-      _map(QMap<QString, int>()),
+      _desc(QMap<QString, int>()),
+      _id(QMap<int, int>()),
       _manualLanguage(false)
 {
     if (!language.isNull() && !language.isEmpty())
@@ -58,7 +59,8 @@ void VlcControlAudio::clean()
 {
     qDeleteAll(_actionList);
     _actionList.clear();
-    _map.clear();
+    _desc.clear();
+    _id.clear();
 }
 
 void VlcControlAudio::reset()
@@ -72,7 +74,7 @@ void VlcControlAudio::update()
     if (!action)
         return;
 
-    int id = _map.value(action->text());
+    int id = _desc.value(action->text());
 
     _vlcAudio->setTrack(id);
 }
@@ -89,8 +91,10 @@ void VlcControlAudio::updateActions()
 
     if (_vlcAudio->trackCount() > 0) {
         QStringList desc = _vlcAudio->trackDescription();
+        QList<int> ids = _vlcAudio->trackIds();
         for (int i = 0; i < desc.size(); i++) {
-            _map.insert(desc[i], i);
+            _desc.insert(desc[i], ids[i]);
+            _id.insert(ids[i], i);
             _actionList << new QAction(desc[i], this);
         }
     } else {
@@ -114,7 +118,7 @@ void VlcControlAudio::updateActions()
         }
     }
 
-    _actionList[_vlcAudio->track()]->setChecked(true);
+    _actionList[_id[_vlcAudio->track()]]->setChecked(true);
 
     emit actions(_actionList, Vlc::AudioTrack);
     emit audioTracks(_actionList);

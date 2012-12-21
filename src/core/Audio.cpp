@@ -111,6 +111,27 @@ QStringList VlcAudio::trackDescription() const
     return descriptions;
 }
 
+QList<int> VlcAudio::trackIds() const
+{
+    QList<int> ids;
+
+    if (_vlcMediaPlayer) {
+        libvlc_track_description_t *desc;
+        desc = libvlc_audio_get_track_description(_vlcMediaPlayer);
+        VlcError::errmsg();
+
+        ids << desc->i_id;
+        if (trackCount() > 1) {
+            for(int i = 1; i < trackCount(); i++) {
+                desc = desc->p_next;
+                ids << desc->i_id;
+            }
+        }
+    }
+
+    return ids;
+}
+
 int VlcAudio::volume() const
 {
     int volume = -1;

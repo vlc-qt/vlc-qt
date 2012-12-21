@@ -95,6 +95,12 @@ public:
     QStringList trackDescription() const;
 
     /*!
+        \brief Get the ids of available audio tracks.
+        \return list with ids of available audio tracks (const QList<int>)
+    */
+    QList<int> trackIds() const;
+
+    /*!
         \brief Get current audio level.
         \return current audio level, -1 if media is not playing (const int)
     */
