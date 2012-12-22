@@ -27,4 +27,4 @@ CONFIGURE_FILE(
 ################
 # Installation #
 ################
-INSTALL(FILES ${CMAKE_BINARY_DIR}/pkgconfig/libvlc-qt.pc DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/pkgconfig)
+INSTALL(FILES ${CMAKE_BINARY_DIR}/pkgconfig/libvlc-qt.pc DESTINATION ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/pkgconfig)
