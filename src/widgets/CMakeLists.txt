@@ -62,6 +62,22 @@ IF(MSVC)
     INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/windows/msvc)
 ENDIF(MSVC)
 
+# Compile resources with windres
+IF(MINGW)
+    ADD_CUSTOM_COMMAND(
+        OUTPUT ${CMAKE_BINARY_DIR}/src/platform/windows/widgets.obj
+        COMMAND ${CMAKE_RC_COMPILER}
+        -i ${CMAKE_SOURCE_DIR}/src/platform/windows/widgets.rc
+        -o ${CMAKE_BINARY_DIR}/src/platform/windows/widgets.obj
+        WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/src/platform/windows"
+    )
+    SET(VLCQT_WIDGETS_SRCS ${VLCQT_WIDGETS_SRCS} ${CMAKE_BINARY_DIR}/src/platform/windows/widgets.obj)
+ENDIF(MINGW)
+
+IF(MSVC)
+    SET(VLCQT_WIDGETS_SRCS ${VLCQT_WIDGETS_SRCS} ${CMAKE_SOURCE_DIR}/src/platform/windows/widgets.rc)
+ENDIF(MSVC)
+
 # Create the library.
 ADD_LIBRARY(${VLCQT_WIDGETS_SHARED} SHARED ${VLCQT_WIDGETS_SRCS})
 

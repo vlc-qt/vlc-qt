@@ -91,6 +91,22 @@ IF(MSVC)
     INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/windows/msvc)
 ENDIF(MSVC)
 
+# Compile resources with windres
+IF(MINGW)
+    ADD_CUSTOM_COMMAND(
+        OUTPUT ${CMAKE_BINARY_DIR}/src/platform/windows/core.obj
+        COMMAND ${CMAKE_RC_COMPILER}
+        -i ${CMAKE_SOURCE_DIR}/src/platform/windows/core.rc
+        -o ${CMAKE_BINARY_DIR}/src/platform/windows/core.obj
+        WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/src/platform/windows"
+    )
+    SET(VLCQT_CORE_SRCS ${VLCQT_CORE_SRCS} ${CMAKE_BINARY_DIR}/src/platform/windows/core.obj)
+ENDIF(MINGW)
+
+IF(MSVC)
+    SET(VLCQT_CORE_SRCS ${VLCQT_CORE_SRCS} ${CMAKE_SOURCE_DIR}/src/platform/windows/core.rc)
+ENDIF(MSVC)
+
 # Create the library.
 ADD_LIBRARY(${VLCQT_SHARED} SHARED
             ${VLCQT_CORE_SRCS} ${VLCQT_CORE_RESOURCES_SRCS})
