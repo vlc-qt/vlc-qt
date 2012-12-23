@@ -16,9 +16,6 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include <QtCore/QTimer>
-#include <QtGui/QMouseEvent>
-
 #if defined(Qt5)
     #include <QtWidgets/QApplication>
     #include <QtWidgets/QDesktopWidget>
@@ -76,8 +73,6 @@ VlcWidgetVideo::~VlcWidgetVideo()
 {
     release();
 
-    delete _timerMouse;
-
 #if !defined(Q_OS_MAC)
     delete _layout;
 
@@ -88,9 +83,6 @@ VlcWidgetVideo::~VlcWidgetVideo()
 
 void VlcWidgetVideo::initWidgetVideo()
 {
-    setMouseTracking(true);
-
-    _hide = true;
     _enableSettings = false;
     _defaultAspectRatio = Vlc::Original;
     _defaultCropRatio = Vlc::Original;
@@ -114,9 +106,6 @@ void VlcWidgetVideo::initWidgetVideo()
     plt.setColor(QPalette::Window, Qt::black);
     setPalette(plt);
 #endif
-
-    _timerMouse = new QTimer(this);
-    connect(_timerMouse, SIGNAL(timeout()), this, SLOT(hideMouse()));
 }
 
 void VlcWidgetVideo::setMediaPlayer(VlcMediaPlayer *player)
@@ -124,82 +113,6 @@ void VlcWidgetVideo::setMediaPlayer(VlcMediaPlayer *player)
     _vlcMediaPlayer = player;
 
     connect(_vlcMediaPlayer, SIGNAL(vout(int)), this, SLOT(applyPreviousSettings()));
-}
-
-//Events:
-void VlcWidgetVideo::mouseDoubleClickEvent(QMouseEvent *event)
-{
-    event->ignore();
-    emit fullscreen();
-}
-
-void VlcWidgetVideo::mouseMoveEvent(QMouseEvent *event)
-{
-    event->ignore();
-    if (isFullScreen()) {
-        emit mouseShow(event->globalPos());
-    }
-
-    if (isFullScreen() && _hide) {
-        qApp->restoreOverrideCursor();
-
-        _timerMouse->start(1000);
-    }
-}
-
-void VlcWidgetVideo::mousePressEvent(QMouseEvent *event)
-{
-    event->ignore();
-
-    if (event->button() == Qt::RightButton) {
-        qApp->restoreOverrideCursor();
-        emit rightClick(event->globalPos());
-    }
-}
-
-void VlcWidgetVideo::wheelEvent(QWheelEvent *event)
-{
-    event->ignore();
-
-    if (event->delta() > 0)
-        emit wheel(true);
-    else
-        emit wheel(false);
-}
-
-void VlcWidgetVideo::hideMouse()
-{
-    if (isFullScreen() && _hide) {
-        qApp->setOverrideCursor(Qt::BlankCursor);
-        _timerMouse->stop();
-        emit mouseHide();
-    }
-}
-
-void VlcWidgetVideo::toggleFullscreen()
-{
-    Qt::WindowFlags flags = windowFlags();
-    if (!isFullScreen()) {
-        flags |= Qt::Window;
-        flags ^= Qt::SubWindow;
-        setWindowFlags(flags);
-#if defined(Q_WS_X11)
-        // This works around a bug with Compiz
-        // as the window must be visible before we can set the state
-        show();
-        raise();
-        setWindowState( windowState() | Qt::WindowFullScreen );
-#else
-        setWindowState( windowState() | Qt::WindowFullScreen );
-        show();
-#endif
-    } else if (isFullScreen()) {
-        flags ^= (Qt::Window | Qt::SubWindow);
-        setWindowFlags(flags);
-        setWindowState( windowState() ^ Qt::WindowFullScreen );
-        qApp->restoreOverrideCursor();
-        show();
-    }
 }
 
 void VlcWidgetVideo::setCurrentAspectRatio(const Vlc::Ratio &ratio)

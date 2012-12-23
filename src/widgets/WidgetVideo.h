@@ -31,8 +31,6 @@
 #include "SharedExportWidgets.h"
 #include "VideoDelegate.h"
 
-class QTimer;
-
 class VlcMediaPlayer;
 
 /*!
@@ -185,57 +183,8 @@ public:
     */
     void release();
 
-protected:
-    void mouseDoubleClickEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
-    void mousePressEvent(QMouseEvent *event);
-    void wheelEvent(QWheelEvent *event);
-
-signals:
-    /*!
-        \brief Signal sending fullscreen request
-    */
-    void fullscreen();
-
-    /*!
-        \brief Signal sending right click and it's location
-        \param QPoint right click location
-    */
-    void rightClick(const QPoint);
-
-    /*!
-        \brief Signal sending mouse wheel direction
-        \param bool true if up
-    */
-    void wheel(const bool);
-
-    /*!
-        \brief Signal sending if mouse moved and cursor is showed
-        \param QPoint global position
-    */
-    void mouseShow(const QPoint);
-
-    /*!
-        \brief Signal sending if mouse cursor is hidden
-    */
-    void mouseHide();
-
 
 public slots:
-    /*!
-        \brief Enable mouse hide
-    */
-    inline void enableMouseHide() { _hide = true; }
-    /*!
-        \brief Disable mouse hide
-    */
-    inline void disableMouseHide() { _hide = false; }
-
-    /*!
-        \brief Toggle fullscreen
-    */
-    void toggleFullscreen();
-
     /*!
         \brief Enable default video settings
 
@@ -283,7 +232,6 @@ public slots:
 
 
 private slots:
-    void hideMouse();
     void applyPreviousSettings();
 
 private:
@@ -297,9 +245,6 @@ private:
     QLayout *_layout;
 #endif
 
-    QTimer *_timerMouse;
-
-    bool _hide;
     bool _enableSettings;
 
     Vlc::Ratio _defaultAspectRatio;
