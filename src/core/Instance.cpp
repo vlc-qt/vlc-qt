@@ -50,7 +50,7 @@ VlcInstance::VlcInstance(const QStringList &args,
         qDebug() << "Using libvlc version:" << version();
     } else {
         qDebug() << "libvlc-qt Error: libvlc failed to load!";
-        exit(-100);
+        abort();
     }
 }
 
