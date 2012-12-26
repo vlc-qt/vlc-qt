@@ -126,7 +126,7 @@ QString VlcMedia::duplicate(const QString &name,
                             const QString &path,
                             const Vlc::Mux &mux)
 {
-    return record(name, path, mux);
+    return record(name, path, mux, true);
 }
 
 QString VlcMedia::duplicate(const QString &name,
@@ -135,7 +135,7 @@ QString VlcMedia::duplicate(const QString &name,
                             const Vlc::AudioCodec &audioCodec,
                             const Vlc::VideoCodec &videoCodec)
 {
-    return record(name, path, mux, audioCodec, videoCodec);
+    return record(name, path, mux, audioCodec, videoCodec, true);
 }
 
 QString VlcMedia::duplicate(const QString &name,
@@ -147,7 +147,7 @@ QString VlcMedia::duplicate(const QString &name,
                             const int &fps,
                             const int &scale)
 {
-    return record(name, path, mux, audioCodec, videoCodec, bitrate, fps, scale);
+    return record(name, path, mux, audioCodec, videoCodec, bitrate, fps, scale, true);
 }
 
 QString VlcMedia::merge(const QString &name,
