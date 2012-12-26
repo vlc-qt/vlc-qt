@@ -77,10 +77,10 @@ void VlcControlVideo::updateSubtitleActions()
 
     if (_vlcVideo->subtitleCount() > 0) {
         QStringList desc = _vlcVideo->subtitleDescription();
-        QList<int> ids = _vlcVideo->subtitleIds();
+        //QList<int> ids = _vlcVideo->subtitleIds();
         for (int i = 0; i < desc.size(); i++) {
-            _descSub.insert(desc[i], ids[i]);
-            _idSub.insert(ids[i], i);
+            _descSub.insert(desc[i], i); //_descSub.insert(desc[i], ids[i]);
+            _idSub.insert(i, i); //_idSub.insert(ids[i], i);
             _actionSubList << new QAction(desc[i], this);
         }
     } else {
