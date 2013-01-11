@@ -39,7 +39,7 @@ Installation
 
 Copyright info
 --------------
-Copyright (C) 2010-2012 Tadej Novak
+Copyright (C) 2010-2013 Tadej Novak
 
 VLC-Qt is free (libre) software. This means that the library
 source code is available to public, anyone is welcome to research

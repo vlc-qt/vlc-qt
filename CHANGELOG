@@ -1,3 +1,13 @@
+0.8.0 (git)
+  * Separate library into modules: core, widgets and qml
+  * Introduce position() and setPosition() methods
+  * Fix pause method and introduce togglePause method
+  * Removed mouse and fullscreen functions from WidgetVideo
+  * Full support for MSVC and Qt5
+  * Fix: Use proper track ids
+  * Fix: Install pkg-config file to correct path (issue #12)
+  * Fix: Don't use exit() (issue #13)
+
 0.7.0 (2012-10-14)
   * Re-licensed under GNU Lesser General Public License v3
   * Native MSVC support
