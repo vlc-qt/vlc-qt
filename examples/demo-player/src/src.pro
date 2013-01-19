@@ -28,8 +28,8 @@ HEADERS     += DemoPlayer.h
 
 FORMS       += DemoPlayer.ui
 
-LIBS        += -lvlc-qt
+LIBS        += -lvlc-qt -lvlc-qt-widgets
 
 # Edit below for custom library location
-#LIBS     += -L/home/tadej/workspace/install/stable/lib -lvlc-qt
-#INCLUDEPATH += /home/tadej/workspace/install/stable/include
+#LIBS     += -L/home/tadej/workspace/tanoprojects/install/linux-devel/lib -lvlc-qt -lvlc-qt-widgets
+#INCLUDEPATH += /home/tadej/workspace/tanoprojects/install/linux-devel/include

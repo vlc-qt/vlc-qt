@@ -3,18 +3,18 @@
 # Copyright (C) 2011 Tadej Novak <tadej@tano.si>
 # Original author: Rohit Yadav <rohityadav89@gmail.com>
 #
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
+# This library is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
-# This program is distributed in the hope that it will be useful,
+# This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
+# GNU Lesser General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
-# along with this program. If not, see <http://www.gnu.org/licenses/>.
+# You should have received a copy of the GNU Lesser General Public License
+# along with this library. If not, see <http://www.gnu.org/licenses/>.
 #############################################################################
 # If it's found it sets LIBVLCQT_FOUND to TRUE
 # and following variables are set:
@@ -50,6 +50,8 @@ FIND_LIBRARY(LIBVLCQT_LIBRARY NAMES vlc-qt PATHS
     NO_DEFAULT_PATH
 )
 FIND_LIBRARY(LIBVLCQT_LIBRARY NAMES vlc-qt)
+FIND_LIBRARY(LIBVLCQT_WIDGETS_LIBRARY NAMES vlc-qt-widgets)
+FIND_LIBRARY(LIBVLCQT_QML_LIBRARY NAMES vlc-qt-qml)
 
 IF (LIBVLCQT_INCLUDE_DIR AND LIBVLCQT_LIBRARY)
     SET(LIBVLCQT_FOUND TRUE)

@@ -60,7 +60,7 @@ INCLUDE(${QT_USE_FILE})
 ADD_EXECUTABLE(${PROJECT_NAME} ${Project_UIC_Srcs} ${Project_Srcs} ${Project_MOC_Srcs})
 
 # Here the needed Qt Libraries are added to the link command.
-TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${QT_LIBRARIES} ${LIBVLCQT_LIBRARY})
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${QT_LIBRARIES} ${LIBVLCQT_WIDGETS_LIBRARY} ${LIBVLCQT_LIBRARY})
 
 
 ################

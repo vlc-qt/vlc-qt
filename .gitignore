@@ -3,6 +3,7 @@ build/
 
 # Project files
 CMakeLists.txt.user
+demo-player.pro.user
 
 # Debian/build
 obj*
