@@ -10,7 +10,5 @@ debian/*debhelper*
 debian/*substvars*
 debian/files
 debian/libvlc-qt/
-debian/libvlc-qt1/
-debian/libvlc-qt-dbg/
-debian/libvlc-qt-dev/
+debian/libvlc-qt-*/
 debian/tmp/
