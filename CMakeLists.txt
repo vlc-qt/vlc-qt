@@ -139,7 +139,7 @@ FIND_PACKAGE(LIBVLC REQUIRED)
 
 # Set Qt bin dir to find QtCoreX.dll and other libs to install
 IF(MINGW OR MSVC)
-    STRING(REGEX REPLACE "([^ ]+)[/\\].*" "\\1" QT_BIN_DIR_TMP "${QT_QMAKE_EXECUTABLE}")
+    STRING(REGEX REPLACE "([^ ]+)[/\\].*" "\\1" QT_BIN_DIR_TMP "${QT_MOC_EXECUTABLE}")
     STRING(REGEX REPLACE "\\\\" "/" QT_BIN_DIR "${QT_BIN_DIR_TMP}")  # Replace back slashes to slashes
 ENDIF(MINGW OR MSVC)
 
