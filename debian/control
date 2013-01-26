@@ -35,7 +35,7 @@ Description: VLC-Qt - Qt and libvlc connector library [debug]
 Package: libvlc-qt-core0
 Section: libs
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libqt4-core (>=4.8.0), libqt4-gui (>=4.8.0), vlc (>=2.0.0), vlc-plugin-pulse (>=2.0.0), vlc-plugin-zvbi (>=2.0.0)
+Depends: ${shlibs:Depends}, ${misc:Depends}, libqtcore4 (>=4.8.0), libqtgui4 (>=4.8.0), vlc (>=2.0.0), vlc-plugin-pulse (>=2.0.0), vlc-plugin-zvbi (>=2.0.0)
 Description: VLC-Qt - Qt and libvlc connector library
  VLC-Qt is a free library used to connect Qt and libvlc libraries.
  It contains core classes for main media playback and also some GUI

@@ -1,4 +1,4 @@
-0.8.0 (git)
+0.8.0 (2013-01-26)
   * Separate library into modules: core, widgets and qml
   * Introduce position() and setPosition() methods
   * Fix pause method and introduce togglePause method
