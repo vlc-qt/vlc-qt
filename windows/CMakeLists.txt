@@ -78,6 +78,7 @@ SET(Qt5_Libs_Widgets
     ${QT_BIN_DIR}/Qt5Widgets.dll
     ${QT_BIN_DIR}/libEGL.dll
     ${QT_BIN_DIR}/libGLESv2.dll
+    ${QT_BIN_DIR}/D3DCompiler_43.dll
 )
 
 SET(Qt4_Libs_Qml
