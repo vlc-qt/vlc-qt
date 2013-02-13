@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2013 Tadej Novak <tadej@tano.si>
 *
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published
@@ -20,7 +20,12 @@
 #define VLCQT_WIDGETSEEK_H_
 
 #include <QtCore/QPoint>
-#include <QWidget>
+
+#if QT_VERSION >= 0x050000
+    #include <QtWidgets/QWidget>
+#else
+    #include <QtGui/QWidget>
+#endif
 
 #include "SharedExportWidgets.h"
 

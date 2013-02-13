@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2013 Tadej Novak <tadej@tano.si>
 *
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published
@@ -19,11 +19,11 @@
 #include <QtCore/QTimer>
 #include <QtGui/QMouseEvent>
 
-#if defined(Qt5)
+#if QT_VERSION >= 0x050000
     #include <QtWidgets/QHBoxLayout>
     #include <QtWidgets/QLabel>
     #include <QtWidgets/QSlider>
-#elif defined(Qt4)
+#else
     #include <QtGui/QHBoxLayout>
     #include <QtGui/QLabel>
     #include <QtGui/QSlider>

@@ -1,6 +1,6 @@
 #############################################################################
 # VLC-Qt - Qt and libvlc connector library
-# Copyright (C) 2012 Tadej Novak <tadej@tano.si>
+# Copyright (C) 2013 Tadej Novak <tadej@tano.si>
 #
 # This library is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published
@@ -24,8 +24,6 @@ PROJECT(test-vlcqt-qml)
 # Define the C++ source files
 SET(Test_QML_Srcs
     main.cpp
-
-    qmlapplicationviewer/qmlapplicationviewer.cpp
 )
 
 
@@ -45,12 +43,12 @@ INCLUDE_DIRECTORIES(
 ADD_EXECUTABLE(${PROJECT_NAME} ${Test_QML_Srcs})
 
 # Link the required libraries
-IF(WITH_QT5)
-    QT5_USE_MODULES(${PROJECT_NAME} Qml)
-    TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${VLCQT_BINARY} ${VLCQT_QML_BINARY})
-ELSE(WITH_QT5)
+IF(QT5)
+    QT5_USE_MODULES(${PROJECT_NAME} Quick)
+    TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${VLCQT_QML_BINARY} ${VLCQT_BINARY})
+ELSE(QT5)
     TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${QT_LIBRARIES} ${VLCQT_QML_BINARY} ${VLCQT_BINARY})
-ENDIF(WITH_QT5)
+ENDIF(QT5)
 
 
 ################

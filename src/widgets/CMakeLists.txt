@@ -1,6 +1,6 @@
 #############################################################################
 # VLC-Qt - Qt and libvlc connector library
-# Copyright (C) 2012 Tadej Novak <tadej@tano.si>
+# Copyright (C) 2013 Tadej Novak <tadej@tano.si>
 #
 # This library is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published
@@ -99,12 +99,12 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
 # Link the required libraries
-IF(WITH_QT5)
+IF(QT5)
     QT5_USE_MODULES(${VLCQT_WIDGETS_SHARED} Widgets)
     TARGET_LINK_LIBRARIES(${VLCQT_WIDGETS_SHARED} ${VLCQT_BINARY})
-ELSE(WITH_QT5)
+ELSE(QT5)
     TARGET_LINK_LIBRARIES(${VLCQT_WIDGETS_SHARED} ${QT_LIBRARIES} ${VLCQT_BINARY})
-ENDIF(WITH_QT5)
+ENDIF(QT5)
 
 # On Mac OS X, the VideoWidget uses Objective-C and Cocoa
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")

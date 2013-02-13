@@ -1,6 +1,6 @@
 #############################################################################
 # VLC-Qt - Qt and libvlc connector library
-# Copyright (C) 2012 Tadej Novak <tadej@tano.si>
+# Copyright (C) 2013 Tadej Novak <tadej@tano.si>
 #
 # This library is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published
@@ -108,7 +108,7 @@ ENDIF(MINGW)
 ################
 # Installation #
 ################
-IF(WITH_QT5)
+IF(QT5)
     INSTALL(FILES ${Qt5_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
     INSTALL(FILES ${Qt5_Platforms} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin/platforms")
     IF(WITH_WIDGETS)
@@ -117,12 +117,12 @@ IF(WITH_QT5)
     IF(WITH_QML)
         INSTALL(FILES ${Qt5_Libs_Qml} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
     ENDIF(WITH_QML)
-ELSE(WITH_QT5)
+ELSE(QT5)
     INSTALL(FILES ${Qt4_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
     IF(WITH_QML)
         INSTALL(FILES ${Q4t_Libs_Qml} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
     ENDIF(WITH_QML)
-ENDIF(WITH_QT5)
+ENDIF(QT5)
 
 INSTALL(FILES ${Vlc_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
 

@@ -1,6 +1,6 @@
 #############################################################################
 # VLC-Qt - Qt and libvlc connector library
-# Copyright (C) 2012 Tadej Novak <tadej@tano.si>
+# Copyright (C) 2013 Tadej Novak <tadej@tano.si>
 #
 # This library is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published
@@ -73,11 +73,11 @@ SET(VLCQT_CORE_RESOURCES
 # Compiler settings #
 #####################
 # This scripts run the resource compiler rcc
-IF(WITH_QT5)
+IF(QT5)
     QT5_ADD_RESOURCES(VLCQT_CORE_RESOURCES_SRCS ${VLCQT_CORE_RESOURCES})
-ELSE(WITH_QT5)
+ELSE(QT5)
     QT4_ADD_RESOURCES(VLCQT_CORE_RESOURCES_SRCS ${VLCQT_CORE_RESOURCES})
-ENDIF(WITH_QT5)
+ENDIF(QT5)
 
 INCLUDE_DIRECTORIES(${LIBVLC_INCLUDE_DIR})
 
@@ -129,12 +129,12 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
 # Link the required libraries
-IF(WITH_QT5)
+IF(QT5)
     QT5_USE_MODULES(${VLCQT_SHARED} Core)
     TARGET_LINK_LIBRARIES(${VLCQT_SHARED} ${LIBVLC_LIBRARY})
-ELSE(WITH_QT5)
+ELSE(QT5)
     TARGET_LINK_LIBRARIES(${VLCQT_SHARED} ${QT_LIBRARIES} ${LIBVLC_LIBRARY})
-ENDIF(WITH_QT5)
+ENDIF(QT5)
 
 
 ################
