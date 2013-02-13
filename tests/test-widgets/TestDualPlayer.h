@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2013 Tadej Novak <tadej@tano.si>
 *
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published
@@ -19,11 +19,8 @@
 #ifndef VLCQT_TEST_DUALPLAYER_H_
 #define VLCQT_TEST_DUALPLAYER_H_
 
-#if defined(Qt5)
-    #include <QtWidgets/QMainWindow>
-#elif defined(Qt4)
-    #include <QtGui/QMainWindow>
-#endif
+// QtGui/QtWidgets
+#include <QMainWindow>
 
 namespace Ui {
     class TestDual;

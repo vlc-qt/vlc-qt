@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2013 Tadej Novak <tadej@tano.si>
 *
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published
@@ -21,10 +21,10 @@
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication::setApplicationName("Test Widgets");
+    QCoreApplication::setApplicationName("Test Core");
     QCoreApplication::setAttribute(Qt::AA_X11InitThreads);
 
-#if defined(Qt4)
+#if QT_VERSION < 0x050000
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
 #endif
 

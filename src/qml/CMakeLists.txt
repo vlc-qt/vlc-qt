@@ -1,6 +1,6 @@
 #############################################################################
 # VLC-Qt - Qt and libvlc connector library
-# Copyright (C) 2012 Tadej Novak <tadej@tano.si>
+# Copyright (C) 2013 Tadej Novak <tadej@tano.si>
 #
 # This library is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published
@@ -28,16 +28,31 @@ ADD_DEFINITIONS(-DQT_SHARED -D_REENTRANT)
 ###################
 # List of sources #
 ###################
+IF(QT5)
 # Define the C++ source files
-SET(VLCQT_QML_SRCS
-    QmlVideoPlayer.cpp
-)
+    SET(VLCQT_QML_SRCS
+        QmlVideoPlayer.cpp
+        QmlVideoPlayer5.h
+    )
 
 # Define the Include files
-SET(VLCQT_QML_HEADERS
-    QmlVideoPlayer.h
-    SharedExportQml.h
-)
+    SET(VLCQT_QML_HEADERS
+        QmlVideoPlayer5.h
+        SharedExportQml.h
+    )
+ELSE(QT5)
+# Define the C++ source files
+    SET(VLCQT_QML_SRCS
+        QmlVideoPlayer.cpp
+        QmlVideoPlayer4.h
+    )
+
+# Define the Include files
+    SET(VLCQT_QML_HEADERS
+        QmlVideoPlayer4.h
+        SharedExportQml.h
+    )
+ENDIF(QT5)
 
 
 #####################
@@ -91,11 +106,11 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
 # Link the required libraries
-IF(WITH_QT5)
-    QT5_USE_MODULES(${VLCQT_QML_SHARED} Qml)
-ELSE(WITH_QT5)
+IF(QT5)
+    QT5_USE_MODULES(${VLCQT_QML_SHARED} Quick)
+ELSE(QT5)
     TARGET_LINK_LIBRARIES(${VLCQT_QML_SHARED} ${QT_LIBRARIES})
-ENDIF(WITH_QT5)
+ENDIF(QT5)
 
 
 ################

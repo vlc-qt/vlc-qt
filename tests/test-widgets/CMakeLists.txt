@@ -1,6 +1,6 @@
 #############################################################################
 # VLC-Qt - Qt and libvlc connector library
-# Copyright (C) 2012 Tadej Novak <tadej@tano.si>
+# Copyright (C) 2013 Tadej Novak <tadej@tano.si>
 #
 # This library is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published
@@ -46,11 +46,11 @@ SET(Test_Widgets_Srcs
 # Qt settings #
 ################
 # This scripts run the user interface compiler uic.
-IF(WITH_QT5)
+IF(QT5)
     QT5_WRAP_UI(Test_Widgets_UIC_Srcs ${Test_Widgets_UIs})
-ELSE(WITH_QT5)
+ELSE(QT5)
     QT4_WRAP_UI(Test_Widgets_UIC_Srcs ${Test_Widgets_UIs})
-ENDIF(WITH_QT5)
+ENDIF(QT5)
 
 
 #####################
@@ -68,12 +68,12 @@ INCLUDE_DIRECTORIES(
 ADD_EXECUTABLE(${PROJECT_NAME} ${Test_Widgets_UIC_Srcs} ${Test_Widgets_Srcs})
 
 # Link the required libraries
-IF(WITH_QT5)
+IF(QT5)
     QT5_USE_MODULES(${PROJECT_NAME} Widgets)
     TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${VLCQT_BINARY} ${VLCQT_WIDGETS_BINARY})
-ELSE(WITH_QT5)
+ELSE(QT5)
     TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${QT_LIBRARIES} ${VLCQT_BINARY} ${VLCQT_WIDGETS_BINARY})
-ENDIF(WITH_QT5)
+ENDIF(QT5)
 
 ################
 # Installation #

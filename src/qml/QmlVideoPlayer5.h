@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2013 Tadej Novak <tadej@tano.si>
 *
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published
@@ -21,7 +21,8 @@
 
 #include <QtCore/QMutex>
 #include <QtCore/QTimer>
-#include <QtDeclarative/QDeclarativeItem>
+
+#include <QtQuick/QQuickPaintedItem>
 
 #include "SharedExportQml.h"
 
@@ -30,11 +31,11 @@ class VlcInstance;
 class VlcMedia;
 class VlcMediaPlayer;
 
-class VLCQT_QML_EXPORT VlcQmlVideoPlayer : public QDeclarativeItem
+class VLCQT_QML_EXPORT VlcQmlVideoPlayer : public QQuickPaintedItem
 {
 Q_OBJECT
 public:
-    explicit VlcQmlVideoPlayer(QDeclarativeItem *parent = 0);
+    explicit VlcQmlVideoPlayer(QQuickItem *parent = 0);
     ~VlcQmlVideoPlayer();
 
 	Q_INVOKABLE void close();
@@ -48,8 +49,9 @@ public:
 	QMutex _mutex;
 
 protected:
-	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
-	void geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry);
+    void paint(QPainter *painter);
+    void geometryChanged(const QRectF &newGeometry,
+                         const QRectF &oldGeometry);
 
 private slots:
 	void updateFrame();

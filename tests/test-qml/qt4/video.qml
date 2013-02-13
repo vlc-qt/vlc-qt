@@ -16,41 +16,24 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_TEST_DUALINSTANCE_H_
-#define VLCQT_TEST_DUALINSTANCE_H_
+import QtQuick 1.1
+import VLCQt 0.9
 
-// QtGui/QtWidgets
-#include <QMainWindow>
+Rectangle {
+    width: 640
+    height: 480
 
-namespace Ui {
-    class TestDual;
+    VlcVideoPlayer
+    {
+        id: vidwidget
+        anchors.fill: parent
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                vidwidget.openFile("/home/tadej/Video/Yugo.mpeg")
+                vidwidget.play()
+            }
+        }
+    }
 }
-
-class VlcInstance;
-class VlcMedia;
-class VlcMediaPlayer;
-
-class TestDualInstance : public QMainWindow
-{
-Q_OBJECT
-public:
-    explicit TestDualInstance(QWidget *parent = 0);
-    ~TestDualInstance();
-
-private slots:
-    void open1();
-    void open2();
-
-private:
-    Ui::TestDual *ui;
-
-    VlcInstance *_instance1;
-    VlcMedia *_media1;
-    VlcMediaPlayer *_player1;
-
-    VlcInstance *_instance2;
-    VlcMedia *_media2;
-    VlcMediaPlayer *_player2;
-};
-
-#endif // VLCQT_TEST_DUALINSTANCE_H_

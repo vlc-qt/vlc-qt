@@ -1,6 +1,6 @@
 #############################################################################
 # VLC-Qt - Qt and libvlc connector library
-# Copyright (C) 2012 Tadej Novak <tadej@tano.si>
+# Copyright (C) 2013 Tadej Novak <tadej@tano.si>
 #
 # This library is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published
@@ -19,11 +19,7 @@
 PROJECT(vlc-qt)
 CMAKE_POLICY(SET CMP0012 NEW)
 
-IF(WITH_QT5)
-    CMAKE_MINIMUM_REQUIRED(VERSION 2.8.9)
-ELSE(WITH_QT5)
-    CMAKE_MINIMUM_REQUIRED(VERSION 2.8.6)
-ENDIF(WITH_QT5)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8.9)
 
 SET(VLCQT_SHARED ${PROJECT_NAME})
 SET(VLCQT_WIDGETS_SHARED ${PROJECT_NAME}-widgets)
@@ -86,53 +82,34 @@ MESSAGE("VLC-Qt: Build with Widgets: ${WITH_WIDGETS}")
 OPTION(WITH_QML "Build with QML" OFF)
 MESSAGE("VLC-Qt: Build with QML: ${WITH_QML}")
 
-# Qt5 support
-OPTION(WITH_QT5 "Build with Qt5" OFF)
-MESSAGE("VLC-Qt: Build with Qt5: ${WITH_QT5}")
-IF(WITH_QT5)
-    OPTION(WITH_QT_DUAL "System has Qt4 and Qt5 installed" OFF)
-    MESSAGE("VLC-Qt: System has Qt4 and Qt5 installed: ${WITH_QT_DUAL}")
-ENDIF(WITH_QT5)
-
-IF(WITH_QT5)
-    SET(WITH_QML OFF)
-ENDIF(WITH_QT5)
-
-# Search for Qt and other libraries
-IF(WITH_QT5)
-    SET(QT_MIN_VERSION "5.0.0")
-    ADD_DEFINITIONS(-DQt5)
-ELSE(WITH_QT5)
-    SET(QT_MIN_VERSION "4.8.0")
-    ADD_DEFINITIONS(-DQt4)
-ENDIF(WITH_QT5)
-
 # Qt
-IF(WITH_QT5)
+SET(QT_MIN_VERSION "4.8.0")
+FIND_PACKAGE(Qt4)
+IF(NOT QT4_FOUND OR QT_VERSION_MAJOR MATCHES 5)
     FIND_PACKAGE(Qt5Core REQUIRED)
     FIND_PACKAGE(Qt5Widgets REQUIRED)
+    SET(QT5 1)
+    MESSAGE("VLC-Qt: Build with Qt5")
+ELSE(NOT QT4_FOUND OR QT_VERSION_MAJOR MATCHES 5)
+    SET(QT5 0)
+    MESSAGE("VLC-Qt: Build with Qt4")
+ENDIF(NOT QT4_FOUND OR QT_VERSION_MAJOR MATCHES 5)
 
+IF(QT5)
 #   Add compiler flags for building executables (-fPIE)
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
 
     IF(Qt5_POSITION_INDEPENDENT_CODE)
         SET(CMAKE_POSITION_INDEPENDENT_CODE ON)
     ENDIF(Qt5_POSITION_INDEPENDENT_CODE)
-
-    IF(WITH_QT_DUAL)
-        SET(QT_MOC_EXECUTABLE "${QT_MOC_EXECUTABLE}-qt5")
-        STRING(REGEX REPLACE "moc" "uic" Qt5Widgets_UIC_EXECUTABLE "${QT_MOC_EXECUTABLE}")
-    ENDIF(WITH_QT_DUAL)
-ELSE(WITH_QT5)
-    FIND_PACKAGE(Qt4 REQUIRED)
-
+ELSE(QT5)
     IF(WITH_QML)
         SET(QT_USE_QTDECLARATIVE True)
     ENDIF(WITH_QML)
 
     ADD_DEFINITIONS(${QT_DEFINITIONS})
     INCLUDE(${QT_USE_FILE})
-ENDIF(WITH_QT5)
+ENDIF(QT5)
 
 # Add additional required libraries
 FIND_PACKAGE(LIBVLC REQUIRED)

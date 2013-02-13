@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2013 Tadej Novak <tadej@tano.si>
 *
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published
@@ -28,17 +28,23 @@
 #include "core/Media.h"
 #include "core/MediaPlayer.h"
 
-#include "qml/QmlVideoPlayer.h"
+#if QT_VERSION >= 0x050000
+    #include "qml/QmlVideoPlayer5.h"
+#else
+    #include "qml/QmlVideoPlayer4.h"
+#endif
 
 // VLC display functions
-static void display(void *core, void *picture)
+static void display(void *core,
+                    void *picture)
 {
     (void) core;
 
     Q_ASSERT(picture == NULL);
 }
 
-static void *lock(void *core, void **planes)
+static void *lock(void *core,
+                  void **planes)
 {
     VlcQmlVideoPlayer *player = (VlcQmlVideoPlayer *)core;
     player->_mutex.lock();
@@ -46,7 +52,9 @@ static void *lock(void *core, void **planes)
     return NULL;
 }
 
-static void unlock(void *core, void *picture, void *const *planes)
+static void unlock(void *core,
+                   void *picture,
+                   void *const *planes)
 {
     Q_UNUSED(planes)
 
@@ -56,12 +64,21 @@ static void unlock(void *core, void *picture, void *const *planes)
     Q_ASSERT(picture == NULL);
 }
 
+#if QT_VERSION >= 0x050000
+VlcQmlVideoPlayer::VlcQmlVideoPlayer(QQuickItem *parent)
+    : QQuickPaintedItem(parent),
+#else
 VlcQmlVideoPlayer::VlcQmlVideoPlayer(QDeclarativeItem *parent)
     : QDeclarativeItem(parent),
+#endif
       _hasMedia(false)
 {
-    setFlag(QGraphicsItem::ItemHasNoContents,false);
-    setFlag(QGraphicsItem::ItemIsFocusable,true);
+#if QT_VERSION >= 0x050000
+    setFlag(ItemHasContents, true);
+#else
+    setFlag(QGraphicsItem::ItemHasNoContents, false);
+    setFlag(QGraphicsItem::ItemIsFocusable, true);
+#endif
 
     _instance = new VlcInstance(VlcCommon::args(), this);
     _player = new VlcMediaPlayer(_instance);
@@ -87,10 +104,15 @@ VlcQmlVideoPlayer::~VlcQmlVideoPlayer()
     delete _instance;
 }
 
-void VlcQmlVideoPlayer::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)
+void VlcQmlVideoPlayer::geometryChanged(const QRectF &newGeometry,
+                                        const QRectF &oldGeometry)
 {
     if (newGeometry == oldGeometry)    {
+#if QT_VERSION >= 0x050000
+        QQuickPaintedItem::geometryChanged(newGeometry, oldGeometry);
+#else
         QDeclarativeItem::geometryChanged(newGeometry, oldGeometry);
+#endif
         return;
     }
 
@@ -106,14 +128,25 @@ void VlcQmlVideoPlayer::geometryChanged(const QRectF &newGeometry, const QRectF 
 
     _mutex.unlock();
 
+#if QT_VERSION >= 0x050000
+    QQuickPaintedItem::geometryChanged(newGeometry, oldGeometry);
+#else
     QDeclarativeItem::geometryChanged(newGeometry, oldGeometry);
-
+#endif
 }
 
-void VlcQmlVideoPlayer::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+#if QT_VERSION >= 0x050000
+void VlcQmlVideoPlayer::paint(QPainter *painter)
+#else
+void VlcQmlVideoPlayer::paint(QPainter *painter,
+                              const QStyleOptionGraphicsItem *option,
+                              QWidget *widget)
+#endif
 {
+#if QT_VERSION < 0x050000
     Q_UNUSED(option)
     Q_UNUSED(widget)
+#endif
 
     _mutex.lock();
     painter->drawImage(0, 0, *_frame);
@@ -175,5 +208,9 @@ void VlcQmlVideoPlayer::stop()
 void VlcQmlVideoPlayer::updateFrame()
 {
     //Fix for cpu usage of calling update inside unlock.
+#if QT_VERSION >= 0x050000
+    update(boundingRect().toAlignedRect());
+#else
     update(boundingRect());
+#endif
 }
