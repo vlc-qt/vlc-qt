@@ -2,6 +2,9 @@
 * VLC-Qt - Qt and libvlc connector library
 * Copyright (C) 2013 Tadej Novak <tadej@tano.si>
 *
+* Based on Phonon multimedia library
+* Copyright (C) 2012 Harald Sitter <sitter@kde.org>
+*
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published
 * by the Free Software Foundation, either version 3 of the License, or
@@ -16,24 +19,20 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-import QtQuick 2.0
-import VLCQt 0.9
+#ifndef VLCQT_PHONON_QPAINTERPAINTER_H_
+#define VLCQT_PHONON_QPAINTERPAINTER_H_
 
-Rectangle {
-    width: 640
-    height: 480
+#include "AbstractVideoGraphicsPainter.h"
 
-    VlcVideoPlayer
-    {
-        id: vidwidget
-        anchors.fill: parent
+class QPainterPainter : public AbstractVideoGraphicsPainter
+{
+public:
+    QPainterPainter();
+    virtual ~QPainterPainter();
 
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                vidwidget.openFile("/home/tadej/Video/Yugo.mpeg")
-                vidwidget.play()
-            }
-        }
-    }
-}
+    virtual QList<VideoFrame::Format> supportedFormats() const;
+    void init();
+    void paint(QPainter *painter, QRectF target);
+};
+
+#endif // VLCQT_PHONON_QPAINTERPAINTER_H_

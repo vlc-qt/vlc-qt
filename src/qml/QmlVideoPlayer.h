@@ -19,10 +19,7 @@
 #ifndef VLCQT_QMLVIDEOPLAYER_H_
 #define VLCQT_QMLVIDEOPLAYER_H_
 
-#include <QtCore/QMutex>
-#include <QtCore/QTimer>
-
-#include <QtQuick/QQuickPaintedItem>
+#include <QtDeclarative/QDeclarativeItem>
 
 #include "SharedExportQml.h"
 
@@ -31,11 +28,13 @@ class VlcInstance;
 class VlcMedia;
 class VlcMediaPlayer;
 
-class VLCQT_QML_EXPORT VlcQmlVideoPlayer : public QQuickPaintedItem
+class VideoGraphicsObject;
+
+class VLCQT_QML_EXPORT VlcQmlVideoPlayer : public QDeclarativeItem
 {
 Q_OBJECT
 public:
-    explicit VlcQmlVideoPlayer(QQuickItem *parent = 0);
+    explicit VlcQmlVideoPlayer(QDeclarativeItem *parent = 0);
     ~VlcQmlVideoPlayer();
 
 	Q_INVOKABLE void close();
@@ -45,18 +44,20 @@ public:
 	Q_INVOKABLE void play();
 	Q_INVOKABLE void stop();
 
-	QImage *_frame;
-	QMutex _mutex;
+    /// \reimp
+    void classBegin();
+
 
 protected:
-    void paint(QPainter *painter);
-    void geometryChanged(const QRectF &newGeometry,
-                         const QRectF &oldGeometry);
-
-private slots:
-	void updateFrame();
+    /// Forwards geometry changes to the internal VideoGraphicsObject.
+    /// \reimp
+    virtual void geometryChanged(const QRectF &newGeometry,
+                                 const QRectF &oldGeometry);
 
 private:
+    /// The contained VideoGraphicsObject (it is a childitem of this item actually).
+    VideoGraphicsObject *_graphicsObject;
+
 	void openInternal();
 
 	VlcInstance *_instance;
@@ -66,8 +67,6 @@ private:
 	VlcAudio *_audioManager;
 
 	bool _hasMedia;
-	int _currentTime;
-	QTimer *_timer;
 };
 
 #endif // VLCQT_QMLVIDEOPLAYER_H_

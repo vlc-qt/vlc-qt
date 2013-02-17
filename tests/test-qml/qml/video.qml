@@ -16,37 +16,25 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include <QtCore/QTextCodec>
-#include <QtDeclarative/QDeclarativeView>
-#include <QtOpenGL/QGLWidget>
+import QtQuick 1.1
+import VLCQt 0.9
 
-#if QT_VERSION >= 0x050000
-    #include <QtWidgets/QApplication>
-#else
-    #include <QtGui/QApplication>
-#endif
+Rectangle {
+    width: 800
+    height: 600
+    color: "black"
 
-#include "qml/QmlVideoPlayer.h"
+    VlcVideoPlayer
+    {
+        id: vidwidget
+        anchors.fill: parent
 
-int main(int argc, char *argv[])
-{
-    QCoreApplication::setApplicationName("Test QML");
-    QCoreApplication::setAttribute(Qt::AA_X11InitThreads);
-
-#if QT_VERSION < 0x050000
-    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
-#endif
-
-    qmlRegisterType<VlcQmlVideoPlayer>("VLCQt", 0, 9, "VlcVideoPlayer");
-
-    QApplication app(argc, argv);
-
-    QDeclarativeView view;
-    view.setViewport(new QGLWidget);
-    view.setSource(QUrl("qml/video.qml"));
-    view.setResizeMode(QDeclarativeView::SizeRootObjectToView);
-    view.show();
-
-    return app.exec();
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                vidwidget.openFile("/home/tadej/Video/Yugo.mpeg")
+                vidwidget.play()
+            }
+        }
+    }
 }
-

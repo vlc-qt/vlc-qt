@@ -40,6 +40,7 @@ SET(VLCQT_CORE_SRCS
     MediaListPlayer.cpp
     MediaPlayer.cpp
     MetaManager.cpp
+    SharedExportCore.h
     Video.cpp
     VideoDelegate.cpp
 )

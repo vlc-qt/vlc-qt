@@ -32,6 +32,7 @@ ADD_DEFINITIONS(-DQT_SHARED -D_REENTRANT)
 SET(VLCQT_WIDGETS_SRCS
     ControlAudio.cpp
     ControlVideo.cpp
+    SharedExportWidgets.h
     WidgetSeek.cpp
     WidgetVideo.cpp
     WidgetVolumeSlider.cpp
