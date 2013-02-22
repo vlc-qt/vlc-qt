@@ -17,14 +17,8 @@
 *****************************************************************************/
 
 #include <QtCore/QTextCodec>
-#include <QtDeclarative/QDeclarativeView>
-#include <QtOpenGL/QGLWidget>
-
-#if QT_VERSION >= 0x050000
-    #include <QtWidgets/QApplication>
-#else
-    #include <QtGui/QApplication>
-#endif
+#include <QtGui/QGuiApplication>
+#include <QtQuick/QQuickView>
 
 #include "qml/QmlVideoPlayer.h"
 
@@ -33,18 +27,13 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("Test QML");
     QCoreApplication::setAttribute(Qt::AA_X11InitThreads);
 
-#if QT_VERSION < 0x050000
-    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
-#endif
-
     qmlRegisterType<VlcQmlVideoPlayer>("VLCQt", 0, 9, "VlcVideoPlayer");
 
-    QApplication app(argc, argv);
+    QGuiApplication app(argc, argv);
 
-    QDeclarativeView view;
-    view.setViewport(new QGLWidget);
+    QQuickView view;;
     view.setSource(QUrl("qml/video.qml"));
-    view.setResizeMode(QDeclarativeView::SizeRootObjectToView);
+    view.setResizeMode(QQuickView::SizeRootObjectToView);
     view.show();
 
     return app.exec();

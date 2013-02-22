@@ -16,16 +16,15 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-import QtQuick 1.1
+import QtQuick 2.0
 import VLCQt 0.9
 
 Rectangle {
-    width: 800
-    height: 600
+    width: 640
+    height: 480
     color: "black"
 
-    VlcVideoPlayer
-    {
+    VlcVideoPlayer {
         id: vidwidget
         anchors.fill: parent
 

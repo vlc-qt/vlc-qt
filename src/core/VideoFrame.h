@@ -19,20 +19,35 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_PHONON_QPAINTERPAINTER_H_
-#define VLCQT_PHONON_QPAINTERPAINTER_H_
+#ifndef VLCQT_VIDEOFRAME_H_
+#define VLCQT_VIDEOFRAME_H_
 
-#include "AbstractVideoGraphicsPainter.h"
+#include <QtCore/QByteArray>
 
-class QPainterPainter : public AbstractVideoGraphicsPainter
-{
-public:
-    QPainterPainter();
-    virtual ~QPainterPainter();
+#include "SharedExportCore.h"
 
-    virtual QList<VideoFrame::Format> supportedFormats() const;
-    void init();
-    void paint(QPainter *painter, QRectF target);
+struct VLCQT_CORE_EXPORT VideoFrame {
+    VideoFrame() : width(0), height(0)
+    {
+        for (int i = 0; i < 4; ++i) {
+            pitch[i] = 0;
+            visiblePitch[i] = 0;
+            lines[i] = 0;
+            visibleLines[i] = 0;
+        }
+    }
+
+    unsigned int width;
+    unsigned int height;
+
+    unsigned int planeCount;
+
+    QByteArray plane[4];
+
+    int pitch[4];
+    int visiblePitch[4];
+    int lines[4];
+    int visibleLines[4];
 };
 
-#endif // VLCQT_PHONON_QPAINTERPAINTER_H_
+#endif // VLCQT_VIDEOFRAME_H_

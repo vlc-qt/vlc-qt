@@ -30,20 +30,17 @@ ADD_DEFINITIONS(-DQT_SHARED -D_REENTRANT)
 ###################
 # Define the C++ source files
 SET(VLCQT_QML_SRCS
+    QmlVideoObject.cpp
     QmlVideoPlayer.cpp
     SharedExportQml.h
 
-    graphicsview/AbstractVideoGraphicsPainter.h
-    graphicsview/GlPainter.cpp
-    graphicsview/GlslPainter.cpp
-    graphicsview/QPainterPainter.cpp
-    graphicsview/VideoFrame.h
-    graphicsview/VideoGraphicsObject.cpp
-    graphicsview/VideoMemoryStream.cpp
+    painter/GlPainter.cpp
+    painter/GlslPainter.cpp
 )
 
 # Define the Include files
 SET(VLCQT_QML_HEADERS
+    QmlVideoObject.h
     QmlVideoPlayer.h
     SharedExportQml.h
 )
@@ -58,15 +55,15 @@ SET(VLCQT_QML_SRCS
 # Compiler settings #
 #####################
 INCLUDE_DIRECTORIES(
-    ${LIBVLC_INCLUDE_DIR}
-    ${LIBVLC_INCLUDE_DIR}/vlc/plugins
-)
-
-INCLUDE_DIRECTORIES(
     ${CMAKE_SOURCE_DIR}/src
     ${CMAKE_SOURCE_DIR}/src/core
     ${CMAKE_SOURCE_DIR}/src/qml
     ${CMAKE_BINARY_DIR}/src
+)
+
+INCLUDE_DIRECTORIES(
+    ${LIBVLC_INCLUDE_DIR}
+    ${LIBVLC_INCLUDE_DIR}/vlc/plugins
 )
 
 IF(MSVC)
@@ -111,7 +108,7 @@ ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
 # Link the required libraries
 IF(QT5)
-    QT5_USE_MODULES(${VLCQT_QML_SHARED} OpenGL Declarative)
+    QT5_USE_MODULES(${VLCQT_QML_SHARED} OpenGL Quick)
 ELSE(QT5)
     TARGET_LINK_LIBRARIES(${VLCQT_QML_SHARED} ${QT_LIBRARIES})
 ENDIF(QT5)

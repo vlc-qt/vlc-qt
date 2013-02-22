@@ -25,11 +25,9 @@
 #include "core/MediaPlayer.h"
 
 #include "qml/QmlVideoPlayer.h"
-#include "qml/graphicsview/VideoGraphicsObject.h"
 
-VlcQmlVideoPlayer::VlcQmlVideoPlayer(QDeclarativeItem *parent)
-    : QDeclarativeItem(parent),
-      _graphicsObject(0),
+VlcQmlVideoPlayer::VlcQmlVideoPlayer(QQuickItem *parent)
+    : VlcQmlVideoObject(parent),
       _hasMedia(false)
 {
     _instance = new VlcInstance(VlcCommon::args(), this);
@@ -45,19 +43,6 @@ VlcQmlVideoPlayer::~VlcQmlVideoPlayer()
     delete _media;
     delete _player;
     delete _instance;
-}
-
-void VlcQmlVideoPlayer::classBegin()
-{
-    _graphicsObject = new VideoGraphicsObject(this);
-    _graphicsObject->connectToMediaPlayer(_player);
-}
-
-void VlcQmlVideoPlayer::geometryChanged(const QRectF &newGeometry,
-                                        const QRectF &oldGeometry)
-{
-    _graphicsObject->setGeometry(newGeometry);
-    QDeclarativeItem::geometryChanged(newGeometry, oldGeometry);
 }
 
 void VlcQmlVideoPlayer::close()
@@ -90,6 +75,7 @@ void VlcQmlVideoPlayer::openStream(const QString &stream)
 void VlcQmlVideoPlayer::openInternal()
 {
     _player->open(_media);
+    connectToMediaPlayer(_player);
 
     _hasMedia = true;
 }
@@ -107,4 +93,5 @@ void VlcQmlVideoPlayer::play()
 void VlcQmlVideoPlayer::stop()
 {
     _player->stop();
+    disconnectFromMediaPlayer(_player);
 }

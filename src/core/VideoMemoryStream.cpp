@@ -22,8 +22,7 @@
 #include <vlc/vlc.h>
 
 #include "core/MediaPlayer.h"
-
-#include "VideoMemoryStream.h"
+#include "core/VideoMemoryStream.h"
 
 static inline VideoMemoryStream *p_this(void *opaque) { return static_cast<VideoMemoryStream *>(opaque); }
 static inline VideoMemoryStream *p_this(void **opaque) { return static_cast<VideoMemoryStream *>(*opaque); }
@@ -106,14 +105,8 @@ void VideoMemoryStream::setCallbacks(VlcMediaPlayer *player)
 
 void VideoMemoryStream::unsetCallbacks(VlcMediaPlayer *player)
 {
-    libvlc_video_set_callbacks(player->core(),
-                               0,
-                               0,
-                               0,
-                               0);
-    libvlc_video_set_format_callbacks(player->core(),
-                                      0,
-                                      0);
+    libvlc_video_set_callbacks(player->core(), 0, 0, 0, 0);
+    libvlc_video_set_format_callbacks(player->core(), 0, 0);
 }
 
 

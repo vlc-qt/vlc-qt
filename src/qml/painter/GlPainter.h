@@ -19,45 +19,56 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_PHONON_GLSLPAINTER_H_
-#define VLCQT_PHONON_GLSLPAINTER_H_
+#ifndef VLCQT_PHONON_GLPAINTER_H_
+#define VLCQT_PHONON_GLPAINTER_H_
 
-#include <QtCore/QTime>
+#include <QtGui/QMatrix4x4>
+#include <QtOpenGL/QGLContext>
 
-#include "GlPainter.h"
+#include "core/VideoFrame.h"
 
-class QGLShaderProgram;
-
-class GlslPainter : public GlPainter
+class GlPainter
 {
+    typedef struct {
+        GLenum target;
+        GLint internalFormat;
+        GLenum format;
+        GLenum type;
+    } GlTextureDescriptor;
+
+    typedef struct {
+        GLsizei width;
+        GLsizei height;
+    } GlTextureSize;
+
 public:
-    GlslPainter();
-    virtual ~GlslPainter();
+    virtual ~GlPainter();
 
-    virtual QList<VideoFrame::Format> supportedFormats() const;
+    void setFrame(const VideoFrame *frame) { _frame = frame; }
+    bool inited() const { return _inited; }
 
-    void init();
-    void paint(QPainter *painter, QRectF target);
+    void setContext(QGLContext *context);
 
-private:
-    void calculateFPS();
-    void addFPSOverlay();
+    void initColorMatrix();
+    void initTextures();
+    void initYv12();
 
-    struct FPS {
-        FPS() : value(0),
-            imagedValue(0),
-            frames(0),
-            img(32, 32, QImage::Format_ARGB32) { }
+protected:
+    GlPainter();
 
-        qreal value;
-        qreal imagedValue;
-        quint64 frames;
-        QTime lastTime;
-        QImage img;
-    };
+    const VideoFrame *_frame;
+    bool _inited;
 
-    struct FPS _fps;
-    QGLShaderProgram *_program;
+    QGLContext *_context;
+    int _textureCount;
+    GLuint _textureIds[3];
+
+    GlTextureDescriptor _texDescriptor;
+    GlTextureSize _texSize[3];
+
+    QMatrix4x4 _colorMatrix;
+
+    bool _texturesInited;
 };
 
-#endif // VLCQT_PHONON_GLSLPAINTER_H_
+#endif // VLCQT_PHONON_GLPAINTER_H_

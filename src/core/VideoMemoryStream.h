@@ -19,14 +19,20 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_PHONON_VLC_VIDEOMEMORYSTREAM_H_
-#define VLCQT_PHONON_VLC_VIDEOMEMORYSTREAM_H_
+#ifndef VLCQT_VIDEOMEMORYSTREAM_H_
+#define VLCQT_VIDEOMEMORYSTREAM_H_
 
-#include <vlc/plugins/vlc_fourcc.h>
+#include "SharedExportCore.h"
+
+#if defined(VLCQT_CORE_LIBRARY) || defined(VLCQT_QML_LIBRARY)
+#   include <vlc/plugins/vlc_fourcc.h>
+#else
+struct vlc_chroma_description_t;
+#endif
 
 class VlcMediaPlayer;
 
-class VideoMemoryStream
+class VLCQT_CORE_EXPORT VideoMemoryStream
 {
 public:
     explicit VideoMemoryStream();
@@ -77,4 +83,4 @@ private:
     static void formatCleanUpCallbackInternal(void *opaque);
 };
 
-#endif // VLCQT_PHONON_VLC_VIDEOMEMORYSTREAM_H_
+#endif // VLCQT_VIDEOMEMORYSTREAM_H_

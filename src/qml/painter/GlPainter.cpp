@@ -19,10 +19,12 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include "GlPainter.h"
+#include "qml/painter/GlPainter.h"
 
 GlPainter::GlPainter()
-    : _context(0),
+    : _frame(0),
+      _inited(false),
+      _context(0),
       _texturesInited(false) { }
 
 GlPainter::~GlPainter() { }
@@ -30,17 +32,6 @@ GlPainter::~GlPainter() { }
 void GlPainter::setContext(QGLContext *context)
 {
     _context = context;
-}
-
-void GlPainter::initRgb32()
-{
-    Q_ASSERT(_frame->planeCount == 1);
-    _textureCount = _frame->planeCount;
-
-    _texDescriptor.target = GL_TEXTURE_2D;
-    _texDescriptor.internalFormat = GL_RGBA;
-    _texDescriptor.format = GL_RGBA;
-    _texDescriptor.type = GL_UNSIGNED_BYTE;
 }
 
 void GlPainter::initYv12()
@@ -60,25 +51,22 @@ void GlPainter::initColorMatrix()
                                0.0, 1.0, 0.0, 0.0,
                                0.0, 0.0, 1.0, 0.0,
                                0.0, 0.0, 0.0, 1.0);
-    // If the fame has YUV format, apply color correction:
-    if (_frame->format == VideoFrame::Format_YV12) {
-        QMatrix4x4 colorSpaceMatrix;
-        if (_frame->height > 576)
-            colorSpaceMatrix =
-                    QMatrix4x4(
-                        1.164383561643836,  0.0000,             1.792741071428571, -0.972945075016308,
-                        1.164383561643836, -0.21324861427373,  -0.532909328559444,  0.301482665475862,
-                        1.164383561643836,  2.112401785714286,  0.0000,            -1.133402217873451,
-                        0.0000,             0.0000,             0.0000,             1.0000           );
-        else
-            colorSpaceMatrix =
-                    QMatrix4x4(
-                        1.164383561643836,  0.0000,             1.596026785714286, -0.874202217873451,
-                        1.164383561643836, -0.391762290094914, -0.812967647237771,  0.531667823499146,
-                        1.164383561643836,  2.017232142857142,  0.0000,            -1.085630789302022,
-                        0.0000,             0.0000,             0.0000,             1.0000           );
-        _colorMatrix = _colorMatrix * colorSpaceMatrix;
-    }
+    QMatrix4x4 colorSpaceMatrix;
+    if (_frame->height > 576)
+        colorSpaceMatrix =
+                QMatrix4x4(
+                    1.164383561643836,  0.0000,             1.792741071428571, -0.972945075016308,
+                    1.164383561643836, -0.21324861427373,  -0.532909328559444,  0.301482665475862,
+                    1.164383561643836,  2.112401785714286,  0.0000,            -1.133402217873451,
+                    0.0000,             0.0000,             0.0000,             1.0000           );
+    else
+        colorSpaceMatrix =
+                QMatrix4x4(
+                    1.164383561643836,  0.0000,             1.596026785714286, -0.874202217873451,
+                    1.164383561643836, -0.391762290094914, -0.812967647237771,  0.531667823499146,
+                    1.164383561643836,  2.017232142857142,  0.0000,            -1.085630789302022,
+                    0.0000,             0.0000,             0.0000,             1.0000           );
+    _colorMatrix = _colorMatrix * colorSpaceMatrix;
 }
 
 void GlPainter::initTextures()

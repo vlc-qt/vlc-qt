@@ -38,12 +38,12 @@ public:
     /*!
         \brief VlcVideoDelegate constructor
     */
-    VlcVideoDelegate();
+    VlcVideoDelegate() { }
 
     /*!
         \brief VlcVideoDelegate destructor
     */
-    ~VlcVideoDelegate();
+    virtual ~VlcVideoDelegate() { }
 
     /*!
         \brief Request new video frame.

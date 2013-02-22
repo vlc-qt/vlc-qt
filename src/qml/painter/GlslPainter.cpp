@@ -21,8 +21,8 @@
 
 #include <QtOpenGL/QGLShaderProgram>
 
-#include "GlslPainter.h"
-#include "VideoFrame.h"
+#include "core/VideoFrame.h"
+#include "qml/painter/GlslPainter.h"
 
 void GlslPainter::calculateFPS()
 {
@@ -60,31 +60,6 @@ void GlslPainter::addFPSOverlay()
     _fps.imagedValue = _fps.value;
 }
 
-static const char *s_rgb32Shader =
-"uniform sampler2D textureSampler;\n"
-"varying highp vec2 textureCoord;\n"
-"void main(void)\n"
-"{\n"
-"    gl_FragColor = vec4(texture2D(textureSampler, textureCoord.st).bgr, 1.0);\n"
-"}\n";
-
-static const char *s_yv12Shader =
-"uniform sampler2D texY;\n"
-"uniform sampler2D texU;\n"
-"uniform sampler2D texV;\n"
-"uniform mediump mat4 colorMatrix;\n"
-"varying highp vec2 textureCoord;\n"
-"uniform lowp float opacity;"
-"void main(void)\n"
-"{\n"
-"    highp vec4 color = vec4(\n"
-"           texture2D(texY, textureCoord.st).r,\n"
-"           texture2D(texV, textureCoord.st).r,\n" // !!!! mind the swp
-"           texture2D(texU, textureCoord.st).r,\n"
-"           1.0);\n"
-"    gl_FragColor = colorMatrix * color * opacity;\n"
-"}\n";
-
 GlslPainter::GlslPainter()
     : _program(0) { }
 
@@ -97,26 +72,6 @@ GlslPainter::~GlslPainter()
         _program->removeAllShaders();
         _program->deleteLater();
     }
-}
-
-QList<VideoFrame::Format> GlslPainter::supportedFormats() const
-{
-    QList<VideoFrame::Format> formats;
-
-    QGLContext *glContext = const_cast<QGLContext *>(QGLContext::currentContext());
-    if (glContext) {
-        glContext->makeCurrent();
-
-        const QByteArray glExtensions(reinterpret_cast<const char *>(glGetString(GL_EXTENSIONS)));
-        if (QGLShaderProgram::hasOpenGLShaderPrograms(glContext)
-                && glExtensions.contains("ARB_shader_objects")) {
-            // We are usable.
-            return formats << VideoFrame::Format_YV12
-                           << VideoFrame::Format_RGB32;
-        }
-    }
-
-    return formats;
 }
 
 void GlslPainter::init()
@@ -139,26 +94,29 @@ void GlslPainter::init()
             "    textureCoord = textureCoordinates;\n"
             "}\n";
 
-    const char *program = 0;
-    switch (_frame->format) {
-    case VideoFrame::Format_RGB32://////////////////////////////////////// RGB32
-        initRgb32();
-        program = s_rgb32Shader;
-        break;
-    case VideoFrame::Format_YV12: ///////////////////////////////////////// YV12
-        initYv12();
-        program = s_yv12Shader;
-        break;
-    default: /////////////////////////////////////////////////////////// Default
-        qDebug() << "format: " << _frame->format;
-        Q_ASSERT(false);
-    }
-    Q_ASSERT(program);
+    static const char *vertexShader =
+            "uniform sampler2D texY;\n"
+            "uniform sampler2D texU;\n"
+            "uniform sampler2D texV;\n"
+            "uniform mediump mat4 colorMatrix;\n"
+            "varying highp vec2 textureCoord;\n"
+            "uniform lowp float opacity;"
+            "void main(void)\n"
+            "{\n"
+            "    highp vec4 color = vec4(\n"
+            "           texture2D(texY, textureCoord.st).r,\n"
+            "           texture2D(texV, textureCoord.st).r,\n" // !!!! mind the swp
+            "           texture2D(texU, textureCoord.st).r,\n"
+            "           1.0);\n"
+            "    gl_FragColor = colorMatrix * color * opacity;\n"
+            "}\n";
+
+    initYv12();
     initColorMatrix();
 
     if (!_program->addShaderFromSourceCode(QGLShader::Vertex, vertexProgram))
         qFatal("couldnt add vertex shader");
-    else if (!_program->addShaderFromSourceCode(QGLShader::Fragment, program))
+    else if (!_program->addShaderFromSourceCode(QGLShader::Fragment, vertexShader))
         qFatal("couldnt add fragment shader");
     else if (!_program->link())
         qFatal("couldnt link shader");
@@ -168,7 +126,9 @@ void GlslPainter::init()
     _inited = true;
 }
 
-void GlslPainter::paint(QPainter *painter, QRectF target)
+void GlslPainter::paint(QPainter *painter,
+                        QRectF target,
+                        QQuickWindow *window)
 {
     // Need to reenable those after native painting has begun, otherwise we might
     // not be able to paint anything.
@@ -207,8 +167,8 @@ void GlslPainter::paint(QPainter *painter, QRectF target)
     };
     //
 
-    const int width = QGLContext::currentContext()->device()->width();
-    const int height = QGLContext::currentContext()->device()->height();
+    const int width = window->width();
+    const int height = window->height();
 
     const QTransform transform = painter->deviceTransform();
 

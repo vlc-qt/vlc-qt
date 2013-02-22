@@ -42,7 +42,9 @@ SET(VLCQT_CORE_SRCS
     MetaManager.cpp
     SharedExportCore.h
     Video.cpp
-    VideoDelegate.cpp
+    VideoDelegate.h
+    VideoFrame.h
+    VideoMemoryStream.cpp
 )
 
 # Define the Include files
@@ -60,6 +62,8 @@ SET(VLCQT_CORE_HEADERS
     SharedExportCore.h
     Video.h
     VideoDelegate.h
+    VideoFrame.h
+    VideoMemoryStream.h
 
     ${CMAKE_BINARY_DIR}/src/Config.h
 )
@@ -80,7 +84,10 @@ ELSE(QT5)
     QT4_ADD_RESOURCES(VLCQT_CORE_RESOURCES_SRCS ${VLCQT_CORE_RESOURCES})
 ENDIF(QT5)
 
-INCLUDE_DIRECTORIES(${LIBVLC_INCLUDE_DIR})
+INCLUDE_DIRECTORIES(
+    ${LIBVLC_INCLUDE_DIR}
+    ${LIBVLC_INCLUDE_DIR}/vlc/plugins
+)
 
 INCLUDE_DIRECTORIES(
     ${CMAKE_SOURCE_DIR}/src
