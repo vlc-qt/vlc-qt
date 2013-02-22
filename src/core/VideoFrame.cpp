@@ -19,27 +19,15 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_VIDEOFRAME_H_
-#define VLCQT_VIDEOFRAME_H_
+#include "core/VideoFrame.h"
 
-#include <QtCore/QByteArray>
-
-#include "SharedExportCore.h"
-
-struct VLCQT_CORE_EXPORT VlcVideoFrame {
-    VlcVideoFrame();
-
-    unsigned int width;
-    unsigned int height;
-
-    unsigned int planeCount;
-
-    QByteArray plane[4];
-
-    int pitch[4];
-    int visiblePitch[4];
-    int lines[4];
-    int visibleLines[4];
-};
-
-#endif // VLCQT_VIDEOFRAME_H_
+VlcVideoFrame::VlcVideoFrame()
+    : width(0), height(0)
+{
+    for (int i = 0; i < 4; ++i) {
+        pitch[i] = 0;
+        visiblePitch[i] = 0;
+        lines[i] = 0;
+        visibleLines[i] = 0;
+    }
+}

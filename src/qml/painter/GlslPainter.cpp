@@ -24,6 +24,7 @@
 #include "core/VideoFrame.h"
 #include "qml/painter/GlslPainter.h"
 
+#if !defined(Q_OS_WIN32)
 void GlslPainter::calculateFPS()
 {
     if (_fps.lastTime.isNull())
@@ -59,6 +60,7 @@ void GlslPainter::addFPSOverlay()
 
     _fps.imagedValue = _fps.value;
 }
+#endif
 
 GlslPainter::GlslPainter()
     : _program(0) { }
@@ -233,7 +235,9 @@ void GlslPainter::paint(QPainter *painter,
     _program->release();
     painter->endNativePainting();
 
+#if !defined(Q_OS_WIN)
     // TODO: FPS optional
     calculateFPS();
     addFPSOverlay();
+#endif
 }

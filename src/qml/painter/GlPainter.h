@@ -44,7 +44,7 @@ class GlPainter
 public:
     virtual ~GlPainter();
 
-    void setFrame(const VideoFrame *frame) { _frame = frame; }
+    void setFrame(const VlcVideoFrame *frame) { _frame = frame; }
     bool inited() const { return _inited; }
 
     void setContext(QGLContext *context);
@@ -56,7 +56,7 @@ public:
 protected:
     GlPainter();
 
-    const VideoFrame *_frame;
+    const VlcVideoFrame *_frame;
     bool _inited;
 
     QGLContext *_context;

@@ -32,11 +32,11 @@ struct vlc_chroma_description_t;
 
 class VlcMediaPlayer;
 
-class VLCQT_CORE_EXPORT VideoMemoryStream
+class VLCQT_CORE_EXPORT VlcVideoMemoryStream
 {
 public:
-    explicit VideoMemoryStream();
-    virtual ~VideoMemoryStream();
+    explicit VlcVideoMemoryStream();
+    virtual ~VlcVideoMemoryStream();
     
     /**
      * @returns overall buffersize needed

@@ -109,8 +109,14 @@ ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 # Link the required libraries
 IF(QT5)
     QT5_USE_MODULES(${VLCQT_QML_SHARED} OpenGL Quick)
+    TARGET_LINK_LIBRARIES(${VLCQT_QML_SHARED} ${VLCQT_BINARY} ${LIBVLC_CORE_LIBRARY})
+    IF(MSVC)
+        TARGET_LINK_LIBRARIES(${VLCQT_QML_SHARED}
+                              ${_qt5OpenGL_install_prefix}/lib/libEGL${LE}.lib
+                              ${_qt5OpenGL_install_prefix}/lib/libGLESv2${LE}.lib)
+    ENDIF(MSVC)
 ELSE(QT5)
-    TARGET_LINK_LIBRARIES(${VLCQT_QML_SHARED} ${QT_LIBRARIES})
+    TARGET_LINK_LIBRARIES(${VLCQT_QML_SHARED} ${QT_LIBRARIES} ${VLCQT_BINARY} ${LIBVLC_CORE_LIBRARY})
 ENDIF(QT5)
 
 

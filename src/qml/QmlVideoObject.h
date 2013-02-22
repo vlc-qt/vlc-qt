@@ -36,7 +36,7 @@ class VlcMediaPlayer;
 class GlslPainter;
 
 class VLCQT_QML_EXPORT VlcQmlVideoObject : public QQuickPaintedItem,
-                                           public VideoMemoryStream
+                                           public VlcVideoMemoryStream
 {
 Q_OBJECT
 public:
@@ -75,7 +75,7 @@ private:
     void updateBoundingRect();
 
     QMutex _mutex;
-    VideoFrame _frame;
+    VlcVideoFrame _frame;
 
     QRectF _geometry;
     QRectF _boundingRect;

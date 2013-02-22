@@ -24,13 +24,13 @@
 #include "core/MediaPlayer.h"
 #include "core/VideoMemoryStream.h"
 
-static inline VideoMemoryStream *p_this(void *opaque) { return static_cast<VideoMemoryStream *>(opaque); }
-static inline VideoMemoryStream *p_this(void **opaque) { return static_cast<VideoMemoryStream *>(*opaque); }
+static inline VlcVideoMemoryStream *p_this(void *opaque) { return static_cast<VlcVideoMemoryStream *>(opaque); }
+static inline VlcVideoMemoryStream *p_this(void **opaque) { return static_cast<VlcVideoMemoryStream *>(*opaque); }
 #define P_THIS p_this(opaque)
 
-VideoMemoryStream::VideoMemoryStream() { }
+VlcVideoMemoryStream::VlcVideoMemoryStream() { }
 
-VideoMemoryStream::~VideoMemoryStream() { }
+VlcVideoMemoryStream::~VlcVideoMemoryStream() { }
 
 static inline qint64 gcd(qint64 a, qint64 b)
 {
@@ -47,7 +47,7 @@ static int lcm(int a, int b)
     return a * b / GCD( a, b );
 }
 
-unsigned VideoMemoryStream::setPitchAndLines(const vlc_chroma_description_t *desc,
+unsigned VlcVideoMemoryStream::setPitchAndLines(const vlc_chroma_description_t *desc,
                                              unsigned width,
                                              unsigned height,
                                              unsigned *pitches,
@@ -91,7 +91,7 @@ unsigned VideoMemoryStream::setPitchAndLines(const vlc_chroma_description_t *des
     return bufferSize;
 }
 
-void VideoMemoryStream::setCallbacks(VlcMediaPlayer *player)
+void VlcVideoMemoryStream::setCallbacks(VlcMediaPlayer *player)
 {
     libvlc_video_set_callbacks(player->core(),
                                lockCallbackInternal,
@@ -103,33 +103,33 @@ void VideoMemoryStream::setCallbacks(VlcMediaPlayer *player)
                                       formatCleanUpCallbackInternal);
 }
 
-void VideoMemoryStream::unsetCallbacks(VlcMediaPlayer *player)
+void VlcVideoMemoryStream::unsetCallbacks(VlcMediaPlayer *player)
 {
     libvlc_video_set_callbacks(player->core(), 0, 0, 0, 0);
     libvlc_video_set_format_callbacks(player->core(), 0, 0);
 }
 
 
-void *VideoMemoryStream::lockCallbackInternal(void *opaque,
+void *VlcVideoMemoryStream::lockCallbackInternal(void *opaque,
                                               void **planes)
 {
     return P_THIS->lockCallback(planes);
 }
 
-void VideoMemoryStream::unlockCallbackInternal(void *opaque,
+void VlcVideoMemoryStream::unlockCallbackInternal(void *opaque,
                                                void *picture,
                                                void *const*planes)
 {
     P_THIS->unlockCallback(picture, planes);
 }
 
-void VideoMemoryStream::displayCallbackInternal(void *opaque,
+void VlcVideoMemoryStream::displayCallbackInternal(void *opaque,
                                                 void *picture)
 {
     P_THIS->displayCallback(picture);
 }
 
-unsigned VideoMemoryStream::formatCallbackInternal(void **opaque,
+unsigned VlcVideoMemoryStream::formatCallbackInternal(void **opaque,
                                                    char *chroma,
                                                    unsigned *width,
                                                    unsigned *height,
@@ -139,7 +139,7 @@ unsigned VideoMemoryStream::formatCallbackInternal(void **opaque,
     return P_THIS->formatCallback(chroma, width, height, pitches, lines);
 }
 
-void VideoMemoryStream::formatCleanUpCallbackInternal(void *opaque)
+void VlcVideoMemoryStream::formatCleanUpCallbackInternal(void *opaque)
 {
     P_THIS->formatCleanUpCallback();
 }
