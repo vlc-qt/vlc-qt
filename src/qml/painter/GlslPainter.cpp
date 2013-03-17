@@ -221,11 +221,6 @@ void GlslPainter::paint(QPainter *painter,
         _program->setUniformValue("texY", 0);
         _program->setUniformValue("texU", 1);
         _program->setUniformValue("texV", 2);
-    } else {
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, _textureIds[0]);
-
-        _program->setUniformValue("texRgb", 0);
     }
     _program->setUniformValue("colorMatrix", _colorMatrix);
     _program->setUniformValue("opacity", GLfloat(painter->opacity()));
