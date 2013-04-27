@@ -1,3 +1,9 @@
+0.8.1 (2013-04-27)
+  * Autodetect Qt4 or Qt5
+  * Restored MinGW support
+  * Windows SDK updated to Qt 5.0.2 and VLC 2.0.6
+    with release and debug builds
+
 0.8.0 (2013-01-26)
   * Separate library into modules: core, widgets and qml
   * Introduce position() and setPosition() methods
