@@ -57,40 +57,39 @@ STRING(REGEX REPLACE "include" "bin" LIBVLC_BIN_DIR "${LIBVLC_BIN_DIR}")
 STRING(REGEX REPLACE "bin" "plugins" QT_PLUGINS_DIR "${QT_BIN_DIR}")
 
 SET(Qt4_Libs
-    ${QT_BIN_DIR}/QtCore4.dll
-    ${QT_BIN_DIR}/QtGui4.dll
+    ${QT_BIN_DIR}/QtCore${LE}4.dll
+    ${QT_BIN_DIR}/QtGui${LE}4.dll
 )
 
 SET(Qt5_Platforms
-    ${QT_PLUGINS_DIR}/platforms/qminimal.dll
-    ${QT_PLUGINS_DIR}/platforms/qwindows.dll
+    ${QT_PLUGINS_DIR}/platforms/qminimal${LE}.dll
+    ${QT_PLUGINS_DIR}/platforms/qwindows${LE}.dll
 )
 
 SET(Qt5_Libs
-    ${QT_BIN_DIR}/Qt5Core.dll
-    ${QT_BIN_DIR}/Qt5Gui.dll
+    ${QT_BIN_DIR}/Qt5Core${LE}.dll
+    ${QT_BIN_DIR}/Qt5Gui${LE}.dll
     ${QT_BIN_DIR}/icudt49.dll
     ${QT_BIN_DIR}/icuin49.dll
     ${QT_BIN_DIR}/icuuc49.dll
 )
 
-SET(Qt5_Libs_Widgets
-    ${QT_BIN_DIR}/Qt5Widgets.dll
-    ${QT_BIN_DIR}/libEGL.dll
-    ${QT_BIN_DIR}/libGLESv2.dll
+SET(Qt5_Libs_Gui
+    ${QT_BIN_DIR}/libEGL${LE}.dll
+    ${QT_BIN_DIR}/libGLESv2${LE}.dll
     ${QT_BIN_DIR}/D3DCompiler_43.dll
 )
 
-SET(Qt4_Libs_Qml
-    ${QT_BIN_DIR}/QtDeclarative4.dll
-    ${QT_BIN_DIR}/QtNetwork4.dll
-    ${QT_BIN_DIR}/QtScript4.dll
-    ${QT_BIN_DIR}/QtSql4.dll
-    ${QT_BIN_DIR}/QtXmlPatterns4.dll
+SET(Qt5_Libs_Widgets
+    ${QT_BIN_DIR}/Qt5Widgets${LE}.dll
 )
 
 SET(Qt5_Libs_Qml
-
+    ${QT_BIN_DIR}/Qt5Network${LE}.dll
+    ${QT_BIN_DIR}/Qt5OpenGL${LE}.dll
+    ${QT_BIN_DIR}/Qt5Qml${LE}.dll
+    ${QT_BIN_DIR}/Qt5Quick${LE}.dll
+    ${QT_BIN_DIR}/Qt5V8${LE}.dll
 )
 
 SET(Vlc_Libs
@@ -111,6 +110,9 @@ ENDIF(MINGW)
 IF(QT5)
     INSTALL(FILES ${Qt5_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
     INSTALL(FILES ${Qt5_Platforms} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin/platforms")
+    IF(WITH_WIDGETS OR WITH_QML)
+        INSTALL(FILES ${Qt5_Libs_Gui} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+    ENDIF(WITH_WIDGETS OR WITH_QML)
     IF(WITH_WIDGETS)
         INSTALL(FILES ${Qt5_Libs_Widgets} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
     ENDIF(WITH_WIDGETS)
@@ -119,9 +121,6 @@ IF(QT5)
     ENDIF(WITH_QML)
 ELSE(QT5)
     INSTALL(FILES ${Qt4_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
-    IF(WITH_QML)
-        INSTALL(FILES ${Q4t_Libs_Qml} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
-    ENDIF(WITH_QML)
 ENDIF(QT5)
 
 INSTALL(FILES ${Vlc_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
