@@ -24,6 +24,10 @@ ADD_DEFINITIONS(-DVLCQT_CORE_LIBRARY)
 # Add definitions for shared library
 ADD_DEFINITIONS(-DQT_SHARED -D_REENTRANT)
 
+CONFIGURE_FILE(
+    ${CMAKE_SOURCE_DIR}/src/platform/windows/core.rc.in
+    ${CMAKE_BINARY_DIR}/src/platform/windows/core.rc
+)
 
 ###################
 # List of sources #
@@ -104,7 +108,7 @@ IF(MINGW)
     ADD_CUSTOM_COMMAND(
         OUTPUT ${CMAKE_BINARY_DIR}/src/platform/windows/core.obj
         COMMAND ${CMAKE_RC_COMPILER}
-        -i ${CMAKE_SOURCE_DIR}/src/platform/windows/core.rc
+        -i ${CMAKE_BINARY_DIR}/src/platform/windows/core.rc
         -o ${CMAKE_BINARY_DIR}/src/platform/windows/core.obj
         WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/src/platform/windows"
     )
@@ -112,7 +116,7 @@ IF(MINGW)
 ENDIF(MINGW)
 
 IF(MSVC)
-    SET(VLCQT_CORE_SRCS ${VLCQT_CORE_SRCS} ${CMAKE_SOURCE_DIR}/src/platform/windows/core.rc)
+    SET(VLCQT_CORE_SRCS ${VLCQT_CORE_SRCS} ${CMAKE_BINARY_DIR}/src/platform/windows/core.rc)
 ENDIF(MSVC)
 
 # Create the library.

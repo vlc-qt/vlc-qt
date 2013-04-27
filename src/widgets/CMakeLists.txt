@@ -24,6 +24,10 @@ ADD_DEFINITIONS(-DVLCQT_WIDGETS_LIBRARY)
 # Add definitions for shared library
 ADD_DEFINITIONS(-DQT_SHARED -D_REENTRANT)
 
+CONFIGURE_FILE(
+    ${CMAKE_SOURCE_DIR}/src/platform/windows/widgets.rc.in
+    ${CMAKE_BINARY_DIR}/src/platform/windows/widgets.rc
+)
 
 ###################
 # List of sources #
@@ -68,7 +72,7 @@ IF(MINGW)
     ADD_CUSTOM_COMMAND(
         OUTPUT ${CMAKE_BINARY_DIR}/src/platform/windows/widgets.obj
         COMMAND ${CMAKE_RC_COMPILER}
-        -i ${CMAKE_SOURCE_DIR}/src/platform/windows/widgets.rc
+        -i ${CMAKE_BINARY_DIR}/src/platform/windows/widgets.rc
         -o ${CMAKE_BINARY_DIR}/src/platform/windows/widgets.obj
         WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/src/platform/windows"
     )
@@ -76,7 +80,7 @@ IF(MINGW)
 ENDIF(MINGW)
 
 IF(MSVC)
-    SET(VLCQT_WIDGETS_SRCS ${VLCQT_WIDGETS_SRCS} ${CMAKE_SOURCE_DIR}/src/platform/windows/widgets.rc)
+    SET(VLCQT_WIDGETS_SRCS ${VLCQT_WIDGETS_SRCS} ${CMAKE_BINARY_DIR}/src/platform/windows/widgets.rc)
 ENDIF(MSVC)
 
 # Create the library.
