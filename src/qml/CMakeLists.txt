@@ -24,6 +24,10 @@ ADD_DEFINITIONS(-DVLCQT_QML_LIBRARY)
 # Add definitions for shared library
 ADD_DEFINITIONS(-DQT_SHARED -D_REENTRANT)
 
+CONFIGURE_FILE(
+    ${CMAKE_SOURCE_DIR}/src/platform/windows/qml.rc.in
+    ${CMAKE_BINARY_DIR}/src/platform/windows/qml.rc
+)
 
 ###################
 # List of sources #
@@ -74,7 +78,7 @@ IF(MINGW)
     ADD_CUSTOM_COMMAND(
         OUTPUT ${CMAKE_BINARY_DIR}/src/platform/windows/qml.obj
         COMMAND ${CMAKE_RC_COMPILER}
-        -i ${CMAKE_SOURCE_DIR}/src/platform/windows/qml.rc
+        -i ${CMAKE_BINARY_DIR}/src/platform/windows/qml.rc
         -o ${CMAKE_BINARY_DIR}/src/platform/windows/qml.obj
         WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/src/platform/windows"
     )
@@ -82,7 +86,7 @@ IF(MINGW)
 ENDIF(MINGW)
 
 IF(MSVC)
-    SET(VLCQT_QML_SRCS ${VLCQT_QML_SRCS} ${CMAKE_SOURCE_DIR}/src/platform/windows/qml.rc)
+    SET(VLCQT_QML_SRCS ${VLCQT_QML_SRCS} ${CMAKE_BINARY_DIR}/src/platform/windows/qml.rc)
 ENDIF(MSVC)
 
 # Create the library.

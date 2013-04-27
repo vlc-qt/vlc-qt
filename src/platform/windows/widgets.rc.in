@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2013 Tadej Novak <tadej@tano.si>
 *
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published
@@ -19,8 +19,8 @@
 #include <windows.h>
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,8,0,0
- PRODUCTVERSION 0,8,0,0
+FILEVERSION @VLCQT_VERSION_MAJOR@,@VLCQT_VERSION_MINOR@,@VLCQT_VERSION_BUGFIX@,0
+PRODUCTVERSION @VLCQT_VERSION_MAJOR@,@VLCQT_VERSION_MINOR@,@VLCQT_VERSION_BUGFIX@,0
  FILEFLAGS 0x0L
  FILEFLAGSMASK 0x3fL
  FILEOS 0x00040004L
@@ -33,12 +33,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Tadej Novak"
             VALUE "FileDescription", "VLC-Qt - Qt bindings for libVLC"
-            VALUE "FileVersion", "0.8.0.0"
-            VALUE "LegalCopyright", "Copyright (C) 2012 Tadej Novak."
-            VALUE "InternalName", "vlc-qt-qml"
-            VALUE "OriginalFilename", "vlc-qt-qml.dll"
+            VALUE "FileVersion", "@VLCQT_VERSION@"
+            VALUE "LegalCopyright", "Copyright (C) 2013 Tadej Novak."
+            VALUE "InternalName", "vlc-qt-widgets"
+            VALUE "OriginalFilename", "vlc-qt-widgets.dll"
             VALUE "ProductName", "VLC-Qt"
-            VALUE "ProductVersion", "0.8.0.0"
+            VALUE "ProductVersion", "@VLCQT_VERSION@"
         END
     END
     BLOCK "VarFileInfo"
