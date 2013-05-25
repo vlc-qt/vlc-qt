@@ -24,10 +24,12 @@ ADD_DEFINITIONS(-DVLCQT_CORE_LIBRARY)
 # Add definitions for shared library
 ADD_DEFINITIONS(-DQT_SHARED -D_REENTRANT)
 
-CONFIGURE_FILE(
-    ${CMAKE_SOURCE_DIR}/src/platform/windows/core.rc.in
-    ${CMAKE_BINARY_DIR}/src/platform/windows/core.rc
-)
+IF(MINGW OR MSVC)
+    CONFIGURE_FILE(
+        ${CMAKE_SOURCE_DIR}/src/platform/windows/core.rc.in
+        ${CMAKE_BINARY_DIR}/src/platform/windows/core.rc
+    )
+ENDIF(MINGW OR MSVC)
 
 ###################
 # List of sources #

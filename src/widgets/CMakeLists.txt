@@ -24,10 +24,12 @@ ADD_DEFINITIONS(-DVLCQT_WIDGETS_LIBRARY)
 # Add definitions for shared library
 ADD_DEFINITIONS(-DQT_SHARED -D_REENTRANT)
 
-CONFIGURE_FILE(
-    ${CMAKE_SOURCE_DIR}/src/platform/windows/widgets.rc.in
-    ${CMAKE_BINARY_DIR}/src/platform/windows/widgets.rc
-)
+IF(MINGW OR MSVC)
+    CONFIGURE_FILE(
+        ${CMAKE_SOURCE_DIR}/src/platform/windows/widgets.rc.in
+        ${CMAKE_BINARY_DIR}/src/platform/windows/widgets.rc
+    )
+ENDIF(MINGW OR MSVC)
 
 ###################
 # List of sources #
