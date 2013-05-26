@@ -10,5 +10,9 @@
         <file>icons/128x128/vlc.png</file>
         <file>icons/256x256/vlc-qt.png</file>
         <file>icons/256x256/vlc.png</file>
+        <file>icons/16x16/vlc-qt.png</file>
+        <file>icons/16x16/vlc.png</file>
+        <file>icons/32x32/vlc-qt.png</file>
+        <file>icons/32x32/vlc.png</file>
     </qresource>
 </RCC>
