@@ -35,8 +35,8 @@
 #include "widgets/WidgetVolumeSlider.h"
 
 VlcWidgetVolumeSlider::VlcWidgetVolumeSlider(VlcMediaPlayer *player,
-                                 QWidget *parent)
-    : QWidget(parent),
+                                             QWidget *parent)
+    : QSlider(parent),
       _vlcAudio(player->audio()),
       _vlcMediaPlayer(player)
 {
@@ -44,7 +44,7 @@ VlcWidgetVolumeSlider::VlcWidgetVolumeSlider(VlcMediaPlayer *player,
 }
 
 VlcWidgetVolumeSlider::VlcWidgetVolumeSlider(QWidget *parent)
-    : QWidget(parent),
+    : QSlider(parent),
       _vlcAudio(0),
       _vlcMediaPlayer(0)
 {
@@ -53,8 +53,6 @@ VlcWidgetVolumeSlider::VlcWidgetVolumeSlider(QWidget *parent)
 
 VlcWidgetVolumeSlider::~VlcWidgetVolumeSlider()
 {
-    delete _slider;
-    delete _label;
     delete _timer;
 }
 
@@ -62,23 +60,10 @@ void VlcWidgetVolumeSlider::initWidgetVolumeSlider()
 {
     _lock = false;
 
-    _slider = new QSlider(this);
-    _slider->setOrientation(Qt::Horizontal);
-    _slider->setMaximum(200);
-
-    _label = new QLabel(this);
-    _label->setMinimumWidth(20);
-    _label->setText(QString().number(0));
-
-    QHBoxLayout *layout = new QHBoxLayout;
-    layout->addWidget(_slider);
-    layout->addWidget(_label);
-    setLayout(layout);
-
     _timer = new QTimer(this);
 
     connect(_timer, SIGNAL(timeout()), this, SLOT(updateVolume()));
-    connect(_slider, SIGNAL(valueChanged(int)), this, SLOT(setVolume(int)));
+    connect(this, SIGNAL(valueChanged(int)), this, SLOT(setVolume(int)));
 }
 
 void VlcWidgetVolumeSlider::mousePressEvent(QMouseEvent *event)
@@ -122,12 +107,10 @@ void VlcWidgetVolumeSlider::setMute(const bool &enabled)
 
     if (!enabled) {
         _timer->start(100);
-        _slider->setDisabled(false);
-        _label->setDisabled(false);
+        setDisabled(false);
     } else {
         _timer->stop();
-        _slider->setDisabled(true);
-        _label->setDisabled(true);
+        setDisabled(true);
     }
 
     _vlcAudio->toggleMute();
@@ -141,8 +124,7 @@ void VlcWidgetVolumeSlider::setVolume(const int &volume)
     lock();
 
     _currentVolume = volume;
-    _slider->setValue(_currentVolume);
-    _label->setText(QString().number(_currentVolume));
+    setValue(_currentVolume);
 
     emit newVolume(_currentVolume);
 

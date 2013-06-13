@@ -20,12 +20,10 @@
 #define VLCQT_WIDGETVOLUMESLIDER_H_
 
 // QtGui/QtWidget
-#include <QWidget>
+#include <QSlider>
 
 #include "SharedExportWidgets.h"
 
-class QLabel;
-class QSlider;
 class QTimer;
 
 class VlcAudio;
@@ -38,7 +36,7 @@ class VlcMediaPlayer;
     This is one of VLC-Qt GUI classes.
     It provides graphical volume control and also visual display of current volume.
 */
-class VLCQT_WIDGETS_EXPORT VlcWidgetVolumeSlider : public QWidget
+class VLCQT_WIDGETS_EXPORT VlcWidgetVolumeSlider : public QSlider
 {
 Q_OBJECT
 public:
@@ -148,8 +146,6 @@ private:
 
     int _currentVolume;
 
-    QSlider *_slider;
-    QLabel *_label;
     QTimer *_timer;
 };
 
