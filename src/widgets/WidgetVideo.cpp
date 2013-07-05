@@ -30,9 +30,7 @@
     #include <QtGui/QToolBar>
 #endif
 
-#if defined(Q_OS_MAC)
-    #import <Cocoa/Cocoa.h>
-#elif defined(Q_WS_X11)
+#if defined(Q_WS_X11)
     #include <X11/Xlib.h>
     #include <qx11info_x11.h>
 #endif
@@ -45,12 +43,7 @@
 
 VlcWidgetVideo::VlcWidgetVideo(VlcMediaPlayer *player,
                                QWidget *parent)
-    :
-#if defined(Q_OS_MAC)
-      QMacCocoaViewContainer(0, parent)
-#else
-      QFrame(parent)
-#endif
+    : QFrame(parent)
 {
     _vlcMediaPlayer = player;
 
@@ -60,12 +53,7 @@ VlcWidgetVideo::VlcWidgetVideo(VlcMediaPlayer *player,
 }
 
 VlcWidgetVideo::VlcWidgetVideo(QWidget *parent)
-    :
-#if defined(Q_OS_MAC)
-      QMacCocoaViewContainer(0, parent),
-#else
-      QFrame(parent),
-#endif
+    : QFrame(parent),
       _vlcMediaPlayer(0)
 {
     initWidgetVideo();
@@ -74,13 +62,6 @@ VlcWidgetVideo::VlcWidgetVideo(QWidget *parent)
 VlcWidgetVideo::~VlcWidgetVideo()
 {
     release();
-
-#if !defined(Q_OS_MAC)
-    delete _layout;
-
-    /* Ensure we are not leaking the video output. This would crash. */
-    Q_ASSERT(!_video);
-#endif
 }
 
 void VlcWidgetVideo::initWidgetVideo()
@@ -95,11 +76,6 @@ void VlcWidgetVideo::initWidgetVideo()
     _currentDeinterlacing = Vlc::Disabled;
     _currentScale = Vlc::NoScale;
 
-#if defined(Q_OS_MAC)
-    NSView *video = [[NSView alloc] init];
-    setCocoaView(video);
-    [video release];
-#else
     _layout = new QHBoxLayout(this);
     _layout->setContentsMargins(0, 0, 0, 0);
     _video = 0;
@@ -107,7 +83,6 @@ void VlcWidgetVideo::initWidgetVideo()
     QPalette plt = palette();
     plt.setColor(QPalette::Window, Qt::black);
     setPalette(plt);
-#endif
 }
 
 void VlcWidgetVideo::setMediaPlayer(VlcMediaPlayer *player)
@@ -237,10 +212,6 @@ void VlcWidgetVideo::sync()
 
 WId VlcWidgetVideo::request()
 {
-#if defined(Q_OS_MAC)
-    return WId(cocoaView());
-#endif
-
     if (_video)
         return 0;
 

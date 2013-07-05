@@ -27,10 +27,6 @@
     #include <QtGui/QFrame>
 #endif
 
-#if defined(Q_OS_MAC)
-    #include <QMacCocoaViewContainer>
-#endif
-
 #include "Enums.h"
 #include "SharedExportWidgets.h"
 #include "VideoDelegate.h"
@@ -44,11 +40,7 @@ class VlcMediaPlayer;
     This is one of VLC-Qt GUI classes.
     It provides video display and mouse control.
 */
-#if defined(Q_OS_MAC)
-class VLCQT_WIDGETS_EXPORT VlcWidgetVideo : public QMacCocoaViewContainer, public VlcVideoDelegate
-#else
 class VLCQT_WIDGETS_EXPORT VlcWidgetVideo : public QFrame, public VlcVideoDelegate
-#endif
 {
 Q_OBJECT
 public:
@@ -244,10 +236,8 @@ private:
 
     VlcMediaPlayer *_vlcMediaPlayer;
 
-#if !defined(Q_OS_MAC)
     QWidget *_video;
     QLayout *_layout;
-#endif
 
     bool _enableSettings;
 

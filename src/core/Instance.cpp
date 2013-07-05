@@ -31,10 +31,16 @@ VlcInstance::VlcInstance(const QStringList &args,
     : QObject(parent),
       _vlcInstance(0)
 {
-    // Convert arguments to required format
+// Convert arguments to required format
+#if defined(Q_OS_WIN32) // Will be removed on Windows if confirmed working
     char **argv = (char **)malloc(sizeof(char **) * args.count());
     for (int i = 0; i < args.count(); ++i)
         argv[i] = (char *)qstrdup(args.at(i).toLocal8Bit().data());
+#else
+    char *argv[args.count()];
+    for (int i = 0; i < args.count(); ++i)
+        argv[i] = (char *)qstrdup(args.at(i).toLocal8Bit().data());
+#endif
 
     // Create new libvlc instance
     _vlcInstance = libvlc_new(args.count(), argv);

@@ -48,6 +48,11 @@ ELSE(QT5)
     TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${QT_LIBRARIES} ${VLCQT_BINARY})
 ENDIF(QT5)
 
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} POST_BUILD COMMAND
+        ${CMAKE_INSTALL_NAME_TOOL} -change ${VLCQT_BINARY} "@loader_path/../lib/libvlc-qt.dylib" $<TARGET_FILE:${PROJECT_NAME}>)
+ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+
 ################
 # Installation #
 ################

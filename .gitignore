@@ -1,6 +1,9 @@
 # Possible build dirs:
 build/
 
+# System files
+*.DS_Store*
+
 # Project files
 CMakeLists.txt.user
 demo-player.pro.user

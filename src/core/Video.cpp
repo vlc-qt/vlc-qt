@@ -179,8 +179,8 @@ void VlcVideo::showMarquee(const QString &text,
 
 QSize VlcVideo::size() const
 {
-    unsigned x;
-    unsigned y;
+    unsigned x = 640;
+    unsigned y = 480;
 
     if (_vlcMediaPlayer && libvlc_media_player_has_vout(_vlcMediaPlayer)) {
         libvlc_video_get_size(_vlcMediaPlayer, 0, &x, &y);

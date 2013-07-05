@@ -50,8 +50,14 @@ SET(VLCQT_CORE_SRCS
     Video.cpp
     VideoDelegate.h
     VideoFrame.cpp
-    VideoMemoryStream.cpp
 )
+
+IF(NOT ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    SET(VLCQT_CORE_SRCS
+        ${VLCQT_CORE_SRCS}
+        VideoMemoryStream.cpp
+    )
+ENDIF(NOT ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 
 # Define the Include files
 SET(VLCQT_CORE_HEADERS
@@ -149,6 +155,13 @@ IF(QT5)
 ELSE(QT5)
     TARGET_LINK_LIBRARIES(${VLCQT_SHARED} ${QT_LIBRARIES} ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY})
 ENDIF(QT5)
+
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    ADD_CUSTOM_COMMAND(TARGET ${VLCQT_SHARED} POST_BUILD COMMAND
+        ${CMAKE_INSTALL_NAME_TOOL} -change "@loader_path/lib/libvlc.5.dylib" "@loader_path/../lib/libvlc.5.dylib" $<TARGET_FILE:${VLCQT_SHARED}>)
+    ADD_CUSTOM_COMMAND(TARGET ${VLCQT_SHARED} POST_BUILD COMMAND
+        ${CMAKE_INSTALL_NAME_TOOL} -change "@loader_path/lib/libvlccore.5.dylib" "@loader_path/../lib/libvlccore.5.dylib" $<TARGET_FILE:${VLCQT_SHARED}>)
+ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 
 
 ################
