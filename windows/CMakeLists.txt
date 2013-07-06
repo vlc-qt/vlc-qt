@@ -69,16 +69,16 @@ SET(Qt5_Platforms
 SET(Qt5_Libs
     ${QT_BIN_DIR}/Qt5Core${LE}.dll
     ${QT_BIN_DIR}/Qt5Gui${LE}.dll
-    ${QT_BIN_DIR}/icudt49.dll
-    ${QT_BIN_DIR}/icuin49.dll
-    ${QT_BIN_DIR}/icuuc49.dll
 )
+
+FILE(GLOB Qt5_Libs_Icu ${QT_BIN_DIR}/icu*.dll)
 
 SET(Qt5_Libs_Gui
     ${QT_BIN_DIR}/libEGL${LE}.dll
     ${QT_BIN_DIR}/libGLESv2${LE}.dll
-    ${QT_BIN_DIR}/D3DCompiler_43.dll
 )
+
+FILE(GLOB Qt5_Libs_D3D ${QT_BIN_DIR}/D3DCompiler_*.dll)
 
 SET(Qt5_Libs_Widgets
     ${QT_BIN_DIR}/Qt5Widgets${LE}.dll
@@ -111,9 +111,11 @@ ENDIF(MINGW)
 ################
 IF(QT5)
     INSTALL(FILES ${Qt5_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+    INSTALL(FILES ${Qt5_Libs_Icu} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
     INSTALL(FILES ${Qt5_Platforms} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin/platforms")
     IF(WITH_WIDGETS OR WITH_QML)
         INSTALL(FILES ${Qt5_Libs_Gui} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+        INSTALL(FILES ${Qt5_Libs_D3D} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
     ENDIF(WITH_WIDGETS OR WITH_QML)
     IF(WITH_WIDGETS)
         INSTALL(FILES ${Qt5_Libs_Widgets} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
