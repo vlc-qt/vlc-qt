@@ -25,9 +25,9 @@ IF("${CMAKE_VERSION}" VERSION_GREATER 2.8.11.1)
     CMAKE_POLICY(SET CMP0020 NEW)
 ENDIF("${CMAKE_VERSION}" VERSION_GREATER 2.8.11.1)
 
-SET(VLCQT_SHARED ${PROJECT_NAME})
-SET(VLCQT_WIDGETS_SHARED ${PROJECT_NAME}-widgets)
-SET(VLCQT_QML_SHARED ${PROJECT_NAME}-qml)
+SET(VLCQT ${PROJECT_NAME})
+SET(VLCQT_WIDGETS ${PROJECT_NAME}-widgets)
+SET(VLCQT_QML ${PROJECT_NAME}-qml)
 
 CONFIGURE_FILE(
     "${CMAKE_SOURCE_DIR}/cmake_uninstall.cmake.in"
@@ -123,6 +123,9 @@ ELSE(QT5)
     INCLUDE(${QT_USE_FILE})
 ENDIF(QT5)
 
+OPTION(STATIC "Build statically" ON)
+MESSAGE("VLC-Qt: Build statically: ${STATIC}")
+
 # Add additional required libraries
 FIND_PACKAGE(LIBVLC REQUIRED)
 
@@ -133,7 +136,11 @@ IF(MINGW OR MSVC)
 ENDIF(MINGW OR MSVC)
 
 # Link parameters
-IF(MINGW)
+IF(STATIC)
+    SET(VLCQT_BINARY ${CMAKE_BINARY_DIR}/src/core/libvlc-qt.a)
+    SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/libvlc-qt-widgets.a)
+    SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/libvlc-qt-qml.a)
+ELSEIF(MINGW)
     SET(VLCQT_BINARY ${CMAKE_BINARY_DIR}/src/core/libvlc-qt.dll.a)
     SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/libvlc-qt-widgets.dll.a)
     SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/libvlc-qt-qml.dll.a)
@@ -145,11 +152,12 @@ ELSEIF(MSVC)
     SET(VLCQT_BINARY ${CMAKE_BINARY_DIR}/src/core/vlc-qt.lib)
     SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/vlc-qt-widgets.lib)
     SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/vlc-qt-qml.lib)
-ELSE(MINGW)
+ELSE(STATIC)
     SET(VLCQT_BINARY ${CMAKE_BINARY_DIR}/src/core/libvlc-qt.so)
     SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/libvlc-qt-widgets.so)
     SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/libvlc-qt-qml.so)
-ENDIF(MINGW)
+ENDIF(STATIC)
+
 
 ###########
 # Version #
