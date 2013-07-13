@@ -123,7 +123,7 @@ ELSE(QT5)
     INCLUDE(${QT_USE_FILE})
 ENDIF(QT5)
 
-OPTION(STATIC "Build statically" ON)
+OPTION(STATIC "Build statically" OFF)
 MESSAGE("VLC-Qt: Build statically: ${STATIC}")
 
 # Add additional required libraries

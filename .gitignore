@@ -1,5 +1,6 @@
 # Possible build dirs:
 build/
+release/
 
 # System files
 *.DS_Store*
