@@ -1,7 +1,7 @@
 #!/bin/bash
 #############################################################################
 # VLC-Qt - Qt and libvlc connector library
-# Copyright (C) 2012 Tadej Novak <tadej@tano.si>
+# Copyright (C) 2013 Tadej Novak <tadej@tano.si>
 #
 # This library is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published
@@ -21,7 +21,8 @@ set -eu
 
 DEVEL=""
 TARGET=""
-while getopts "hdt:" OPTION
+BUILD="1"
+while getopts "hdt:b:" OPTION
 do
   case $OPTION in
       h)
@@ -29,6 +30,7 @@ do
           echo ""
           echo "Use -t to specify target (in targets directory)"
           echo "Use -d to ignore dependency requests"
+          echo "Use -b to specify build number (defaults to 1)"
           exit 0
           ;;
       d)
@@ -36,6 +38,9 @@ do
           ;;
       t)
           TARGET="$OPTARG"
+          ;;
+      b)
+          BUILD="$OPTARG"
           ;;
   esac
 done
