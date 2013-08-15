@@ -11,9 +11,3 @@ demo-player.pro.user
 
 # Debian/build
 obj*
-debian/*debhelper*
-debian/*substvars*
-debian/files
-debian/libvlc-qt/
-debian/libvlc-qt-*/
-debian/tmp/

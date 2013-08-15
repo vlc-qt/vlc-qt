@@ -14,19 +14,11 @@ build()
     echo >>${CHANGELOG} " -- Tadej Novak <tadej@tano.si>  ${NOW}"
     
     dpkg-buildpackage -b -us -uc ${DEVEL}
-}
 
-clean() 
-{
-    for a in ../libvlc-qt*${VER}*.deb; do
-	rm -f "$a"
-    done
+    git clean debian/ -fdx || { echo "Git is not installed. Debian directory will not be cleaned."; }
+    git checkout debian/ || { echo "Git is not installed. Debian directory will not be cleaned."; }
 
-    for a in ../libvlc-qt*${VER}*.changes; do
-	rm -f "$a"
-    done
-
-    dh_clean
+    echo "Completed!"
 }
 
 deps() 
@@ -36,11 +28,6 @@ deps()
 	exit 1
     fi
     apt-get -y install ${BUILD_DEPS}
-}
-
-buildenv() 
-{
-    echo $BUILD_DEPS | shasum | awk '{print $1}'
 }
 
 eval build
