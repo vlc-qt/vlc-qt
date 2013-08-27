@@ -29,7 +29,7 @@ QStringList VlcCommon::args()
          << "--no-osd"
          << "--no-loop"
          << "--no-video-title-show"
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_DARWIN)
          << "--vout=macosx"
 #endif
          << "--drop-late-frames";

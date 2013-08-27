@@ -200,7 +200,7 @@ void VlcMediaPlayer::play()
     if (_currentWId) {
 #if defined(Q_OS_WIN32)
         libvlc_media_player_set_hwnd(_vlcMediaPlayer, (void *)_currentWId);
-#elif defined(Q_OS_MAC)
+#elif defined(Q_OS_DARWIN)
         libvlc_media_player_set_nsobject(_vlcMediaPlayer, (void *)_currentWId);
 #elif defined(Q_OS_UNIX)
         libvlc_media_player_set_xwindow(_vlcMediaPlayer, _currentWId);

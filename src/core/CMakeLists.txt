@@ -53,15 +53,9 @@ SET(VLCQT_CORE_SRCS
     SharedExportCore.h
     Video.cpp
     VideoDelegate.h
+    VideoMemoryStream.cpp
     VideoFrame.cpp
 )
-
-IF(NOT ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    SET(VLCQT_CORE_SRCS
-        ${VLCQT_CORE_SRCS}
-        VideoMemoryStream.cpp
-    )
-ENDIF(NOT ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 
 # Define the Include files
 SET(VLCQT_CORE_HEADERS

@@ -4,7 +4,7 @@ VLC-Qt is a free library used to connect Qt and libvlc libraries.
 It contains core classes for main media playback and also some GUI
 classes for faster media player developement.
 
-VLC-Qt runs on Linux and Windows,
+VLC-Qt runs on Linux, OS X and Windows,
 other operating systems are currently not supported.
 
 
@@ -19,7 +19,7 @@ You can download VLC-Qt from the official web page
 Dependencies
 ------------
 - g++, make
-- cmake >= 2.8.6
+- cmake >= 2.8.9
 - Qt >= 4.8
 - libvlc >= 2.0
 

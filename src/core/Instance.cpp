@@ -73,13 +73,13 @@ libvlc_instance_t *VlcInstance::core()
 QString VlcInstance::libVersion()
 {
     QString version;
-#ifdef LIBVLCQT_VERSION
+#if defined(LIBVLCQT_VERSION)
     version.append(QString(LIBVLCQT_VERSION));
 #else
     version.append(QString("Unknown"));
 #endif //LIBVLCQT_VERSION
 
-#ifdef LIBVLCQT_VERSION_PATCH
+#if defined(LIBVLCQT_VERSION_PATCH)
     if(QString(LIBVLCQT_VERSION_PATCH) != "0" && QString(LIBVLCQT_VERSION_PATCH) != "") {
         version.append("-" + QString(LIBVLCQT_VERSION_PATCH));
     }
