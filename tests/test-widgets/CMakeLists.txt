@@ -66,6 +66,7 @@ INCLUDE_DIRECTORIES(
 
 # This line tells cmake to create the Test program.
 ADD_EXECUTABLE(${PROJECT_NAME} ${Test_Widgets_UIC_Srcs} ${Test_Widgets_Srcs})
+ADD_DEPENDENCIES(${PROJECT_NAME} ${VLCQT} ${VLCQT_WIDGETS})
 
 # Link the required libraries
 IF(QT5)
