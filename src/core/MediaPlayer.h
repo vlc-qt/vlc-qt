@@ -118,7 +118,7 @@ public:
 
         \param time the movie time (in ms) (int)
     */
-    void setTime(const int &time);
+    void setTime(int time);
 
     /*!
         \brief Get the current movie time (in ms).
@@ -164,7 +164,7 @@ public:
 
         \param pos the movie position (float)
     */
-    void setPosition(const float &pos);
+    void setPosition(float pos);
 
 public slots:
     /*!
@@ -203,7 +203,7 @@ signals:
         \brief Signal sent on buffering
         \param float buffer
     */
-    void buffering(const float &);
+    void buffering(float);
 
     /*!
         \brief Signal sent when end reached
@@ -224,7 +224,7 @@ signals:
         \brief Signal sent on length change
         \param int length
     */
-    void lengthChanged(const int &);
+    void lengthChanged(int);
 
     /*!
         \brief Signal sent on media change
@@ -246,7 +246,7 @@ signals:
         \brief Signal sent on pausable change
         \param bool pausable
     */
-    void pausableChanged(const bool &);
+    void pausableChanged(bool);
 
     /*!
         \brief Signal sent when paused
@@ -262,13 +262,13 @@ signals:
         \brief Signal sent on position change
         \param float position
     */
-    void positionChanged(const float &);
+    void positionChanged(float);
 
     /*!
         \brief Signal sent on seekable change
         \param bool seekable
     */
-    void seekableChanged(const bool &);
+    void seekableChanged(bool);
 
     /*!
         \brief Signal sent on snapshot taken
@@ -285,19 +285,19 @@ signals:
         \brief Signal sent on time change
         \param int time
     */
-    void timeChanged(const int &);
+    void timeChanged(int);
 
     /*!
         \brief Signal sent on title change
         \param int title
     */
-    void titleChanged(const int &);
+    void titleChanged(int);
 
     /*!
         \brief Signal sent when video output is available
         \param int vout count
     */
-    void vout(const int &);
+    void vout(int);
 
     /*!
         \brief Signal sent when state of the player changed

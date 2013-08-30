@@ -51,6 +51,7 @@ VlcMediaListPlayer::VlcMediaListPlayer(VlcMediaPlayer *player,
     _player = player;
 
     _vlcMediaListPlayer = libvlc_media_list_player_new(instance->core());
+    _vlcEvents = libvlc_media_list_player_event_manager(_vlcMediaListPlayer);
     libvlc_media_list_player_set_media_player(_vlcMediaListPlayer, _player->core());
 
     createCoreConnections();
@@ -106,7 +107,7 @@ void VlcMediaListPlayer::removeCoreConnections()
     }
 }
 
-void VlcMediaListPlayer::itemAt(const int &index)
+void VlcMediaListPlayer::itemAt(int index)
 {
     libvlc_media_list_player_play_item_at_index(_vlcMediaListPlayer, index);
 

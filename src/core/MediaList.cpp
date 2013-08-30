@@ -87,7 +87,7 @@ void VlcMediaList::addMedia(VlcMedia *media)
     VlcError::errmsg();
 }
 
-VlcMedia *VlcMediaList::at(const int &index)
+VlcMedia *VlcMediaList::at(int index)
 {
     return _list[index];
 }
@@ -121,7 +121,7 @@ int VlcMediaList::indexOf(libvlc_media_t *media)
 }
 
 void VlcMediaList::insertMedia(VlcMedia *media,
-                               const int &index)
+                               int index)
 {
     lock();
     libvlc_media_list_insert_media(_vlcMediaList, media->core(), index);
@@ -131,7 +131,7 @@ void VlcMediaList::insertMedia(VlcMedia *media,
     VlcError::errmsg();
 }
 
-void VlcMediaList::removeMedia(const int &index)
+void VlcMediaList::removeMedia(int index)
 {
     lock();
     libvlc_media_list_remove_index(_vlcMediaList, index);

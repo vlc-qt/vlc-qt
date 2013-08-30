@@ -78,7 +78,7 @@ public:
 
         \param autoHide new auto-hide option (bool)
     */
-    void setAutoHide(const bool &autoHide);
+    void setAutoHide(bool autoHide);
 
     /*!
         \brief Set media player if initialised without it
@@ -94,8 +94,8 @@ protected:
 
 private slots:
     void end();
-    void updateCurrentTime(const int &time);
-    void updateFullTime(const int &time);
+    void updateCurrentTime(int time);
+    void updateFullTime(int time);
 
 private:
     void initWidgetSeek();

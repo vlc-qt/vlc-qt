@@ -75,7 +75,7 @@ public:
         \param index item position
         \return media item (VlcMedia)
     */
-    VlcMedia *at(const int &index);
+    VlcMedia *at(int index);
 
     /*!
         \brief libvlc media list item
@@ -103,13 +103,13 @@ public:
         \param index item position
     */
     void insertMedia(VlcMedia *media,
-                     const int &index);
+                     int index);
 
     /*!
         \brief Remove media item from the specific position of the list.
         \param index item position
     */
-    void removeMedia(const int &index);
+    void removeMedia(int index);
 
 
 signals:
@@ -119,7 +119,7 @@ signals:
         \param int index
     */
     void itemAdded(libvlc_media_t *,
-                   const int &);
+                   int);
 
     /*!
         \brief Signal sent when item will be added
@@ -127,7 +127,7 @@ signals:
         \param int index
     */
     void willAddItem(libvlc_media_t *,
-                     const int &);
+                     int);
 
     /*!
         \brief Signal sent on item deleted
@@ -135,7 +135,7 @@ signals:
         \param int index
     */
     void itemDeleted(libvlc_media_t *,
-                     const int &);
+                     int);
 
     /*!
         \brief Signal sent when item will be deleted
@@ -143,7 +143,7 @@ signals:
         \param int index
     */
     void willDeleteItem(libvlc_media_t *,
-                        const int &);
+                        int);
 
 
 private:

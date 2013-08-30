@@ -78,13 +78,13 @@ public slots:
         \brief Toggle mute
         \param enabled new mutte status (bool)
     */
-    void setMute(const bool &enabled);
+    void setMute(bool enabled);
 
     /*!
         \brief Set volume for current media
         \param volume number from 0 to 200 (int)
     */
-    void setVolume(const int &volume);
+    void setVolume(int volume);
 
     /*!
         \brief Get volume for current media
@@ -99,7 +99,7 @@ public slots:
 
         \param up if true increases the volume (bool)
     */
-    void volumeControl(const bool &up);
+    void volumeControl(bool up);
 
     /*!
         \brief Decreases volume for 1.
@@ -124,7 +124,7 @@ signals:
         \brief Signal for new volume
         \param int new volume (int)
     */
-    void newVolume(const int &);
+    void newVolume(int);
 
 protected:
     void mousePressEvent(QMouseEvent *event);

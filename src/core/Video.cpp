@@ -109,7 +109,7 @@ void VlcVideo::setScale(const Vlc::Scale &scale)
     }
 }
 
-void VlcVideo::setSubtitle(const int &subtitle)
+void VlcVideo::setSubtitle(int subtitle)
 {
     if (_vlcMediaPlayer && libvlc_media_player_has_vout(_vlcMediaPlayer)) {
         libvlc_video_set_spu(_vlcMediaPlayer, subtitle);
@@ -125,7 +125,7 @@ void VlcVideo::setSubtitleFile(const QString &subtitle)
     }
 }
 
-void VlcVideo::setTeletextPage(const int &page)
+void VlcVideo::setTeletextPage(int page)
 {
     if (_vlcMediaPlayer && libvlc_media_player_has_vout(_vlcMediaPlayer)) {
         libvlc_video_set_teletext(_vlcMediaPlayer, page);
@@ -133,7 +133,7 @@ void VlcVideo::setTeletextPage(const int &page)
     }
 }
 
-void VlcVideo::setTrack(const int &track)
+void VlcVideo::setTrack(int track)
 {
     if (_vlcMediaPlayer) {
         libvlc_video_set_track(_vlcMediaPlayer, track);
@@ -142,9 +142,9 @@ void VlcVideo::setTrack(const int &track)
 }
 
 void VlcVideo::showLogo(const QString &file,
-                        const int &x,
-                        const int &y,
-                        const int &opacity)
+                        int x,
+                        int y,
+                        int opacity)
 {
     if (_vlcMediaPlayer && libvlc_media_player_has_vout(_vlcMediaPlayer)) {
         libvlc_video_set_logo_string(_vlcMediaPlayer, libvlc_logo_file, file.toLocal8Bit().data());
@@ -157,12 +157,13 @@ void VlcVideo::showLogo(const QString &file,
 }
 
 void VlcVideo::showMarquee(const QString &text,
-                           const int &x,
-                           const int &y,
-                           const int &timeout,
-                           const int &opacity,
-                           const int &size,
-                           const int &color)
+                           int x,
+                           int y,
+                           int timeout,
+                           int opacity,
+                           int size,
+                           int color,
+                           int refresh)
 {
     if (_vlcMediaPlayer && libvlc_media_player_has_vout(_vlcMediaPlayer)) {
         libvlc_video_set_marquee_string(_vlcMediaPlayer, libvlc_marquee_Text, text.toLocal8Bit().data());
@@ -172,6 +173,7 @@ void VlcVideo::showMarquee(const QString &text,
         libvlc_video_set_marquee_int(_vlcMediaPlayer, libvlc_marquee_Opacity, opacity);
         libvlc_video_set_marquee_int(_vlcMediaPlayer, libvlc_marquee_Size, size);
         libvlc_video_set_marquee_int(_vlcMediaPlayer, libvlc_marquee_Color, color);
+        libvlc_video_set_marquee_int(_vlcMediaPlayer, libvlc_marquee_Refresh, refresh);
 
         libvlc_video_set_marquee_int(_vlcMediaPlayer, libvlc_marquee_Enable, 1);
     }

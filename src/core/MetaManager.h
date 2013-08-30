@@ -120,7 +120,7 @@ public:
         \brief Set track number.
         \param number new track number (int)
     */
-    void setNumber(const int &number);
+    void setNumber(int number);
 
     /*!
         \brief Get current track description.
@@ -150,7 +150,7 @@ public:
         \brief Set track year.
         \param year new track year (int)
     */
-    void setYear(const int &year);
+    void setYear(int year);
 
     /*!
         \brief Get current track setting.

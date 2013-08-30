@@ -62,13 +62,13 @@ public:
         \brief Set current audio level.
         \param volume new audio level (int)
     */
-    void setVolume(const int &volume);
+    void setVolume(int volume);
 
     /*!
         \brief Set current audio track.
         \param track new audio track (int)
     */
-    void setTrack(const int &track);
+    void setTrack(int track);
 
     /*!
         \brief Toggle mute status.

@@ -121,7 +121,7 @@ void VlcWidgetSeek::wheelEvent(QWheelEvent *event)
         _vlcMediaPlayer->setTime(_vlcMediaPlayer->time() - _vlcMediaPlayer->length() * 0.01);
 }
 
-void VlcWidgetSeek::setAutoHide(const bool &autoHide)
+void VlcWidgetSeek::setAutoHide(bool autoHide)
 {
     _autoHide = autoHide;
 
@@ -172,7 +172,7 @@ void VlcWidgetSeek::updateEvent(const QPoint &pos)
     _seek->setValue(newValue);
 }
 
-void VlcWidgetSeek::updateCurrentTime(const int &time)
+void VlcWidgetSeek::updateCurrentTime(int time)
 {
     if (_lock)
         return;
@@ -188,7 +188,7 @@ void VlcWidgetSeek::updateCurrentTime(const int &time)
 }
 
 
-void VlcWidgetSeek::updateFullTime(const int &time)
+void VlcWidgetSeek::updateFullTime(int time)
 {
     if (_lock)
         return;

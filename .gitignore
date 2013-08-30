@@ -6,8 +6,8 @@ release/
 *.DS_Store*
 
 # Project files
-CMakeLists.txt.user
-demo-player.pro.user
+CMakeLists.txt.user*
+demo-player.pro.user*
 
 # Debian/build
 obj*

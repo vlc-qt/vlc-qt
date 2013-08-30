@@ -39,7 +39,7 @@ bool VlcAudio::getMute() const
     return mute;
 }
 
-void VlcAudio::setVolume(const int &volume)
+void VlcAudio::setVolume(int volume)
 {
     if (_vlcMediaPlayer) {
         // Don't change if volume is the same
@@ -50,7 +50,7 @@ void VlcAudio::setVolume(const int &volume)
     }
 }
 
-void VlcAudio::setTrack(const int &track)
+void VlcAudio::setTrack(int track)
 {
     if (_vlcMediaPlayer) {
         libvlc_audio_set_track(_vlcMediaPlayer, track);

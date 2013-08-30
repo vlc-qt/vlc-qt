@@ -53,7 +53,7 @@ public:
         \param instance main libvlc instance (VlcInstance *)
     */
     explicit VlcMedia(const QString &location,
-                      const bool &localFile,
+                      bool localFile,
                       VlcInstance *instance);
 
     /*!
@@ -151,9 +151,9 @@ public:
                       const Vlc::Mux &mux,
                       const Vlc::AudioCodec &audioCodec,
                       const Vlc::VideoCodec &videoCodec,
-                      const int &bitrate,
-                      const int &fps,
-                      const int &scale);
+                      int bitrate,
+                      int fps,
+                      int scale);
 
 
     /*!
@@ -184,7 +184,7 @@ public:
     QString record(const QString &name,
                    const QString &path,
                    const Vlc::Mux &mux,
-                   const bool &duplicate = false);
+                   bool duplicate = false);
 
     /*!
         \brief Record
@@ -204,7 +204,7 @@ public:
                    const Vlc::Mux &mux,
                    const Vlc::AudioCodec &audioCodec,
                    const Vlc::VideoCodec &videoCodec,
-                   const bool &duplicate = false);
+                   bool duplicate = false);
 
     /*!
         \brief Record
@@ -228,10 +228,10 @@ public:
                    const Vlc::Mux &mux,
                    const Vlc::AudioCodec &audioCodec,
                    const Vlc::VideoCodec &videoCodec,
-                   const int &bitrate,
-                   const int &fps,
-                   const int &scale,
-                   const bool &duplicate = false);
+                   int bitrate,
+                   int fps,
+                   int scale,
+                   bool duplicate = false);
 
     /*!
         \brief Set media option
@@ -269,13 +269,13 @@ signals:
         \brief Signal sent on duration change
         \param int duration
     */
-    void durationChanged(const int &);
+    void durationChanged(int);
 
     /*!
         \brief Signal sent on parsed change
         \param int status
     */
-    void parsedChanged(const int &);
+    void parsedChanged(int);
 
     /*!
         \brief Signal sent on freed
@@ -292,7 +292,7 @@ signals:
 
 private:
     void initMedia(const QString &location,
-                   const bool &localFile,
+                   bool localFile,
                    VlcInstance *instance);
 
     static void libvlc_callback(const libvlc_event_t *event,

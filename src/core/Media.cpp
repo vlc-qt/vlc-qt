@@ -25,7 +25,7 @@
 #include "core/Media.h"
 
 VlcMedia::VlcMedia(const QString &location,
-                   const bool &localFile,
+                   bool localFile,
                    VlcInstance *instance)
     : QObject(instance)
 {
@@ -62,7 +62,7 @@ libvlc_media_t *VlcMedia::core()
 }
 
 void VlcMedia::initMedia(const QString &location,
-                         const bool &localFile,
+                         bool localFile,
                          VlcInstance *instance)
 {
     _currentLocation = location;
@@ -143,9 +143,9 @@ QString VlcMedia::duplicate(const QString &name,
                             const Vlc::Mux &mux,
                             const Vlc::AudioCodec &audioCodec,
                             const Vlc::VideoCodec &videoCodec,
-                            const int &bitrate,
-                            const int &fps,
-                            const int &scale)
+                            int bitrate,
+                            int fps,
+                            int scale)
 {
     return record(name, path, mux, audioCodec, videoCodec, bitrate, fps, scale, true);
 }
@@ -178,7 +178,7 @@ QString VlcMedia::merge(const QString &name,
 QString VlcMedia::record(const QString &name,
                          const QString &path,
                          const Vlc::Mux &mux,
-                         const bool &duplicate)
+                         bool duplicate)
 {
     QString option1, option2, parameters;
     QString l = path + "/" + name;
@@ -211,7 +211,7 @@ QString VlcMedia::record(const QString &name,
                          const Vlc::Mux &mux,
                          const Vlc::AudioCodec &audioCodec,
                          const Vlc::VideoCodec &videoCodec,
-                         const bool &duplicate)
+                         bool duplicate)
 {
     QString option1, option2, parameters;
     QString l = path + "/" + name;
@@ -244,10 +244,10 @@ QString VlcMedia::record(const QString &name,
                          const Vlc::Mux &mux,
                          const Vlc::AudioCodec &audioCodec,
                          const Vlc::VideoCodec &videoCodec,
-                         const int &bitrate,
-                         const int &fps,
-                         const int &scale,
-                         const bool &duplicate)
+                         int bitrate,
+                         int fps,
+                         int scale,
+                         bool duplicate)
 {
     QString option1, option2, parameters;
     QString l = path + "/" + name;

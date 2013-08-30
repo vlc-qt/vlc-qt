@@ -113,7 +113,7 @@ public slots:
         \brief Starts playing item at specific position.
         \param index item position
     */
-    void itemAt(const int &index);
+    void itemAt(int index);
 
     /*!
         \brief Starts playing next item in the list.

@@ -111,7 +111,7 @@ public:
         \brief Set current video subtitle.
         \param subtitle new video subtitle (int)
     */
-    void setSubtitle(const int &subtitle);
+    void setSubtitle(int subtitle);
 
     /*!
         \brief Set new video subtitle file.
@@ -123,13 +123,13 @@ public:
         \brief Set new teletext page to retrieve.
         \param page new teletext page number (int)
     */
-    void setTeletextPage(const int &page);
+    void setTeletextPage(int page);
 
     /*!
         \brief Set current video track.
         \param track new video track (int)
     */
-    void setTrack(const int &track);
+    void setTrack(int track);
 
     /*!
         \brief Show logo.
@@ -139,9 +139,9 @@ public:
         \param opacity logo opacity (int)
     */
     void showLogo(const QString &file,
-                  const int &x,
-                  const int &y,
-                  const int &opacity = 255);
+                  int x,
+                  int y,
+                  int opacity = 255);
 
     /*!
         \brief Show logo.
@@ -149,14 +149,16 @@ public:
         \param x x-coordinate (int)
         \param y y-coordinate (int)
         \param opacity logo opacity (int)
+        \param refresh rate (int)
     */
     void showMarquee(const QString &text,
-                     const int &x,
-                     const int &y,
-                     const int &timeout = 0,
-                     const int &opacity = 255,
-                     const int &size = -1,
-                     const int &color = 0xFFFFFF);
+                     int x,
+                     int y,
+                     int timeout = 0,
+                     int opacity = 255,
+                     int size = -1,
+                     int color = 0xFFFFFF,
+                     int refresh = 0);
 
     /*!
         \brief Get current video size. (currently primary only)

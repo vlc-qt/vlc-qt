@@ -90,7 +90,7 @@ int VlcMetaManager::number() const
     return meta.toInt();
 }
 
-void VlcMetaManager::setNumber(const int &number)
+void VlcMetaManager::setNumber(int number)
 {
     libvlc_media_set_meta(_media->core(), libvlc_meta_TrackNumber, QString().number(number).toLocal8Bit().data());
 }
@@ -118,7 +118,7 @@ int VlcMetaManager::year() const
     return meta.toInt();
 }
 
-void VlcMetaManager::setYear(const int &year)
+void VlcMetaManager::setYear(int year)
 {
     libvlc_media_set_meta(_media->core(), libvlc_meta_Date, QString().number(year).toLocal8Bit().data());
 }

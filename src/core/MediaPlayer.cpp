@@ -245,7 +245,7 @@ void VlcMediaPlayer::resume()
     VlcError::errmsg();
 }
 
-void VlcMediaPlayer::setTime(const int &time)
+void VlcMediaPlayer::setTime(int time)
 {
     libvlc_media_player_set_time(_vlcMediaPlayer, time);
 
@@ -381,7 +381,7 @@ float VlcMediaPlayer::position()
     return libvlc_media_player_get_position(_vlcMediaPlayer);
 }
 
-void VlcMediaPlayer::setPosition(const float &pos)
+void VlcMediaPlayer::setPosition(float pos)
 {
     libvlc_media_player_set_position(_vlcMediaPlayer, pos);
 

@@ -98,7 +98,7 @@ bool VlcWidgetVolumeSlider::mute() const
         return _vlcAudio->getMute();
 }
 
-void VlcWidgetVolumeSlider::setMute(const bool &enabled)
+void VlcWidgetVolumeSlider::setMute(bool enabled)
 {
     if (!(_vlcMediaPlayer->state() == Vlc::Buffering ||
         _vlcMediaPlayer->state() == Vlc::Playing ||
@@ -116,7 +116,7 @@ void VlcWidgetVolumeSlider::setMute(const bool &enabled)
     _vlcAudio->toggleMute();
 }
 
-void VlcWidgetVolumeSlider::setVolume(const int &volume)
+void VlcWidgetVolumeSlider::setVolume(int volume)
 {
     if (_currentVolume == volume)
         return;
@@ -150,7 +150,7 @@ int VlcWidgetVolumeSlider::volume() const
     return _currentVolume;
 }
 
-void VlcWidgetVolumeSlider::volumeControl(const bool &up)
+void VlcWidgetVolumeSlider::volumeControl(bool up)
 {
     if (up) {
         if (_currentVolume != 200) {
