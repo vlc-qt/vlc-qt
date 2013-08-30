@@ -1,18 +1,18 @@
 #############################################################################
 # VLC-Qt Demo Player
-# Copyright (C) 2012 Tadej Novak <tadej@tano.si>
+# Copyright (C) 2013 Tadej Novak <tadej@tano.si>
 #
 # This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
+# it under the terms of the GNU Lesser General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
+# GNU Lesser General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
+# You should have received a copy of the GNU Lesser General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #############################################################################
 
@@ -37,13 +37,21 @@ IF(MINGW)
     STRING(REGEX REPLACE "\\\\" "/" MINGW_BIN_DIR "${MINGW_BIN_DIR_TMP}") # Replace back slashes to slashes
 ENDIF(MINGW)
 
+# Find Qt
 SET(QT_MIN_VERSION "4.8.0")
+FIND_PACKAGE(Qt4)
+IF(NOT QT4_FOUND OR QT_VERSION_MAJOR MATCHES 5)
+    FIND_PACKAGE(Qt5Core REQUIRED)
+    FIND_PACKAGE(Qt5Widgets REQUIRED)
+    SET(QT5 1)
+ELSE(NOT QT4_FOUND OR QT_VERSION_MAJOR MATCHES 5)
+    SET(QT5 0)
+ENDIF(NOT QT4_FOUND OR QT_VERSION_MAJOR MATCHES 5)
 
-# Add required libraries
-FIND_PACKAGE(Qt4 REQUIRED)
+# Add additional libraries
 FIND_PACKAGE(LIBVLCQT REQUIRED)
 
-# Set Qt4 bin dir to find QtCore4.dll and other libs to install
+# Set Qt bin dir to find QtCore*.dll and other libs to install
 STRING(REGEX REPLACE "([^ ]+)[/\\].*" "\\1" QT_BIN_DIR_TMP "${QT_QMAKE_EXECUTABLE}")
 STRING(REGEX REPLACE "\\\\" "/" QT_BIN_DIR "${QT_BIN_DIR_TMP}")  # Replace back slashes to slashes
 
