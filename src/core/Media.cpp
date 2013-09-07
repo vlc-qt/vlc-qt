@@ -275,6 +275,12 @@ QString VlcMedia::record(const QString &name,
     return l + "." + Vlc::mux()[mux];
 }
 
+void VlcMedia::setProgram(int program)
+{
+    QString option = "program=%1";
+    setOption(option.arg(program));
+}
+
 void VlcMedia::setOption(const QString &option)
 {
     libvlc_media_add_option(_vlcMedia, option.toLocal8Bit().data());

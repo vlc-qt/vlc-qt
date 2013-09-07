@@ -234,6 +234,12 @@ public:
                    bool duplicate = false);
 
     /*!
+        \brief Set program
+        \param program program PID (int)
+    */
+    void setProgram(int program);
+
+    /*!
         \brief Set media option
         \param option media option (QString)
     */
