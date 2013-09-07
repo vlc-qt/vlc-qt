@@ -16,7 +16,7 @@ build()
     mkdir -p ${OUTPUT_DIR}
 
     pushd ${BUILD_DIR}
-    cmake ../../ -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${OUTPUT_DIR} -DLIBVLC_INCLUDE_DIR=/Applications/VLC.app/Contents/MacOS/include -DLIBVLC_LIBRARY=/Applications/VLC.app/Contents/MacOS/lib/libvlc.dylib -DLIBVLCCORE_LIBRARY=/Applications/VLC.app/Contents/MacOS/lib/libvlccore.dylib -DGIT=
+    cmake ../../ -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${OUTPUT_DIR} -DLIBVLC_INCLUDE_DIR=/Applications/VLC.app/Contents/MacOS/include -DLIBVLC_LIBRARY=/Applications/VLC.app/Contents/MacOS/lib/libvlc.dylib -DLIBVLCCORE_LIBRARY=/Applications/VLC.app/Contents/MacOS/lib/libvlccore.dylib -DGIT= -DBUILD_TESTS=ON
     make install -j8
     popd
 

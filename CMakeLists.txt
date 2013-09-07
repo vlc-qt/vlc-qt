@@ -123,6 +123,9 @@ IF(QT5)
         SET(CMAKE_POSITION_INDEPENDENT_CODE ON)
     ENDIF(Qt5_POSITION_INDEPENDENT_CODE)
 
+    # QtCreator include fix
+    INCLUDE_DIRECTORIES(${_qt5Widgets_install_prefix}/include)
+
     # QML
     OPTION(WITH_QML "Build with QML" OFF)
     MESSAGE("VLC-Qt: Build with QML: ${WITH_QML}")
