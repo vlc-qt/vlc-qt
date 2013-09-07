@@ -246,7 +246,7 @@ QList<int> VlcVideo::subtitleIds() const
 
         ids << desc->i_id;
         if (subtitleCount() > 1) {
-            for(int i = 1; i < trackCount(); i++) {
+            for(int i = 1; i < subtitleCount(); i++) {
                 desc = desc->p_next;
                 ids << desc->i_id;
             }
