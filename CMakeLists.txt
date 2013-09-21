@@ -86,9 +86,7 @@ ENDIF(MSVC)
 # Support OS X 10.6 or later (64-bit only)
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     SET(CMAKE_OSX_ARCHITECTURES x86_64)
-    SET(CMAKE_OSX_SYSROOT "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.6.sdk/")
     SET(CMAKE_OSX_DEPLOYMENT_TARGET "10.6")
-    SET(CMAKE_CXX_FLAGS "--sysroot ${CMAKE_OSX_SYSROOT} ${CMAKE_CXX_FLAGS}")
 ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 
 # Qt
