@@ -17,6 +17,7 @@
 *****************************************************************************/
 
 #include <QtCore/QDebug>
+#include <QtCore/QDir>
 
 #include <vlc/vlc.h>
 
@@ -67,10 +68,8 @@ void VlcMedia::initMedia(const QString &location,
 {
     _currentLocation = location;
     QString l = location;
-#if defined(Q_OS_WIN32)
     if (localFile)
-        l.replace("/", "\\");
-#endif
+        l = QDir::toNativeSeparators(l);
 
     // Create a new libvlc media descriptor from location
     if (localFile)
@@ -155,10 +154,7 @@ QString VlcMedia::merge(const QString &name,
                         const Vlc::Mux &mux)
 {
     QString option1, option2, parameters;
-    QString l = path + "/" + name;
-#if defined(Q_OS_WIN32)
-    l.replace("/", "\\");
-#endif
+    QString l = QDir::toNativeSeparators(path + "/" + name);
 
     parameters = "gather:std{access=file,mux=%1,dst='%2'}";
     parameters = parameters.arg(Vlc::mux()[mux], l + "." + Vlc::mux()[mux]);
@@ -181,10 +177,7 @@ QString VlcMedia::record(const QString &name,
                          bool duplicate)
 {
     QString option1, option2, parameters;
-    QString l = path + "/" + name;
-#if defined(Q_OS_WIN32)
-    l.replace("/", "\\");
-#endif
+    QString l = QDir::toNativeSeparators(path + "/" + name);
 
     parameters = "std{access=file,mux=%1,dst='%2'}";
     parameters = parameters.arg(Vlc::mux()[mux], l + "." + Vlc::mux()[mux]);
@@ -214,10 +207,7 @@ QString VlcMedia::record(const QString &name,
                          bool duplicate)
 {
     QString option1, option2, parameters;
-    QString l = path + "/" + name;
-#if defined(Q_OS_WIN32)
-    l.replace("/", "\\");
-#endif
+    QString l = QDir::toNativeSeparators(path + "/" + name);
 
     parameters = "transcode{vcodec=%1,acodec=%2}:std{access=file,mux=%3,dst='%4'}";
     parameters = parameters.arg(Vlc::videoCodec()[videoCodec], Vlc::audioCodec()[audioCodec], Vlc::mux()[mux], l + "." + Vlc::mux()[mux]);
@@ -250,10 +240,7 @@ QString VlcMedia::record(const QString &name,
                          bool duplicate)
 {
     QString option1, option2, parameters;
-    QString l = path + "/" + name;
-#if defined(Q_OS_WIN32)
-    l.replace("/", "\\");
-#endif
+    QString l = QDir::toNativeSeparators(path + "/" + name);
 
     parameters = "transcode{vcodec=%1,vb=%2,fps=%3,scale=%4,acodec=%5}:std{access=file,mux=%6,dst='%7'}";
     parameters = parameters.arg(Vlc::videoCodec()[videoCodec], QString::number(bitrate), QString::number(fps), QString::number(scale), Vlc::audioCodec()[audioCodec], Vlc::mux()[mux], l + "." + Vlc::mux()[mux]);
