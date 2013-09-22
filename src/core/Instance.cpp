@@ -35,11 +35,11 @@ VlcInstance::VlcInstance(const QStringList &args,
 #if defined(Q_OS_WIN32) // Will be removed on Windows if confirmed working
     char **argv = (char **)malloc(sizeof(char **) * args.count());
     for (int i = 0; i < args.count(); ++i)
-        argv[i] = (char *)qstrdup(args.at(i).toLocal8Bit().data());
+        argv[i] = (char *)qstrdup(args.at(i).toUtf8().data());
 #else
     char *argv[args.count()];
     for (int i = 0; i < args.count(); ++i)
-        argv[i] = (char *)qstrdup(args.at(i).toLocal8Bit().data());
+        argv[i] = (char *)qstrdup(args.at(i).toUtf8().data());
 #endif
 
     // Create new libvlc instance
@@ -111,5 +111,5 @@ void VlcInstance::setUserAgent(const QString &application,
 {
     QString applicationOutput = application + " " + version;
     QString httpOutput = application + "/" + version + " " + "libvlc-qt" + "/" + libVersion(); // "AppName/1.2.3 libvlc-qt/1.2.3"
-    libvlc_set_user_agent(_vlcInstance, applicationOutput.toLocal8Bit().data(), httpOutput.toLocal8Bit().data());
+    libvlc_set_user_agent(_vlcInstance, applicationOutput.toUtf8().data(), httpOutput.toUtf8().data());
 }

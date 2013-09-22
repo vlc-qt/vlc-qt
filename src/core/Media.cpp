@@ -73,9 +73,9 @@ void VlcMedia::initMedia(const QString &location,
 
     // Create a new libvlc media descriptor from location
     if (localFile)
-        _vlcMedia = libvlc_media_new_path(instance->core(), l.toLocal8Bit().data());
+        _vlcMedia = libvlc_media_new_path(instance->core(), l.toUtf8().data());
     else
-        _vlcMedia = libvlc_media_new_location(instance->core(), l.toLocal8Bit().data());
+        _vlcMedia = libvlc_media_new_location(instance->core(), l.toUtf8().data());
 
     _vlcEvents = libvlc_media_event_manager(_vlcMedia);
 
@@ -270,7 +270,7 @@ void VlcMedia::setProgram(int program)
 
 void VlcMedia::setOption(const QString &option)
 {
-    libvlc_media_add_option(_vlcMedia, option.toLocal8Bit().data());
+    libvlc_media_add_option(_vlcMedia, option.toUtf8().data());
 
     VlcError::errmsg();
 }
@@ -278,7 +278,7 @@ void VlcMedia::setOption(const QString &option)
 void VlcMedia::setOptions(const QStringList &options)
 {
     foreach(const QString &option, options) {
-        libvlc_media_add_option(_vlcMedia, option.toLocal8Bit().data());
+        libvlc_media_add_option(_vlcMedia, option.toUtf8().data());
     }
 
     VlcError::errmsg();
