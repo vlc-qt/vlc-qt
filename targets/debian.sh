@@ -3,12 +3,14 @@ CHANGELOG=debian/changelog
 NOW=`date -R`
 #VER=`git describe | sed "s/\([0-9]*\)\.\([0-9]*\)-\([0-9]*\)-.*/\1.\2.\3/"`
 VER=`cat VERSION`
+[ -z "${DEBDIST:-}" ] && DEBDIST="unstable"
+[ -z "${DEBSUFFIX:-}" ] && DEBSUFFIX=""
 
 build() 
 {
-    echo >${CHANGELOG} "libvlc-qt (${VER}-${BUILD}) unstable; urgency=low"
+    echo >${CHANGELOG} "libvlc-qt (${VER}-${BUILD}${DEBSUFFIX}) ${DEBDIST}; urgency=low"
     echo >>${CHANGELOG}
-    echo >>${CHANGELOG} "  * The full changelog can be found in NEWS"
+    echo >>${CHANGELOG} "  * The full changelog can be found in CHANGELOG"
     echo >>${CHANGELOG} "    or by running 'git log' when using Git"
     echo >>${CHANGELOG}
     echo >>${CHANGELOG} " -- Tadej Novak <tadej@tano.si>  ${NOW}"
