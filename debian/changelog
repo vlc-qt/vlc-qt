@@ -3,4 +3,4 @@ libvlc-qt (0.9.0-1) unstable; urgency=low
   * The full changelog can be found in NEWS
     or by running 'git log' when using Git
 
- -- Tadej Novak <tadej@tano.si>  Wed, 17 Jul 2013 19:58:34 +0200
+ -- Tadej Novak <tadej@tano.si>  Thu, 26 Sep 2013 19:10:00 +0200
