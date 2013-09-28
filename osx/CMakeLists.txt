@@ -21,13 +21,7 @@ STRING(REGEX REPLACE "sdk/include" "" LIBVLC_BIN_DIR "${LIBVLC_INCLUDE_DIR}")
 STRING(REGEX REPLACE "include" "plugins" LIBVLC_PLUGINS_DIR "${LIBVLC_BIN_DIR}")
 STRING(REGEX REPLACE "include" "lib" LIBVLC_LIB_DIR "${LIBVLC_BIN_DIR}")
 
-SET(Vlc_Libs
-    ${LIBVLC_LIB_DIR}/libvlc.dylib
-    ${LIBVLC_LIB_DIR}/libvlc.5.dylib
-    ${LIBVLC_LIB_DIR}/libvlccore.dylib
-    ${LIBVLC_LIB_DIR}/libvlccore.5.dylib
-)
-
+FILE(GLOB Vlc_Libs ${LIBVLC_LIB_DIR}/*.dylib)
 FILE(GLOB Vlc_Plugins ${LIBVLC_PLUGINS_DIR}/*.dylib)
 
 
