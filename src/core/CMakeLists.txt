@@ -107,6 +107,8 @@ INCLUDE_DIRECTORIES(
 
 IF(MSVC)
     INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/windows/msvc)
+ELSE(MINGW)
+    INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/windows/mingw)
 ENDIF(MSVC)
 
 # Compile resources with windres
