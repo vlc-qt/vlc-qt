@@ -19,7 +19,8 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include <QtOpenGL/QGLShaderProgram>
+#include <QtGui/QOpenGLFunctions>
+#include <QtGui/QOpenGLShaderProgram>
 
 #include "core/VideoFrame.h"
 #include "qml/painter/GlslPainter.h"
@@ -78,12 +79,11 @@ GlslPainter::~GlslPainter()
 
 void GlslPainter::init()
 {
-    _context = const_cast<QGLContext *>(QGLContext::currentContext());
+    _context = const_cast<QOpenGLContext *>(QOpenGLContext::currentContext());
     Q_ASSERT(_context);
-    _context->makeCurrent();
 
     if (!_program)
-        _program = new QGLShaderProgram(_context);
+        _program = new QOpenGLShaderProgram();
 
     const char *vertexProgram =
             "attribute highp vec4 targetVertex;\n"
@@ -116,9 +116,9 @@ void GlslPainter::init()
     initYv12();
     initColorMatrix();
 
-    if (!_program->addShaderFromSourceCode(QGLShader::Vertex, vertexProgram))
+    if (!_program->addShaderFromSourceCode(QOpenGLShader::Vertex, vertexProgram))
         qFatal("couldnt add vertex shader");
-    else if (!_program->addShaderFromSourceCode(QGLShader::Fragment, vertexShader))
+    else if (!_program->addShaderFromSourceCode(QOpenGLShader::Fragment, vertexShader))
         qFatal("couldnt add fragment shader");
     else if (!_program->link())
         qFatal("couldnt link shader");
@@ -209,14 +209,15 @@ void GlslPainter::paint(QPainter *painter,
     _program->setAttributeArray("textureCoordinates", textureCoordinates, 2);
     _program->setUniformValue("positionMatrix", positionMatrix);
 
+    QOpenGLFunctions gl(QOpenGLContext::currentContext());
     if (_textureCount == 3) {
-        glActiveTexture(GL_TEXTURE0);
+        gl.glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, _textureIds[0]);
-        glActiveTexture(GL_TEXTURE1);
+        gl.glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, _textureIds[1]);
-        glActiveTexture(GL_TEXTURE2);
+        gl.glActiveTexture(GL_TEXTURE2);
         glBindTexture(GL_TEXTURE_2D, _textureIds[2]);
-        glActiveTexture(GL_TEXTURE0);
+        gl.glActiveTexture(GL_TEXTURE0);
 
         _program->setUniformValue("texY", 0);
         _program->setUniformValue("texU", 1);

@@ -23,7 +23,8 @@
 #define VLCQT_PHONON_GLPAINTER_H_
 
 #include <QtGui/QMatrix4x4>
-#include <QtOpenGL/QGLContext>
+#include <QtGui/QOpenGLContext>
+#include <QtGui/QPainter>
 
 #include "core/VideoFrame.h"
 
@@ -47,7 +48,7 @@ public:
     void setFrame(const VlcVideoFrame *frame) { _frame = frame; }
     bool inited() const { return _inited; }
 
-    void setContext(QGLContext *context);
+    void setContext(QOpenGLContext *context);
 
     void initColorMatrix();
     void initTextures();
@@ -59,7 +60,7 @@ protected:
     const VlcVideoFrame *_frame;
     bool _inited;
 
-    QGLContext *_context;
+    QOpenGLContext *_context;
     int _textureCount;
     GLuint _textureIds[3];
 

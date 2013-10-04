@@ -60,6 +60,14 @@ SET(VLCQT_QML_SRCS
 #####################
 # Compiler settings #
 #####################
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    SET(OPENGL_LIBRARY "-weak_framework OpenGL")
+ELSEIF(MINGW)
+    SET(OPENGL_LIBRARY "-lglu32 -lopengl32 -lgdi32 -luser32")
+ELSEIF(MSVC)
+    SET(OPENGL_LIBRARY "glu32.lib opengl32.lib gdi32.lib user32.lib")
+ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+
 INCLUDE_DIRECTORIES(
     ${CMAKE_SOURCE_DIR}/src
     ${CMAKE_SOURCE_DIR}/src/core
@@ -74,6 +82,8 @@ INCLUDE_DIRECTORIES(
 
 IF(MSVC)
     INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/windows/msvc)
+ELSEIF(MINGW)
+    INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/windows/mingw)
 ENDIF(MSVC)
 
 # Compile resources with windres
@@ -113,22 +123,16 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
 # Link the required libraries
-IF(QT5)
-    QT5_USE_MODULES(${VLCQT_QML} OpenGL Quick)
-    TARGET_LINK_LIBRARIES(${VLCQT_QML} ${VLCQT_BINARY} ${LIBVLCCORE_LIBRARY})
-    IF(MINGW)
-        TARGET_LINK_LIBRARIES(${VLCQT_QML}
-                              ${_qt5OpenGL_install_prefix}/lib/liblibEGL${LE}.a
-                              ${_qt5OpenGL_install_prefix}/lib/liblibGLESv2${LE}.a)
-    ELSEIF(MSVC)
-        TARGET_LINK_LIBRARIES(${VLCQT_QML}
-                              ${_qt5OpenGL_install_prefix}/lib/libEGL${LE}.lib
-                              ${_qt5OpenGL_install_prefix}/lib/libGLESv2${LE}.lib)
-    ENDIF(MINGW)
-ELSE(QT5)
-    TARGET_LINK_LIBRARIES(${VLCQT_QML} ${QT_LIBRARIES} ${VLCQT_BINARY} ${LIBVLCCORE_LIBRARY})
-ENDIF(QT5)
+QT5_USE_MODULES(${VLCQT_QML} Quick)
+TARGET_LINK_LIBRARIES(${VLCQT_QML} ${VLCQT_BINARY} ${LIBVLCCORE_LIBRARY})
 
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    TARGET_LINK_LIBRARIES(${VLCQT_QML} ${OPENGL_LIBRARY})
+ELSEIF(MSVC)
+    TARGET_LINK_LIBRARIES(${VLCQT_QML}
+                          ${_qt5Core_install_prefix}/lib/libEGL${LE}.lib
+                          ${_qt5Core_install_prefix}/lib/libGLESv2${LE}.lib)
+ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 
 ################
 # Installation #

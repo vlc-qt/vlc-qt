@@ -31,7 +31,7 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                vidwidget.openFile("/home/tadej/Video/Yugo.mpeg")
+                vidwidget.openFile("/Users/tadej/Movies/Yugo.mpeg")
                 vidwidget.play()
             }
         }

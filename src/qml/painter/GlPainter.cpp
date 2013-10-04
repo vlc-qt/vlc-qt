@@ -29,7 +29,7 @@ GlPainter::GlPainter()
 
 GlPainter::~GlPainter() { }
 
-void GlPainter::setContext(QGLContext *context)
+void GlPainter::setContext(QOpenGLContext *context)
 {
     _context = context;
 }
@@ -89,15 +89,14 @@ void GlPainter::initTextures()
             glTexParameterf(_texDescriptor.target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameterf(_texDescriptor.target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
             glTexParameterf(_texDescriptor.target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-            //glTexParameterf(_texDescriptor.target, GL_TEXTURE_PRIORITY, 1.0);
-            //glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
             _texturesInited = true;
         }
     }
 
     for (unsigned i = 0; i < _frame->planeCount; ++i) {
         glBindTexture(_texDescriptor.target, _textureIds[i]);
-        glPixelStorei(GL_UNPACK_ROW_LENGTH, _frame->pitch[i]);
+
+        //glPixelStorei(GL_UNPACK_ROW_LENGTH, _frame->pitch[i]);
         glTexSubImage2D(_texDescriptor.target, 0,
                         0, 0,
                         _frame->visiblePitch[i],
@@ -105,6 +104,6 @@ void GlPainter::initTextures()
                         _texDescriptor.format,
                         _texDescriptor.type,
                         _frame->plane[i].data());
-        glPixelStorei(GL_UNPACK_ROW_LENGTH, 0); // reset to default
+        //glPixelStorei(GL_UNPACK_ROW_LENGTH, 0); // reset to default
     }
 }
