@@ -26,44 +26,6 @@
 #include "core/VideoFrame.h"
 #include "qml/painter/GlslPainter.h"
 
-#if !defined(Q_OS_WIN32)
-void GlslPainter::calculateFPS()
-{
-    if (_fps.lastTime.isNull())
-        _fps.lastTime = QTime::currentTime();
-    QTime time = QTime::currentTime();
-
-    int delta = _fps.lastTime.msecsTo(time);
-    if (delta > 2000) {
-        _fps.value = 1000.0 * _fps.frames / qreal(delta);
-        if (_fps.value < 20.0)
-            qWarning() << "Drawing less than 20 frames per second!";
-        _fps.lastTime = time;
-        _fps.frames = 0;
-    }
-
-    ++_fps.frames;
-}
-
-void GlslPainter::addFPSOverlay()
-{
-    if (_fps.value != _fps.imagedValue) {
-        // Update image
-        _fps.img.fill(Qt::blue);
-        QPainter painter(&(_fps.img));
-        painter.setPen(QColor(Qt::white));
-        painter.drawText(0, 16, QString::number((int)_fps.value));
-        painter.end();
-    }
-
-    GLuint id = _context->bindTexture(_fps.img);
-    _context->drawTexture(QPointF(0, 0), id);
-    _context->deleteTexture(id);
-
-    _fps.imagedValue = _fps.value;
-}
-#endif
-
 GlslPainter::GlslPainter()
     : _program(0) { }
 
@@ -237,9 +199,23 @@ void GlslPainter::paint(QPainter *painter,
     _program->release();
     painter->endNativePainting();
 
-#if !defined(Q_OS_WIN)
-    // TODO: FPS optional
     calculateFPS();
-    addFPSOverlay();
-#endif
+}
+
+void GlslPainter::calculateFPS()
+{
+    if (_fps.lastTime.isNull())
+        _fps.lastTime = QTime::currentTime();
+    QTime time = QTime::currentTime();
+
+    int delta = _fps.lastTime.msecsTo(time);
+    if (delta > 2000) {
+        _fps.value = 1000.0 * _fps.frames / qreal(delta);
+        if (_fps.value < 20.0)
+            qWarning() << "Drawing less than 20 frames per second!";
+        _fps.lastTime = time;
+        _fps.frames = 0;
+    }
+
+    ++_fps.frames;
 }
