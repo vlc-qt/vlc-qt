@@ -19,6 +19,8 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
+#include <QtGui/QOpenGLFunctions_1_1>
+
 #include "qml/painter/GlPainter.h"
 
 GlPainter::GlPainter()
@@ -73,8 +75,8 @@ void GlPainter::initTextures()
 {
     if (!_texturesInited) {
         for (unsigned i = 0; i < _frame->planeCount; ++i) {
-            glBindTexture(_texDescriptor.target, _textureIds[i]);
-            glTexImage2D(_texDescriptor.target,
+            _glF->glBindTexture(_texDescriptor.target, _textureIds[i]);
+            _glF->glTexImage2D(_texDescriptor.target,
                          0,
                          _texDescriptor.internalFormat,
                          _frame->visiblePitch[i],
@@ -85,19 +87,19 @@ void GlPainter::initTextures()
                          0);
             // Scale appropriately so we can change to target geometry without
             // much hassle.
-            glTexParameterf(_texDescriptor.target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            glTexParameterf(_texDescriptor.target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameterf(_texDescriptor.target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-            glTexParameterf(_texDescriptor.target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+            _glF->glTexParameterf(_texDescriptor.target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            _glF->glTexParameterf(_texDescriptor.target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            _glF->glTexParameterf(_texDescriptor.target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+            _glF->glTexParameterf(_texDescriptor.target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
             _texturesInited = true;
         }
     }
 
     for (unsigned i = 0; i < _frame->planeCount; ++i) {
-        glBindTexture(_texDescriptor.target, _textureIds[i]);
+        _glF->glBindTexture(_texDescriptor.target, _textureIds[i]);
 
         //glPixelStorei(GL_UNPACK_ROW_LENGTH, _frame->pitch[i]);
-        glTexSubImage2D(_texDescriptor.target, 0,
+        _glF->glTexSubImage2D(_texDescriptor.target, 0,
                         0, 0,
                         _frame->visiblePitch[i],
                         _frame->visibleLines[i],

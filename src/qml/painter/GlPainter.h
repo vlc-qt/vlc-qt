@@ -28,6 +28,8 @@
 
 #include "core/VideoFrame.h"
 
+class QOpenGLFunctions_1_1;
+
 class GlPainter
 {
     typedef struct {
@@ -61,6 +63,9 @@ protected:
     bool _inited;
 
     QOpenGLContext *_context;
+    QOpenGLFunctions *_gl;
+    QOpenGLFunctions_1_1 *_glF;
+
     int _textureCount;
     GLuint _textureIds[3];
 

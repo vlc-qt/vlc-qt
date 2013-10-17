@@ -60,14 +60,6 @@ SET(VLCQT_QML_SRCS
 #####################
 # Compiler settings #
 #####################
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    SET(OPENGL_LIBRARY "-weak_framework OpenGL")
-ELSEIF(MINGW)
-    SET(OPENGL_LIBRARY "-lglu32 -lopengl32 -lgdi32 -luser32")
-ELSEIF(MSVC)
-    SET(OPENGL_LIBRARY "glu32.lib opengl32.lib gdi32.lib user32.lib")
-ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-
 INCLUDE_DIRECTORIES(
     ${CMAKE_SOURCE_DIR}/src
     ${CMAKE_SOURCE_DIR}/src/core
@@ -126,13 +118,6 @@ ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 QT5_USE_MODULES(${VLCQT_QML} Quick)
 TARGET_LINK_LIBRARIES(${VLCQT_QML} ${VLCQT_BINARY} ${LIBVLCCORE_LIBRARY})
 
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    TARGET_LINK_LIBRARIES(${VLCQT_QML} ${OPENGL_LIBRARY})
-ELSEIF(MSVC)
-    TARGET_LINK_LIBRARIES(${VLCQT_QML}
-                          ${_qt5Core_install_prefix}/lib/libEGL${LE}.lib
-                          ${_qt5Core_install_prefix}/lib/libGLESv2${LE}.lib)
-ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 
 ################
 # Installation #
