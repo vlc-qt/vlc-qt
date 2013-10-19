@@ -126,6 +126,8 @@ IF(QT5)
     # QML
     OPTION(WITH_QML "Build with QML" OFF)
     MESSAGE("VLC-Qt: Build with QML: ${WITH_QML}")
+    OPTION(WITH_QML_GLES "Build QML with OpenGL ES2" OFF)
+    MESSAGE("VLC-Qt: Build QML with OpenGL ES2: ${WITH_QML_GLES}")
 ELSE(QT5)
     ADD_DEFINITIONS(${QT_DEFINITIONS})
     INCLUDE(${QT_USE_FILE})

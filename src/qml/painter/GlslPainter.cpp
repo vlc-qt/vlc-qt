@@ -20,7 +20,6 @@
 *****************************************************************************/
 
 #include <QtGui/QOpenGLFunctions>
-#include <QtGui/QOpenGLFunctions_1_1>
 #include <QtGui/QOpenGLShaderProgram>
 
 #include "core/VideoFrame.h"
@@ -46,7 +45,11 @@ void GlslPainter::init()
     Q_ASSERT(_context);
 
     _gl = _context->functions();
+#if defined(QT_OPENGL_ES_2)
+    _glF = _context->versionFunctions<QOpenGLFunctions_ES2>();
+#else
     _glF = _context->versionFunctions<QOpenGLFunctions_1_1>();
+#endif
     Q_ASSERT(_glF);
 
     _glF->initializeOpenGLFunctions();

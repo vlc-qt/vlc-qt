@@ -107,6 +107,11 @@ IF(MSVC)
     SET_TARGET_PROPERTIES(${VLCQT_QML} PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_PROFILE ".")
 ENDIF(MSVC)
 
+# MSVC: Fix build
+IF(MSVC)
+    ADD_DEFINITIONS(-DNOMINMAX)
+ENDIF(MSVC)
+
 # Linux: So version extensions
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     SET_TARGET_PROPERTIES(${VLCQT_QML} PROPERTIES VERSION ${VLCQT_VERSION}
@@ -118,6 +123,13 @@ ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 QT5_USE_MODULES(${VLCQT_QML} Quick)
 TARGET_LINK_LIBRARIES(${VLCQT_QML} ${VLCQT_BINARY} ${LIBVLCCORE_LIBRARY})
 
+IF(WITH_QML_GLES)
+    IF(MSVC)
+        TARGET_LINK_LIBRARIES(${VLCQT_QML}
+                              ${_qt5Core_install_prefix}/lib/libEGL${LE}.lib
+                              ${_qt5Core_install_prefix}/lib/libGLESv2${LE}.lib)
+    ENDIF(MSVC)
+ENDIF(WITH_QML_GLES)
 
 ################
 # Installation #
