@@ -166,6 +166,8 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin" AND NOT STATIC)
         ${CMAKE_INSTALL_NAME_TOOL} -change "@loader_path/lib/libvlc.5.dylib" "@loader_path/../lib/libvlc.5.dylib" $<TARGET_FILE:${VLCQT}>)
     ADD_CUSTOM_COMMAND(TARGET ${VLCQT} POST_BUILD COMMAND
         ${CMAKE_INSTALL_NAME_TOOL} -change "@loader_path/lib/libvlccore.5.dylib" "@loader_path/../lib/libvlccore.5.dylib" $<TARGET_FILE:${VLCQT}>)
+    ADD_CUSTOM_COMMAND(TARGET ${VLCQT} POST_BUILD COMMAND
+        ${CMAKE_INSTALL_NAME_TOOL} -change "@loader_path/lib/libvlccore.7.dylib" "@loader_path/../lib/libvlccore.7.dylib" $<TARGET_FILE:${VLCQT}>)
 ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin" AND NOT STATIC)
 
 

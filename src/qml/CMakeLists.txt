@@ -21,8 +21,12 @@
 # Add definition for exporting symbols
 ADD_DEFINITIONS(-DVLCQT_QML_LIBRARY)
 
-# Add definitions for shared library
-ADD_DEFINITIONS(-DQT_SHARED -D_REENTRANT)
+# Add definitions for shared or static library
+IF(STATIC)
+    ADD_DEFINITIONS(-DQT_STATIC -D_REENTRANT)
+ELSE(STATIC)
+    ADD_DEFINITIONS(-DQT_SHARED -D_REENTRANT)
+ENDIF(STATIC)
 
 IF(MINGW OR MSVC)
     CONFIGURE_FILE(
@@ -95,7 +99,12 @@ IF(MSVC)
 ENDIF(MSVC)
 
 # Create the library.
-ADD_LIBRARY(${VLCQT_QML} SHARED ${VLCQT_QML_SRCS})
+IF(STATIC)
+    ADD_LIBRARY(${VLCQT_QML} STATIC ${VLCQT_QML_SRCS})
+ELSE(STATIC)
+    ADD_LIBRARY(${VLCQT_QML} SHARED ${VLCQT_QML_SRCS})
+ENDIF(STATIC)
+ADD_DEPENDENCIES(${VLCQT_QML} ${VLCQT})
 
 # MSVC: Avoid Debug/Release/... subfolders
 IF(MSVC)
@@ -130,6 +139,18 @@ IF(WITH_QML_GLES)
                               ${_qt5Core_install_prefix}/lib/libGLESv2${LE}.lib)
     ENDIF(MSVC)
 ENDIF(WITH_QML_GLES)
+
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin" AND NOT STATIC)
+    ADD_CUSTOM_COMMAND(TARGET ${VLCQT_QML} POST_BUILD COMMAND
+        ${CMAKE_INSTALL_NAME_TOOL} -change ${VLCQT_BINARY} "@loader_path/../lib/libvlc-qt.dylib" $<TARGET_FILE:${VLCQT_QML}>)
+    ADD_CUSTOM_COMMAND(TARGET ${VLCQT_QML} POST_BUILD COMMAND
+        ${CMAKE_INSTALL_NAME_TOOL} -change "@loader_path/lib/libvlc.5.dylib" "@loader_path/../lib/libvlc.5.dylib" $<TARGET_FILE:${VLCQT_QML}>)
+    ADD_CUSTOM_COMMAND(TARGET ${VLCQT_QML} POST_BUILD COMMAND
+        ${CMAKE_INSTALL_NAME_TOOL} -change "@loader_path/lib/libvlccore.5.dylib" "@loader_path/../lib/libvlccore.5.dylib" $<TARGET_FILE:${VLCQT_QML}>)
+    ADD_CUSTOM_COMMAND(TARGET ${VLCQT_QML} POST_BUILD COMMAND
+        ${CMAKE_INSTALL_NAME_TOOL} -change "@loader_path/lib/libvlccore.7.dylib" "@loader_path/../lib/libvlccore.7.dylib" $<TARGET_FILE:${VLCQT_QML}>)
+ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin" AND NOT STATIC)
+
 
 ################
 # Installation #

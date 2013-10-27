@@ -1,5 +1,5 @@
 # Possible build dirs:
-build/
+build*/
 release/
 
 # System files
