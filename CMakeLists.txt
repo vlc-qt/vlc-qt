@@ -113,15 +113,17 @@ OPTION(WITH_WIDGETS "Build with Widgets" ON)
 MESSAGE("VLC-Qt: Build with Widgets: ${WITH_WIDGETS}")
 
 IF(QT5)
-#   Add compiler flags for building executables (-fPIE)
+    # QtCreator include fix
+    IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+        INCLUDE_DIRECTORIES(${_qt5Core_install_prefix}/include)
+    ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+
+    # Add compiler flags for building executables (-fPIE)
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
 
     IF(Qt5_POSITION_INDEPENDENT_CODE)
         SET(CMAKE_POSITION_INDEPENDENT_CODE ON)
     ENDIF(Qt5_POSITION_INDEPENDENT_CODE)
-
-    # QtCreator include fix
-    INCLUDE_DIRECTORIES(${_qt5Widgets_install_prefix}/include)
 
     # QML
     OPTION(WITH_QML "Build with QML" OFF)
