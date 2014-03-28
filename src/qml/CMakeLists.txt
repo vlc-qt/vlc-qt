@@ -138,6 +138,11 @@ IF(WITH_QML_GLES)
                               ${_qt5Core_install_prefix}/lib/libEGL${LE}.lib
                               ${_qt5Core_install_prefix}/lib/libGLESv2${LE}.lib)
     ENDIF()
+    IF(MINGW)
+        TARGET_LINK_LIBRARIES(${VLCQT_QML}
+                              ${_qt5Core_install_prefix}/lib/liblibEGL${LE}.a
+                              ${_qt5Core_install_prefix}/lib/liblibGLESv2${LE}.a)
+    ENDIF()
 ENDIF()
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin" AND NOT STATIC)
