@@ -27,8 +27,23 @@
     \namespace Vlc Enums.h vlc-qt/Enums.h
     \brief Common enumerations
 */
-namespace Vlc
+class Vlc : public QObject
 {
+    Q_OBJECT
+    Q_ENUMS(ActionsType)
+    Q_ENUMS(AudioCodec)
+    Q_ENUMS(AudioOutput)
+    Q_ENUMS(Deinterlacing)
+    Q_ENUMS(Meta)
+    Q_ENUMS(Mux)
+    Q_ENUMS(PlaybackMode)
+    Q_ENUMS(Ratio)
+    Q_ENUMS(Scale)
+    Q_ENUMS(State)
+    Q_ENUMS(TrackType)
+    Q_ENUMS(VideoCodec)
+    Q_ENUMS(VideoOutput)
+public:
     // Enums
     /*!
         \enum ActionsType
@@ -219,67 +234,67 @@ namespace Vlc
         \brief Audio codecs strings
         \return audio codecs strings (QStringList)
     */
-    VLCQT_CORE_EXPORT QStringList audioCodec();
+    static VLCQT_CORE_EXPORT QStringList audioCodec();
 
     /*!
         \brief Audio outputs strings
         \return audio outputs strings (QStringList)
     */
-    VLCQT_CORE_EXPORT QStringList audioOutput();
+    static VLCQT_CORE_EXPORT QStringList audioOutput();
 
     /*!
         \brief Audio outputs strings in readable form
         \return audio outputs strings (QStringList)
     */
-    VLCQT_CORE_EXPORT QStringList audioOutputHuman();
+    static VLCQT_CORE_EXPORT QStringList audioOutputHuman();
 
     /*!
         \brief Deinterlacing modes strings
         \return deinterlacing strings (QStringList)
     */
-    VLCQT_CORE_EXPORT QStringList deinterlacing();
+    static VLCQT_CORE_EXPORT QStringList deinterlacing();
 
     /*!
         \brief Mux strings
         \return mux strings (QStringList)
     */
-    VLCQT_CORE_EXPORT QStringList mux();
+    static VLCQT_CORE_EXPORT QStringList mux();
 
     /*!
         \brief Aspect and crop ratios strings
         \return ratios strings (QStringList)
     */
-    VLCQT_CORE_EXPORT QStringList ratio();
+    static VLCQT_CORE_EXPORT QStringList ratio();
 
     /*!
         \brief Aspect and crop ratios strings in readable form
         \return ratios strings (QStringList)
     */
-    VLCQT_CORE_EXPORT QStringList ratioHuman();
+    static VLCQT_CORE_EXPORT QStringList ratioHuman();
 
     /*!
         \brief Scale floats
         \return scale floats (QList<float>)
     */
-    VLCQT_CORE_EXPORT QList<float> scale();
+    static VLCQT_CORE_EXPORT QList<float> scale();
 
     /*!
         \brief Video codecs strings
         \return video codecs strings (QStringList)
     */
-    VLCQT_CORE_EXPORT QStringList videoCodec();
+    static VLCQT_CORE_EXPORT QStringList videoCodec();
 
     /*!
         \brief Video outputs strings
         \return video outputs strings (QStringList)
     */
-    VLCQT_CORE_EXPORT QStringList videoOutput();
+    static VLCQT_CORE_EXPORT QStringList videoOutput();
 
     /*!
         \brief Video outputs strings in readable form
         \return video outputs strings (QStringList)
     */
-    VLCQT_CORE_EXPORT QStringList videoOutputHuman();
-}
+    static VLCQT_CORE_EXPORT QStringList videoOutputHuman();
+};
 
 #endif // VLCQT_ENUMS_H_
