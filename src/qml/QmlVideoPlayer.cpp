@@ -99,3 +99,14 @@ void VlcQmlVideoPlayer::stop()
     _player->stop();
     disconnectFromMediaPlayer(_player);
 }
+
+int VlcQmlVideoPlayer::volume() const
+{
+    return _audioManager->volume();
+}
+
+void VlcQmlVideoPlayer::setVolume(int volume)
+{
+    _audioManager->setVolume(volume);
+    emit volumeChanged();
+}
