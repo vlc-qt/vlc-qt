@@ -19,16 +19,43 @@
 #ifndef VLCQT_ENUMS_H_
 #define VLCQT_ENUMS_H_
 
+#include <QObject>
 #include <QtCore/QStringList>
 
 #include "SharedExportCore.h"
 
 /*!
-    \namespace Vlc Enums.h vlc-qt/Enums.h
+    \class Vlc Enums.h vlc-qt/Enums.h
     \brief Common enumerations
 */
-namespace Vlc
+class VLCQT_CORE_EXPORT Vlc : public QObject
 {
+Q_OBJECT
+
+Q_ENUMS(ActionsType)
+Q_ENUMS(AudioCodec)
+Q_ENUMS(AudioOutput)
+Q_ENUMS(Deinterlacing)
+Q_ENUMS(Meta)
+Q_ENUMS(Mux)
+Q_ENUMS(PlaybackMode)
+Q_ENUMS(Ratio)
+Q_ENUMS(Scale)
+Q_ENUMS(State)
+Q_ENUMS(TrackType)
+Q_ENUMS(VideoCodec)
+Q_ENUMS(VideoOutput)
+
+public:
+    /*!
+        \brief Vlc enums constructor.
+
+        This constructor creates a new dummy enums object.
+
+        \param parent object parent (QObject *)
+    */
+    explicit Vlc(QObject *parent = 0);
+
     // Enums
     /*!
         \enum ActionsType
@@ -219,67 +246,67 @@ namespace Vlc
         \brief Audio codecs strings
         \return audio codecs strings (QStringList)
     */
-    VLCQT_CORE_EXPORT QStringList audioCodec();
+    static QStringList audioCodec();
 
     /*!
         \brief Audio outputs strings
         \return audio outputs strings (QStringList)
     */
-    VLCQT_CORE_EXPORT QStringList audioOutput();
+    static QStringList audioOutput();
 
     /*!
         \brief Audio outputs strings in readable form
         \return audio outputs strings (QStringList)
     */
-    VLCQT_CORE_EXPORT QStringList audioOutputHuman();
+    static QStringList audioOutputHuman();
 
     /*!
         \brief Deinterlacing modes strings
         \return deinterlacing strings (QStringList)
     */
-    VLCQT_CORE_EXPORT QStringList deinterlacing();
+    static QStringList deinterlacing();
 
     /*!
         \brief Mux strings
         \return mux strings (QStringList)
     */
-    VLCQT_CORE_EXPORT QStringList mux();
+    static QStringList mux();
 
     /*!
         \brief Aspect and crop ratios strings
         \return ratios strings (QStringList)
     */
-    VLCQT_CORE_EXPORT QStringList ratio();
+    static QStringList ratio();
 
     /*!
         \brief Aspect and crop ratios strings in readable form
         \return ratios strings (QStringList)
     */
-    VLCQT_CORE_EXPORT QStringList ratioHuman();
+    static QStringList ratioHuman();
 
     /*!
         \brief Scale floats
         \return scale floats (QList<float>)
     */
-    VLCQT_CORE_EXPORT QList<float> scale();
+    static QList<float> scale();
 
     /*!
         \brief Video codecs strings
         \return video codecs strings (QStringList)
     */
-    VLCQT_CORE_EXPORT QStringList videoCodec();
+    static QStringList videoCodec();
 
     /*!
         \brief Video outputs strings
         \return video outputs strings (QStringList)
     */
-    VLCQT_CORE_EXPORT QStringList videoOutput();
+    static QStringList videoOutput();
 
     /*!
         \brief Video outputs strings in readable form
         \return video outputs strings (QStringList)
     */
-    VLCQT_CORE_EXPORT QStringList videoOutputHuman();
-}
+    static QStringList videoOutputHuman();
+};
 
 #endif // VLCQT_ENUMS_H_
