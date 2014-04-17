@@ -71,6 +71,9 @@ public:
     Vlc::Ratio aspectRatio() const;
     void setAspectRatio(const Vlc::Ratio &aspectRatio);
 
+    Vlc::Ratio cropRatio() const;
+    void setCropRatio(const Vlc::Ratio &cropRatio);
+
 private slots:
     void frameReady();
     void reset();
@@ -78,6 +81,9 @@ private slots:
 private:
     void updateBoundingRect();
     void updateAspectRatio();
+    void updateCropRatio();
+
+    QSizeF ratioSize( Vlc::Ratio );
 
     QMutex _mutex;
     VlcVideoFrame _frame;
@@ -92,6 +98,7 @@ private:
     bool _gotSize;
 
     Vlc::Ratio _aspectRatio;
+    Vlc::Ratio _cropRatio;
 };
 
 #endif // VLCQT_QMLVIDEOOBJECT_H_
