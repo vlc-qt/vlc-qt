@@ -18,6 +18,11 @@
 
 #include "core/Enums.h"
 
+Vlc::Vlc(QObject *parent) :
+    QObject(parent)
+{
+}
+
 QStringList Vlc::audioCodec()
 {
     QStringList list;
