@@ -35,6 +35,7 @@ Q_OBJECT
 public:
     Q_PROPERTY(int volume READ volume WRITE setVolume NOTIFY volumeChanged)
     Q_PROPERTY(int aspectRatio READ aspectRatio WRITE setAspectRatio)
+    Q_PROPERTY(int cropRatio READ cropRatio WRITE setCropRatio)
     explicit VlcQmlVideoPlayer(QQuickItem *parent = 0);
     ~VlcQmlVideoPlayer();
 
@@ -49,6 +50,9 @@ public:
 
     int aspectRatio();
     void setAspectRatio(const int &aspectRatio);
+
+    int cropRatio();
+    void setCropRatio(const int &cropRatio);
 signals:
 	void volumeChanged();
 private:

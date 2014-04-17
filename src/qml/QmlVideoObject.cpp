@@ -32,7 +32,8 @@ VlcQmlVideoObject::VlcQmlVideoObject(QQuickItem *parent)
       _graphicsPainter(0),
       _paintedOnce(false),
       _gotSize(false),
-      _aspectRatio(Vlc::Original)
+      _aspectRatio(Vlc::Original),
+      _cropRatio(Vlc::Original)
 {
     setRenderTarget(InvertedYFramebufferObject);
     setFlag(ItemHasContents, true);
@@ -57,66 +58,96 @@ void VlcQmlVideoObject::updateBoundingRect()
 
     QSizeF scaledFrameSize = _boundingRect.size();
     scaledFrameSize.scale(_geometry.size(), Qt::KeepAspectRatio);
-
     _boundingRect.setSize( scaledFrameSize );
+
+    updateCropRatio();
+
     _boundingRect.moveCenter(_geometry.center());
 }
 
 void VlcQmlVideoObject::updateAspectRatio()
 {
-    qreal arW = 1;
-    qreal arH = 1;
-    switch( _aspectRatio )
+    QSizeF ar = ratioSize( _aspectRatio );
+
+    if( ar.width() != 0 && ar.height() != 0)
+    {
+        qreal ratio = qMin( _boundingRect.width() / ar.width() , _boundingRect.height() / ar.height() );
+        _boundingRect.setWidth( (qreal) ratio * ar.width() );
+        _boundingRect.setHeight( (qreal) ratio * ar.height() );
+    }
+}
+
+void VlcQmlVideoObject::updateCropRatio()
+{
+    QSizeF ar = ratioSize( _cropRatio );
+
+    if( ar.width() != 0 && ar.height() != 0)
+    {
+        QRectF cropRect = _boundingRect;
+        qreal ratio = qMin( cropRect.width() / ar.width() , cropRect.height() / ar.height() );
+        cropRect.setWidth( (qreal) ratio * ar.width() );
+        cropRect.setHeight( (qreal) ratio * ar.height() );
+
+        QSizeF scaledFrameSize = cropRect.size();
+        scaledFrameSize.scale(_geometry.size(), Qt::KeepAspectRatio);
+
+
+        _boundingRect.setWidth( _boundingRect.width() * ( scaledFrameSize.width() / cropRect.width() ) );
+        _boundingRect.setHeight( _boundingRect.height() * ( scaledFrameSize.height() / cropRect.height() ) );
+    }
+}
+
+QSizeF VlcQmlVideoObject::ratioSize(Vlc::Ratio ratio)
+{
+    switch( ratio )
     {
         default:
         case Vlc::Original:
-            return;
+            return QSizeF(0,0);
         break;
         case Vlc::R_16_9:
-            arW = 16;
-            arH = 9;
+            return QSizeF(16,9);
         break;
         case Vlc::R_16_10:
-            arW = 16;
-            arH = 10;
+            return QSizeF(16,10);
         break;
         case Vlc::R_185_100:
-            arW = 185;
-            arH = 100;
+            return QSizeF(185,100);
         break;
         case Vlc::R_221_100:
-            arW = 221;
-            arH = 100;
+            return QSizeF(221,100);
         break;
         case Vlc::R_235_100:
-            arW = 235;
-            arH = 100;
+            return QSizeF(235,100);
         break;
         case Vlc::R_239_100:
-            arW = 239;
-            arH = 100;
+            return QSizeF(239,100);
         break;
         case Vlc::R_4_3:
-            arW = 4;
-            arH = 3;
+            return QSizeF(4,3);
         break;
         case Vlc::R_5_4:
-            arW = 5;
-            arH = 4;
+            return QSizeF(5,4);
         break;
         case Vlc::R_5_3:
-            arW = 5;
-            arH = 3;
+            return QSizeF(5,3);
         break;
         case Vlc::R_1_1:
-            arW = 1;
-            arH = 1;
+            return QSizeF(1,1);
         break;
     }
-    qreal ratio = qMin( _boundingRect.width() / arW , _boundingRect.height() / arH );
-    _boundingRect.setWidth( (qreal) ratio * arW );
-    _boundingRect.setHeight( (qreal) ratio * arH );
+    return QSizeF(0,0);
 }
+Vlc::Ratio VlcQmlVideoObject::cropRatio() const
+{
+    return _cropRatio;
+}
+
+void VlcQmlVideoObject::setCropRatio(const Vlc::Ratio &cropRatio)
+{
+    _cropRatio = cropRatio;
+}
+
 
 Vlc::Ratio VlcQmlVideoObject::aspectRatio() const
 {

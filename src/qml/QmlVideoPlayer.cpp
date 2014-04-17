@@ -120,3 +120,13 @@ void VlcQmlVideoPlayer::setAspectRatio(const int &aspectRatio)
 {
     VlcQmlVideoObject::setAspectRatio( (Vlc::Ratio)aspectRatio );
 }
+
+int VlcQmlVideoPlayer::cropRatio()
+{
+    return (int) VlcQmlVideoObject::cropRatio();
+}
+
+void VlcQmlVideoPlayer::setCropRatio(const int &cropRatio)
+{
+    VlcQmlVideoObject::setCropRatio( (Vlc::Ratio)cropRatio );
+}
