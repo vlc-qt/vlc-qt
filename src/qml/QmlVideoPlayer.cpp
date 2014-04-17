@@ -110,3 +110,13 @@ void VlcQmlVideoPlayer::setVolume(int volume)
     _audioManager->setVolume(volume);
     emit volumeChanged();
 }
+
+int VlcQmlVideoPlayer::aspectRatio()
+{
+    return (int) VlcQmlVideoObject::aspectRatio();
+}
+
+void VlcQmlVideoPlayer::setAspectRatio(int aspectRatio)
+{
+    VlcQmlVideoObject::setAspectRatio( (Vlc::Ratio)aspectRatio );
+}
