@@ -34,6 +34,7 @@ class VLCQT_QML_EXPORT VlcQmlVideoPlayer : public VlcQmlVideoObject
 Q_OBJECT
 public:
     Q_PROPERTY(int volume READ volume WRITE setVolume NOTIFY volumeChanged)
+    Q_PROPERTY(int aspectRatio READ aspectRatio WRITE setAspectRatio)
     explicit VlcQmlVideoPlayer(QQuickItem *parent = 0);
     ~VlcQmlVideoPlayer();
 
@@ -45,6 +46,9 @@ public:
 	Q_INVOKABLE void stop();
 	int volume() const;
 	void setVolume(const int &volume);
+
+    int aspectRatio();
+    void setAspectRatio(const int &aspectRatio);
 signals:
 	void volumeChanged();
 private:

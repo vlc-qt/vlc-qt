@@ -26,6 +26,7 @@
 #include <QtCore/QMutex>
 #include <QtQuick/QQuickPaintedItem>
 
+#include "Enums.h"
 #include "VideoFrame.h"
 #include "VideoMemoryStream.h"
 
@@ -67,12 +68,16 @@ public:
                                     unsigned *lines);
     virtual void formatCleanUpCallback();
 
+    Vlc::Ratio aspectRatio() const;
+    void setAspectRatio(const Vlc::Ratio &aspectRatio);
+
 private slots:
     void frameReady();
     void reset();
 
 private:
     void updateBoundingRect();
+    void updateAspectRatio();
 
     QMutex _mutex;
     VlcVideoFrame _frame;
@@ -85,6 +90,8 @@ private:
 
     bool _paintedOnce;
     bool _gotSize;
+
+    Vlc::Ratio _aspectRatio;
 };
 
 #endif // VLCQT_QMLVIDEOOBJECT_H_

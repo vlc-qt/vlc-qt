@@ -31,7 +31,8 @@ VlcQmlVideoObject::VlcQmlVideoObject(QQuickItem *parent)
       _frameSize(0, 0),
       _graphicsPainter(0),
       _paintedOnce(false),
-      _gotSize(false)
+      _gotSize(false),
+      _aspectRatio(Vlc::Original)
 {
     setRenderTarget(InvertedYFramebufferObject);
     setFlag(ItemHasContents, true);
@@ -50,11 +51,81 @@ QRectF VlcQmlVideoObject::boundingRect() const
 
 void VlcQmlVideoObject::updateBoundingRect()
 {
-    QSizeF scaledFrameSize = _frameSize;
+    _boundingRect = QRectF(0, 0, _frameSize.width(), _frameSize.height());
+
+    updateAspectRatio();
+
+    QSizeF scaledFrameSize = _boundingRect.size();
     scaledFrameSize.scale(_geometry.size(), Qt::KeepAspectRatio);
 
-    _boundingRect = QRectF(0, 0, scaledFrameSize.width(), scaledFrameSize.height());
+    _boundingRect.setSize( scaledFrameSize );
     _boundingRect.moveCenter(_geometry.center());
+}
+
+void VlcQmlVideoObject::updateAspectRatio()
+{
+    qreal arW = 1;
+    qreal arH = 1;
+    switch( _aspectRatio )
+    {
+        default:
+        case Vlc::Original:
+            return;
+        break;
+        case Vlc::R_16_9:
+            arW = 16;
+            arH = 9;
+        break;
+        case Vlc::R_16_10:
+            arW = 16;
+            arH = 10;
+        break;
+        case Vlc::R_185_100:
+            arW = 185;
+            arH = 100;
+        break;
+        case Vlc::R_221_100:
+            arW = 221;
+            arH = 100;
+        break;
+        case Vlc::R_235_100:
+            arW = 235;
+            arH = 100;
+        break;
+        case Vlc::R_239_100:
+            arW = 239;
+            arH = 100;
+        break;
+        case Vlc::R_4_3:
+            arW = 4;
+            arH = 3;
+        break;
+        case Vlc::R_5_4:
+            arW = 5;
+            arH = 4;
+        break;
+        case Vlc::R_5_3:
+            arW = 5;
+            arH = 3;
+        break;
+        case Vlc::R_1_1:
+            arW = 1;
+            arH = 1;
+        break;
+    }
+    qreal ratio = qMin( _boundingRect.width() / arW , _boundingRect.height() / arH );
+    _boundingRect.setWidth( (qreal) ratio * arW );
+    _boundingRect.setHeight( (qreal) ratio * arH );
+}
+
+Vlc::Ratio VlcQmlVideoObject::aspectRatio() const
+{
+    return _aspectRatio;
+}
+
+void VlcQmlVideoObject::setAspectRatio(const Vlc::Ratio &aspectRatio)
+{
+    _aspectRatio = aspectRatio;
 }
 
 void VlcQmlVideoObject::paint(QPainter *painter)
