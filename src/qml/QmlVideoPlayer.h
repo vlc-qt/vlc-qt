@@ -37,6 +37,7 @@ public:
     Q_PROPERTY(int aspectRatio READ aspectRatio WRITE setAspectRatio)
     Q_PROPERTY(int cropRatio READ cropRatio WRITE setCropRatio)
     Q_PROPERTY(QUrl url READ url WRITE setUrl)
+    Q_PROPERTY(bool autoplay READ autoplay WRITE setAutoplay)
     explicit VlcQmlVideoPlayer(QQuickItem *parent = 0);
     ~VlcQmlVideoPlayer();
 
@@ -58,6 +59,9 @@ public:
     QUrl url() const;
     void setUrl(const QUrl &url);
 
+    bool autoplay() const;
+    void setAutoplay(bool autoplay);
+
 signals:
     void volumeChanged();
 private:
@@ -70,6 +74,7 @@ private:
 	VlcAudio *_audioManager;
 
 	bool _hasMedia;
+    bool _autoplay;
 };
 
 #endif // VLCQT_QMLVIDEOPLAYER_H_
