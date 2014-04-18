@@ -32,7 +32,8 @@ VlcQmlVideoPlayer::VlcQmlVideoPlayer(QQuickItem *parent)
       _player(0),
       _media(0),
       _audioManager(0),
-      _hasMedia(false)
+      _hasMedia(false),
+      _autoplay(true)
 {
     _instance = new VlcInstance(VlcCommon::args(), this);
     _player = new VlcMediaPlayer(_instance);
@@ -78,10 +79,24 @@ void VlcQmlVideoPlayer::openStream(const QString &stream)
 
 void VlcQmlVideoPlayer::openInternal()
 {
-    _player->open(_media);
+    if(_autoplay)
+        _player->open(_media);
+    else
+        _player->openOnly(_media);
+
     connectToMediaPlayer(_player);
 
     _hasMedia = true;
+}
+
+bool VlcQmlVideoPlayer::autoplay() const
+{
+    return _autoplay;
+}
+
+void VlcQmlVideoPlayer::setAutoplay(bool autoplay)
+{
+    _autoplay = autoplay;
 }
 
 QUrl VlcQmlVideoPlayer::url() const
