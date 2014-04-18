@@ -83,6 +83,24 @@ void VlcQmlVideoPlayer::openInternal()
 
     _hasMedia = true;
 }
+QUrl VlcQmlVideoPlayer::url() const
+{
+    if (_media)
+        return QUrl( _media->currentLocation() );
+    else
+        return QUrl();
+}
+
+void VlcQmlVideoPlayer::setUrl(const QUrl &url)
+{
+    if (_media)
+        delete _media;
+
+    _media = new VlcMedia(url.toString(), url.isLocalFile(), _instance);
+
+    openInternal();
+}
+
 
 void VlcQmlVideoPlayer::pause()
 {

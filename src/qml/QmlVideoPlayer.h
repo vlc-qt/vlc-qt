@@ -36,6 +36,7 @@ public:
     Q_PROPERTY(int volume READ volume WRITE setVolume NOTIFY volumeChanged)
     Q_PROPERTY(int aspectRatio READ aspectRatio WRITE setAspectRatio)
     Q_PROPERTY(int cropRatio READ cropRatio WRITE setCropRatio)
+    Q_PROPERTY(QUrl url READ url WRITE setUrl)
     explicit VlcQmlVideoPlayer(QQuickItem *parent = 0);
     ~VlcQmlVideoPlayer();
 
@@ -53,10 +54,14 @@ public:
 
     int cropRatio();
     void setCropRatio(const int &cropRatio);
+
+    QUrl url() const;
+    void setUrl(const QUrl &url);
+
 signals:
-	void volumeChanged();
+    void volumeChanged();
 private:
-	void openInternal();
+    void openInternal();
 
 	VlcInstance *_instance;
 	VlcMediaPlayer *_player;
