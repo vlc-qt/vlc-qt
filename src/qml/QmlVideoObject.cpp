@@ -146,6 +146,7 @@ Vlc::Ratio VlcQmlVideoObject::cropRatio() const
 void VlcQmlVideoObject::setCropRatio(const Vlc::Ratio &cropRatio)
 {
     _cropRatio = cropRatio;
+    updateBoundingRect();
 }
 
 
@@ -157,6 +158,7 @@ Vlc::Ratio VlcQmlVideoObject::aspectRatio() const
 void VlcQmlVideoObject::setAspectRatio(const Vlc::Ratio &aspectRatio)
 {
     _aspectRatio = aspectRatio;
+    updateBoundingRect();
 }
 
 void VlcQmlVideoObject::paint(QPainter *painter)
