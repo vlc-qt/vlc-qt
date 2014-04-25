@@ -28,6 +28,7 @@ class VlcAudio;
 class VlcInstance;
 class VlcMedia;
 class VlcMediaPlayer;
+class VlcVideo;
 
 class VLCQT_QML_EXPORT VlcQmlVideoPlayer : public VlcQmlVideoObject
 {
@@ -36,6 +37,7 @@ public:
     Q_PROPERTY(int volume READ volume WRITE setVolume NOTIFY volumeChanged)
     Q_PROPERTY(int aspectRatio READ aspectRatio WRITE setAspectRatio)
     Q_PROPERTY(int cropRatio READ cropRatio WRITE setCropRatio)
+    Q_PROPERTY(int deinterlacing READ deinterlacing WRITE setDeinterlacing)
     Q_PROPERTY(QUrl url READ url WRITE setUrl)
     Q_PROPERTY(bool autoplay READ autoplay WRITE setAutoplay)
 
@@ -64,19 +66,24 @@ public:
     bool autoplay() const;
     void setAutoplay(bool autoplay);
 
+    int deinterlacing() const;
+    void setDeinterlacing(int deinterlacing);
+
 signals:
 	void volumeChanged();
 
 private:
     void openInternal();
 
-	VlcInstance *_instance;
-	VlcMediaPlayer *_player;
-	VlcMedia *_media;
+    VlcInstance *_instance;
+    VlcMediaPlayer *_player;
+    VlcMedia *_media;
 
-	VlcAudio *_audioManager;
+    VlcAudio *_audioManager;
 
-	bool _hasMedia;
+    Vlc::Deinterlacing _deinterlacing;
+
+    bool _hasMedia;
     bool _autoplay;
 };
 

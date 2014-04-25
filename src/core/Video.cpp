@@ -95,7 +95,7 @@ void VlcVideo::setCropGeometry(const Vlc::Ratio &ratio)
 
 void VlcVideo::setDeinterlace(const Vlc::Deinterlacing &filter)
 {
-    if (_vlcMediaPlayer && libvlc_media_player_has_vout(_vlcMediaPlayer)) {
+    if (_vlcMediaPlayer) {
         libvlc_video_set_deinterlace(_vlcMediaPlayer, Vlc::deinterlacing()[filter].toUtf8().data());
         VlcError::errmsg();
     }
