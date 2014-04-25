@@ -18,6 +18,7 @@
 
 #include <QtCore/QDebug>
 
+#include "core/Video.h"
 #include "core/Audio.h"
 #include "core/Common.h"
 #include "core/Instance.h"
@@ -33,7 +34,8 @@ VlcQmlVideoPlayer::VlcQmlVideoPlayer(QQuickItem *parent)
       _player(NULL),
       _media(NULL),
       _audioManager(NULL),
-      _autoplay(true)
+      _autoplay(true),
+      _deinterlacing(Vlc::Disabled)
 {
     _instance = new VlcInstance(VlcCommon::args(), this);
     _player = new VlcMediaPlayer(_instance);
@@ -88,6 +90,17 @@ void VlcQmlVideoPlayer::openInternal()
 
     _hasMedia = true;
 }
+int VlcQmlVideoPlayer::deinterlacing() const
+{
+    return (int)_deinterlacing;
+}
+
+void VlcQmlVideoPlayer::setDeinterlacing(const int &deinterlacing)
+{
+    _deinterlacing = (Vlc::Deinterlacing) deinterlacing;
+    _player->video()->setDeinterlace(_deinterlacing);
+}
+
 bool VlcQmlVideoPlayer::autoplay() const
 {
     return _autoplay;
