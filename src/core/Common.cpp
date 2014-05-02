@@ -24,7 +24,6 @@ QStringList VlcCommon::args()
 
     args << "--intf=dummy"
          << "--no-media-library"
-         << "--no-plugins-cache"
          << "--no-stats"
          << "--no-osd"
          << "--no-loop"
