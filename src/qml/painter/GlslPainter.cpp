@@ -132,17 +132,16 @@ void GlslPainter::paint(QPainter *painter,
         1, 0, // top right
     };
 
-    const GLfloat targetVertex[] =
+	const GLfloat targetVertex[] =
     {
-        GLfloat(target.left()), GLfloat(target.bottom()),
-        GLfloat(target.right()), GLfloat(target.bottom()),
-        GLfloat(target.left()) , GLfloat(target.top()),
-        GLfloat(target.right()), GLfloat(target.top())
+        GLfloat(0), GLfloat(target.height()),
+		GLfloat(target.width()), GLfloat(target.height()),
+        GLfloat(0) , GLfloat(0),
+		GLfloat(target.width()), GLfloat(0)
     };
-    //
 
-    const int width = window->width();
-    const int height = window->height();
+    const int width = target.width();
+    const int height = target.height();
 
     const QTransform transform = painter->deviceTransform();
 
