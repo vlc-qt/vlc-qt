@@ -83,6 +83,11 @@ IF(MSVC)
     SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NOLOGO /DYNAMICBASE /NXCOMPAT")
 ENDIF(MSVC)
 
+IF( MINGW )
+    #Select gcc exception handling method
+    set(GCC_EH_METHOD "dw2" CACHE STRING "Gcc exception handling method(dw2/sjlj)")
+ENDIF( MINGW )
+
 # Support OS X 10.6 or later (64-bit only)
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     SET(CMAKE_OSX_ARCHITECTURES x86_64)
