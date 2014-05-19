@@ -123,8 +123,10 @@ void VlcQmlVideoPlayer::setUrl(const QUrl &url)
 {
     if (_media)
         delete _media;
-
-    _media = new VlcMedia(url.toString(), url.isLocalFile(), _instance);
+    if( url.isLocalFile() )
+        _media = new VlcMedia(url.toLocalFile(), true, _instance);
+    else
+        _media = new VlcMedia(url.toString(), false, _instance);
 
     openInternal();
 }
