@@ -99,7 +99,7 @@ SET(Vlc_Libs
 
 IF(MINGW)
     SET(Extra_Libs
-        ${QT_BIN_DIR}/libgcc_s_dw2-1.dll
+        ${QT_BIN_DIR}/libgcc_s_${GCC_EH_METHOD}-1.dll
         ${QT_BIN_DIR}/libstdc++-6.dll
         ${QT_BIN_DIR}/libwinpthread-1.dll
     )
