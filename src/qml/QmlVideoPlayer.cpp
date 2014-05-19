@@ -116,7 +116,7 @@ void VlcQmlVideoPlayer::setAutoplay(bool autoplay)
 QUrl VlcQmlVideoPlayer::url() const
 {
     if (_media)
-        return QUrl( _media->currentLocation() );
+        return QUrl(_media->currentLocation());
     else
         return QUrl();
 }
@@ -126,7 +126,11 @@ void VlcQmlVideoPlayer::setUrl(const QUrl &url)
     if (_media)
         delete _media;
 
-    _media = new VlcMedia(url.toString(), url.isLocalFile(), _instance);
+    if(url.isLocalFile()) {
+        _media = new VlcMedia(url.toLocalFile(), true, _instance);
+    } else {
+        _media = new VlcMedia(url.toString(), false, _instance);
+    }
 
     openInternal();
 }
