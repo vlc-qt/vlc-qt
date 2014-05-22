@@ -148,7 +148,7 @@ IF(MINGW OR MSVC)
 ENDIF(MINGW OR MSVC)
 
 # Link parameters
-IF(STATIC)
+IF(STATIC AND NOT MSVC)
     SET(VLCQT_BINARY ${CMAKE_BINARY_DIR}/src/core/libvlc-qt.a)
     SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/libvlc-qt-widgets.a)
     SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/libvlc-qt-qml.a)
@@ -161,6 +161,7 @@ ELSEIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/libvlc-qt-widgets.dylib)
     SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/libvlc-qt-qml.dylib)
 ELSEIF(MSVC)
+    MESSAGE("MSVC linking")
     SET(VLCQT_BINARY ${CMAKE_BINARY_DIR}/src/core/vlc-qt.lib)
     SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/vlc-qt-widgets.lib)
     SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/vlc-qt-qml.lib)
@@ -168,7 +169,7 @@ ELSE(STATIC)
     SET(VLCQT_BINARY ${CMAKE_BINARY_DIR}/src/core/libvlc-qt.so)
     SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/libvlc-qt-widgets.so)
     SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/libvlc-qt-qml.so)
-ENDIF(STATIC)
+ENDIF(STATIC AND NOT MSVC)
 
 
 ###########
