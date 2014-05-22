@@ -47,11 +47,11 @@ public:
 private:
 	void openInternal();
 
-	VlcInstance *_instance;
-	VlcMediaPlayer *_player;
-	VlcMedia *_media;
+	VlcInstance *_instance = nullptr;
+	VlcMediaPlayer *_player = nullptr;
+	VlcMedia *_media = nullptr;
 
-	VlcAudio *_audioManager;
+	VlcAudio *_audioManager = nullptr;
 
 	bool _hasMedia;
 };

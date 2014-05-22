@@ -73,10 +73,10 @@ SET(Qt5_Libs
 
 FILE(GLOB Qt5_Libs_Icu ${QT_BIN_DIR}/icu*.dll)
 
-SET(Qt5_Libs_Gui
-    ${QT_BIN_DIR}/libEGL${LE}.dll
-    ${QT_BIN_DIR}/libGLESv2${LE}.dll
-)
+# SET(Qt5_Libs_Gui
+#     ${QT_BIN_DIR}/libEGL${LE}.dll
+#     ${QT_BIN_DIR}/libGLESv2${LE}.dll
+# )
 
 FILE(GLOB Qt5_Libs_D3D ${QT_BIN_DIR}/D3DCompiler_*.dll)
 
@@ -89,7 +89,7 @@ SET(Qt5_Libs_Qml
     ${QT_BIN_DIR}/Qt5OpenGL${LE}.dll
     ${QT_BIN_DIR}/Qt5Qml${LE}.dll
     ${QT_BIN_DIR}/Qt5Quick${LE}.dll
-    ${QT_BIN_DIR}/Qt5V8${LE}.dll
+    # ${QT_BIN_DIR}/Qt5V8${LE}.dll
 )
 
 SET(Vlc_Libs

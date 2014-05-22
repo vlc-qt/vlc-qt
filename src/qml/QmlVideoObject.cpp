@@ -33,7 +33,7 @@ VlcQmlVideoObject::VlcQmlVideoObject(QQuickItem *parent)
       _paintedOnce(false),
       _gotSize(false)
 {
-    setRenderTarget(InvertedYFramebufferObject);
+	setRenderTarget(InvertedYFramebufferObject);
     setFlag(ItemHasContents, true);
 }
 

@@ -31,7 +31,7 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                vidwidget.openFile("/Users/tadej/Movies/Yugo.mpeg")
+                vidwidget.openStream("http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4")
                 vidwidget.play()
             }
         }

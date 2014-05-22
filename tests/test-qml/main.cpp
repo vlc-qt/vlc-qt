@@ -24,18 +24,19 @@
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication::setApplicationName("Test QML");
-    QCoreApplication::setAttribute(Qt::AA_X11InitThreads);
+	QCoreApplication::setApplicationName("Test QML");
+	QCoreApplication::setAttribute(Qt::AA_X11InitThreads);
 
-    qmlRegisterType<VlcQmlVideoPlayer>("VLCQt", 0, 9, "VlcVideoPlayer");
+	qmlRegisterType<VlcQmlVideoPlayer>("VLCQt", 0, 9, "VlcVideoPlayer");
 
-    QGuiApplication app(argc, argv);
+	QGuiApplication app(argc, argv);
 
-    QQuickView view;;
-    view.setSource(QUrl("qml/video.qml"));
-    view.setResizeMode(QQuickView::SizeRootObjectToView);
-    view.show();
+	QQuickView view;;
+	view.setSource(QUrl("qml/video.qml"));
+	//view.setResizeMode(QQuickView::SizeRootObjectToView);
+	view.setMinimumWidth(640); view.setMinimumHeight(480);
+	view.show();
 
-    return app.exec();
+	return app.exec();
 }
 
