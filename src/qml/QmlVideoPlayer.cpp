@@ -35,11 +35,13 @@ VlcQmlVideoPlayer::VlcQmlVideoPlayer(QQuickItem *parent)
       _media(NULL),
       _audioManager(NULL),
       _autoplay(true),
-      _deinterlacing(Vlc::Disabled)
+      _deinterlacing(Vlc::Disabled),
+      _seekable(true)
 {
     _instance = new VlcInstance(VlcCommon::args(), this);
     _player = new VlcMediaPlayer(_instance);
     connect(_player, SIGNAL(stateChanged()), this, SIGNAL(stateChanged()));
+    connect(_player, SIGNAL(seekableChanged(bool)), this, SLOT(s_seekableChanged(bool)));
     _audioManager = new VlcAudio(_player);
 }
 
@@ -105,6 +107,17 @@ void VlcQmlVideoPlayer::setDeinterlacing(const int &deinterlacing)
 int VlcQmlVideoPlayer::state() const
 {
     return (int)_player->state();
+}
+
+bool VlcQmlVideoPlayer::seekable() const
+{
+    return _seekable;
+}
+
+void VlcQmlVideoPlayer::s_seekableChanged(bool seekable)
+{
+    _seekable = seekable;
+    emit seekableChanged();
 }
 
 bool VlcQmlVideoPlayer::autoplay() const

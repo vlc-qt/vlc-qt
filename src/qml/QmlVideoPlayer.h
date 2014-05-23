@@ -41,6 +41,7 @@ public:
     Q_PROPERTY(QUrl url READ url WRITE setUrl)
     Q_PROPERTY(bool autoplay READ autoplay WRITE setAutoplay)
     Q_PROPERTY(int state READ state NOTIFY stateChanged)
+    Q_PROPERTY(bool seekable READ seekable NOTIFY seekableChanged)
     explicit VlcQmlVideoPlayer(QQuickItem *parent = 0);
     ~VlcQmlVideoPlayer();
 
@@ -70,9 +71,13 @@ public:
 
     int state() const;
 
+    bool seekable() const;
+private slots:
+    void s_seekableChanged(bool);
 signals:
     void volumeChanged();
     void stateChanged();
+    void seekableChanged();
 private:
     void openInternal();
 
@@ -86,6 +91,7 @@ private:
 
     bool _hasMedia;
     bool _autoplay;
+    bool _seekable;
 };
 
 #endif // VLCQT_QMLVIDEOPLAYER_H_
