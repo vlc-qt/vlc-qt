@@ -39,6 +39,7 @@ VlcQmlVideoPlayer::VlcQmlVideoPlayer(QQuickItem *parent)
 {
     _instance = new VlcInstance(VlcCommon::args(), this);
     _player = new VlcMediaPlayer(_instance);
+    connect(_player, SIGNAL(stateChanged()), this, SIGNAL(stateChanged()));
     _audioManager = new VlcAudio(_player);
 }
 
@@ -99,6 +100,11 @@ void VlcQmlVideoPlayer::setDeinterlacing(const int &deinterlacing)
 {
     _deinterlacing = (Vlc::Deinterlacing) deinterlacing;
     _player->video()->setDeinterlace(_deinterlacing);
+}
+
+int VlcQmlVideoPlayer::state() const
+{
+    return (int)_player->state();
 }
 
 bool VlcQmlVideoPlayer::autoplay() const

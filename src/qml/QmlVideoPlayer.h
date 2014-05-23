@@ -40,6 +40,7 @@ public:
     Q_PROPERTY(int deinterlacing READ deinterlacing WRITE setDeinterlacing)
     Q_PROPERTY(QUrl url READ url WRITE setUrl)
     Q_PROPERTY(bool autoplay READ autoplay WRITE setAutoplay)
+    Q_PROPERTY(int state READ state NOTIFY stateChanged)
     explicit VlcQmlVideoPlayer(QQuickItem *parent = 0);
     ~VlcQmlVideoPlayer();
 
@@ -67,8 +68,11 @@ public:
     int deinterlacing() const;
     void setDeinterlacing(const int &deinterlacing);
 
+    int state() const;
+
 signals:
     void volumeChanged();
+    void stateChanged();
 private:
     void openInternal();
 
