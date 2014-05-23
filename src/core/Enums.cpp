@@ -63,7 +63,11 @@ QStringList Vlc::deinterlacing()
          << "man"
          << "bob"
          << "linear"
-         << "x";
+         << "x"
+         << "yadif"
+         << "yadif2x"
+         << "phosphor"
+         << "ivtc";
 
     return list;
 }
