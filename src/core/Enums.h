@@ -100,7 +100,11 @@ public:
         Mean,
         Bob,
         Linear,
-        X
+        X,
+        Yadif,
+        Yadif2x,
+        Phospor,
+        IVTC
     };
 
     /*!
