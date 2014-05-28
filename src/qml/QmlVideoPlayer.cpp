@@ -39,6 +39,7 @@ VlcQmlVideoPlayer::VlcQmlVideoPlayer(QQuickItem *parent)
       _seekable(true)
 {
     _instance = new VlcInstance(VlcCommon::args(), this);
+    _instance->setUserAgent(qApp->applicationName(), qApp->applicationVersion());
     _player = new VlcMediaPlayer(_instance);
     connect(_player, SIGNAL(stateChanged()), this, SIGNAL(stateChanged()));
     connect(_player, SIGNAL(seekableChanged(bool)), this, SLOT(s_seekableChanged(bool)));
