@@ -28,7 +28,8 @@
 
 VlcQmlVideoPlayer::VlcQmlVideoPlayer(QQuickItem *parent)
     : VlcQmlVideoObject(parent),
-      _hasMedia(false)
+      _hasMedia(false),
+      _media(0)
 {
     _instance = new VlcInstance(VlcCommon::args(), this);
     _player = new VlcMediaPlayer(_instance);
