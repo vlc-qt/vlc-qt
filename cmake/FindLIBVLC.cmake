@@ -1,6 +1,6 @@
 #############################################################################
 # VLC - CMake module
-# Copyright (C) 2012 Tadej Novak <tadej@tano.si>
+# Copyright (C) 2014 Tadej Novak <tadej@tano.si>
 # Original author: Rohit Yadav <rohityadav89@gmail.com>
 #
 # This library is free software: you can redistribute it and/or modify
@@ -37,6 +37,8 @@ FIND_PATH(LIBVLC_INCLUDE_DIR vlc/vlc.h
     #Mac OS and Contribs
     "${CMAKE_CURRENT_SOURCE_DIR}/contribs/include"
     "${CMAKE_CURRENT_SOURCE_DIR}/contribs/include/vlc"
+    "/Applications/VLC.app/Contents/MacOS/include"
+    "/Applications/VLC.app/Contents/MacOS/include/vlc"
     # Env
     "$ENV{LIB_DIR}/include"
     "$ENV{LIB_DIR}/include/vlc"
@@ -59,6 +61,8 @@ FIND_LIBRARY(LIBVLC_LIBRARY NAMES vlc libvlc
     #Mac OS
     "${CMAKE_CURRENT_SOURCE_DIR}/contribs/lib"
     "${CMAKE_CURRENT_SOURCE_DIR}/contribs/plugins"
+    "/Applications/VLC.app/Contents/MacOS/lib"
+    "/Applications/VLC.app/Contents/MacOS/plugins"
     #mingw
     c:/msys/local/lib
   )
@@ -70,6 +74,8 @@ FIND_LIBRARY(LIBVLCCORE_LIBRARY NAMES vlccore libvlccore
     #Mac OS
     "${CMAKE_CURRENT_SOURCE_DIR}/contribs/lib"
     "${CMAKE_CURRENT_SOURCE_DIR}/contribs/plugins"
+    "/Applications/VLC.app/Contents/MacOS/lib"
+    "/Applications/VLC.app/Contents/MacOS/plugins"
     #mingw
     c:/msys/local/lib
   )
