@@ -1,6 +1,6 @@
 #############################################################################
 # VLC-Qt - Qt and libvlc connector library
-# Copyright (C) 2013 Tadej Novak <tadej@tano.si>
+# Copyright (C) 2014 Tadej Novak <tadej@tano.si>
 #
 # This library is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published
@@ -24,16 +24,16 @@ ADD_DEFINITIONS(-DVLCQT_CORE_LIBRARY)
 # Add definitions for shared or static library
 IF(STATIC)
     ADD_DEFINITIONS(-DQT_STATIC -D_REENTRANT)
-ELSE(STATIC)
+ELSE()
     ADD_DEFINITIONS(-DQT_SHARED -D_REENTRANT)
-ENDIF(STATIC)
+ENDIF()
 
 IF(MINGW OR MSVC)
     CONFIGURE_FILE(
         ${CMAKE_SOURCE_DIR}/src/platform/windows/core.rc.in
         ${CMAKE_BINARY_DIR}/src/platform/windows/core.rc
     )
-ENDIF(MINGW OR MSVC)
+ENDIF()
 
 ###################
 # List of sources #
@@ -87,13 +87,6 @@ SET(VLCQT_CORE_RESOURCES
 #####################
 # Compiler settings #
 #####################
-# This scripts run the resource compiler rcc
-IF(QT5)
-    QT5_ADD_RESOURCES(VLCQT_CORE_RESOURCES_SRCS ${VLCQT_CORE_RESOURCES})
-ELSE(QT5)
-    QT4_ADD_RESOURCES(VLCQT_CORE_RESOURCES_SRCS ${VLCQT_CORE_RESOURCES})
-ENDIF(QT5)
-
 INCLUDE_DIRECTORIES(
     ${LIBVLC_INCLUDE_DIR}
     ${LIBVLC_INCLUDE_DIR}/vlc/plugins
@@ -109,7 +102,7 @@ IF(MSVC)
     INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/windows/msvc)
 ELSEIF(MINGW)
     INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/windows/mingw)
-ENDIF(MSVC)
+ENDIF()
 
 # Compile resources with windres
 IF(MINGW)
@@ -121,20 +114,20 @@ IF(MINGW)
         WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/src/platform/windows"
     )
     SET(VLCQT_CORE_SRCS ${VLCQT_CORE_SRCS} ${CMAKE_BINARY_DIR}/src/platform/windows/core.obj)
-ENDIF(MINGW)
+ENDIF()
 
 IF(MSVC)
     SET(VLCQT_CORE_SRCS ${VLCQT_CORE_SRCS} ${CMAKE_BINARY_DIR}/src/platform/windows/core.rc)
-ENDIF(MSVC)
+ENDIF()
 
 # Create the library.
 IF(STATIC)
     ADD_LIBRARY(${VLCQT} STATIC
-                ${VLCQT_CORE_SRCS} ${VLCQT_CORE_RESOURCES_SRCS})
-ELSE(STATIC)
+                ${VLCQT_CORE_SRCS} ${VLCQT_CORE_RESOURCES})
+ELSE()
     ADD_LIBRARY(${VLCQT} SHARED
-                ${VLCQT_CORE_SRCS} ${VLCQT_CORE_RESOURCES_SRCS})
-ENDIF(STATIC)
+                ${VLCQT_CORE_SRCS} ${VLCQT_CORE_RESOURCES})
+ENDIF()
 
 # MSVC: Avoid Debug/Release/... subfolders
 IF(MSVC)
@@ -144,22 +137,21 @@ IF(MSVC)
     SET_TARGET_PROPERTIES(${VLCQT} PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_RELWITHDUBUGINFO ".")
     SET_TARGET_PROPERTIES(${VLCQT} PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_MINSIZEREL ".")
     SET_TARGET_PROPERTIES(${VLCQT} PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_PROFILE ".")
-ENDIF(MSVC)
+ENDIF()
 
 # Linux: So version extensions
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     SET_TARGET_PROPERTIES(${VLCQT} PROPERTIES VERSION ${VLCQT_VERSION}
-                                          SOVERSION "${VLCQT_VERSION_MAJOR}.${VLCQT_VERSION_MINOR}"
+                                              SOVERSION "${VLCQT_VERSION_MAJOR}.${VLCQT_VERSION_MINOR}"
     )
-ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+ENDIF()
 
 # Link the required libraries
-IF(QT5)
-    QT5_USE_MODULES(${VLCQT} Core)
-    TARGET_LINK_LIBRARIES(${VLCQT} ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY})
-ELSE(QT5)
-    TARGET_LINK_LIBRARIES(${VLCQT} ${QT_LIBRARIES} ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY})
-ENDIF(QT5)
+IF(QT_VERSION MATCHES 4)
+    TARGET_LINK_LIBRARIES(${VLCQT} Qt4::Core ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY})
+ELSE()
+    TARGET_LINK_LIBRARIES(${VLCQT} Qt5::Core ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY})
+ENDIF()
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin" AND NOT STATIC)
     ADD_CUSTOM_COMMAND(TARGET ${VLCQT} POST_BUILD COMMAND
@@ -168,7 +160,7 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin" AND NOT STATIC)
         ${CMAKE_INSTALL_NAME_TOOL} -change "@loader_path/lib/libvlccore.5.dylib" "@loader_path/../lib/libvlccore.5.dylib" $<TARGET_FILE:${VLCQT}>)
     ADD_CUSTOM_COMMAND(TARGET ${VLCQT} POST_BUILD COMMAND
         ${CMAKE_INSTALL_NAME_TOOL} -change "@loader_path/lib/libvlccore.7.dylib" "@loader_path/../lib/libvlccore.7.dylib" $<TARGET_FILE:${VLCQT}>)
-ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin" AND NOT STATIC)
+ENDIF()
 
 
 ################

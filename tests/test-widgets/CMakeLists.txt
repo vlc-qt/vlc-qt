@@ -1,6 +1,6 @@
 #############################################################################
 # VLC-Qt - Qt and libvlc connector library
-# Copyright (C) 2013 Tadej Novak <tadej@tano.si>
+# Copyright (C) 2014 Tadej Novak <tadej@tano.si>
 #
 # This library is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published
@@ -46,11 +46,11 @@ SET(Test_Widgets_Srcs
 # Qt settings #
 ################
 # This scripts run the user interface compiler uic.
-IF(QT5)
-    QT5_WRAP_UI(Test_Widgets_UIC_Srcs ${Test_Widgets_UIs})
-ELSE(QT5)
+IF(QT_VERSION MATCHES 4)
     QT4_WRAP_UI(Test_Widgets_UIC_Srcs ${Test_Widgets_UIs})
-ENDIF(QT5)
+ELSE()
+    QT5_WRAP_UI(Test_Widgets_UIC_Srcs ${Test_Widgets_UIs})
+ENDIF()
 
 
 #####################
@@ -69,23 +69,22 @@ ADD_EXECUTABLE(${PROJECT_NAME} ${Test_Widgets_UIC_Srcs} ${Test_Widgets_Srcs})
 ADD_DEPENDENCIES(${PROJECT_NAME} ${VLCQT} ${VLCQT_WIDGETS})
 
 # Link the required libraries
-IF(QT5)
-    QT5_USE_MODULES(${PROJECT_NAME} Widgets)
-    TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${VLCQT_BINARY} ${VLCQT_WIDGETS_BINARY})
-ELSE(QT5)
-    TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${QT_LIBRARIES} ${VLCQT_BINARY} ${VLCQT_WIDGETS_BINARY})
-ENDIF(QT5)
+IF(QT_VERSION MATCHES 4)
+    TARGET_LINK_LIBRARIES(${PROJECT_NAME} Qt4::Gui ${VLCQT_BINARY} ${VLCQT_WIDGETS_BINARY})
+ELSE()
+    TARGET_LINK_LIBRARIES(${PROJECT_NAME} Qt5::Widgets ${VLCQT_BINARY} ${VLCQT_WIDGETS_BINARY})
+ENDIF()
 
 IF(STATIC)
     TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY})
-ENDIF(STATIC)
+ENDIF()
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin" AND NOT STATIC)
     ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} POST_BUILD COMMAND
         ${CMAKE_INSTALL_NAME_TOOL} -change ${VLCQT_BINARY} "@loader_path/../lib/libvlc-qt.dylib" $<TARGET_FILE:${PROJECT_NAME}>)
     ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} POST_BUILD COMMAND
         ${CMAKE_INSTALL_NAME_TOOL} -change ${VLCQT_WIDGETS_BINARY} "@loader_path/../lib/libvlc-qt-widgets.dylib" $<TARGET_FILE:${PROJECT_NAME}>)
-ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin" AND NOT STATIC)
+ENDIF()
 
 ################
 # Installation #

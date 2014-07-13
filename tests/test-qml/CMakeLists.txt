@@ -1,6 +1,6 @@
 #############################################################################
 # VLC-Qt - Qt and libvlc connector library
-# Copyright (C) 2013 Tadej Novak <tadej@tano.si>
+# Copyright (C) 2014 Tadej Novak <tadej@tano.si>
 #
 # This library is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published
@@ -49,12 +49,18 @@ ADD_EXECUTABLE(${PROJECT_NAME} ${Test_QML_Srcs})
 ADD_DEPENDENCIES(${PROJECT_NAME} ${VLCQT} ${VLCQT_QML})
 
 # Link the required libraries
-IF(QT5)
-    QT5_USE_MODULES(${PROJECT_NAME} Quick)
-    TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${VLCQT_QML_BINARY} ${VLCQT_BINARY})
-ELSE(QT5)
-    TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${QT_LIBRARIES} ${VLCQT_QML_BINARY} ${VLCQT_BINARY})
-ENDIF(QT5)
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} Qt5::Quick ${VLCQT_QML_BINARY} ${VLCQT_BINARY})
+
+IF(STATIC)
+    TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY})
+ENDIF()
+
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin" AND NOT STATIC)
+    ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} POST_BUILD COMMAND
+        ${CMAKE_INSTALL_NAME_TOOL} -change ${VLCQT_BINARY} "@loader_path/../lib/libvlc-qt.dylib" $<TARGET_FILE:${PROJECT_NAME}>)
+    ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} POST_BUILD COMMAND
+        ${CMAKE_INSTALL_NAME_TOOL} -change ${VLCQT_QML_BINARY} "@loader_path/../lib/libvlc-qt-qml.dylib" $<TARGET_FILE:${PROJECT_NAME}>)
+ENDIF()
 
 
 ################

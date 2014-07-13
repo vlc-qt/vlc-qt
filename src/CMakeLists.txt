@@ -1,6 +1,6 @@
 #############################################################################
 # VLC-Qt - Qt and libvlc connector library
-# Copyright (C) 2012 Tadej Novak <tadej@tano.si>
+# Copyright (C) 2014 Tadej Novak <tadej@tano.si>
 #
 # This library is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published
@@ -23,11 +23,15 @@ CONFIGURE_FILE(
 )
 
 
+###########
+# Modules #
+###########
 ADD_SUBDIRECTORY(core)
 
 IF(WITH_WIDGETS)
     ADD_SUBDIRECTORY(widgets)
-ENDIF(WITH_WIDGETS)
-IF(QT5 AND WITH_QML)
+ENDIF()
+
+IF(QT_VERSION MATCHES 5 AND WITH_QML)
     ADD_SUBDIRECTORY(qml)
-ENDIF(QT5 AND WITH_QML)
+ENDIF()

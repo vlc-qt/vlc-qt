@@ -1,6 +1,6 @@
 #############################################################################
 # VLC-Qt - Qt and libvlc connector library
-# Copyright (C) 2013 Tadej Novak <tadej@tano.si>
+# Copyright (C) 2014 Tadej Novak <tadej@tano.si>
 #
 # This library is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published
@@ -24,16 +24,16 @@ ADD_DEFINITIONS(-DVLCQT_WIDGETS_LIBRARY)
 # Add definitions for shared or static library
 IF(STATIC)
     ADD_DEFINITIONS(-DQT_STATIC -D_REENTRANT)
-ELSE(STATIC)
+ELSE()
     ADD_DEFINITIONS(-DQT_SHARED -D_REENTRANT)
-ENDIF(STATIC)
+ENDIF()
 
 IF(MINGW OR MSVC)
     CONFIGURE_FILE(
         ${CMAKE_SOURCE_DIR}/src/platform/windows/widgets.rc.in
         ${CMAKE_BINARY_DIR}/src/platform/windows/widgets.rc
     )
-ENDIF(MINGW OR MSVC)
+ENDIF()
 
 ###################
 # List of sources #
@@ -71,7 +71,7 @@ INCLUDE_DIRECTORIES(
 
 IF(MSVC)
     INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/windows/msvc)
-ENDIF(MSVC)
+ENDIF()
 
 # Compile resources with windres
 IF(MINGW)
@@ -83,18 +83,19 @@ IF(MINGW)
         WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/src/platform/windows"
     )
     SET(VLCQT_WIDGETS_SRCS ${VLCQT_WIDGETS_SRCS} ${CMAKE_BINARY_DIR}/src/platform/windows/widgets.obj)
-ENDIF(MINGW)
+ENDIF()
 
 IF(MSVC)
     SET(VLCQT_WIDGETS_SRCS ${VLCQT_WIDGETS_SRCS} ${CMAKE_BINARY_DIR}/src/platform/windows/widgets.rc)
-ENDIF(MSVC)
+ENDIF()
 
 # Create the library.
 IF(STATIC)
     ADD_LIBRARY(${VLCQT_WIDGETS} STATIC ${VLCQT_WIDGETS_SRCS})
-ELSE(STATIC)
+ELSE()
     ADD_LIBRARY(${VLCQT_WIDGETS} SHARED ${VLCQT_WIDGETS_SRCS})
-ENDIF(STATIC)
+ENDIF()
+
 ADD_DEPENDENCIES(${VLCQT_WIDGETS} ${VLCQT})
 
 # MSVC: Avoid Debug/Release/... subfolders
@@ -105,22 +106,21 @@ IF(MSVC)
     SET_TARGET_PROPERTIES(${VLCQT_WIDGETS} PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_RELWITHDUBUGINFO ".")
     SET_TARGET_PROPERTIES(${VLCQT_WIDGETS} PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_MINSIZEREL ".")
     SET_TARGET_PROPERTIES(${VLCQT_WIDGETS} PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_PROFILE ".")
-ENDIF(MSVC)
+ENDIF()
 
 # Linux: So version extensions
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     SET_TARGET_PROPERTIES(${VLCQT_WIDGETS} PROPERTIES VERSION ${VLCQT_VERSION}
-                                                  SOVERSION "${VLCQT_VERSION_MAJOR}.${VLCQT_VERSION_MINOR}"
+                                                      SOVERSION "${VLCQT_VERSION_MAJOR}.${VLCQT_VERSION_MINOR}"
     )
-ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+ENDIF()
 
 # Link the required libraries
-IF(QT5)
-    QT5_USE_MODULES(${VLCQT_WIDGETS} Widgets)
-    TARGET_LINK_LIBRARIES(${VLCQT_WIDGETS} ${VLCQT_BINARY})
-ELSE(QT5)
-    TARGET_LINK_LIBRARIES(${VLCQT_WIDGETS} ${QT_LIBRARIES} ${VLCQT_BINARY})
-ENDIF(QT5)
+IF(QT_VERSION MATCHES 4)
+    TARGET_LINK_LIBRARIES(${VLCQT_WIDGETS} ${VLCQT_BINARY} Qt4::Gui)
+ELSE()
+    TARGET_LINK_LIBRARIES(${VLCQT_WIDGETS} ${VLCQT_BINARY} Qt5::Widgets)
+ENDIF()
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin" AND NOT STATIC)
     ADD_CUSTOM_COMMAND(TARGET ${VLCQT_WIDGETS} POST_BUILD COMMAND
@@ -131,7 +131,7 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin" AND NOT STATIC)
         ${CMAKE_INSTALL_NAME_TOOL} -change "@loader_path/lib/libvlccore.5.dylib" "@loader_path/../lib/libvlccore.5.dylib" $<TARGET_FILE:${VLCQT_WIDGETS}>)
     ADD_CUSTOM_COMMAND(TARGET ${VLCQT_WIDGETS} POST_BUILD COMMAND
         ${CMAKE_INSTALL_NAME_TOOL} -change "@loader_path/lib/libvlccore.7.dylib" "@loader_path/../lib/libvlccore.7.dylib" $<TARGET_FILE:${VLCQT_WIDGETS}>)
-ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin" AND NOT STATIC)
+ENDIF()
 
 
 ################

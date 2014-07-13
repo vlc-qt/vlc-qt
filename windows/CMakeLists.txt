@@ -1,6 +1,6 @@
 #############################################################################
 # VLC-Qt - Qt and libvlc connector library
-# Copyright (C) 2013 Tadej Novak <tadej@tano.si>
+# Copyright (C) 2014 Tadej Novak <tadej@tano.si>
 #
 # This library is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published
@@ -103,34 +103,34 @@ IF(MINGW)
         ${QT_BIN_DIR}/libstdc++-6.dll
         ${QT_BIN_DIR}/libwinpthread-1.dll
     )
-ENDIF(MINGW)
+ENDIF()
 
 
 ################
 # Installation #
 ################
-IF(QT5)
+IF(QT_VERSION MATCHES 4)
+    INSTALL(FILES ${Qt4_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+ELSE()
     INSTALL(FILES ${Qt5_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
     INSTALL(FILES ${Qt5_Libs_Icu} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
     INSTALL(FILES ${Qt5_Platforms} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin/platforms")
     IF(WITH_WIDGETS OR WITH_QML)
         INSTALL(FILES ${Qt5_Libs_Gui} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
         INSTALL(FILES ${Qt5_Libs_D3D} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
-    ENDIF(WITH_WIDGETS OR WITH_QML)
+    ENDIF()
     IF(WITH_WIDGETS)
         INSTALL(FILES ${Qt5_Libs_Widgets} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
-    ENDIF(WITH_WIDGETS)
+    ENDIF()
     IF(WITH_QML)
         INSTALL(FILES ${Qt5_Libs_Qml} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
-    ENDIF(WITH_QML)
-ELSE(QT5)
-    INSTALL(FILES ${Qt4_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
-ENDIF(QT5)
+    ENDIF()
+ENDIF()
 
 INSTALL(FILES ${Vlc_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
 
 IF(MINGW)
     INSTALL(FILES ${Extra_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
-ENDIF(MINGW)
+ENDIF()
 
 VLC_INSTALL_PLUGINS(${Vlc_Plugins_Type})
