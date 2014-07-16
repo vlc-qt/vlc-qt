@@ -26,11 +26,16 @@
 #include <QtCore/QMutex>
 #include <QtQuick/QQuickPaintedItem>
 
+#include "Enums.h"
 #include "VideoFrame.h"
 #include "VideoMemoryStream.h"
 
 #include "SharedExportQml.h"
 
+class VlcVideo;
+class VlcAudio;
+class VlcInstance;
+class VlcMedia;
 class VlcMediaPlayer;
 
 class GlslPainter;
@@ -67,12 +72,27 @@ public:
                                     unsigned *lines);
     virtual void formatCleanUpCallback();
 
+    Vlc::Ratio aspectRatio() const;
+    void setAspectRatio(const Vlc::Ratio &aspectRatio);
+
+    Vlc::Ratio cropRatio() const;
+    void setCropRatio(const Vlc::Ratio &cropRatio);
+
 private slots:
     void frameReady();
     void reset();
+protected:
+    VlcInstance *_instance;
+    VlcMediaPlayer *_player;
+    VlcMedia *_media;
 
+    VlcAudio *_audioManager;
 private:
     void updateBoundingRect();
+    void updateAspectRatio();
+    void updateCropRatio();
+
+    QSizeF ratioSize( Vlc::Ratio );
 
     QMutex _mutex;
     VlcVideoFrame _frame;
@@ -85,6 +105,9 @@ private:
 
     bool _paintedOnce;
     bool _gotSize;
+
+    Vlc::Ratio _aspectRatio;
+    Vlc::Ratio _cropRatio;
 };
 
 #endif // VLCQT_QMLVIDEOOBJECT_H_

@@ -89,7 +89,7 @@ SET(Qt5_Libs_Qml
     ${QT_BIN_DIR}/Qt5OpenGL${LE}.dll
     ${QT_BIN_DIR}/Qt5Qml${LE}.dll
     ${QT_BIN_DIR}/Qt5Quick${LE}.dll
-    ${QT_BIN_DIR}/Qt5V8${LE}.dll
+    #${QT_BIN_DIR}/Qt5V8${LE}.dll
 )
 
 SET(Vlc_Libs
@@ -99,7 +99,7 @@ SET(Vlc_Libs
 
 IF(MINGW)
     SET(Extra_Libs
-        ${QT_BIN_DIR}/libgcc_s_dw2-1.dll
+        ${QT_BIN_DIR}/libgcc_s_${GCC_EH_METHOD}-1.dll
         ${QT_BIN_DIR}/libstdc++-6.dll
         ${QT_BIN_DIR}/libwinpthread-1.dll
     )

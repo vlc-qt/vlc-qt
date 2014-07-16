@@ -18,6 +18,7 @@
 
 #include <QtCore/QDebug>
 
+#include "core/Video.h"
 #include "core/Audio.h"
 #include "core/Common.h"
 #include "core/Instance.h"
@@ -28,21 +29,15 @@
 
 VlcQmlVideoPlayer::VlcQmlVideoPlayer(QQuickItem *parent)
     : VlcQmlVideoObject(parent),
-      _hasMedia(false)
+      _hasMedia(false),
+      _autoplay(true),
+      _deinterlacing(Vlc::Disabled),
+      _seekable(true)
 {
-    _instance = new VlcInstance(VlcCommon::args(), this);
-    _player = new VlcMediaPlayer(_instance);
-    _audioManager = new VlcAudio(_player);
 }
 
 VlcQmlVideoPlayer::~VlcQmlVideoPlayer()
 {
-    _player->stop();
-
-    delete _audioManager;
-    delete _media;
-    delete _player;
-    delete _instance;
 }
 
 void VlcQmlVideoPlayer::close()
@@ -74,11 +69,72 @@ void VlcQmlVideoPlayer::openStream(const QString &stream)
 
 void VlcQmlVideoPlayer::openInternal()
 {
-    _player->open(_media);
+    if( _autoplay )
+        _player->open(_media);
+    else
+        _player->openOnly(_media);
+
     connectToMediaPlayer(_player);
 
     _hasMedia = true;
 }
+int VlcQmlVideoPlayer::deinterlacing() const
+{
+    return (int)_deinterlacing;
+}
+
+void VlcQmlVideoPlayer::setDeinterlacing(const int &deinterlacing)
+{
+    _deinterlacing = (Vlc::Deinterlacing) deinterlacing;
+    _player->video()->setDeinterlace(_deinterlacing);
+}
+
+int VlcQmlVideoPlayer::state() const
+{
+    return (int)_player->state();
+}
+
+bool VlcQmlVideoPlayer::seekable() const
+{
+    return _seekable;
+}
+
+void VlcQmlVideoPlayer::s_seekableChanged(bool seekable)
+{
+    _seekable = seekable;
+    emit seekableChanged();
+}
+
+bool VlcQmlVideoPlayer::autoplay() const
+{
+    return _autoplay;
+}
+
+void VlcQmlVideoPlayer::setAutoplay(bool autoplay)
+{
+    _autoplay = autoplay;
+}
+
+QUrl VlcQmlVideoPlayer::url() const
+{
+    if (_media)
+        return QUrl( _media->currentLocation() );
+    else
+        return QUrl();
+}
+
+void VlcQmlVideoPlayer::setUrl(const QUrl &url)
+{
+    if (_media)
+        delete _media;
+    if( url.isLocalFile() )
+        _media = new VlcMedia(url.toLocalFile(), true, _instance);
+    else
+        _media = new VlcMedia(url.toString(), false, _instance);
+
+    openInternal();
+}
+
 
 void VlcQmlVideoPlayer::pause()
 {
@@ -94,4 +150,35 @@ void VlcQmlVideoPlayer::stop()
 {
     _player->stop();
     disconnectFromMediaPlayer(_player);
+}
+
+int VlcQmlVideoPlayer::volume() const
+{
+    return _audioManager->volume();
+}
+
+void VlcQmlVideoPlayer::setVolume(const int &volume)
+{
+    _audioManager->setVolume(volume);
+    emit volumeChanged();
+}
+
+int VlcQmlVideoPlayer::aspectRatio()
+{
+    return (int) VlcQmlVideoObject::aspectRatio();
+}
+
+void VlcQmlVideoPlayer::setAspectRatio(const int &aspectRatio)
+{
+    VlcQmlVideoObject::setAspectRatio( (Vlc::Ratio)aspectRatio );
+}
+
+int VlcQmlVideoPlayer::cropRatio()
+{
+    return (int) VlcQmlVideoObject::cropRatio();
+}
+
+void VlcQmlVideoPlayer::setCropRatio(const int &cropRatio)
+{
+    VlcQmlVideoObject::setCropRatio( (Vlc::Ratio)cropRatio );
 }
