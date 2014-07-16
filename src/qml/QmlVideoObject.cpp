@@ -19,6 +19,11 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
+#include "core/Video.h"
+#include "core/Audio.h"
+#include "core/Common.h"
+#include "core/Instance.h"
+#include "core/Media.h"
 #include "core/MediaPlayer.h"
 
 #include "qml/QmlVideoObject.h"
@@ -26,6 +31,10 @@
 
 VlcQmlVideoObject::VlcQmlVideoObject(QQuickItem *parent)
     : QQuickPaintedItem(parent),
+      _instance(NULL),
+      _player(NULL),
+      _media(NULL),
+      _audioManager(NULL),
       _geometry(0, 0, 640, 480),
       _boundingRect(0, 0, 0, 0),
       _frameSize(0, 0),
@@ -35,12 +44,26 @@ VlcQmlVideoObject::VlcQmlVideoObject(QQuickItem *parent)
       _aspectRatio(Vlc::Original),
       _cropRatio(Vlc::Original)
 {
+    _instance = new VlcInstance(VlcCommon::args(), this);
+    _instance->setUserAgent(qApp->applicationName(), qApp->applicationVersion());
+    _player = new VlcMediaPlayer(_instance);
+    connect(_player, SIGNAL(stateChanged()), this, SIGNAL(stateChanged()));
+    connect(_player, SIGNAL(seekableChanged(bool)), this, SLOT(s_seekableChanged(bool)));
+    _audioManager = new VlcAudio(_player);
+
     setRenderTarget(InvertedYFramebufferObject);
     setFlag(ItemHasContents, true);
 }
 
 VlcQmlVideoObject::~VlcQmlVideoObject()
 {
+    _player->stop();
+
+    delete _audioManager;
+    delete _media;
+    delete _player;
+    delete _instance;
+
     if (_graphicsPainter)
         delete _graphicsPainter;
 }
@@ -177,7 +200,7 @@ void VlcQmlVideoObject::paint(QPainter *painter)
         updateBoundingRect();
     }
 
-    if (!_paintedOnce) {
+    if (!_paintedOnce || ( _player->state() != Vlc::Playing && _player->state() != Vlc::Paused ) ) {
         painter->fillRect(_boundingRect, Qt::black);
         _paintedOnce = true;
     } else {

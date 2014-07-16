@@ -32,6 +32,10 @@
 
 #include "SharedExportQml.h"
 
+class VlcVideo;
+class VlcAudio;
+class VlcInstance;
+class VlcMedia;
 class VlcMediaPlayer;
 
 class GlslPainter;
@@ -77,7 +81,12 @@ public:
 private slots:
     void frameReady();
     void reset();
+protected:
+    VlcInstance *_instance;
+    VlcMediaPlayer *_player;
+    VlcMedia *_media;
 
+    VlcAudio *_audioManager;
 private:
     void updateBoundingRect();
     void updateAspectRatio();

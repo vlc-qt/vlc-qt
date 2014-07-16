@@ -24,12 +24,6 @@
 #include "QmlVideoObject.h"
 #include "SharedExportQml.h"
 
-class VlcVideo;
-class VlcAudio;
-class VlcInstance;
-class VlcMedia;
-class VlcMediaPlayer;
-
 class VLCQT_QML_EXPORT VlcQmlVideoPlayer : public VlcQmlVideoObject
 {
 Q_OBJECT
@@ -80,12 +74,6 @@ signals:
     void seekableChanged();
 private:
     void openInternal();
-
-    VlcInstance *_instance;
-    VlcMediaPlayer *_player;
-    VlcMedia *_media;
-
-    VlcAudio *_audioManager;
 
     Vlc::Deinterlacing _deinterlacing;
 
