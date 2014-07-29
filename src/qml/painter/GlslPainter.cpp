@@ -30,10 +30,7 @@ GlslPainter::GlslPainter()
 
 GlslPainter::~GlslPainter()
 {
-#ifdef __GNUC__
-#warning context may be long gone, leading to crashery
-#endif
-    if (_program) {
+    if (_program && QOpenGLContext::currentContext()) {
         _program->removeAllShaders();
         _program->deleteLater();
     }
