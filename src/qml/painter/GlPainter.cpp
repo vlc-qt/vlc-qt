@@ -96,7 +96,7 @@ void GlPainter::initTextures()
     for (unsigned i = 0; i < _frame->planeCount; ++i) {
         _glF->glBindTexture(_texDescriptor.target, _textureIds[i]);
 
-        //glPixelStorei(GL_UNPACK_ROW_LENGTH, _frame->pitch[i]);
+        _glF->glPixelStorei(GL_UNPACK_ROW_LENGTH, _frame->pitch[i]);
         _glF->glTexSubImage2D(_texDescriptor.target, 0,
                         0, 0,
                         _frame->visiblePitch[i],
@@ -104,6 +104,6 @@ void GlPainter::initTextures()
                         _texDescriptor.format,
                         _texDescriptor.type,
                         _frame->plane[i].data());
-        //glPixelStorei(GL_UNPACK_ROW_LENGTH, 0); // reset to default
+        _glF->glPixelStorei(GL_UNPACK_ROW_LENGTH, 0); // reset to default
     }
 }
