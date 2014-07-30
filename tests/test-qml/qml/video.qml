@@ -27,13 +27,6 @@ Rectangle {
     VlcVideoPlayer {
         id: vidwidget
         anchors.fill: parent
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                vidwidget.openFile("/Users/tadej/Movies/Yugo.mpeg")
-                vidwidget.play()
-            }
-        }
+        url: "http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_640x360.m4v"
     }
 }

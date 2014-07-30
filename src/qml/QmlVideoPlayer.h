@@ -46,9 +46,6 @@ public:
     explicit VlcQmlVideoPlayer(QQuickItem *parent = 0);
     ~VlcQmlVideoPlayer();
 
-	Q_INVOKABLE void close();
-	Q_INVOKABLE void openFile(const QString &file);
-	Q_INVOKABLE void openStream(const QString &stream);
 	Q_INVOKABLE void pause();
 	Q_INVOKABLE void play();
 	Q_INVOKABLE void stop();

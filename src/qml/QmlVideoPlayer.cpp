@@ -58,33 +58,6 @@ VlcQmlVideoPlayer::~VlcQmlVideoPlayer()
     delete _instance;
 }
 
-void VlcQmlVideoPlayer::close()
-{
-    _hasMedia = false;
-
-    _player->stop();
-}
-
-void VlcQmlVideoPlayer::openFile(const QString &file)
-{
-    if (_media)
-        delete _media;
-
-    _media = new VlcMedia(file, true, _instance);
-
-    openInternal();
-}
-
-void VlcQmlVideoPlayer::openStream(const QString &stream)
-{
-    if (_media)
-        delete _media;
-
-    _media = new VlcMedia(stream, false, _instance);
-
-    openInternal();
-}
-
 void VlcQmlVideoPlayer::openInternal()
 {
     if(_autoplay)
