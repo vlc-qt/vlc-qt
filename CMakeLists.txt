@@ -53,7 +53,13 @@ SET(CMAKE_VERBOSE_MAKEFILE ON)
 
 # Detect debug build
 IF(CMAKE_BUILD_TYPE MATCHES Debug)
-    SET(LE d)
+    SET(LE d) # For Qt
+
+    OPTION(DEBUG_SUFFIX "Debug library suffix" OFF)
+    MESSAGE("VLC-Qt: Debug library suffix ${DEBUG_SUFFIX}")
+    IF(DEBUG_SUFFIX)
+        SET(LS d) # For VLC-Qt
+    ENDIF()
 ENDIF()
 
 # Show all warnings
@@ -134,25 +140,25 @@ ENDIF()
 
 # Link parameters
 IF(STATIC)
-    SET(VLCQT_BINARY ${CMAKE_BINARY_DIR}/src/core/libvlc-qt.a)
-    SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/libvlc-qt-widgets.a)
-    SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/libvlc-qt-qml.a)
+    SET(VLCQT_BINARY ${CMAKE_BINARY_DIR}/src/core/libvlc-qt${LS}.a)
+    SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/libvlc-qt-widgets${LS}.a)
+    SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/libvlc-qt-qml${LS}.a)
 ELSEIF(MINGW)
-    SET(VLCQT_BINARY ${CMAKE_BINARY_DIR}/src/core/libvlc-qt.dll.a)
-    SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/libvlc-qt-widgets.dll.a)
-    SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/libvlc-qt-qml.dll.a)
+    SET(VLCQT_BINARY ${CMAKE_BINARY_DIR}/src/core/libvlc-qt${LS}.dll.a)
+    SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/libvlc-qt-widgets${LS}.dll.a)
+    SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/libvlc-qt-qml${LS}.dll.a)
 ELSEIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    SET(VLCQT_BINARY ${CMAKE_BINARY_DIR}/src/core/libvlc-qt.dylib)
-    SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/libvlc-qt-widgets.dylib)
-    SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/libvlc-qt-qml.dylib)
+    SET(VLCQT_BINARY ${CMAKE_BINARY_DIR}/src/core/libvlc-qt${LS}.dylib)
+    SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/libvlc-qt-widgets${LS}.dylib)
+    SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/libvlc-qt-qml${LS}.dylib)
 ELSEIF(MSVC)
-    SET(VLCQT_BINARY ${CMAKE_BINARY_DIR}/src/core/vlc-qt.lib)
-    SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/vlc-qt-widgets.lib)
-    SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/vlc-qt-qml.lib)
+    SET(VLCQT_BINARY ${CMAKE_BINARY_DIR}/src/core/vlc-qt${LS}.lib)
+    SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/vlc-qt-widgets${LS}.lib)
+    SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/vlc-qt-qml${LS}.lib)
 ELSE()
-    SET(VLCQT_BINARY ${CMAKE_BINARY_DIR}/src/core/libvlc-qt.so)
-    SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/libvlc-qt-widgets.so)
-    SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/libvlc-qt-qml.so)
+    SET(VLCQT_BINARY ${CMAKE_BINARY_DIR}/src/core/libvlc-qt${LS}.so)
+    SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/libvlc-qt-widgets${LS}.so)
+    SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/libvlc-qt-qml${LS}.so)
 ENDIF()
 
 
