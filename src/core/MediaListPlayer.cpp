@@ -39,7 +39,7 @@ VlcMediaListPlayer::VlcMediaListPlayer(VlcInstance *instance)
 
     createCoreConnections();
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 }
 
 VlcMediaListPlayer::VlcMediaListPlayer(VlcMediaPlayer *player,
@@ -56,7 +56,7 @@ VlcMediaListPlayer::VlcMediaListPlayer(VlcMediaPlayer *player,
 
     createCoreConnections();
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 }
 
 VlcMediaListPlayer::~VlcMediaListPlayer()
@@ -65,7 +65,7 @@ VlcMediaListPlayer::~VlcMediaListPlayer()
 
     libvlc_media_list_player_release(_vlcMediaListPlayer);
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 }
 
 libvlc_media_list_player_t *VlcMediaListPlayer::core()
@@ -111,21 +111,21 @@ void VlcMediaListPlayer::itemAt(int index)
 {
     libvlc_media_list_player_play_item_at_index(_vlcMediaListPlayer, index);
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 }
 
 void VlcMediaListPlayer::next()
 {
     libvlc_media_list_player_next(_vlcMediaListPlayer);
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 }
 
 void VlcMediaListPlayer::play()
 {
     libvlc_media_list_player_play(_vlcMediaListPlayer);
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 }
 
 Vlc::PlaybackMode VlcMediaListPlayer::playbackMode() const
@@ -137,14 +137,14 @@ void VlcMediaListPlayer::previous()
 {
     libvlc_media_list_player_previous(_vlcMediaListPlayer);
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 }
 
 void VlcMediaListPlayer::stop()
 {
     libvlc_media_list_player_stop(_vlcMediaListPlayer);
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 }
 
 void VlcMediaListPlayer::setMediaList(VlcMediaList *list)
@@ -152,7 +152,7 @@ void VlcMediaListPlayer::setMediaList(VlcMediaList *list)
     _list = list;
     libvlc_media_list_player_set_media_list(_vlcMediaListPlayer, list->core());
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 }
 
 void VlcMediaListPlayer::setPlaybackMode(const Vlc::PlaybackMode &mode)

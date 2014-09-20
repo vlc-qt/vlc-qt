@@ -48,7 +48,7 @@ VlcInstance::VlcInstance(const QStringList &args,
     qRegisterMetaType<Vlc::Meta>("Vlc::Meta");
     qRegisterMetaType<Vlc::State>("Vlc::State");
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 
     // Check if instance is running
     if(_vlcInstance) {

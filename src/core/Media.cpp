@@ -45,7 +45,7 @@ VlcMedia::VlcMedia(libvlc_media_t *media)
     // Create a new libvlc media descriptor from existing one
     _vlcMedia = libvlc_media_duplicate(media);
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 }
 
 VlcMedia::~VlcMedia()
@@ -54,7 +54,7 @@ VlcMedia::~VlcMedia()
 
     libvlc_media_release(_vlcMedia);
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 }
 
 libvlc_media_t *VlcMedia::core()
@@ -81,7 +81,7 @@ void VlcMedia::initMedia(const QString &location,
 
     createCoreConnections();
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 
     qDebug() << "libvlc" << "Media:" << location << "Local:" << localFile;
 }
@@ -166,7 +166,7 @@ QString VlcMedia::merge(const QString &name,
     setOption(option1);
     setOption(option2);
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 
     return l + "." + Vlc::mux()[mux];
 }
@@ -194,7 +194,7 @@ QString VlcMedia::record(const QString &name,
     setOption(option1);
     setOption(option2);
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 
     return l + "." + Vlc::mux()[mux];
 }
@@ -224,7 +224,7 @@ QString VlcMedia::record(const QString &name,
     setOption(option1);
     setOption(option2);
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 
     return l + "." + Vlc::mux()[mux];
 }
@@ -257,7 +257,7 @@ QString VlcMedia::record(const QString &name,
     setOption(option1);
     setOption(option2);
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 
     return l + "." + Vlc::mux()[mux];
 }
@@ -272,7 +272,7 @@ void VlcMedia::setOption(const QString &option)
 {
     libvlc_media_add_option(_vlcMedia, option.toUtf8().data());
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 }
 
 void VlcMedia::setOptions(const QStringList &options)
@@ -281,7 +281,7 @@ void VlcMedia::setOptions(const QStringList &options)
         libvlc_media_add_option(_vlcMedia, option.toUtf8().data());
     }
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 }
 
 Vlc::TrackType VlcMedia::trackType()
@@ -299,7 +299,7 @@ Vlc::TrackType VlcMedia::trackType()
 
     free(info);
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 
     if (type == libvlc_track_audio)
         return Vlc::Audio;

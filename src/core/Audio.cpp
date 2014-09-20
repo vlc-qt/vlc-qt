@@ -33,7 +33,7 @@ bool VlcAudio::getMute() const
     bool mute = false;
     if (_vlcMediaPlayer) {
         mute = libvlc_audio_get_mute(_vlcMediaPlayer);
-        VlcError::errmsg();
+        VlcError::showErrmsg();
     }
 
     return mute;
@@ -45,7 +45,7 @@ void VlcAudio::setVolume(int volume)
         // Don't change if volume is the same
         if (volume != VlcAudio::volume()) {
             libvlc_audio_set_volume(_vlcMediaPlayer, volume);
-            VlcError::errmsg();
+            VlcError::showErrmsg();
         }
     }
 }
@@ -54,7 +54,7 @@ void VlcAudio::setTrack(int track)
 {
     if (_vlcMediaPlayer) {
         libvlc_audio_set_track(_vlcMediaPlayer, track);
-        VlcError::errmsg();
+        VlcError::showErrmsg();
     }
 }
 
@@ -62,7 +62,7 @@ bool VlcAudio::toggleMute() const
 {
     if (_vlcMediaPlayer) {
         libvlc_audio_toggle_mute(_vlcMediaPlayer);
-        VlcError::errmsg();
+        VlcError::showErrmsg();
     }
 
     return getMute();
@@ -73,7 +73,7 @@ int VlcAudio::track() const
     int track = -1;
     if (_vlcMediaPlayer) {
         track = libvlc_audio_get_track(_vlcMediaPlayer);
-        VlcError::errmsg();
+        VlcError::showErrmsg();
     }
 
     return track;
@@ -84,7 +84,7 @@ int VlcAudio::trackCount() const
     int count = -1;
     if (_vlcMediaPlayer) {
         count = libvlc_audio_get_track_count(_vlcMediaPlayer);
-        VlcError::errmsg();
+        VlcError::showErrmsg();
     }
 
     return count;
@@ -97,7 +97,7 @@ QStringList VlcAudio::trackDescription() const
     if (_vlcMediaPlayer) {
         libvlc_track_description_t *desc;
         desc = libvlc_audio_get_track_description(_vlcMediaPlayer);
-        VlcError::errmsg();
+        VlcError::showErrmsg();
 
         descriptions << QString().fromUtf8(desc->psz_name);
         if (trackCount() > 1) {
@@ -118,7 +118,7 @@ QList<int> VlcAudio::trackIds() const
     if (_vlcMediaPlayer) {
         libvlc_track_description_t *desc;
         desc = libvlc_audio_get_track_description(_vlcMediaPlayer);
-        VlcError::errmsg();
+        VlcError::showErrmsg();
 
         ids << desc->i_id;
         if (trackCount() > 1) {
@@ -137,7 +137,7 @@ int VlcAudio::volume() const
     int volume = -1;
     if (_vlcMediaPlayer) {
         volume = libvlc_audio_get_volume(_vlcMediaPlayer);
-        VlcError::errmsg();
+        VlcError::showErrmsg();
     }
 
     return volume;

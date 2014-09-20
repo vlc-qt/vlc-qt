@@ -38,7 +38,7 @@ VlcMediaPlayer::VlcMediaPlayer(VlcInstance *instance)
     libvlc_video_set_key_input(_vlcMediaPlayer, false);
     libvlc_video_set_mouse_input(_vlcMediaPlayer, false);
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 
     _vlcAudio = new VlcAudio(this);
     _vlcVideo = new VlcVideo(this);
@@ -48,7 +48,7 @@ VlcMediaPlayer::VlcMediaPlayer(VlcInstance *instance)
 
     createCoreConnections();
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 }
 
 VlcMediaPlayer::~VlcMediaPlayer()
@@ -60,7 +60,7 @@ VlcMediaPlayer::~VlcMediaPlayer()
 
     libvlc_media_player_release(_vlcMediaPlayer);
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 }
 
 libvlc_media_player_t *VlcMediaPlayer::core()
@@ -148,7 +148,7 @@ int VlcMediaPlayer::length() const
 {
     libvlc_time_t length = libvlc_media_player_get_length(_vlcMediaPlayer);
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 
     return length;
 }
@@ -162,7 +162,7 @@ libvlc_media_t *VlcMediaPlayer::currentMediaCore()
 {
     libvlc_media_t *media = libvlc_media_player_get_media(_vlcMediaPlayer);
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 
     return media;
 }
@@ -172,7 +172,7 @@ void VlcMediaPlayer::open(VlcMedia *media)
     _media = media;
     libvlc_media_player_set_media(_vlcMediaPlayer, media->core());
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 
     play();
 }
@@ -182,7 +182,7 @@ void VlcMediaPlayer::openOnly(VlcMedia *media)
     _media = media;
     libvlc_media_player_set_media(_vlcMediaPlayer, media->core());
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 }
 
 void VlcMediaPlayer::play()
@@ -209,7 +209,7 @@ void VlcMediaPlayer::play()
 
     libvlc_media_player_play(_vlcMediaPlayer);
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 }
 
 void VlcMediaPlayer::pause()
@@ -220,7 +220,7 @@ void VlcMediaPlayer::pause()
     if (libvlc_media_player_can_pause(_vlcMediaPlayer))
         libvlc_media_player_set_pause(_vlcMediaPlayer, true);
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 }
 
 void VlcMediaPlayer::togglePause()
@@ -231,7 +231,7 @@ void VlcMediaPlayer::togglePause()
     if (libvlc_media_player_can_pause(_vlcMediaPlayer))
         libvlc_media_player_pause(_vlcMediaPlayer);
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 }
 
 void VlcMediaPlayer::resume()
@@ -242,14 +242,14 @@ void VlcMediaPlayer::resume()
     if (libvlc_media_player_can_pause(_vlcMediaPlayer))
         libvlc_media_player_set_pause(_vlcMediaPlayer, false);
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 }
 
 void VlcMediaPlayer::setTime(int time)
 {
     libvlc_media_player_set_time(_vlcMediaPlayer, time);
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 }
 
 void VlcMediaPlayer::setVideoWidget(VlcVideoDelegate *widget)
@@ -267,7 +267,7 @@ Vlc::State VlcMediaPlayer::state() const
     libvlc_state_t state;
     state = libvlc_media_player_get_state(_vlcMediaPlayer);
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 
     return Vlc::State(state);
 }
@@ -283,14 +283,14 @@ void VlcMediaPlayer::stop()
 
     libvlc_media_player_stop(_vlcMediaPlayer);
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 }
 
 int VlcMediaPlayer::time() const
 {
     libvlc_time_t time = libvlc_media_player_get_time(_vlcMediaPlayer);
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 
     return time;
 }
@@ -385,5 +385,5 @@ void VlcMediaPlayer::setPosition(float pos)
 {
     libvlc_media_player_set_position(_vlcMediaPlayer, pos);
 
-    VlcError::errmsg();
+    VlcError::showErrmsg();
 }
