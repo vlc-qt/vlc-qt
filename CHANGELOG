@@ -1,3 +1,6 @@
+0.10.0 (git)
+ * Qt5 QML support
+
 0.9.0 (2013-09-26)
  * Official OS X support (10.6 or later, 64-bit only)
  * Static build support

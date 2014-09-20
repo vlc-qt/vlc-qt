@@ -19,7 +19,7 @@ You can download VLC-Qt from the official web page
 Dependencies
 ------------
 - g++, make
-- cmake >= 2.8.9
+- cmake >= 3.0.2
 - Qt >= 4.8
 - libvlc >= 2.0
 
@@ -39,7 +39,7 @@ Installation
 
 Copyright info
 --------------
-Copyright (C) 2010-2013 Tadej Novak
+Copyright (C) 2010-2014 Tadej Novak
 
 VLC-Qt is free (libre) software. This means that the library
 source code is available to public, anyone is welcome to research

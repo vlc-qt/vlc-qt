@@ -42,17 +42,6 @@ SET(Test_Widgets_Srcs
 )
 
 
-################
-# Qt settings #
-################
-# This scripts run the user interface compiler uic.
-IF(QT_VERSION MATCHES 4)
-    QT4_WRAP_UI(Test_Widgets_UIC_Srcs ${Test_Widgets_UIs})
-ELSE()
-    QT5_WRAP_UI(Test_Widgets_UIC_Srcs ${Test_Widgets_UIs})
-ENDIF()
-
-
 #####################
 # Compiler settings #
 #####################
