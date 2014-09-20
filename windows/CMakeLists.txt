@@ -86,10 +86,8 @@ SET(Qt5_Libs_Widgets
 
 SET(Qt5_Libs_Qml
     ${QT_BIN_DIR}/Qt5Network${LE}.dll
-    ${QT_BIN_DIR}/Qt5OpenGL${LE}.dll
     ${QT_BIN_DIR}/Qt5Qml${LE}.dll
     ${QT_BIN_DIR}/Qt5Quick${LE}.dll
-    #${QT_BIN_DIR}/Qt5V8${LE}.dll
 )
 
 SET(Vlc_Libs
