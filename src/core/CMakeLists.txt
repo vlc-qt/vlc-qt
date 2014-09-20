@@ -78,11 +78,6 @@ SET(VLCQT_CORE_HEADERS
     ${CMAKE_BINARY_DIR}/src/Config.h
 )
 
-# Define the resource files
-SET(VLCQT_CORE_RESOURCES
-    ../../data/logo.qrc
-)
-
 
 #####################
 # Compiler settings #
@@ -122,11 +117,9 @@ ENDIF()
 
 # Create the library.
 IF(STATIC)
-    ADD_LIBRARY(${VLCQT} STATIC
-                ${VLCQT_CORE_SRCS} ${VLCQT_CORE_RESOURCES})
+    ADD_LIBRARY(${VLCQT} STATIC ${VLCQT_CORE_SRCS})
 ELSE()
-    ADD_LIBRARY(${VLCQT} SHARED
-                ${VLCQT_CORE_SRCS} ${VLCQT_CORE_RESOURCES})
+    ADD_LIBRARY(${VLCQT} SHARED ${VLCQT_CORE_SRCS})
 ENDIF()
 
 # MSVC: Avoid Debug/Release/... subfolders
