@@ -251,12 +251,6 @@ public:
     */
     void setOptions(const QStringList &options);
 
-    /*!
-        \brief Get media track type
-        \return track type (Vlc::TrackType)
-    */
-    Vlc::TrackType trackType();
-
 
 signals:
     /*!

@@ -42,7 +42,6 @@ Q_ENUMS(PlaybackMode)
 Q_ENUMS(Ratio)
 Q_ENUMS(Scale)
 Q_ENUMS(State)
-Q_ENUMS(TrackType)
 Q_ENUMS(VideoCodec)
 Q_ENUMS(VideoOutput)
 
@@ -203,17 +202,6 @@ public:
         Stopped,
         Ended,
         Error
-    };
-
-    /*!
-        \enum TrackType
-        \brief Media track type
-    */
-    enum TrackType {
-        UnknownType,
-        Audio,
-        Video,
-        Text
     };
 
     /*!

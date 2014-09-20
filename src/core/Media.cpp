@@ -284,33 +284,6 @@ void VlcMedia::setOptions(const QStringList &options)
     VlcError::showErrmsg();
 }
 
-Vlc::TrackType VlcMedia::trackType()
-{
-    libvlc_media_track_info_t *info;
-
-    libvlc_media_parse(_vlcMedia);
-
-    if (!libvlc_media_get_tracks_info(_vlcMedia, &info)) {
-        free(info);
-        return Vlc::UnknownType;
-    }
-
-    libvlc_track_type_t type = info->i_type;
-
-    free(info);
-
-    VlcError::showErrmsg();
-
-    if (type == libvlc_track_audio)
-        return Vlc::Audio;
-    else if (type == libvlc_track_video)
-        return Vlc::Video;
-    else if (type == libvlc_track_text)
-        return Vlc::Text;
-    else
-        return Vlc::UnknownType;
-}
-
 void VlcMedia::libvlc_callback(const libvlc_event_t *event,
                                void *data)
 {
