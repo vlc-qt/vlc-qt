@@ -83,8 +83,6 @@ private:
     void updateAspectRatio();
     void updateCropRatio();
 
-    QSizeF ratioSize( Vlc::Ratio );
-
     QMutex _mutex;
     VlcVideoFrame _frame;
 

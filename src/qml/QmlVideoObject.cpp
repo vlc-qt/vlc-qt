@@ -67,7 +67,7 @@ void VlcQmlVideoObject::updateBoundingRect()
 
 void VlcQmlVideoObject::updateAspectRatio()
 {
-    QSizeF ar = ratioSize( _aspectRatio );
+    QSizeF ar = Vlc::ratioSize( _aspectRatio );
 
     if( ar.width() != 0 && ar.height() != 0)
     {
@@ -79,7 +79,7 @@ void VlcQmlVideoObject::updateAspectRatio()
 
 void VlcQmlVideoObject::updateCropRatio()
 {
-    QSizeF ar = ratioSize( _cropRatio );
+    QSizeF ar = Vlc::ratioSize( _cropRatio );
 
     if( ar.width() != 0 && ar.height() != 0)
     {
@@ -97,47 +97,6 @@ void VlcQmlVideoObject::updateCropRatio()
     }
 }
 
-QSizeF VlcQmlVideoObject::ratioSize(Vlc::Ratio ratio)
-{
-    switch( ratio )
-    {
-        default:
-        case Vlc::Original:
-            return QSizeF(0,0);
-        break;
-        case Vlc::R_16_9:
-            return QSizeF(16,9);
-        break;
-        case Vlc::R_16_10:
-            return QSizeF(16,10);
-        break;
-        case Vlc::R_185_100:
-            return QSizeF(185,100);
-        break;
-        case Vlc::R_221_100:
-            return QSizeF(221,100);
-        break;
-        case Vlc::R_235_100:
-            return QSizeF(235,100);
-        break;
-        case Vlc::R_239_100:
-            return QSizeF(239,100);
-        break;
-        case Vlc::R_4_3:
-            return QSizeF(4,3);
-        break;
-        case Vlc::R_5_4:
-            return QSizeF(5,4);
-        break;
-        case Vlc::R_5_3:
-            return QSizeF(5,3);
-        break;
-        case Vlc::R_1_1:
-            return QSizeF(1,1);
-        break;
-    }
-    return QSizeF(0,0);
-}
 Vlc::Ratio VlcQmlVideoObject::cropRatio() const
 {
     return _cropRatio;
@@ -148,7 +107,6 @@ void VlcQmlVideoObject::setCropRatio(const Vlc::Ratio &cropRatio)
     _cropRatio = cropRatio;
     updateBoundingRect();
 }
-
 
 Vlc::Ratio VlcQmlVideoObject::aspectRatio() const
 {

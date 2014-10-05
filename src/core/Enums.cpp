@@ -118,6 +118,49 @@ QStringList Vlc::ratioHuman()
     return list;
 }
 
+QSizeF Vlc::ratioSize(const Vlc::Ratio &ratio)
+{
+    switch(ratio)
+    {
+        default:
+        case Vlc::Original:
+            return QSizeF(0,0);
+            break;
+        case Vlc::R_16_9:
+            return QSizeF(16,9);
+            break;
+        case Vlc::R_16_10:
+            return QSizeF(16,10);
+            break;
+        case Vlc::R_185_100:
+            return QSizeF(185,100);
+            break;
+        case Vlc::R_221_100:
+            return QSizeF(221,100);
+            break;
+        case Vlc::R_235_100:
+            return QSizeF(235,100);
+            break;
+        case Vlc::R_239_100:
+            return QSizeF(239,100);
+            break;
+        case Vlc::R_4_3:
+            return QSizeF(4,3);
+            break;
+        case Vlc::R_5_4:
+            return QSizeF(5,4);
+            break;
+        case Vlc::R_5_3:
+            return QSizeF(5,3);
+            break;
+        case Vlc::R_1_1:
+            return QSizeF(1,1);
+            break;
+    }
+
+    return QSizeF(0,0);
+}
+
 QList<float> Vlc::scale()
 {
     QList<float> list;

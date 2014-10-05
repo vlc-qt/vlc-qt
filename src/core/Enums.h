@@ -19,7 +19,8 @@
 #ifndef VLCQT_ENUMS_H_
 #define VLCQT_ENUMS_H_
 
-#include <QObject>
+#include <QtCore/QObject>
+#include <QtCore/QSizeF>
 #include <QtCore/QStringList>
 
 #include "SharedExportCore.h"
@@ -275,6 +276,13 @@ public:
         \return ratios strings (QStringList)
     */
     static QStringList ratioHuman();
+
+    /*!
+        \brief Aspect and crop ratios converter to QSizeF
+        \param ratio aspect or crop ratio (Vlc::Ratio)
+        \return two-dimensional object using floating point precision (QSizeF)
+    */
+    static QSizeF ratioSize(const Vlc::Ratio &ratio);
 
     /*!
         \brief Scale floats
