@@ -37,17 +37,17 @@ class VlcMediaPlayer;
     \brief Video memory stream
 
     VlcVideoMemoryStream is a template class for creating own video rendering engines.
-*/
+ */
 class VLCQT_CORE_EXPORT VlcVideoMemoryStream
 {
 public:
     explicit VlcVideoMemoryStream();
     virtual ~VlcVideoMemoryStream();
     
-    /**
-     * \brief Set required information for rendering video
-     *
-     * \returns overall buffersize needed
+    /*!
+        \brief Set required information for rendering video
+
+        \returns overall buffersize needed
      */
     static unsigned setPitchAndLines(const vlc_chroma_description_t *chromaDescription,
                                      unsigned width,
@@ -57,37 +57,37 @@ public:
                                      unsigned *visiblePitches = 0,
                                      unsigned *visibleLines = 0);
 
-    /**
-     * \brief Set VlcMediaPlayer callbacks
-     * \param player media player (VlcMediaPlayer *)
+    /*!
+        \brief Set VlcMediaPlayer callbacks
+        \param player media player (VlcMediaPlayer *)
      */
     void setCallbacks(VlcMediaPlayer *player);
 
-    /**
-     * \brief Unset VlcMediaPlayer callbacks
-     * \param player media player (VlcMediaPlayer *)
+    /*!
+        \brief Unset VlcMediaPlayer callbacks
+        \param player media player (VlcMediaPlayer *)
      */
     void unsetCallbacks(VlcMediaPlayer *player);
 
 protected:
-    /**
-     * \brief Lock callback
+    /*!
+        \brief Lock callback
      */
     virtual void *lockCallback(void **planes) = 0;
 
-    /**
-     * \brief Unlock callback
+    /*!
+        \brief Unlock callback
      */
     virtual void unlockCallback(void *picture,
                                 void *const *planes) = 0;
 
-    /**
-     * \brief Display callback
+    /*!
+        \brief Display callback
      */
     virtual void displayCallback(void *picture) = 0;
 
-    /**
-     * \brief Format callback
+    /*!
+        \brief Format callback
      */
     virtual unsigned formatCallback(char *chroma,
                                     unsigned *width,
@@ -95,8 +95,8 @@ protected:
                                     unsigned *pitches,
                                     unsigned *lines) = 0;
 
-    /**
-     * \brief Format cleanup callback
+    /*!
+        \brief Format cleanup callback
      */
     virtual void formatCleanUpCallback() = 0;
 

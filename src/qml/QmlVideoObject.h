@@ -36,28 +36,72 @@ class VlcMediaPlayer;
 
 class GlslPainter;
 
+/*!
+    \class VlcQmlVideoObject QmlVideoObject.h vlc-qt/QmlVideoObject.h
+    \brief QML video object
+
+    A basic QML video object for painting video. It acts as a replacement for video widget.
+ */
 class VLCQT_QML_EXPORT VlcQmlVideoObject : public QQuickPaintedItem,
                                            public VlcVideoMemoryStream
 {
 Q_OBJECT
 public:
+    /*!
+        \brief VlcQmlVideoObject constructor.
+        \param parent parent item (QQuickItem *)
+     */
     explicit VlcQmlVideoObject(QQuickItem *parent = 0);
+
+    /*!
+        VlcMediaPlayer destructor
+     */
     virtual ~VlcQmlVideoObject();
 
-    virtual QRectF boundingRect() const;
-    void geometryChanged(const QRectF &newGeometry,
-                         const QRectF &oldGeometry);
 
-    void paint(QPainter *painter);
+    /*!
+        \brief Connect to media player
+        \param player media player (VlcMediaPlayer *)
+     */
+    void connectToMediaPlayer(VlcMediaPlayer *mediaObject);
 
-    // VLC
-    virtual void connectToMediaPlayer(VlcMediaPlayer *mediaObject);
-    virtual void disconnectFromMediaPlayer(VlcMediaPlayer *mediaObject);
+    /*!
+        \brief Disconnect from media player
+        \param player media player (VlcMediaPlayer *)
+     */
+    void disconnectFromMediaPlayer(VlcMediaPlayer *mediaObject);
 
-    void lock();
-    bool tryLock();
-    void unlock();
 
+    /*!
+        \brief Get current aspect ratio
+        \return aspect ratio (Vlc::Ratio)
+     */
+    Vlc::Ratio aspectRatio() const;
+
+    /*!
+        \brief Set aspect ratio
+        \param aspectRatio new aspect ratio (Vlc::Ratio)
+     */
+    void setAspectRatio(const Vlc::Ratio &aspectRatio);
+
+    /*!
+        \brief Get current crop ratio
+        \return crop ratio (Vlc::Ratio)
+     */
+    Vlc::Ratio cropRatio() const;
+
+    /*!
+        \brief Set crop ratio
+        \param cropRatio new crop ratio (Vlc::Ratio)
+     */
+    void setCropRatio(const Vlc::Ratio &cropRatio);
+
+
+private slots:
+    void frameReady();
+    void reset();
+
+private:
     virtual void *lockCallback(void **planes);
     virtual void unlockCallback(void *picture,void *const *planes);
     virtual void displayCallback(void *picture);
@@ -68,17 +112,16 @@ public:
                                     unsigned *lines);
     virtual void formatCleanUpCallback();
 
-    Vlc::Ratio aspectRatio() const;
-    void setAspectRatio(const Vlc::Ratio &aspectRatio);
+    virtual QRectF boundingRect() const;
+    void geometryChanged(const QRectF &newGeometry,
+                         const QRectF &oldGeometry);
 
-    Vlc::Ratio cropRatio() const;
-    void setCropRatio(const Vlc::Ratio &cropRatio);
+    void paint(QPainter *painter);
 
-private slots:
-    void frameReady();
-    void reset();
+    void lock();
+    bool tryLock();
+    void unlock();
 
-private:
     void updateBoundingRect();
     void updateAspectRatio();
     void updateCropRatio();

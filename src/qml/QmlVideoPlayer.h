@@ -30,52 +30,228 @@ class VlcMedia;
 class VlcMediaPlayer;
 class VlcVideo;
 
+/*!
+    \class VlcQmlVideoPlayer QmlVideoPlayer.h vlc-qt/QmlVideoPlayer.h
+    \brief QML video player
+
+    A simple QML video player that can be used standalone and directly inside QML.
+ */
 class VLCQT_QML_EXPORT VlcQmlVideoPlayer : public VlcQmlVideoObject
 {
 Q_OBJECT
 public:
+    /*!
+        \brief Current volume
+        \see setVolume
+        \see volumeChanged
+     */
     Q_PROPERTY(int volume READ volume WRITE setVolume NOTIFY volumeChanged)
+
+    /*!
+        \brief Current aspect ratio
+        \see setAspectRatio
+     */
     Q_PROPERTY(int aspectRatio READ aspectRatio WRITE setAspectRatio)
+
+    /*!
+        \brief Current crop ratio
+        \see setCropRatio
+     */
     Q_PROPERTY(int cropRatio READ cropRatio WRITE setCropRatio)
+
+    /*!
+        \brief Current deinterlacing mode
+        \see setDeinterlacing
+     */
     Q_PROPERTY(int deinterlacing READ deinterlacing WRITE setDeinterlacing)
+
+    /*!
+        \brief Current media URL
+        \see setUrl
+     */
     Q_PROPERTY(QUrl url READ url WRITE setUrl)
+
+    /*!
+        \brief Current autoplay setting
+        \see setAutoplay
+     */
     Q_PROPERTY(bool autoplay READ autoplay WRITE setAutoplay)
+
+    /*!
+        \brief Current state
+        \see stateChanged
+     */
     Q_PROPERTY(int state READ state NOTIFY stateChanged)
+
+    /*!
+        \brief Current seekable status
+        \see seekableChanged
+     */
     Q_PROPERTY(bool seekable READ seekable NOTIFY seekableChanged)
 
+
+    /*!
+        \brief VlcQmlVideoPlayer constructor.
+        \param parent parent item (QQuickItem *)
+     */
     explicit VlcQmlVideoPlayer(QQuickItem *parent = 0);
+
+    /*!
+        VlcMediaPlayer destructor
+     */
     ~VlcQmlVideoPlayer();
 
+    /*!
+        \brief Pause current playback
+
+        Invokable from QML.
+     */
 	Q_INVOKABLE void pause();
+
+    /*!
+        \brief Play current playback
+
+        Invokable from QML.
+     */
 	Q_INVOKABLE void play();
+
+    /*!
+        \brief Stop current playback
+
+        Invokable from QML.
+     */
 	Q_INVOKABLE void stop();
 
+
+    /*!
+        \brief Get current volume
+        \return current volume (int)
+
+        Used as property in QML.
+     */
 	int volume() const;
+
+    /*!
+        \brief Set volume
+        \param volume new volume (int)
+
+        Used as property in QML.
+     */
     void setVolume(int volume);
 
+    /*!
+        \brief Get current aspect ratio
+        \return current aspect ratio (int)
+
+        Used as property in QML.
+     */
     int aspectRatio();
+
+    /*!
+        \brief Set aspect ratio
+        \param aspectRatio new aspect ratio (int)
+
+        Used as property in QML.
+     */
     void setAspectRatio(int aspectRatio);
 
+    /*!
+        \brief Get current crop ratio
+        \return current crop ratio (int)
+
+        Used as property in QML.
+     */
     int cropRatio();
+
+    /*!
+        \brief Set crop ratio
+        \param cropRatio new crop ratio (int)
+
+        Used as property in QML.
+     */
     void setCropRatio(int cropRatio);
 
+    /*!
+        \brief Get current media URL
+        \return current media URL (QUrl)
+
+        Used as property in QML.
+     */
     QUrl url() const;
+
+    /*!
+        \brief Set media URL
+        \param url new media URL (QUrl)
+
+        Used as property in QML.
+     */
     void setUrl(const QUrl &url);
 
+    /*!
+        \brief Get current autoplay setting
+        \return current autoplay setting (bool)
+
+        Used as property in QML.
+     */
     bool autoplay() const;
+
+    /*!
+        \brief Set autoplay setting
+        \param autoplay new autoplay setting (bool)
+
+        Used as property in QML.
+     */
     void setAutoplay(bool autoplay);
 
+    /*!
+        \brief Get current deinterlacing() mode
+        \return current deinterlacing mode (int)
+
+        Used as property in QML.
+     */
     int deinterlacing() const;
+
+    /*!
+        \brief Set deinterlacing mode
+        \param deinterlacing new deinterlacing mode (int)
+
+        Used as property in QML.
+     */
     void setDeinterlacing(int deinterlacing);
 
+    /*!
+        \brief Get current state
+        \return current state (int)
+
+        Used as property in QML.
+     */
     int state() const;
 
+    /*!
+        \brief Get current seekable status
+        \return current seekable status (bool)
+
+        Used as property in QML.
+     */
     bool seekable() const;
 
+
 signals:
+    /*!
+        \brief Volume changed signal
+    */
     void volumeChanged();
+
+    /*!
+        \brief State changed signal
+    */
     void stateChanged();
+
+    /*!
+        \brief Seekable status changed signal
+    */
     void seekableChanged();
+
 
 private slots:
     void seekableChangedPrivate(bool);
