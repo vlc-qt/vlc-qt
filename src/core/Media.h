@@ -27,6 +27,7 @@
 #include "SharedExportCore.h"
 
 class VlcInstance;
+struct VlcStats;
 
 struct libvlc_event_t;
 struct libvlc_event_manager_t;
@@ -94,6 +95,13 @@ public:
         \return QString media location
     */
     QString currentLocation() const;
+
+    /*!
+        \brief Get media stats
+
+        \return VlcStats media stats object
+    */
+    VlcStats *getStats();
 
     /*!
         \brief Duplicate (provided for convenience)

@@ -24,6 +24,7 @@
 #include "core/Error.h"
 #include "core/Instance.h"
 #include "core/Media.h"
+#include "core/Stats.h"
 
 VlcMedia::VlcMedia(const QString &location,
                    bool localFile,
@@ -119,6 +120,32 @@ void VlcMedia::removeCoreConnections()
 QString VlcMedia::currentLocation() const
 {
     return _currentLocation;
+}
+
+VlcStats *VlcMedia::getStats()
+{
+    libvlc_media_stats_t *coreStats = new libvlc_media_stats_t;
+
+    VlcStats *stats = new VlcStats;
+    stats->valid = libvlc_media_get_stats(_vlcMedia, coreStats);
+
+    stats->read_bytes = coreStats->i_read_bytes;
+    stats->input_bitrate = coreStats->f_input_bitrate;
+    stats->demux_read_bytes = coreStats->i_demux_read_bytes;
+    stats->demux_bitrate = coreStats->f_demux_bitrate;
+    stats->demux_corrupted = coreStats->i_demux_corrupted;
+    stats->demux_discontinuity = coreStats->i_demux_discontinuity;
+    stats->decoded_video = coreStats->i_decoded_video;
+    stats->decoded_audio = coreStats->i_decoded_audio;
+    stats->displayed_pictures = coreStats->i_displayed_pictures;
+    stats->lost_pictures = coreStats->i_lost_pictures;
+    stats->played_abuffers = coreStats->i_played_abuffers;
+    stats->lost_abuffers = coreStats->i_lost_abuffers;
+    stats->sent_packets = coreStats->i_sent_packets;
+    stats->sent_bytes = coreStats->i_sent_bytes;
+    stats->send_bitrate = coreStats->f_send_bitrate;
+
+    return stats;
 }
 
 QString VlcMedia::duplicate(const QString &name,

@@ -51,6 +51,7 @@ SET(VLCQT_CORE_SRCS
     MediaPlayer.cpp
     MetaManager.cpp
     SharedExportCore.h
+    Stats.h
     Video.cpp
     VideoDelegate.h
     VideoMemoryStream.cpp
@@ -70,6 +71,7 @@ SET(VLCQT_CORE_HEADERS
     MediaPlayer.h
     MetaManager.h
     SharedExportCore.h
+    Stats.h
     Video.h
     VideoDelegate.h
     VideoFrame.h
