@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2013 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2014 Tadej Novak <tadej@tano.si>
 *
 * Based on Phonon multimedia library
 * Copyright (C) 2012 Harald Sitter <sitter@kde.org>
@@ -48,12 +48,12 @@ static int lcm(int a, int b)
 }
 
 unsigned VlcVideoMemoryStream::setPitchAndLines(const vlc_chroma_description_t *desc,
-                                             unsigned width,
-                                             unsigned height,
-                                             unsigned *pitches,
-                                             unsigned *lines,
-                                             unsigned *visiblePitches,
-                                             unsigned *visibleLines)
+                                                unsigned width,
+                                                unsigned height,
+                                                unsigned *pitches,
+                                                unsigned *lines,
+                                                unsigned *visiblePitches,
+                                                unsigned *visibleLines)
 {
     // Mostly taken from vlc/src/misc/picture.c
     // Simple alignment would be an option but I trust the VLC guys they know what they are doing.

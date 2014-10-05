@@ -47,7 +47,7 @@ Q_ENUMS(VideoOutput)
 
 public:
     /*!
-        \brief Vlc enums constructor.
+        \brief Dummy enums constructor.
 
         This constructor creates a new dummy enums object.
 

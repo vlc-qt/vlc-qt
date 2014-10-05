@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2013 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2014 Tadej Novak <tadej@tano.si>
 *
 * Based on Phonon multimedia library
 * Copyright (C) 2012 Harald Sitter <sitter@kde.org>
@@ -26,20 +26,30 @@
 
 #include "SharedExportCore.h"
 
-struct VLCQT_CORE_EXPORT VlcVideoFrame {
+/*!
+    \struct VlcVideoFrame VideoFrame.h vlc-qt/VideoFrame.h
+    \brief Video frame data container
+*/
+struct VLCQT_CORE_EXPORT VlcVideoFrame
+{
+    /*!
+        \brief VlcVideoFrame constructor.
+
+        This construction ensures default data is set.
+    */
     VlcVideoFrame();
 
-    unsigned int width;
-    unsigned int height;
+    unsigned int width; /*!< frame width */
+    unsigned int height; /*!< frame height */
 
-    unsigned int planeCount;
+    unsigned int planeCount; /*!< plane count */
 
-    QByteArray plane[4];
+    QByteArray plane[4]; /*!< plane data */
 
-    int pitch[4];
-    int visiblePitch[4];
-    int lines[4];
-    int visibleLines[4];
+    int pitch[4]; /*!< pitch information */
+    int visiblePitch[4]; /*!< visible pitch information */
+    int lines[4]; /*!< lines count */
+    int visibleLines[4]; /*!< visible lines count */
 };
 
 #endif // VLCQT_VIDEOFRAME_H_

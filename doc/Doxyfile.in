@@ -185,7 +185,7 @@ SEPARATE_MEMBER_PAGES  = NO
 # The TAB_SIZE tag can be used to set the number of spaces in a tab.
 # Doxygen uses this value to replace tabs by spaces in code fragments.
 
-TAB_SIZE               = 8
+TAB_SIZE               = 4
 
 # This tag can be used to specify a number of aliases that acts
 # as commands in the documentation. An alias has the form "name=value".
@@ -626,7 +626,7 @@ EXCLUDE_SYMLINKS       = NO
 # against the file with absolute , so to exclude all test directories
 # for example use the pattern */test/*
 
-EXCLUDE_PATTERNS       = */tests/* */.git/* */*build*/* */examples/* */*obj*/* */*debian*/*
+EXCLUDE_PATTERNS       = */tests/* */.git/* */*build*/* */examples/* */painter/* */*obj*/* */*debian*/*
 
 # The EXCLUDE_SYMBOLS tag can be used to specify one or more symbol names
 # (namespaces, classes, functions, etc.) that should be excluded from the
