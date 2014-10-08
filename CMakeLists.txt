@@ -122,6 +122,21 @@ IF(QT_VERSION MATCHES 5)
     # QML
     OPTION(WITH_QML "Build with QML" ON)
     MESSAGE("VLC-Qt: Build with QML: ${WITH_QML}")
+
+    IF(MINGW OR MSVC)
+        OPTION(WITH_ANGLE "Build with Angle" OFF)
+        MESSAGE("VLC-Qt: Build with Angle: ${WITH_ANGLE}")
+
+        IF(WITH_ANGLE)
+            SET(WITH_GLES ON)
+        ELSE()
+            OPTION(WITH_GLES "Build with OpenGL ES2" OFF)
+        ENDIF()
+    ELSE()
+        OPTION(WITH_GLES "Build with OpenGL ES2" OFF)
+    ENDIF()
+
+    MESSAGE("VLC-Qt: Build with OpenGL ES2: ${WITH_GLES}")
 ENDIF()
 
 OPTION(STATIC "Build statically" OFF)

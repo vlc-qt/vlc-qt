@@ -137,8 +137,7 @@ ENDIF()
 # Link the required libraries
 TARGET_LINK_LIBRARIES(${VLCQT_QML} Qt5::Quick ${VLCQT_BINARY} ${LIBVLCCORE_LIBRARY})
 
-IF(WITH_QML_GLES)
-    ADD_DEFINITIONS(-DVLCQT_QML_GLES)
+IF(WITH_GLES)
     IF(MSVC)
         TARGET_LINK_LIBRARIES(${VLCQT_QML}
                               ${_qt5Core_install_prefix}/lib/libEGL${LE}.lib
