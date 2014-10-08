@@ -39,7 +39,7 @@ INCLUDE_DIRECTORIES(
 
 # This line tells cmake to create the Test program.
 ADD_EXECUTABLE(${PROJECT_NAME} ${Test_Core_Srcs})
-ADD_DEPENDENCIES(${PROJECT_NAME} ${VLCQT} ${VLCQT_WIDGETS})
+ADD_DEPENDENCIES(${PROJECT_NAME} ${VLCQT})
 
 # Link the required libraries
 IF(QT_VERSION MATCHES 4)
