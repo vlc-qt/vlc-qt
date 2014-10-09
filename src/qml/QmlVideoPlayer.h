@@ -89,6 +89,26 @@ public:
      */
     Q_PROPERTY(bool seekable READ seekable NOTIFY seekableChanged)
 
+    /*!
+        \brief Current media length
+        \see length
+        \see lengthChanged
+     */
+    Q_PROPERTY(int length READ length NOTIFY lengthChanged)
+
+    /*!
+        \brief Current media time
+        \see time
+        \see timeChanged
+     */
+    Q_PROPERTY(int time READ time WRITE setTime NOTIFY timeChanged)
+
+    /*!
+        \brief Current media position
+        \see position
+        \see positionChanged
+     */
+    Q_PROPERTY(float position READ position WRITE setPosition NOTIFY positionChanged)
 
     /*!
         \brief VlcQmlVideoPlayer constructor.
@@ -235,6 +255,46 @@ public:
      */
     bool seekable() const;
 
+    /*!
+        \brief Get current media length
+        \return current media length(int)
+
+        Used as property in QML.
+     */
+    int length() const;
+
+    /*!
+        \brief Get current media time
+        \return current media time(int)
+
+        Used as property in QML.
+     */
+    int time() const;
+
+    /*!
+        \brief Set current media time
+        \param current media time(int)
+
+        Used as property in QML.
+     */
+    void setTime(int time);
+
+    /*!
+        \brief Get current media position
+        \return current media position from 0 to 1(float)
+
+        Used as property in QML.
+     */
+    float position() const;
+
+    /*!
+        \brief Set current media position
+        \param position media position from 0 to 1(float)
+
+        Used as property in QML.
+     */
+    void setPosition(float position);
+
 
 signals:
     /*!
@@ -252,6 +312,20 @@ signals:
     */
     void seekableChanged();
 
+    /*!
+        \brief Length changed signal
+    */
+    void lengthChanged();
+
+    /*!
+        \brief Time changed signal
+    */
+    void timeChanged();
+
+    /*!
+        \brief Position changed signal
+    */
+    void positionChanged();
 
 private slots:
     void seekableChangedPrivate(bool);

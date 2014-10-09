@@ -46,6 +46,9 @@ VlcQmlVideoPlayer::VlcQmlVideoPlayer(QQuickItem *parent)
 
     connect(_player, SIGNAL(stateChanged()), this, SIGNAL(stateChanged()));
     connect(_player, SIGNAL(seekableChanged(bool)), this, SLOT(seekableChangedPrivate(bool)));
+    connect(_player, SIGNAL(lengthChanged(int)), this, SIGNAL(lengthChanged()));
+    connect(_player, SIGNAL(timeChanged(int)), this, SIGNAL(timeChanged()));
+    connect(_player, SIGNAL(positionChanged(float)), this, SIGNAL(positionChanged()));
 }
 
 VlcQmlVideoPlayer::~VlcQmlVideoPlayer()
@@ -89,6 +92,31 @@ int VlcQmlVideoPlayer::state() const
 bool VlcQmlVideoPlayer::seekable() const
 {
     return _seekable;
+}
+
+int VlcQmlVideoPlayer::length() const
+{
+    return _player->length();
+}
+
+int VlcQmlVideoPlayer::time() const
+{
+    return _player->time();
+}
+
+void VlcQmlVideoPlayer::setTime(int time)
+{
+    _player->setTime( time );
+}
+
+float VlcQmlVideoPlayer::position() const
+{
+    return _player->position();
+}
+
+void VlcQmlVideoPlayer::setPosition(float position)
+{
+    _player->setPosition( position );
 }
 
 void VlcQmlVideoPlayer::seekableChangedPrivate(bool seekable)
