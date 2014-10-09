@@ -153,7 +153,7 @@ ENDIF()
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin" AND NOT STATIC)
     ADD_CUSTOM_COMMAND(TARGET ${VLCQT_QML} POST_BUILD COMMAND
-        ${CMAKE_INSTALL_NAME_TOOL} -change ${VLCQT_BINARY} "@loader_path/../lib/libvlc-qt.dylib" $<TARGET_FILE:${VLCQT_QML}>)
+        ${CMAKE_INSTALL_NAME_TOOL} -add_rpath "@loader_path/../lib/" $<TARGET_FILE:${VLCQT_QML}>)
     ADD_CUSTOM_COMMAND(TARGET ${VLCQT_QML} POST_BUILD COMMAND
         ${CMAKE_INSTALL_NAME_TOOL} -change "@loader_path/lib/libvlc.5.dylib" "@loader_path/../lib/libvlc.5.dylib" $<TARGET_FILE:${VLCQT_QML}>)
     ADD_CUSTOM_COMMAND(TARGET ${VLCQT_QML} POST_BUILD COMMAND
