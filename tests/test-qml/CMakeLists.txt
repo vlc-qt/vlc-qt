@@ -18,6 +18,8 @@
 
 PROJECT(test-vlcqt-qml)
 
+include(InstallDirRecursive)
+
 ###################
 # List of sources #
 ###################
@@ -25,7 +27,6 @@ PROJECT(test-vlcqt-qml)
 SET(Test_QML_Srcs
     main.cpp
 )
-
 
 #####################
 # Compiler settings #
@@ -67,4 +68,4 @@ ENDIF()
 # Installation #
 ################
 INSTALL(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
-INSTALL(FILES ${CMAKE_SOURCE_DIR}/tests/test-qml/qml/video.qml DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/qml)
+install_dir_recursive(${CMAKE_SOURCE_DIR}/tests/test-qml/qml/* "${CMAKE_INSTALL_PREFIX}/bin/qml/." )
