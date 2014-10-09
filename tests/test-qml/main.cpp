@@ -46,7 +46,7 @@ public:
             setFlags( flags() | Qt::WindowFullscreenButtonHint );
         #endif
 
-        setSource( QUrl("qml/video.qml") );
+        setSource( QUrl::fromLocalFile( qApp->applicationDirPath() + "/qml/video.qml" ) );
     }
 
     Q_INVOKABLE void toggleFullscreen()
