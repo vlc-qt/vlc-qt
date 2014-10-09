@@ -95,20 +95,9 @@ void GlPainter::initTextures()
 
     for (unsigned i = 0; i < _frame->planeCount; ++i) {
         _glF->glBindTexture(_texDescriptor.target, _textureIds[i]);
-
-#ifdef VLCQT_QML_GLES
-        for (int y = 0; y < _frame->visibleLines[i]; y++) {
-            const char *row = _frame->plane[i].data() + y * _frame->pitch[i];
-            _glF->glTexSubImage2D(_texDescriptor.target, 0,
-                            0, y,
-                            _frame->visiblePitch[i],
-                            1,
-                            _texDescriptor.format,
-                            _texDescriptor.type,
-                            row);
-        }
-#else
+#ifndef VLCQT_QML_GLES
         _glF->glPixelStorei(GL_UNPACK_ROW_LENGTH, _frame->pitch[i]);
+#endif
         _glF->glTexSubImage2D(_texDescriptor.target, 0,
                         0, 0,
                         _frame->visiblePitch[i],
@@ -116,6 +105,7 @@ void GlPainter::initTextures()
                         _texDescriptor.format,
                         _texDescriptor.type,
                         _frame->plane[i].data());
+#ifndef VLCQT_QML_GLES
         _glF->glPixelStorei(GL_UNPACK_ROW_LENGTH, 0); // reset to default
 #endif
     }

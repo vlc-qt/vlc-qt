@@ -73,7 +73,7 @@ SET(Qt5_Libs
 
 FILE(GLOB Qt5_Libs_Icu ${QT_BIN_DIR}/icu*.dll)
 
-SET(Qt5_Libs_Gui
+SET(Qt5_Libs_Gles
     ${QT_BIN_DIR}/libEGL${LE}.dll
     ${QT_BIN_DIR}/libGLESv2${LE}.dll
 )
@@ -114,8 +114,12 @@ ELSE()
     INSTALL(FILES ${Qt5_Libs_Icu} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
     INSTALL(FILES ${Qt5_Platforms} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin/platforms")
     IF(WITH_WIDGETS OR WITH_QML)
-        INSTALL(FILES ${Qt5_Libs_Gui} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
-        INSTALL(FILES ${Qt5_Libs_D3D} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+        IF(WITH_GLES)
+            INSTALL(FILES ${Qt5_Libs_Gles} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+        ENDIF()
+        IF(WITH_ANGLE)
+            INSTALL(FILES ${Qt5_Libs_D3D} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+        ENDIF()
     ENDIF()
     IF(WITH_WIDGETS)
         INSTALL(FILES ${Qt5_Libs_Widgets} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")

@@ -19,23 +19,67 @@
 #include <QtCore/QTextCodec>
 #include <QtGui/QGuiApplication>
 #include <QtQuick/QQuickView>
+#include <QtQml/QQmlContext>
 
+#include "Enums.h"
 #include "qml/QmlVideoPlayer.h"
+
+class Viewer: public QQuickView
+{
+    Q_OBJECT
+    Q_PROPERTY(bool isFullscreen READ isFullscreen NOTIFY isFullscreenChanged)
+public:
+    Viewer( QWindow *parent = 0 ) :
+        QQuickView( parent )
+    {
+        connect( this, &Viewer::windowStateChanged, this, &Viewer::windowStateChanged );
+
+        setTitle( "vlc-qt-qml" );
+        qmlRegisterType<Vlc>("VLCQt", 0, 9, "Vlc");
+        qmlRegisterType<VlcQmlVideoPlayer>("VLCQt", 0, 9, "VlcVideoPlayer");
+
+        QQmlContext *context = rootContext();
+        context->setContextProperty( "viewer", this );
+
+        setResizeMode( QQuickView::SizeRootObjectToView );
+        #ifdef Q_OS_MACX
+            setFlags( flags() | Qt::WindowFullscreenButtonHint );
+        #endif
+
+        setSource( QUrl::fromLocalFile( qApp->applicationDirPath() + "/qml/video.qml" ) );
+    }
+
+    Q_INVOKABLE void toggleFullscreen()
+    {
+        setWindowState( ( Qt::WindowState )( windowState() ^ Qt::WindowFullScreen ) );
+    }
+
+    bool isFullscreen()
+    {
+        return ( Qt::WindowState )( windowState() & Qt::WindowFullScreen );
+    }
+
+private slots:
+    void windowStateChanged()
+    {
+        emit isFullscreenChanged();
+    }
+
+signals:
+    void isFullscreenChanged();
+};
 
 int main(int argc, char *argv[])
 {
     QCoreApplication::setApplicationName("Test QML");
     QCoreApplication::setAttribute(Qt::AA_X11InitThreads);
 
-    qmlRegisterType<VlcQmlVideoPlayer>("VLCQt", 0, 9, "VlcVideoPlayer");
-
     QGuiApplication app(argc, argv);
 
-    QQuickView view;;
-    view.setSource(QUrl("qml/video.qml"));
-    view.setResizeMode(QQuickView::SizeRootObjectToView);
+    Viewer view;
     view.show();
 
     return app.exec();
 }
 
+#include "main.moc"

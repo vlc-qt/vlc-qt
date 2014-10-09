@@ -18,6 +18,8 @@
 
 PROJECT(test-vlcqt-qml)
 
+include(InstallDirRecursive)
+
 ###################
 # List of sources #
 ###################
@@ -25,7 +27,6 @@ PROJECT(test-vlcqt-qml)
 SET(Test_QML_Srcs
     main.cpp
 )
-
 
 #####################
 # Compiler settings #
@@ -57,6 +58,8 @@ ENDIF()
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin" AND NOT STATIC)
     ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} POST_BUILD COMMAND
+        ${CMAKE_INSTALL_NAME_TOOL} -add_rpath "@loader_path/../lib/" $<TARGET_FILE:${PROJECT_NAME}>)
+    ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} POST_BUILD COMMAND
         ${CMAKE_INSTALL_NAME_TOOL} -change ${VLCQT_BINARY} "@loader_path/../lib/libvlc-qt.dylib" $<TARGET_FILE:${PROJECT_NAME}>)
     ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} POST_BUILD COMMAND
         ${CMAKE_INSTALL_NAME_TOOL} -change ${VLCQT_QML_BINARY} "@loader_path/../lib/libvlc-qt-qml.dylib" $<TARGET_FILE:${PROJECT_NAME}>)
@@ -67,4 +70,4 @@ ENDIF()
 # Installation #
 ################
 INSTALL(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
-INSTALL(FILES ${CMAKE_SOURCE_DIR}/tests/test-qml/qml/video.qml DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/qml)
+install_dir_recursive(${CMAKE_SOURCE_DIR}/tests/test-qml/qml/* "${CMAKE_INSTALL_PREFIX}/bin/qml/." )
