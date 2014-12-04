@@ -97,16 +97,23 @@ void GlPainter::initTextures()
         _glF->glBindTexture(_texDescriptor.target, _textureIds[i]);
 
 #ifdef VLCQT_QML_GLES
+        // Taken from vlc/src/video_output/opengl.c:663
+        char *new_plane = ( char * ) malloc( _frame->pitch[i] * _frame->visibleLines[i] );
+        char *destination = new_plane;
         for (int y = 0; y < _frame->visibleLines[i]; y++) {
-            const char *row = _frame->plane[i].data() + y * _frame->pitch[i];
-            _glF->glTexSubImage2D(_texDescriptor.target, 0,
-                            0, y,
-                            _frame->visiblePitch[i],
-                            1,
-                            _texDescriptor.format,
-                            _texDescriptor.type,
-                            row);
+            const char *source = _frame->plane[i].data() + y * _frame->pitch[i];
+            memcpy( destination, source, _frame->visiblePitch[i] );
+            destination += _frame->visiblePitch[i];
         }
+
+        _glF->glTexSubImage2D(_texDescriptor.target, 0,
+                                    0, 0,
+                                    _frame->visiblePitch[i],
+                                    _frame->visibleLines[i],
+                                    _texDescriptor.format,
+                                    _texDescriptor.type,
+                                    new_plane);
+        free( new_plane );
 #else
         _glF->glPixelStorei(GL_UNPACK_ROW_LENGTH, _frame->pitch[i]);
         _glF->glTexSubImage2D(_texDescriptor.target, 0,
