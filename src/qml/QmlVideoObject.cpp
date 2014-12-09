@@ -143,7 +143,7 @@ void VlcQmlVideoObject::paint(QPainter *painter)
         _graphicsPainter->setFrame(&_frame);
         if (!_graphicsPainter->inited())
             _graphicsPainter->init();
-        _graphicsPainter->paint(painter, _boundingRect, window());
+        _graphicsPainter->paint(painter, _boundingRect, this);
     }
 
     unlock();
