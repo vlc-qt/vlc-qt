@@ -96,14 +96,17 @@ void GlPainter::initTextures()
     for (unsigned i = 0; i < _frame->planeCount; ++i) {
         _glF->glBindTexture(_texDescriptor.target, _textureIds[i]);
 
-#ifdef VLCQT_QML_GLES
-        // Taken from vlc/src/video_output/opengl.c:663
-        char *new_plane = ( char * ) malloc( _frame->pitch[i] * _frame->visibleLines[i] );
+// Based on vlc/src/video_output/opengl.c
+#ifndef GL_UNPACK_ROW_LENGTH
+#define ALIGN(x, y) (((x) + ((y) - 1)) & ~((y) - 1))
+        int dst_pitch = ALIGN(_frame->visiblePitch[i], 4);
+        char *new_plane = (char *) malloc(dst_pitch * _frame->visibleLines[i]);
+        const char *source = _frame->plane[i].data();
         char *destination = new_plane;
         for (int y = 0; y < _frame->visibleLines[i]; y++) {
-            const char *source = _frame->plane[i].data() + y * _frame->pitch[i];
-            memcpy( destination, source, _frame->visiblePitch[i] );
-            destination += _frame->visiblePitch[i];
+            memcpy(destination, source, _frame->visiblePitch[i]);
+            source += _frame->pitch[i];
+            destination += dst_pitch;
         }
 
         _glF->glTexSubImage2D(_texDescriptor.target, 0,
@@ -113,7 +116,7 @@ void GlPainter::initTextures()
                                     _texDescriptor.format,
                                     _texDescriptor.type,
                                     new_plane);
-        free( new_plane );
+        free(new_plane);
 #else
         _glF->glPixelStorei(GL_UNPACK_ROW_LENGTH, _frame->pitch[i]);
         _glF->glTexSubImage2D(_texDescriptor.target, 0,
@@ -123,7 +126,6 @@ void GlPainter::initTextures()
                         _texDescriptor.format,
                         _texDescriptor.type,
                         _frame->plane[i].data());
-        _glF->glPixelStorei(GL_UNPACK_ROW_LENGTH, 0); // reset to default
 #endif
     }
 }

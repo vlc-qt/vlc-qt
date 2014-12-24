@@ -122,8 +122,6 @@ IF(QT_VERSION MATCHES 5)
     # QML
     OPTION(WITH_QML "Build with QML" ON)
     MESSAGE("VLC-Qt: Build with QML: ${WITH_QML}")
-    OPTION(WITH_QML_GLES "Build QML with OpenGL ES2" OFF)
-    MESSAGE("VLC-Qt: Build QML with OpenGL ES2: ${WITH_QML_GLES}")
 ENDIF()
 
 OPTION(STATIC "Build statically" OFF)
