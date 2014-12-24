@@ -126,6 +126,7 @@ void GlPainter::initTextures()
                         _texDescriptor.format,
                         _texDescriptor.type,
                         _frame->plane[i].data());
+        _glF->glPixelStorei(GL_UNPACK_ROW_LENGTH, 0); // reset to default
 #endif
     }
 }
