@@ -24,13 +24,13 @@
 
 #include <QtCore/QRectF>
 #include <QtCore/QTime>
-#include <QtQuick/QQuickWindow>
+#include <QtQuick/QQuickItem>
 
 #include "qml/painter/GlPainter.h"
 
 class QOpenGLShaderProgram;
 class QPainter;
-class QQuickWindow;
+class QQuickItem;
 
 struct VideoFrame;
 
@@ -43,7 +43,7 @@ public:
     void init();
     void paint(QPainter *painter,
                QRectF target,
-               QQuickWindow *window);
+               QQuickItem *quickItem);
 
 private:
     QOpenGLShaderProgram *_program;

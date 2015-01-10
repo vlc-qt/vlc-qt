@@ -99,7 +99,7 @@ void GlslPainter::init()
 
 void GlslPainter::paint(QPainter *painter,
                         QRectF target,
-                        QQuickWindow *window)
+                        QQuickItem *quickItem)
 {
     // Need to reenable those after native painting has begun, otherwise we might
     // not be able to paint anything.
@@ -138,8 +138,8 @@ void GlslPainter::paint(QPainter *painter,
     };
     //
 
-    const int width = window->width();
-    const int height = window->height();
+    const int width = quickItem->width();
+    const int height = quickItem->height();
 
     const QTransform transform = painter->deviceTransform();
 
