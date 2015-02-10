@@ -95,8 +95,18 @@ SET(Vlc_Libs
     ${LIBVLC_BIN_DIR}/libvlccore.dll
 )
 
+FILE(GLOB Vlc_Gcc "${LIBVLC_BIN_DIR}/libgcc_s_*-1.dll")
+IF(Vlc_Gcc)
+    SET(Extra_Libs
+        ${Vlc_Gcc}
+        ${LIBVLC_BIN_DIR}/libstdc++-6.dll
+        ${LIBVLC_BIN_DIR}/libwinpthread-1.dll
+    )
+ENDIF()
+
 IF(MINGW)
     SET(Extra_Libs
+        ${Extra_Libs}
         ${QT_BIN_DIR}/libgcc_s_${GCC_EH_METHOD}-1.dll
         ${QT_BIN_DIR}/libstdc++-6.dll
         ${QT_BIN_DIR}/libwinpthread-1.dll
@@ -131,7 +141,7 @@ ENDIF()
 
 INSTALL(FILES ${Vlc_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
 
-IF(MINGW)
+IF(MINGW OR Vlc_Gcc)
     INSTALL(FILES ${Extra_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
 ENDIF()
 
