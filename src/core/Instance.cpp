@@ -88,6 +88,26 @@ QString VlcInstance::libVersion()
     return version;
 }
 
+int VlcInstance::libVersionMajor()
+{
+    int version = -1;
+#if defined(LIBVLCQT_VERSION_MAJOR)
+    version = QString(LIBVLCQT_VERSION_MAJOR).toInt();
+#endif //LIBVLCQT_VERSION
+
+    return version;
+}
+
+int VlcInstance::libVersionMinor()
+{
+    int version = -1;
+#if defined(LIBVLCQT_VERSION_MINOR)
+    version = QString(LIBVLCQT_VERSION_MINOR).toInt();
+#endif //LIBVLCQT_VERSION
+
+    return version;
+}
+
 QString VlcInstance::changeset()
 {
     // Returns libvlc changeset

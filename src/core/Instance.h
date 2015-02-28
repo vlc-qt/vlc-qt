@@ -59,10 +59,22 @@ public:
     libvlc_instance_t *core();
 
     /*!
-        \brief VLC-QT version info
+        \brief VLC-Qt version info
         \return a string containing the VLC-Qt version (QString)
     */
     static QString libVersion();
+
+    /*!
+        \brief VLC-Qt major version
+        \return VLC-Qt major version (int)
+    */
+    static int libVersionMajor();
+
+    /*!
+        \brief VLC-Qt minor version
+        \return VLC-Qt minor version (int)
+    */
+    static int libVersionMinor();
 
     /*!
         \brief libvlc version info

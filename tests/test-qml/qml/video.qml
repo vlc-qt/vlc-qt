@@ -17,7 +17,7 @@
 *****************************************************************************/
 
 import QtQuick 2.0
-import VLCQt 0.9
+import VLCQt 0.10
 
 Rectangle {
     width: 640

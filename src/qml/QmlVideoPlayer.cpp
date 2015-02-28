@@ -17,6 +17,7 @@
 *****************************************************************************/
 
 #include <QtCore/QDebug>
+#include <QtQml/QQmlEngine>
 
 #include "core/Video.h"
 #include "core/Audio.h"
@@ -59,6 +60,11 @@ VlcQmlVideoPlayer::~VlcQmlVideoPlayer()
     delete _media;
     delete _player;
     delete _instance;
+}
+
+void VlcQmlVideoPlayer::registerPlugin()
+{
+    qmlRegisterType<VlcQmlVideoPlayer>("VLCQt", VlcInstance::libVersionMajor(), VlcInstance::libVersionMinor(), "VlcVideoPlayer");
 }
 
 void VlcQmlVideoPlayer::openInternal()

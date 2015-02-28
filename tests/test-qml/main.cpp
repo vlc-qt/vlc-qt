@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("Test QML");
     QCoreApplication::setAttribute(Qt::AA_X11InitThreads);
 
-    qmlRegisterType<VlcQmlVideoPlayer>("VLCQt", 0, 9, "VlcVideoPlayer");
+    VlcQmlVideoPlayer::registerPlugin();
 
     QGuiApplication app(argc, argv);
     VlcCommon::setPluginPath(app.applicationDirPath() + "/../plugins");

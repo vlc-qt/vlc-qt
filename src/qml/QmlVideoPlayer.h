@@ -121,6 +121,17 @@ public:
      */
     ~VlcQmlVideoPlayer();
 
+
+    /*!
+        \brief Register QML plugin as VLCQt.VlcVideoPlayer
+
+        Include into QML file as
+        import VLCQt VERSION_MAJOR.VERSION_MINOR
+
+        Object name: VlcVideoPlayer
+     */
+    static void registerPlugin();
+
     /*!
         \brief Pause current playback
 
