@@ -35,6 +35,13 @@ namespace VlcCommon
 		\return libvlc arguments (QStringList)
 	*/
     VLCQT_CORE_EXPORT QStringList args();
+
+    /*!
+        \brief Set plugin path
+        \param path plugin path (QString)
+        \return success status
+    */
+    VLCQT_CORE_EXPORT bool setPluginPath(const QString &path);
 }
 
 #endif // VLCQT_COMMON_H_

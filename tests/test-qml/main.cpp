@@ -20,6 +20,7 @@
 #include <QtGui/QGuiApplication>
 #include <QtQuick/QQuickView>
 
+#include "core/Common.h"
 #include "qml/QmlVideoPlayer.h"
 
 int main(int argc, char *argv[])
@@ -30,6 +31,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<VlcQmlVideoPlayer>("VLCQt", 0, 9, "VlcVideoPlayer");
 
     QGuiApplication app(argc, argv);
+    VlcCommon::setPluginPath(app.applicationDirPath() + "/../plugins");
 
     QQuickView view;;
     view.setSource(QUrl(QStringLiteral("qrc:/qml/video.qml")));

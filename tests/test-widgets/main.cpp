@@ -25,6 +25,8 @@
     #include <QtGui/QApplication>
 #endif
 
+#include "core/Common.h"
+
 #include "TestMain.h"
 
 int main(int argc, char *argv[])
@@ -37,6 +39,7 @@ int main(int argc, char *argv[])
 #endif
 
     QApplication app(argc, argv);
+    VlcCommon::setPluginPath(app.applicationDirPath() + "/../plugins");
 
     TestMain mainWindow;
     mainWindow.show();

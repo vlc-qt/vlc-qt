@@ -35,3 +35,12 @@ QStringList VlcCommon::args()
 
     return args;
 }
+
+bool VlcCommon::setPluginPath(const QString &path)
+{
+    if (qgetenv("VLC_PLUGIN_PATH").isEmpty()) {
+        return qputenv("VLC_PLUGIN_PATH", path.toLocal8Bit());
+    }
+
+    return false;
+}
