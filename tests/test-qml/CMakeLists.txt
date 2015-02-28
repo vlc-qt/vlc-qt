@@ -26,6 +26,10 @@ SET(Test_QML_Srcs
     main.cpp
 )
 
+SET(Test_QML_Resources
+    qml.qrc
+)
+
 
 #####################
 # Compiler settings #
@@ -45,7 +49,7 @@ INCLUDE_DIRECTORIES(
 
 
 # This line tells cmake to create the Test program.
-ADD_EXECUTABLE(${PROJECT_NAME} ${Test_QML_Srcs})
+ADD_EXECUTABLE(${PROJECT_NAME} ${Test_QML_Srcs} ${Test_QML_Resources})
 ADD_DEPENDENCIES(${PROJECT_NAME} ${VLCQT} ${VLCQT_QML})
 
 # Link the required libraries
@@ -69,4 +73,3 @@ ENDIF()
 # Installation #
 ################
 INSTALL(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
-INSTALL(FILES ${CMAKE_SOURCE_DIR}/tests/test-qml/qml/video.qml DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/qml)

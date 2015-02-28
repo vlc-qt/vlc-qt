@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     QQuickView view;;
-    view.setSource(QUrl("qml/video.qml"));
+    view.setSource(QUrl(QStringLiteral("qrc:/qml/video.qml")));
     view.setResizeMode(QQuickView::SizeRootObjectToView);
     view.show();
 
