@@ -99,6 +99,12 @@ FILE(GLOB Vlc_Gcc "${LIBVLC_BIN_DIR}/libgcc_s_*-1.dll")
 IF(Vlc_Gcc)
     SET(Extra_Libs
         ${Vlc_Gcc}
+    )
+ENDIF()
+
+FILE(GLOB Vlc_Std "${LIBVLC_BIN_DIR}/libstdc++-6.dll")
+IF(Vlc_Std)
+    SET(Extra_Libs
         ${LIBVLC_BIN_DIR}/libstdc++-6.dll
         ${LIBVLC_BIN_DIR}/libwinpthread-1.dll
     )
