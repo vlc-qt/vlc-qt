@@ -127,8 +127,8 @@ IF(MSVC)
     ADD_DEFINITIONS(-DNOMINMAX)
 ENDIF()
 
-# Linux: So version extensions
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+# Linux/Mac: So version extensions
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     SET_TARGET_PROPERTIES(${VLCQT_QML} PROPERTIES VERSION ${VLCQT_VERSION}
                                                   SOVERSION "${VLCQT_VERSION_MAJOR}.${VLCQT_VERSION_MINOR}"
     )
