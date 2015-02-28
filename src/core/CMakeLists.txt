@@ -153,17 +153,6 @@ ELSE()
     TARGET_LINK_LIBRARIES(${VLCQT} Qt5::Core ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY})
 ENDIF()
 
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin" AND NOT STATIC)
-    ADD_CUSTOM_COMMAND(TARGET ${VLCQT} POST_BUILD COMMAND
-        ${CMAKE_INSTALL_NAME_TOOL} -add_rpath "@loader_path/../lib/" $<TARGET_FILE:${VLCQT}>)
-    ADD_CUSTOM_COMMAND(TARGET ${VLCQT} POST_BUILD COMMAND
-        ${CMAKE_INSTALL_NAME_TOOL} -change "@loader_path/lib/libvlc.5.dylib" "@loader_path/../lib/libvlc.5.dylib" $<TARGET_FILE:${VLCQT}>)
-    ADD_CUSTOM_COMMAND(TARGET ${VLCQT} POST_BUILD COMMAND
-        ${CMAKE_INSTALL_NAME_TOOL} -change "@loader_path/lib/libvlccore.5.dylib" "@loader_path/../lib/libvlccore.5.dylib" $<TARGET_FILE:${VLCQT}>)
-    ADD_CUSTOM_COMMAND(TARGET ${VLCQT} POST_BUILD COMMAND
-        ${CMAKE_INSTALL_NAME_TOOL} -change "@loader_path/lib/libvlccore.7.dylib" "@loader_path/../lib/libvlccore.7.dylib" $<TARGET_FILE:${VLCQT}>)
-ENDIF()
-
 
 ################
 # Installation #

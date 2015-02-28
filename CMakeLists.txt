@@ -93,6 +93,8 @@ ENDIF()
 
 # Support OS X 10.6 or later (64-bit only)
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    SET(CMAKE_MACOSX_RPATH ON)
+    SET(CMAKE_INSTALL_RPATH "@loader_path/../lib")
     SET(CMAKE_OSX_ARCHITECTURES x86_64)
 ENDIF()
 
