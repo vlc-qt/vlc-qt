@@ -150,6 +150,10 @@ IF(WITH_GLES)
     ENDIF()
 ENDIF()
 
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux" AND WITH_X11)
+    TARGET_LINK_LIBRARIES(${VLCQT_WIDGETS} -lX11)
+ENDIF()
+
 
 ################
 # Installation #

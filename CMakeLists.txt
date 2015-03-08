@@ -138,6 +138,10 @@ IF(QT_VERSION MATCHES 5)
         OPTION(WITH_GLES "Build with OpenGL ES2" OFF)
     ENDIF()
 
+    IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+        OPTION(WITH_X11 "Link with X11" OFF)
+    ENDIF()
+
     MESSAGE("VLC-Qt: Build with OpenGL ES2: ${WITH_GLES}")
 ENDIF()
 
