@@ -42,6 +42,14 @@ void GlslPainter::init()
     Q_ASSERT(_context);
 
     _gl = _context->functions();
+#if defined(QT_OPENGL_ES_2)
+    _glF = _context->versionFunctions<QOpenGLFunctions_ES2>();
+#else
+    _glF = _context->versionFunctions<QOpenGLFunctions_1_1>();
+#endif
+    Q_ASSERT(_glF);
+
+    _glF->initializeOpenGLFunctions();
 
     if (!_program)
         _program = new QOpenGLShaderProgram();
@@ -84,7 +92,7 @@ void GlslPainter::init()
     else if (!_program->link())
         qFatal("couldnt link shader");
 
-    _gl->glGenTextures(_textureCount, _textureIds);
+    _glF->glGenTextures(_textureCount, _textureIds);
 
     _inited = true;
 }
@@ -95,15 +103,15 @@ void GlslPainter::paint(QPainter *painter,
 {
     // Need to reenable those after native painting has begun, otherwise we might
     // not be able to paint anything.
-    bool stencilTestEnabled = _gl->glIsEnabled(GL_STENCIL_TEST);
-    bool scissorTestEnabled = _gl->glIsEnabled(GL_SCISSOR_TEST);
+    bool stencilTestEnabled = _glF->glIsEnabled(GL_STENCIL_TEST);
+    bool scissorTestEnabled = _glF->glIsEnabled(GL_SCISSOR_TEST);
 
     painter->beginNativePainting();
 
     if (stencilTestEnabled)
-        _gl->glEnable(GL_STENCIL_TEST);
+        _glF->glEnable(GL_STENCIL_TEST);
     if (scissorTestEnabled)
-        _gl->glEnable(GL_SCISSOR_TEST);
+        _glF->glEnable(GL_SCISSOR_TEST);
 
     //////////////////////////////////////////////////////////////
     initTextures();
@@ -172,11 +180,11 @@ void GlslPainter::paint(QPainter *painter,
 
     if (_textureCount == 3) {
         _gl->glActiveTexture(GL_TEXTURE0);
-        _gl->glBindTexture(GL_TEXTURE_2D, _textureIds[0]);
+        _glF->glBindTexture(GL_TEXTURE_2D, _textureIds[0]);
         _gl->glActiveTexture(GL_TEXTURE1);
-        _gl->glBindTexture(GL_TEXTURE_2D, _textureIds[1]);
+        _glF->glBindTexture(GL_TEXTURE_2D, _textureIds[1]);
         _gl->glActiveTexture(GL_TEXTURE2);
-        _gl->glBindTexture(GL_TEXTURE_2D, _textureIds[2]);
+        _glF->glBindTexture(GL_TEXTURE_2D, _textureIds[2]);
         _gl->glActiveTexture(GL_TEXTURE0);
 
         _program->setUniformValue("texY", 0);
@@ -186,7 +194,7 @@ void GlslPainter::paint(QPainter *painter,
     _program->setUniformValue("colorMatrix", _colorMatrix);
     _program->setUniformValue("opacity", GLfloat(painter->opacity()));
 
-    _gl->glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    _glF->glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
     _program->release();
     painter->endNativePainting();

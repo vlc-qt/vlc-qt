@@ -73,8 +73,8 @@ void GlPainter::initTextures()
 {
     if (!_texturesInited) {
         for (unsigned i = 0; i < _frame->planeCount; ++i) {
-            _gl->glBindTexture(_texDescriptor.target, _textureIds[i]);
-            _gl->glTexImage2D(_texDescriptor.target,
+            _glF->glBindTexture(_texDescriptor.target, _textureIds[i]);
+            _glF->glTexImage2D(_texDescriptor.target,
                          0,
                          _texDescriptor.internalFormat,
                          _frame->visiblePitch[i],
@@ -85,16 +85,16 @@ void GlPainter::initTextures()
                          0);
             // Scale appropriately so we can change to target geometry without
             // much hassle.
-            _gl->glTexParameterf(_texDescriptor.target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            _gl->glTexParameterf(_texDescriptor.target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            _gl->glTexParameterf(_texDescriptor.target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-            _gl->glTexParameterf(_texDescriptor.target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+            _glF->glTexParameterf(_texDescriptor.target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            _glF->glTexParameterf(_texDescriptor.target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            _glF->glTexParameterf(_texDescriptor.target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+            _glF->glTexParameterf(_texDescriptor.target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
             _texturesInited = true;
         }
     }
 
     for (unsigned i = 0; i < _frame->planeCount; ++i) {
-        _gl->glBindTexture(_texDescriptor.target, _textureIds[i]);
+        _glF->glBindTexture(_texDescriptor.target, _textureIds[i]);
 
 // Based on vlc/src/video_output/opengl.c
 #ifndef GL_UNPACK_ROW_LENGTH
@@ -109,7 +109,7 @@ void GlPainter::initTextures()
             destination += dst_pitch;
         }
 
-        _gl->glTexSubImage2D(_texDescriptor.target, 0,
+        _glF->glTexSubImage2D(_texDescriptor.target, 0,
                                     0, 0,
                                     _frame->visiblePitch[i],
                                     _frame->visibleLines[i],
@@ -118,15 +118,15 @@ void GlPainter::initTextures()
                                     new_plane);
         free(new_plane);
 #else
-        _gl->glPixelStorei(GL_UNPACK_ROW_LENGTH, _frame->pitch[i]);
-        _gl->glTexSubImage2D(_texDescriptor.target, 0,
+        _glF->glPixelStorei(GL_UNPACK_ROW_LENGTH, _frame->pitch[i]);
+        _glF->glTexSubImage2D(_texDescriptor.target, 0,
                         0, 0,
                         _frame->visiblePitch[i],
                         _frame->visibleLines[i],
                         _texDescriptor.format,
                         _texDescriptor.type,
                         _frame->plane[i].data());
-        _gl->glPixelStorei(GL_UNPACK_ROW_LENGTH, 0); // reset to default
+        _glF->glPixelStorei(GL_UNPACK_ROW_LENGTH, 0); // reset to default
 #endif
     }
 }
