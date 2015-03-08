@@ -24,7 +24,26 @@ CONFIGURE_FILE(
     @ONLY
 )
 
+CONFIGURE_FILE(
+    "${CMAKE_SOURCE_DIR}/pkgconfig/libvlc-qt-widgets.pc.in"
+    "${CMAKE_BINARY_DIR}/pkgconfig/libvlc-qt-widgets.pc"
+    @ONLY
+)
+
+IF(WITH_QML)
+    CONFIGURE_FILE(
+        "${CMAKE_SOURCE_DIR}/pkgconfig/libvlc-qt-qml.pc.in"
+        "${CMAKE_BINARY_DIR}/pkgconfig/libvlc-qt-qml.pc"
+        @ONLY
+    )
+ENDIF()
+
+
 ################
 # Installation #
 ################
 INSTALL(FILES ${CMAKE_BINARY_DIR}/pkgconfig/libvlc-qt.pc DESTINATION ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/pkgconfig)
+INSTALL(FILES ${CMAKE_BINARY_DIR}/pkgconfig/libvlc-qt-widgets.pc DESTINATION ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/pkgconfig)
+IF(WITH_QML)
+    INSTALL(FILES ${CMAKE_BINARY_DIR}/pkgconfig/libvlc-qt-qml.pc DESTINATION ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/pkgconfig)
+ENDIF()
