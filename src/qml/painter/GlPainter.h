@@ -24,12 +24,17 @@
 
 #include <QtGui/QMatrix4x4>
 #include <QtGui/QOpenGLContext>
-#if defined(QT_OPENGL_ES_2)
-    #include <QtGui/QOpenGLFunctions_ES2>
-#else
-    #include <QtGui/QOpenGLFunctions_1_1>
-#endif
 #include <QtGui/QPainter>
+
+#if QT_VERSION < 0x050300
+    #if defined(QT_OPENGL_ES_2)
+        #include <QtGui/QOpenGLFunctions_ES2>
+    #else
+        #include <QtGui/QOpenGLFunctions_1_1>
+    #endif
+#else
+    #include <QtGui/QOpenGLFunctions>
+#endif
 
 #include "core/VideoFrame.h"
 
@@ -67,10 +72,14 @@ protected:
 
     QOpenGLContext *_context;
     QOpenGLFunctions *_gl;
-#if defined(QT_OPENGL_ES_2)
-    QOpenGLFunctions_ES2 *_glF;
+#if QT_VERSION < 0x050300
+    #if defined(QT_OPENGL_ES_2)
+        QOpenGLFunctions_ES2 *_glF;
+    #else
+        QOpenGLFunctions_1_1 *_glF;
+    #endif
 #else
-    QOpenGLFunctions_1_1 *_glF;
+    QOpenGLFunctions *_glF;
 #endif
 
     int _textureCount;

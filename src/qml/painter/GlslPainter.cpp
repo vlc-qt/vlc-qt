@@ -42,14 +42,18 @@ void GlslPainter::init()
     Q_ASSERT(_context);
 
     _gl = _context->functions();
-#if defined(QT_OPENGL_ES_2)
-    _glF = _context->versionFunctions<QOpenGLFunctions_ES2>();
-#else
-    _glF = _context->versionFunctions<QOpenGLFunctions_1_1>();
-#endif
-    Q_ASSERT(_glF);
+#if QT_VERSION < 0x050300
+    #if defined(QT_OPENGL_ES_2)
+        _glF = _context->versionFunctions<QOpenGLFunctions_ES2>();
+    #else
+        _glF = _context->versionFunctions<QOpenGLFunctions_1_1>();
+    #endif
+        Q_ASSERT(_glF);
 
-    _glF->initializeOpenGLFunctions();
+        _glF->initializeOpenGLFunctions();
+#else
+    _glF = _gl;
+#endif
 
     if (!_program)
         _program = new QOpenGLShaderProgram();
