@@ -34,3 +34,21 @@ LIBS        += -lvlc-qt -lvlc-qt-widgets
 # Edit below for custom library location
 #LIBS     += -L/home/tadej/workspace/tanoprojects/install/linux-devel/lib -lvlc-qt -lvlc-qt-widgets
 #INCLUDEPATH += /home/tadej/workspace/tanoprojects/install/linux-devel/include
+
+# Copy required dlls on windows with install target
+#win32 {
+#	CONFIG(debug, debug|release) {
+#		LIBS += -L../../../../vlc-qt-build-debug/install/lib -llibvlc-qt -llibvlc-qt-widgets
+#		INCLUDEPATH += ../../../../vlc-qt-build-debug/install/include
+#		vlcQtDlls.path = $$OUT_PWD/debug
+#		vlcQtDlls.files = ../../../../vlc-qt-build-debug/install/bin/libvlc*
+#		vlcQtDlls.files += ../../../../vlc-qt-build-debug/install/bin/plugins
+#	} else {
+#		LIBS += -L../../../../vlc-qt-build/install/lib -llibvlc-qt -llibvlc-qt-widgets
+#		INCLUDEPATH += ../../../../vlc-qt-build/install/include
+#		vlcQtDlls.path = $$OUT_PWD/release
+#		vlcQtDlls.files = ../../../../vlc-qt-build/install/bin/libvlc*
+#		vlcQtDlls.files += ../../../../vlc-qt-build/install/bin/plugins
+#	}
+#	INSTALLS += vlcQtDlls
+#}
