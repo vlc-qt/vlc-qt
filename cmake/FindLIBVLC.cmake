@@ -49,6 +49,7 @@ FIND_PATH(LIBVLC_INCLUDE_DIR vlc/vlc.h
     "/usr/local/include/vlc"
     #mingw
     c:/msys/local/include
+    "c:/Program Files (x86)/VideoLAN/VLC/sdk/include"
   )
 FIND_PATH(LIBVLC_INCLUDE_DIR PATHS "${CMAKE_INCLUDE_PATH}/vlc" NAMES vlc.h)
 
@@ -65,6 +66,7 @@ FIND_LIBRARY(LIBVLC_LIBRARY NAMES vlc libvlc
     "/Applications/VLC.app/Contents/MacOS/plugins"
     #mingw
     c:/msys/local/lib
+    "c:/Program Files (x86)/VideoLAN/VLC/sdk/lib"
   )
 FIND_LIBRARY(LIBVLC_LIBRARY NAMES vlc libvlc)
 FIND_LIBRARY(LIBVLCCORE_LIBRARY NAMES vlccore libvlccore
@@ -78,6 +80,7 @@ FIND_LIBRARY(LIBVLCCORE_LIBRARY NAMES vlccore libvlccore
     "/Applications/VLC.app/Contents/MacOS/plugins"
     #mingw
     c:/msys/local/lib
+    "c:/Program Files (x86)/VideoLAN/VLC/sdk/lib"
   )
 FIND_LIBRARY(LIBVLCCORE_LIBRARY NAMES vlccore libvlccore)
 
