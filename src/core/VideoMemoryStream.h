@@ -25,6 +25,9 @@
 #include "SharedExportCore.h"
 
 #if defined(VLCQT_CORE_LIBRARY) || defined(VLCQT_QML_LIBRARY)
+#   if defined(Q_OS_WIN) && defined(Q_CC_GNU)
+#      define poll(u,n,t) vlc_poll(u, n, t)
+#   endif
 #   include <vlc/plugins/vlc_fourcc.h>
 #else
 struct vlc_chroma_description_t;
