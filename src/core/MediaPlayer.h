@@ -112,6 +112,7 @@ public:
     */
     void openOnly(VlcMedia *media);
 
+public slots:
     /*! \brief Set the movie time (in ms).
 
         This has no effect if no media is being played. Not all formats and protocols support this.
@@ -120,6 +121,7 @@ public:
     */
     void setTime(int time);
 
+public:
     /*!
         \brief Get the current movie time (in ms).
         \return the movie time (in ms), or -1 if there is no media (const int)
@@ -158,6 +160,7 @@ public:
     */
     float position();
 
+public slots:
     /*! \brief Set the movie position.
 
         This has no effect if no media is being played. Not all formats and protocols support this.
@@ -166,7 +169,6 @@ public:
     */
     void setPosition(float pos);
 
-public slots:
     /*!
         \brief Starts playing current media if possible
     */
