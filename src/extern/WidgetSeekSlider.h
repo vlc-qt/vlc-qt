@@ -14,8 +14,19 @@
 
 class VLCQT_EXTERN_EXPORT VlcWidgetSeekSlider : public SeekSlider
 {
+Q_OBJECT
 public:
-	VlcWidgetSeekSlider(Qt::Orientation q, QWidget *_parent = 0, bool _classic = false);
+    VlcWidgetSeekSlider(Qt::Orientation q, QWidget *_parent = 0, bool _classic = false);
+
+    using SeekSlider::setPosition;
+public slots:
+    void setDuration(int duration);
+    void setPosition(float pos);
+    void setTime(int time);
+    void updateBuffering100(float f);
+
+private:
+    int _duration;
 };
 
 #endif // VLCQT_WIDGETSEEKSLIDER_H_
