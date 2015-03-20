@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2013 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2015 Tadej Novak <tadej@tano.si>
 *
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published
@@ -19,8 +19,6 @@
 #ifndef VLCQT_WIDGETSEEK_H_
 #define VLCQT_WIDGETSEEK_H_
 
-#include <QtCore/QPoint>
-
 #if QT_VERSION >= 0x050000
     #include <QtWidgets/QWidget>
 #else
@@ -29,6 +27,7 @@
 
 #include "SharedExportWidgets.h"
 
+class QAbstractSlider;
 class QLabel;
 class QProgressBar;
 class QTimer;
@@ -41,18 +40,32 @@ class VlcMediaPlayer;
     \brief Seek widget
 
     This is one of VLC-Qt GUI classes.
-    It provides only a display of elapsed time and full time of the media.
+    It provides a display of elapsed time and full time of the media.
 */
 class VLCQT_WIDGETS_EXPORT VlcWidgetSeek : public QWidget
 {
-Q_OBJECT
+    Q_OBJECT
 public:
     /*!
         \brief VlcWidgetSeek constructor
         \param player media player
+        \param slider widget to be used as slider
+        \param connectSlider connect the slider to relevant sigals, set to false if you want to handle everything yourself
         \param parent seek widget's parent GUI widget
     */
     explicit VlcWidgetSeek(VlcMediaPlayer *player,
+                           QWidget *slider = 0,
+                           bool connectSlider = true,
+                           QWidget *parent = 0);
+
+    /*!
+        \brief VlcWidgetSeek constructor
+        \param slider widget to be used as slider
+        \param connectSlider connect the slider to relevant sigals, set to false if you want to handle everything yourself
+        \param parent seek widget's parent GUI widget
+    */
+    explicit VlcWidgetSeek(QWidget *slider,
+                           bool connectSlider,
                            QWidget *parent = 0);
 
     /*!
@@ -73,7 +86,7 @@ public:
     bool autoHide() const { return _autoHide; }
 
     /*!
-        \brief Set auto-hide option.
+        \brief Set auto-hide option
 
         This option will automatically hide seek widget, if enabled.
 
@@ -85,32 +98,52 @@ public:
         \brief Set media player if initialised without it
         \param player media player
     */
-    void setMediaPlayer(VlcMediaPlayer *player);
+    virtual void setMediaPlayer(VlcMediaPlayer *player);
+
+    /*!
+        \brief Set slider widget
+        \param slider widget to be used as slider
+        \param updateSlider connect the slider to relevant sigals, set to false if you want to handle everything yourself
+    */
+    virtual void setSliderWidget(QWidget *slider,
+                                 bool updateSlider = true);
+
+
+protected slots:
+    /*!
+        \brief Update turrent time callback
+        \param time current time
+    */
+    virtual void updateCurrentTime(int time);
+
+    /*!
+        \brief Update full time callback
+        \param time full time
+    */
+    virtual void updateFullTime(int time);
+
+
+protected:
+    /*!
+     * \brief Media player
+     */
+    VlcMediaPlayer *_vlcMediaPlayer;
+
+    /*!
+     * \brief Progress bar
+     */
+    QProgressBar *_progress;
 
 
 private slots:
     void end();
-    void updateCurrentTime(int time);
-    void updateFullTime(int time);
 
 private:
-    void mouseMoveEvent(QMouseEvent *event);
-    void mousePressEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
-    void wheelEvent(QWheelEvent *event);
-
-    void initWidgetSeek();
-    void updateEvent(const QPoint &pos);
-
-    void lock();
-    void unlock();
-
-    bool _lock;
-
-    VlcMediaPlayer *_vlcMediaPlayer;
+    void initWidgetSeek(QWidget *slider);
 
     bool _autoHide;
-    QProgressBar *_seek;
+    QAbstractSlider *_slider;
+    bool _connectSlider;
     QLabel *_labelElapsed;
     QLabel *_labelFull;
 };

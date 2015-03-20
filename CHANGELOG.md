@@ -6,6 +6,7 @@
  - Added Equalizer
  - Added support for functions from newer libVLC versions
  - Added volumeChanged and muteChanged slots to VlcAudio
+ - Made WidgetSeek more flexible with supporting sliders and progress bars
  - Fix: Building with Qt4 (issue #59)
  - Fix: Missing break in event parsing
  - Fix: Windows does not need patched headers anymore

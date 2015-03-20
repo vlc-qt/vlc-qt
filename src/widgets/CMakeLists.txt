@@ -44,6 +44,7 @@ SET(VLCQT_WIDGETS_SRCS
     ControlVideo.cpp
     SharedExportWidgets.h
     WidgetSeek.cpp
+    WidgetSeekProgress.cpp
     WidgetVideo.cpp
     WidgetVolumeSlider.cpp
 )
@@ -54,6 +55,7 @@ SET(VLCQT_WIDGETS_HEADERS
     ControlVideo.h
     SharedExportWidgets.h
     WidgetSeek.h
+    WidgetSeekProgress.h
     WidgetVideo.h
     WidgetVolumeSlider.h
 )
