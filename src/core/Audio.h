@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2015 Tadej Novak <tadej@tano.si>
 *
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published
@@ -38,6 +38,7 @@ struct libvlc_media_player_t;
 class VLCQT_CORE_EXPORT VlcAudio : public QObject
 {
 Q_OBJECT
+    friend class VlcAudioCallbackHelper;
 public:
     /*!
         \brief VlcAudio constructor.
@@ -54,10 +55,11 @@ public:
     ~VlcAudio();
 
     /*!
-        \brief Get current mute status.
-        \return current mute status (const bool)
+        \brief Get current mute state.
+        \return current mute state (const bool)
     */
     bool getMute() const;
+
 
 public slots:
     /*!
@@ -73,12 +75,19 @@ public slots:
     void setTrack(int track);
 
     /*!
-        \brief Toggle mute status.
-        \return new mute status (const bool)
+        \brief Toggle mute state.
+        \return new mute state (const bool)
     */
     bool toggleMute() const;
 
+
 public:
+    /*!
+        \brief Set mute state.
+        \param mute mute state (bool)
+    */
+    void setMute(bool mute) const;
+
     /*!
         \brief Get current audio track.
         \return the number of current audio track, or -1 if none (const int)
@@ -108,6 +117,27 @@ public:
         \return current audio level, -1 if media is not playing (const int)
     */
     int volume() const;
+
+
+signals:
+    /*!
+        \brief Signal sent when volume has changed.
+        \param volume new volume (float)
+    */
+    void volumeChangedF(float volume);
+
+    /*!
+        \brief Signal sent when volume has changed.
+        \param volume new volume (int)
+    */
+    void volumeChanged(int volume);
+
+    /*!
+        \brief Signal sent when mute has changed.
+        \param mute new mute state (bool)
+    */
+    void muteChanged(bool mute);
+
 
 private:
     libvlc_media_player_t *_vlcMediaPlayer;

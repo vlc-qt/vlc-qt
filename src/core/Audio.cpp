@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2015 Tadej Novak <tadej@tano.si>
 *
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published
@@ -16,17 +16,76 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
+/* MSVC support fix */
+#if defined(_MSC_VER)
+#   include <BaseTsd.h>
+    typedef SSIZE_T ssize_t;
+#endif
+/* MSVC + MinGW support fix */
+#if defined (_WIN32)
+#   define LIBVLC_USE_PTHREAD_CANCEL 1
+#endif
+
 #include <vlc/vlc.h>
+#include <vlc/plugins/vlc_common.h>
+#include <vlc/plugins/vlc_variables.h>
 
 #include "core/Audio.h"
 #include "core/Error.h"
 #include "core/MediaPlayer.h"
 
+/*!
+    \private
+*/
+class VlcAudioCallbackHelper
+{
+public:
+    static int volumeCallback(vlc_object_t *obj,
+                              const char *name,
+                              vlc_value_t oldVal,
+                              vlc_value_t newVal,
+                              void *data)
+    {
+        Q_UNUSED(obj)
+        Q_UNUSED(name)
+        Q_UNUSED(oldVal)
+
+        VlcAudio *core = (VlcAudio *)data;
+        emit core->volumeChangedF(newVal.f_float);
+        int vol = newVal.f_float < 0 ? -1 : qRound(newVal.f_float * 100.f);
+        emit core->volumeChanged(vol);
+        return VLC_SUCCESS;
+    }
+
+    static int muteCallback(vlc_object_t *obj,
+                            const char *name,
+                            vlc_value_t oldVal,
+                            vlc_value_t newVal,
+                            void *data)
+    {
+        Q_UNUSED(obj);
+        Q_UNUSED(name);
+        Q_UNUSED(oldVal);
+
+        VlcAudio *core = (VlcAudio *)data;
+        emit core->muteChanged(newVal.b_bool);
+        return VLC_SUCCESS;
+    }
+};
+
 VlcAudio::VlcAudio(VlcMediaPlayer *player)
     : QObject(player),
-      _vlcMediaPlayer(player->core()) { }
+      _vlcMediaPlayer(player->core())
+{
+    var_AddCallback((vlc_object_t *)_vlcMediaPlayer, "volume", VlcAudioCallbackHelper::volumeCallback, this);
+    var_AddCallback((vlc_object_t *)_vlcMediaPlayer, "mute", VlcAudioCallbackHelper::muteCallback, this);
+}
 
-VlcAudio::~VlcAudio() { }
+VlcAudio::~VlcAudio()
+{
+    var_DelCallback((vlc_object_t *)_vlcMediaPlayer, "volume", VlcAudioCallbackHelper::volumeCallback, this);
+    var_DelCallback((vlc_object_t *)_vlcMediaPlayer, "mute", VlcAudioCallbackHelper::muteCallback, this);
+}
 
 bool VlcAudio::getMute() const
 {
@@ -66,6 +125,14 @@ bool VlcAudio::toggleMute() const
     }
 
     return getMute();
+}
+
+void VlcAudio::setMute(bool mute) const
+{
+    if (_vlcMediaPlayer && mute != getMute()) {
+        libvlc_audio_set_mute(_vlcMediaPlayer, mute);
+        VlcError::showErrmsg();
+    }
 }
 
 int VlcAudio::track() const
