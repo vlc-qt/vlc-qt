@@ -17,16 +17,49 @@
 *****************************************************************************/
 
 #include <vlc/vlc.h>
+#include <vlc/plugins/vlc_common.h>
+#include <vlc/plugins/vlc_variables.h>
 
 #include "core/Audio.h"
 #include "core/Error.h"
 #include "core/MediaPlayer.h"
 
+// Header doesn't have vlc includes but uses forward declarations, but vlc_value_t cannot be declared forward.
+// Thus the callbacks cannot be known in the header. Still they need access to private memvers.
+// To solve this problem I use a dummy friend class that has access to priveate memvers but does not need to be defined in the header.
+// If you have a better solution feel free. -ym
+class VlcAudioCallbackHelper
+{
+public:
+    static int volume_callback(vlc_object_t */*obj*/, const char */*name*/, vlc_value_t /*oldVal*/, vlc_value_t newVal, void *data)
+    {
+        VlcAudio *core = (VlcAudio *)data;
+        emit core->volumeChangedF(newVal.f_float);
+        Q_ASSERT( qRound(newVal.f_float * 100.f) == core->volume() );
+        emit core->volumeChanged(qRound(newVal.f_float * 100.f));
+        return VLC_SUCCESS;
+    }
+    static int mute_callback(vlc_object_t */*obj*/, const char */*name*/, vlc_value_t /*oldVal*/, vlc_value_t newVal, void *data)
+    {
+        VlcAudio *core = (VlcAudio *)data;
+        emit core->muteChanged(newVal.b_bool);
+        return VLC_SUCCESS;
+    }
+};
+
 VlcAudio::VlcAudio(VlcMediaPlayer *player)
     : QObject(player),
-      _vlcMediaPlayer(player->core()) { }
+      _vlcMediaPlayer(player->core())
+{
+    var_AddCallback((vlc_object_t *)_vlcMediaPlayer, "volume", VlcAudioCallbackHelper::volume_callback, this);
+    var_AddCallback((vlc_object_t *)_vlcMediaPlayer, "mute", VlcAudioCallbackHelper::mute_callback, this);
+}
 
-VlcAudio::~VlcAudio() { }
+VlcAudio::~VlcAudio()
+{
+    var_DelCallback((vlc_object_t *)_vlcMediaPlayer, "volume", VlcAudioCallbackHelper::volume_callback, this);
+    var_DelCallback((vlc_object_t *)_vlcMediaPlayer, "mute", VlcAudioCallbackHelper::mute_callback, this);
+}
 
 bool VlcAudio::getMute() const
 {
@@ -66,6 +99,14 @@ bool VlcAudio::toggleMute() const
     }
 
     return getMute();
+}
+
+void VlcAudio::setMute(bool mute) const
+{
+    if (_vlcMediaPlayer) {
+        libvlc_audio_set_mute(_vlcMediaPlayer, mute);
+        VlcError::showErrmsg();
+    }
 }
 
 int VlcAudio::track() const
