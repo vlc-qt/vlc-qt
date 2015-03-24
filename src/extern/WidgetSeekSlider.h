@@ -12,6 +12,8 @@
 #include "SharedExportExtern.h"
 #include "util/input_slider.hpp"
 
+class VlcMediaPlayer;
+
 class VLCQT_EXTERN_EXPORT VlcWidgetSeekSlider : public SeekSlider
 {
 Q_OBJECT
@@ -24,6 +26,8 @@ public slots:
     void setPosition(float pos);
     void setTime(int time);
     void updateBuffering100(float f);
+    void connectMediaPlayer(VlcMediaPlayer * player);
+    void disconnectMediaPlayer(VlcMediaPlayer * player);
 
 private:
     int _duration;
