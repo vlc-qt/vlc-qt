@@ -318,6 +318,7 @@ void VlcMediaPlayer::libvlc_callback(const libvlc_event_t *event,
         break;
     case libvlc_MediaPlayerBuffering:
         emit core->buffering(event->u.media_player_buffering.new_cache);
+        emit core->buffering(qRound(event->u.media_player_buffering.new_cache));
         break;
     case libvlc_MediaPlayerPlaying:
         emit core->playing();
