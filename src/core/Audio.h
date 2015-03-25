@@ -59,6 +59,7 @@ public:
     */
     bool getMute() const;
 
+public slots:
     /*!
         \brief Set current audio level.
         \param volume new audio level (int)
@@ -82,6 +83,7 @@ public:
     */
     void setMute(bool mute) const;
 
+public:
     /*!
         \brief Get current audio track.
         \return the number of current audio track, or -1 if none (const int)
