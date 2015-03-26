@@ -103,7 +103,7 @@ bool VlcAudio::toggleMute() const
 
 void VlcAudio::setMute(bool mute) const
 {
-    if (_vlcMediaPlayer) {
+    if (_vlcMediaPlayer && mute != getMute()) {
         libvlc_audio_set_mute(_vlcMediaPlayer, mute);
         VlcError::showErrmsg();
     }
