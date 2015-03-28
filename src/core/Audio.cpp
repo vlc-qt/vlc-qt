@@ -36,7 +36,6 @@ public:
         VlcAudio *core = (VlcAudio *)data;
         emit core->volumeChangedF(newVal.f_float);
         int vol = newVal.f_float < 0 ? -1 : qRound(newVal.f_float * 100.f);
-        Q_ASSERT( vol == core->volume() );
         emit core->volumeChanged(vol);
         return VLC_SUCCESS;
     }
