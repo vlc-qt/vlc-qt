@@ -35,8 +35,9 @@ public:
     {
         VlcAudio *core = (VlcAudio *)data;
         emit core->volumeChangedF(newVal.f_float);
-        Q_ASSERT( qRound(newVal.f_float * 100.f) == core->volume() );
-        emit core->volumeChanged(qRound(newVal.f_float * 100.f));
+        int vol = newVal.f_float < 0 ? -1 : qRound(newVal.f_float * 100.f);
+        Q_ASSERT( vol == core->volume() );
+        emit core->volumeChanged(vol);
         return VLC_SUCCESS;
     }
     static int mute_callback(vlc_object_t */*obj*/, const char */*name*/, vlc_value_t /*oldVal*/, vlc_value_t newVal, void *data)
