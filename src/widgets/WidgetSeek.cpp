@@ -74,12 +74,14 @@ void VlcWidgetSeek::initWidgetSeek(QWidget *slider)
 
     QAbstractSlider * sl = qobject_cast<QAbstractSlider *>(slider);
     _slider = sl;
-    if (sl != 0 && _connectSlider)
-    {
+    if (sl != 0 && _connectSlider) {
         sl->setOrientation(Qt::Horizontal);
         sl->setMaximum(1);
         if (_vlcMediaPlayer != 0)
+        {
             connect(sl, SIGNAL(valueChanged(int)), _vlcMediaPlayer, SLOT(setTime(int)));
+            connect(_vlcMediaPlayer, SIGNAL(seekableChanged(bool)), sl, SLOT(setEnabled(bool)));
+        }
     }
     QProgressBar * bar = qobject_cast<QProgressBar *>(slider);
     _progress = bar;
@@ -120,8 +122,10 @@ void VlcWidgetSeek::setMediaPlayer(VlcMediaPlayer *player)
         disconnect(_vlcMediaPlayer, SIGNAL(timeChanged(int)), this, SLOT(updateCurrentTime(int)));
         disconnect(_vlcMediaPlayer, SIGNAL(end()), this, SLOT(end()));
         disconnect(_vlcMediaPlayer, SIGNAL(stopped()), this, SLOT(end()));
-        if (_slider != 0)
+        if (_slider != 0) {
             disconnect(_slider, SIGNAL(valueChanged(int)), _vlcMediaPlayer, SLOT(setTime(int)));
+            disconnect(_vlcMediaPlayer, SIGNAL(seekableChanged(bool)), _slider, SLOT(setEnabled(bool)));
+        }
     }
 
     _vlcMediaPlayer = player;
@@ -132,11 +136,11 @@ void VlcWidgetSeek::setMediaPlayer(VlcMediaPlayer *player)
     connect(_vlcMediaPlayer, SIGNAL(timeChanged(int)), this, SLOT(updateCurrentTime(int)));
     connect(_vlcMediaPlayer, SIGNAL(end()), this, SLOT(end()));
     connect(_vlcMediaPlayer, SIGNAL(stopped()), this, SLOT(end()));
-    if (_slider != 0 && _connectSlider)
-    {
+    if (_slider != 0 && _connectSlider) {
         _slider->setOrientation(Qt::Horizontal);
         _slider->setMaximum(1);
         connect(_slider, SIGNAL(valueChanged(int)), _vlcMediaPlayer, SLOT(setTime(int)));
+        connect(_vlcMediaPlayer, SIGNAL(seekableChanged(bool)), _slider, SLOT(setEnabled(bool)));
     }
     else if (_progress != 0 && _connectSlider)
     {
@@ -214,8 +218,11 @@ void VlcWidgetSeek::updateFullTime(int time)
             _progress->setMaximum(1);
         setVisible(!_autoHide);
     } else {
-        if (_slider && _connectSlider)
+        if (_slider && _connectSlider) {
             _slider->setMaximum(time);
+            _slider->setSingleStep(1000);
+            _slider->setPageStep(time / 100);
+        }
         if (_progress && _connectSlider)
             _progress->setMaximum(time);
         setVisible(true);
