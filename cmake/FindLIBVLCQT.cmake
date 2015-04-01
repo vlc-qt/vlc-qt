@@ -38,6 +38,7 @@ FIND_PATH(LIBVLCQT_INCLUDE_DIR vlc-qt/Instance.h
     "/usr/local/include"
     "/usr/local/include/vlc-qt"
     c:/msys/local/include
+    "c:/Program Files (x86)/VideoLAN/VLC/sdk/include"
     NO_DEFAULT_PATH
 )
 FIND_PATH(LIBVLCQT_INCLUDE_DIR Instance.h)
@@ -47,6 +48,7 @@ FIND_LIBRARY(LIBVLCQT_LIBRARY NAMES vlc-qt PATHS
     "$ENV{LIBVLCQT_LIBRARY_PATH}"
     "$ENV{LIB_DIR}/lib"
     c:/msys/local/lib
+    "c:/Program Files (x86)/VideoLAN/VLC/sdk/lib"
     NO_DEFAULT_PATH
 )
 FIND_LIBRARY(LIBVLCQT_LIBRARY NAMES vlc-qt)

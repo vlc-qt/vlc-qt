@@ -37,6 +37,7 @@ struct libvlc_media_player_t;
 class VLCQT_CORE_EXPORT VlcAudio : public QObject
 {
 Q_OBJECT
+    friend class VlcAudioCallbackHelper;
 public:
     /*!
         \brief VlcAudio constructor.
@@ -58,6 +59,7 @@ public:
     */
     bool getMute() const;
 
+public slots:
     /*!
         \brief Set current audio level.
         \param volume new audio level (int)
@@ -76,6 +78,12 @@ public:
     */
     bool toggleMute() const;
 
+    /*!
+        \brief Set mute status.
+    */
+    void setMute(bool mute) const;
+
+public:
     /*!
         \brief Get current audio track.
         \return the number of current audio track, or -1 if none (const int)
@@ -105,6 +113,20 @@ public:
         \return current audio level, -1 if media is not playing (const int)
     */
     int volume() const;
+
+signals:
+    /*!
+        \brief Signal sent when volume has changed.
+    */
+    void volumeChangedF(float volume);
+    /*!
+        \brief Signal sent when volume has changed.
+    */
+    void volumeChanged(int volume);
+    /*!
+        \brief Signal sent when mute has changed.
+    */
+    void muteChanged(bool mute);
 
 private:
     libvlc_media_player_t *_vlcMediaPlayer;
