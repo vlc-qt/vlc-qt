@@ -213,9 +213,15 @@ signals:
 
     /*!
         \brief Signal sent on buffering
-        \param float buffer
+        \param float buffer in percent
     */
     void buffering(float);
+
+    /*!
+        \brief Signal sent on buffering
+        \param int buffer in percent
+    */
+    void buffering(int);
 
     /*!
         \brief Signal sent when end reached
