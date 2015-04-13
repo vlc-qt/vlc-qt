@@ -14,6 +14,8 @@ obj*
 
 # Examples build
 examples/demo-player/Makefile
-examples/demo-player/*.o
-examples/demo-player/moc_*
-examples/demo-player/ui_*
+examples/demo-player/src/demo-player
+examples/demo-player/src/Makefile
+examples/demo-player/src/*.o
+examples/demo-player/src/moc_*
+examples/demo-player/src/ui_*

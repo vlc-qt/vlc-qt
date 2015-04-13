@@ -48,7 +48,7 @@ private:
     VlcInstance *_instance;
     VlcMedia *_media;
     VlcMediaPlayer *_player;
-	EqualizerDialog *_equalizerDialog;
+    EqualizerDialog *_equalizerDialog;
 };
 
 #endif // DEMOPLAYER_H_

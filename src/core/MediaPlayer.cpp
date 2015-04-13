@@ -43,7 +43,7 @@ VlcMediaPlayer::VlcMediaPlayer(VlcInstance *instance)
 
     _vlcAudio = new VlcAudio(this);
     _vlcVideo = new VlcVideo(this);
-	_vlcEqualizer = new VlcEqualizer(this);
+    _vlcEqualizer = new VlcEqualizer(this);
 
     _videoWidget = 0;
     _media = 0;
@@ -59,7 +59,7 @@ VlcMediaPlayer::~VlcMediaPlayer()
 
     delete _vlcAudio;
     delete _vlcVideo;
-	delete _vlcEqualizer;
+    delete _vlcEqualizer;
 
     libvlc_media_player_release(_vlcMediaPlayer);
 
@@ -83,7 +83,7 @@ VlcVideo *VlcMediaPlayer::video() const
 
 VlcEqualizer *VlcMediaPlayer::equalizer() const
 {
-	 return _vlcEqualizer;
+     return _vlcEqualizer;
 }
 
 void VlcMediaPlayer::createCoreConnections()
