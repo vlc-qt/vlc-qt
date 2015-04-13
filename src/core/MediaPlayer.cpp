@@ -21,6 +21,7 @@
 #include <vlc/vlc.h>
 
 #include "core/Audio.h"
+#include "core/Equalizer.h"
 #include "core/Error.h"
 #include "core/Instance.h"
 #include "core/Media.h"
@@ -42,6 +43,7 @@ VlcMediaPlayer::VlcMediaPlayer(VlcInstance *instance)
 
     _vlcAudio = new VlcAudio(this);
     _vlcVideo = new VlcVideo(this);
+	_vlcEqualizer = new VlcEqualizer(this);
 
     _videoWidget = 0;
     _media = 0;
@@ -57,25 +59,31 @@ VlcMediaPlayer::~VlcMediaPlayer()
 
     delete _vlcAudio;
     delete _vlcVideo;
+	delete _vlcEqualizer;
 
     libvlc_media_player_release(_vlcMediaPlayer);
 
     VlcError::showErrmsg();
 }
 
-libvlc_media_player_t *VlcMediaPlayer::core()
+libvlc_media_player_t *VlcMediaPlayer::core() const
 {
     return _vlcMediaPlayer;
 }
 
-VlcAudio *VlcMediaPlayer::audio()
+VlcAudio *VlcMediaPlayer::audio() const
 {
     return _vlcAudio;
 }
 
-VlcVideo *VlcMediaPlayer::video()
+VlcVideo *VlcMediaPlayer::video() const
 {
     return _vlcVideo;
+}
+
+VlcEqualizer *VlcMediaPlayer::equalizer() const
+{
+	 return _vlcEqualizer;
 }
 
 void VlcMediaPlayer::createCoreConnections()
@@ -153,7 +161,7 @@ int VlcMediaPlayer::length() const
     return length;
 }
 
-VlcMedia *VlcMediaPlayer::currentMedia()
+VlcMedia *VlcMediaPlayer::currentMedia() const
 {
     return _media;
 }
@@ -295,7 +303,7 @@ int VlcMediaPlayer::time() const
     return time;
 }
 
-VlcVideoDelegate *VlcMediaPlayer::videoWidget()
+VlcVideoDelegate *VlcMediaPlayer::videoWidget() const
 {
     return _videoWidget;
 }

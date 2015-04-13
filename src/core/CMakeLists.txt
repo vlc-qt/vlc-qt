@@ -43,6 +43,7 @@ SET(VLCQT_CORE_SRCS
     Audio.cpp
     Common.cpp
     Enums.cpp
+    Equalizer.cpp
     Error.cpp
     Instance.cpp
     Media.cpp
@@ -63,6 +64,7 @@ SET(VLCQT_CORE_HEADERS
     Audio.h
     Common.h
     Enums.h
+    Equalizer.h
     Error.h
     Instance.h
     Media.h

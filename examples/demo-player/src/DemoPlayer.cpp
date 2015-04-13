@@ -30,27 +30,30 @@
 DemoPlayer::DemoPlayer(QWidget *parent)
     : QMainWindow(parent),
       ui(new Ui::DemoPlayer),
-      _media(0)
+	  _media(0),
+	  _equalizerDialog(new EqualizerDialog(this))
 {
     ui->setupUi(this);
 
     _instance = new VlcInstance(VlcCommon::args(), this);
     _player = new VlcMediaPlayer(_instance);
     _player->setVideoWidget(ui->video);
+	_equalizerDialog->setMediaPlayer(_player);
 
     ui->video->setMediaPlayer(_player);
     ui->volume->setMediaPlayer(_player);
     ui->volume->setVolume(50);
     ui->seek->setMediaPlayer(_player);
 
-    connect(ui->actionOpenLocal, SIGNAL(triggered()), this, SLOT(openLocal()));
-    connect(ui->actionOpenUrl, SIGNAL(triggered()), this, SLOT(openUrl()));
-    connect(ui->actionPause, SIGNAL(triggered()), _player, SLOT(pause()));
-    connect(ui->actionStop, SIGNAL(triggered()), _player, SLOT(stop()));
-    connect(ui->openLocal, SIGNAL(clicked()), this, SLOT(openLocal()));
-    connect(ui->openUrl, SIGNAL(clicked()), this, SLOT(openUrl()));
-    connect(ui->pause, SIGNAL(clicked()), _player, SLOT(pause()));
-    connect(ui->stop, SIGNAL(clicked()), _player, SLOT(stop()));
+	connect(ui->actionOpenLocal, &QAction::triggered, this, &DemoPlayer::openLocal);
+	connect(ui->actionOpenUrl, &QAction::triggered, this, &DemoPlayer::openUrl);
+	connect(ui->actionPause, &QAction::triggered, _player, &VlcMediaPlayer::paused);
+	connect(ui->actionStop, &QAction::triggered, _player, &VlcMediaPlayer::stop);
+	connect(ui->openLocal, &QPushButton::clicked, this, &DemoPlayer::openLocal);
+	connect(ui->openUrl, &QPushButton::clicked, this, &DemoPlayer::openUrl);
+	connect(ui->pause, &QPushButton::clicked, _player, &VlcMediaPlayer::pause);
+	connect(ui->stop, &QPushButton::clicked, _player, &VlcMediaPlayer::stop);
+	connect(ui->equalizer, &QPushButton::clicked, _equalizerDialog, &EqualizerDialog::show);
 }
 
 DemoPlayer::~DemoPlayer()
