@@ -11,3 +11,9 @@ demo-player.pro.user*
 
 # Debian/build
 obj*
+
+# Examples build
+examples/demo-player/Makefile
+examples/demo-player/*.o
+examples/demo-player/moc_*
+examples/demo-player/ui_*
