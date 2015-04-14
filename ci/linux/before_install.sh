@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ev
+set -e
 
 # Prepare build environment
 mkdir dependencies

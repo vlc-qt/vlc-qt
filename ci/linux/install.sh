@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ev
+set -e
 
 # Install dependencies from APT
 sudo apt-get update -qq
