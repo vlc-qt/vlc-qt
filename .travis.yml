@@ -1,0 +1,10 @@
+os:
+  - linux
+
+sudo: true
+language: cpp
+compiler: gcc
+
+before_install: . ci/$TRAVIS_OS_NAME/before_install.sh
+install: . ci/$TRAVIS_OS_NAME/install.sh
+script: . ci/$TRAVIS_OS_NAME/script.sh
