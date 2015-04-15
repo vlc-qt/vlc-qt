@@ -19,21 +19,21 @@
 #################
 
 CONFIGURE_FILE(
-    "${CMAKE_SOURCE_DIR}/pkgconfig/libvlc-qt.pc.in"
-    "${CMAKE_BINARY_DIR}/pkgconfig/libvlc-qt.pc"
+    "${CMAKE_SOURCE_DIR}/platform/pkgconfig/libvlc-qt.pc.in"
+    "${CMAKE_BINARY_DIR}/platform/pkgconfig/libvlc-qt.pc"
     @ONLY
 )
 
 CONFIGURE_FILE(
-    "${CMAKE_SOURCE_DIR}/pkgconfig/libvlc-qt-widgets.pc.in"
-    "${CMAKE_BINARY_DIR}/pkgconfig/libvlc-qt-widgets.pc"
+    "${CMAKE_SOURCE_DIR}/platform/pkgconfig/libvlc-qt-widgets.pc.in"
+    "${CMAKE_BINARY_DIR}/platform/pkgconfig/libvlc-qt-widgets.pc"
     @ONLY
 )
 
 IF(WITH_QML)
     CONFIGURE_FILE(
-        "${CMAKE_SOURCE_DIR}/pkgconfig/libvlc-qt-qml.pc.in"
-        "${CMAKE_BINARY_DIR}/pkgconfig/libvlc-qt-qml.pc"
+        "${CMAKE_SOURCE_DIR}/platform/pkgconfig/libvlc-qt-qml.pc.in"
+        "${CMAKE_BINARY_DIR}/platform/pkgconfig/libvlc-qt-qml.pc"
         @ONLY
     )
 ENDIF()
@@ -42,8 +42,8 @@ ENDIF()
 ################
 # Installation #
 ################
-INSTALL(FILES ${CMAKE_BINARY_DIR}/pkgconfig/libvlc-qt.pc DESTINATION ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/pkgconfig)
-INSTALL(FILES ${CMAKE_BINARY_DIR}/pkgconfig/libvlc-qt-widgets.pc DESTINATION ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/pkgconfig)
+INSTALL(FILES ${CMAKE_BINARY_DIR}/platform/pkgconfig/libvlc-qt.pc DESTINATION ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/pkgconfig)
+INSTALL(FILES ${CMAKE_BINARY_DIR}/platform/pkgconfig/libvlc-qt-widgets.pc DESTINATION ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/pkgconfig)
 IF(WITH_QML)
-    INSTALL(FILES ${CMAKE_BINARY_DIR}/pkgconfig/libvlc-qt-qml.pc DESTINATION ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/pkgconfig)
+    INSTALL(FILES ${CMAKE_BINARY_DIR}/platform/pkgconfig/libvlc-qt-qml.pc DESTINATION ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/pkgconfig)
 ENDIF()

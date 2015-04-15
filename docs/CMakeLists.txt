@@ -19,7 +19,7 @@
 #################
 
 CONFIGURE_FILE(
-    "${CMAKE_SOURCE_DIR}/doc/Doxyfile.in"
-    "${CMAKE_BINARY_DIR}/doc/Doxyfile"
+    "${CMAKE_SOURCE_DIR}/docs/Doxyfile.in"
+    "${CMAKE_BINARY_DIR}/docs/Doxyfile"
     @ONLY
 )

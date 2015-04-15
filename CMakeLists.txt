@@ -25,7 +25,7 @@ SET(VLCQT_WIDGETS ${PROJECT_NAME}-widgets)
 SET(VLCQT_QML ${PROJECT_NAME}-qml)
 
 CONFIGURE_FILE(
-    "${CMAKE_SOURCE_DIR}/cmake_uninstall.cmake.in"
+    "${CMAKE_SOURCE_DIR}/cmake/cmake_uninstall.cmake.in"
     "${CMAKE_BINARY_DIR}/cmake_uninstall.cmake"
     IMMEDIATE @ONLY)
 
@@ -216,13 +216,13 @@ ENDIF()
 # Compile and set #
 ###################
 ADD_SUBDIRECTORY(src) 
-ADD_SUBDIRECTORY(doc)
+ADD_SUBDIRECTORY(docs)
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-    ADD_SUBDIRECTORY(pkgconfig)
+    ADD_SUBDIRECTORY(platform/pkgconfig)
 ELSEIF(MINGW OR MSVC)
-    ADD_SUBDIRECTORY(windows)
+    ADD_SUBDIRECTORY(platform/windows)
 ELSEIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    ADD_SUBDIRECTORY(osx)
+    ADD_SUBDIRECTORY(platform/osx)
 ENDIF()
 
 
