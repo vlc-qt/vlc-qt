@@ -19,6 +19,9 @@
 
 set -eu
 
+pushd `dirname $0` > /dev/null
+pushd .. > /dev/null
+
 DEVEL=""
 TARGET=""
 BUILD="1"
@@ -48,13 +51,24 @@ done
 
 if [[ -z $TARGET ]]; then
     echo "Target (-t) not specified"
+
+    popd > /dev/null
+    popd > /dev/null
+
     exit 1
 fi
 
 
-if [ -f targets/${TARGET}.sh ]; then
-    source targets/${TARGET}.sh
+if [ -f `dirname $0`/targets/${TARGET}.sh ]; then
+    source `dirname $0`/targets/${TARGET}.sh
+
+    popd > /dev/null
+    popd > /dev/null
 else
     echo "Target $TARGET not supported"
+
+    popd > /dev/null
+    popd > /dev/null
+
     exit 1
 fi

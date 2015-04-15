@@ -5,6 +5,6 @@ sudo: true
 language: cpp
 compiler: gcc
 
-before_install: . ci/$TRAVIS_OS_NAME/before_install.sh
-install: . ci/$TRAVIS_OS_NAME/install.sh
-script: . ci/$TRAVIS_OS_NAME/script.sh
+before_install: . tools/ci/$TRAVIS_OS_NAME/before_install.sh
+install: . tools/ci/$TRAVIS_OS_NAME/install.sh
+script: . tools/ci/$TRAVIS_OS_NAME/script.sh
