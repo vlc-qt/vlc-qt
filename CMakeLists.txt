@@ -180,6 +180,11 @@ ELSE()
     SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/libvlc-qt-qml${LS}.so)
 ENDIF()
 
+#Fix for MinGW
+IF(MINGW)
+    ADD_DEFINITIONS( -Dpoll\(u,n,t\)=vlc_poll\(u,n,t\) )
+ENDIF()
+
 
 ###########
 # Version #
