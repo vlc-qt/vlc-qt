@@ -32,16 +32,6 @@ VlcVideoMemoryStream::VlcVideoMemoryStream() { }
 
 VlcVideoMemoryStream::~VlcVideoMemoryStream() { }
 
-static inline qint64 gcd(qint64 a, qint64 b)
-{
-    while(b) {
-        qint64 c = a % b;
-        a = b;
-        b = c;
-    }
-    return a;
-}
-
 static int lcm(int a, int b)
 {
     return a * b / GCD( a, b );

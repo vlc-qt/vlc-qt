@@ -76,11 +76,6 @@ INCLUDE_DIRECTORIES(
     ${LIBVLC_INCLUDE_DIR}/vlc/plugins
 )
 
-IF(MSVC)
-    INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/windows/msvc)
-ELSEIF(MINGW)
-    INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/windows/mingw)
-ENDIF()
 
 # Compile resources with windres
 IF(MINGW)
