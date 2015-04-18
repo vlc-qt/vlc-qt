@@ -1,0 +1,96 @@
+# VLC-Qt Changelog
+
+## master
+ - Fix: Building with Qt4 (issue #59)
+ - Fix: Missing break in event parsing
+ - Fix: Windows does not need patched headers anymore
+
+---
+
+## 0.10.0 (2015-03-15)
+ - Full Qt5 QML support
+ - Ability to set VLC plugin path
+ - VLC 2.2 support
+ - Stats support (issue #28)
+ - Debug/Release postfix in library filenames (issue #29)
+ - Fix: Make VlcError::errmsg() return QString, not void (issue #48)
+ - Fix: Add remaining pkgconfig files (issue #51)
+
+## 0.9.0 (2013-09-26)
+ - Official OS X support (10.6 or later, 64-bit only)
+ - Static build support
+ - Simplified volume slider
+ - Experimental Qt5 QML support (disabled by default)
+ - Fix: Use UTF-8 encoding on all platforms
+ - Windows SDK updated to Qt 5.1.1 MSVC2012 and VLC 2.0.8
+
+## 0.8.1 (2013-04-27)
+ - Autodetect Qt4 or Qt5
+ - Restored MinGW support
+ - Windows SDK updated to Qt 5.0.2 and VLC 2.0.6 with release and debug builds
+
+## 0.8.0 (2013-01-26)
+  - Separate library into modules: core, widgets and qml
+  - Introduce position() and setPosition() methods
+  - Fix pause method and introduce togglePause method
+  - Removed mouse and fullscreen functions from WidgetVideo
+  - Full support for MSVC and Qt5
+  - Fix: Use proper track ids
+  - Fix: Install pkg-config file to correct path (issue #12)
+  - Fix: Don't use exit() (issue #13)
+
+## 0.7.0 (2012-10-14)
+  - Re-licensed under GNU Lesser General Public License v3
+  - Native MSVC support
+  - Basic QML Video Player
+  - New MediaList and MediaListPlayer
+  - Support for libvlc events
+  - Ability to access current media and other set objects
+  - Ability to check track type
+  - Enums for common audio/video outputs
+  - Logo and marquee support
+  - Scale video function
+  - Added and changed some common instance arguments
+  - Drop support for older versions of Qt and VLC
+    Supported are Qt 4.8 or later and VLC 2.0 or later.
+
+## 0.6.2 (2012-07-02)
+  - New take snapshot and size functions for video
+  - New seek widget
+  - [FIX] #6: Window-resize cursor
+  - Updated examples and tests
+  - MSVC linking support
+  - Windows SDK based on VLC 2.0.2 and Qt 4.8.1
+
+## 0.6.1 (2012-05-27)
+  - Updated VideoWidget to remove X11 compositing problems
+  - Qt5 improved support
+
+## 0.6.0 (2012-05-03)
+  - Multiple instances and players support
+  - Basic recording support
+  - Examples for new VLC-Qt based projects
+  - Improved Windows support
+  - Basic Mac OS X support
+  - Various bugfixes and improvements
+
+## 0.5.1 (2011-06-27)
+  - Pkgconfig support
+  - Changes in audio/video controllers
+  - Teletext updates
+
+## 0.5.0 (2011-04-03)
+  - Auto-hide option for seek widget
+  - Update for Audio and Video control classes
+  - Added recorder args
+  - Added ability to set default audio language
+  - New status signals
+  - [FIX] Bug #1 - Support for meta data
+
+## 0.4.0 (2010-10-08)
+  - QVlc project is now separated from Tano and now known as VLC-Qt.
+  - Only libvlc 1.1 and later are supported.
+  - Instance has been split into VlcError, VlcInstance, VlcMedia and VlcMediaPlayer classes.
+  - New VlcAudio and VlcVideo classes
+  - Code cleanup and optimisation
+  - Doxygen documentation update
