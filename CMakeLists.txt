@@ -148,7 +148,12 @@ ENDIF()
 OPTION(STATIC "Build statically" OFF)
 MESSAGE("VLC-Qt: Build statically: ${STATIC}")
 
-# Add additional required libraries
+# Add libVLC libraries
+# Define version, if not defined use latest relased
+IF(NOT DEFINED LIBVLC_VERSION)
+    SET(LIBVLC_VERSION 0x020200)
+ENDIF()
+# Include libVLC library
 FIND_PACKAGE(LIBVLC REQUIRED)
 
 # Set Qt bin dir to find QtCoreX.dll and other libs to install

@@ -92,7 +92,7 @@ int VlcInstance::libVersionMajor()
 {
     int version = -1;
 #if defined(LIBVLCQT_VERSION_MAJOR)
-    version = QString(LIBVLCQT_VERSION_MAJOR).toInt();
+    version = LIBVLCQT_VERSION_MAJOR;
 #endif //LIBVLCQT_VERSION
 
     return version;
@@ -102,7 +102,7 @@ int VlcInstance::libVersionMinor()
 {
     int version = -1;
 #if defined(LIBVLCQT_VERSION_MINOR)
-    version = QString(LIBVLCQT_VERSION_MINOR).toInt();
+    version = LIBVLCQT_VERSION_MINOR;
 #endif //LIBVLCQT_VERSION
 
     return version;

@@ -43,7 +43,6 @@ SET(VLCQT_CORE_SRCS
     Audio.cpp
     Common.cpp
     Enums.cpp
-    Equalizer.cpp
     Error.cpp
     Instance.cpp
     Media.cpp
@@ -64,7 +63,6 @@ SET(VLCQT_CORE_HEADERS
     Audio.h
     Common.h
     Enums.h
-    Equalizer.h
     Error.h
     Instance.h
     Media.h
@@ -81,6 +79,20 @@ SET(VLCQT_CORE_HEADERS
 
     ${CMAKE_BINARY_DIR}/src/Config.h
 )
+
+IF(${LIBVLC_VERSION} EQUAL 0x020200 OR ${LIBVLC_VERSION} GREATER 0x020200)
+    SET(VLCQT_CORE_SRCS
+        ${VLCQT_CORE_SRCS}
+
+        Equalizer.cpp
+    )
+
+    SET(VLCQT_CORE_HEADERS
+        ${VLCQT_CORE_SRCS}
+
+        Equalizer.h
+    )
+ENDIF()
 
 
 #####################

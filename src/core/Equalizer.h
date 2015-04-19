@@ -30,6 +30,8 @@ struct libvlc_equalizer_t;
 /*!
     \class VlcEqualizer
     \brief VlcEqualizer
+
+    \since libVLC 2.2
 */
 class VLCQT_CORE_EXPORT VlcEqualizer : public QObject
 {

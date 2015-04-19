@@ -25,6 +25,7 @@
 
 #include <QtGui/qwindowdefs.h>
 
+#include "Config.h"
 #include "Enums.h"
 #include "SharedExportCore.h"
 
@@ -83,11 +84,13 @@ public:
     */
     VlcVideo *video() const;
 
+#if LIBVLC_VERSION >= 0x020200
     /*!
         \brief Returns equalizer object.
         \return equalizer (VlcEqualizer *)
     */
     VlcEqualizer *equalizer() const;
+#endif
 
     /*!
         \brief Get the current movie length (in ms).
@@ -325,7 +328,9 @@ private:
 
     VlcAudio *_vlcAudio;
     VlcVideo *_vlcVideo;
+#if LIBVLC_VERSION >= 0x020200
     VlcEqualizer *_vlcEqualizer;
+#endif
 
     VlcVideoDelegate *_videoWidget;
     WId _currentWId;

@@ -16,18 +16,19 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include <QtCore/QDebug>
-
 #include <vlc/vlc.h>
 
 #include "core/Audio.h"
-#include "core/Equalizer.h"
 #include "core/Error.h"
 #include "core/Instance.h"
 #include "core/Media.h"
 #include "core/MediaPlayer.h"
 #include "core/Video.h"
 #include "core/VideoDelegate.h"
+
+#if LIBVLC_VERSION >= 0x020200
+#include "core/Equalizer.h"
+#endif
 
 VlcMediaPlayer::VlcMediaPlayer(VlcInstance *instance)
     : QObject(instance)
@@ -43,7 +44,9 @@ VlcMediaPlayer::VlcMediaPlayer(VlcInstance *instance)
 
     _vlcAudio = new VlcAudio(this);
     _vlcVideo = new VlcVideo(this);
+#if LIBVLC_VERSION >= 0x020200
     _vlcEqualizer = new VlcEqualizer(this);
+#endif
 
     _videoWidget = 0;
     _media = 0;
@@ -59,7 +62,9 @@ VlcMediaPlayer::~VlcMediaPlayer()
 
     delete _vlcAudio;
     delete _vlcVideo;
+#if LIBVLC_VERSION >= 0x020200
     delete _vlcEqualizer;
+#endif
 
     libvlc_media_player_release(_vlcMediaPlayer);
 
@@ -81,10 +86,12 @@ VlcVideo *VlcMediaPlayer::video() const
     return _vlcVideo;
 }
 
+#if LIBVLC_VERSION >= 0x020200
 VlcEqualizer *VlcMediaPlayer::equalizer() const
 {
      return _vlcEqualizer;
 }
+#endif
 
 void VlcMediaPlayer::createCoreConnections()
 {
