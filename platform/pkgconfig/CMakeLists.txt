@@ -30,7 +30,7 @@ CONFIGURE_FILE(
     @ONLY
 )
 
-IF(WITH_QML)
+IF(QT_VERSION MATCHES 5)
     CONFIGURE_FILE(
         "${CMAKE_SOURCE_DIR}/platform/pkgconfig/libvlc-qt-qml.pc.in"
         "${CMAKE_BINARY_DIR}/platform/pkgconfig/libvlc-qt-qml.pc"
@@ -44,6 +44,6 @@ ENDIF()
 ################
 INSTALL(FILES ${CMAKE_BINARY_DIR}/platform/pkgconfig/libvlc-qt.pc DESTINATION ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/pkgconfig)
 INSTALL(FILES ${CMAKE_BINARY_DIR}/platform/pkgconfig/libvlc-qt-widgets.pc DESTINATION ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/pkgconfig)
-IF(WITH_QML)
+IF(QT_VERSION MATCHES 5)
     INSTALL(FILES ${CMAKE_BINARY_DIR}/platform/pkgconfig/libvlc-qt-qml.pc DESTINATION ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/pkgconfig)
 ENDIF()

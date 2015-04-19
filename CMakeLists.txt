@@ -125,16 +125,7 @@ ELSE()
     MESSAGE("VLC-Qt: Build with Qt5")
 ENDIF()
 
-# Select modules
-# Widgets
-OPTION(WITH_WIDGETS "Build with Widgets" ON)
-MESSAGE("VLC-Qt: Build with Widgets: ${WITH_WIDGETS}")
-
 IF(QT_VERSION MATCHES 5)
-    # QML
-    OPTION(WITH_QML "Build with QML" ON)
-    MESSAGE("VLC-Qt: Build with QML: ${WITH_QML}")
-
     IF(MINGW OR MSVC)
         OPTION(WITH_ANGLE "Build with Angle" OFF)
         MESSAGE("VLC-Qt: Build with Angle: ${WITH_ANGLE}")
@@ -148,11 +139,12 @@ IF(QT_VERSION MATCHES 5)
         OPTION(WITH_GLES "Build with OpenGL ES2" OFF)
     ENDIF()
 
-    IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-        OPTION(WITH_X11 "Link with X11" OFF)
-    ENDIF()
-
     MESSAGE("VLC-Qt: Build with OpenGL ES2: ${WITH_GLES}")
+ENDIF()
+
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    OPTION(WITH_X11 "Link with X11" OFF)
+    MESSAGE("VLC-Qt: Link with X11: ${WITH_X11}")
 ENDIF()
 
 OPTION(STATIC "Build statically" OFF)
