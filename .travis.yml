@@ -1,10 +1,17 @@
 os:
   - linux
 
-sudo: true
 language: cpp
 compiler: gcc
 
 before_install: . tools/ci/$TRAVIS_OS_NAME/before_install.sh
 install: . tools/ci/$TRAVIS_OS_NAME/install.sh
 script: . tools/ci/$TRAVIS_OS_NAME/script.sh
+
+addons:
+  apt:
+    packages:
+    - libqt4-dev
+    - libvlc-dev
+    - libvlccore-dev
+    - p7zip-full
