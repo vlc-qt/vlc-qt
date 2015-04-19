@@ -41,6 +41,20 @@ SET(Test_Widgets_Srcs
     TestRecorder.cpp
 )
 
+IF(${LIBVLC_VERSION} EQUAL 0x020200 OR ${LIBVLC_VERSION} GREATER 0x020200)
+    SET(Test_Widgets_UIs
+        ${Test_Widgets_UIs}
+
+        EqualizerDialog.ui
+    )
+
+    SET(Test_Widgets_Srcs
+        ${Test_Widgets_Srcs}
+
+        EqualizerDialog.cpp
+    )
+ENDIF()
+
 
 #####################
 # Compiler settings #

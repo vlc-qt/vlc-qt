@@ -16,47 +16,32 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_TEST_PLAYER_H_
-#define VLCQT_TEST_PLAYER_H_
+#ifndef EQUALIZERDIALOG_H
+#define EQUALIZERDIALOG_H
 
-// QtGui/QtWidgets
-#include <QMainWindow>
+#include <QDialog>
+#include "ui_EqualizerDialog.h"
 
-#include "Config.h"
-
-namespace Ui {
-    class TestPlayer;
-}
-
-class VlcInstance;
-class VlcMedia;
 class VlcMediaPlayer;
 
-#if LIBVLC_VERSION >= 0x020200
-    class EqualizerDialog;
-#endif
-
-class TestPlayer : public QMainWindow
+class EqualizerDialog : public QDialog, Ui::EqualizerDialog
 {
-Q_OBJECT
+    Q_OBJECT
 public:
-    explicit TestPlayer(QWidget *parent = 0);
-    ~TestPlayer();
+    explicit EqualizerDialog(QWidget *parent = 0);
 
-private slots:
-    void openLocal();
-    void openUrl();
+    void setMediaPlayer(VlcMediaPlayer *mediaPlayer);
+
+public slots:
+    void applyChangesForBand(int value);
+
+    void applySelectedPreset();
+
+    void toggle(bool checked);
 
 private:
-    Ui::TestPlayer *ui;
-
-    VlcInstance *_instance;
-    VlcMedia *_media;
-    VlcMediaPlayer *_player;
-
-#if LIBVLC_VERSION >= 0x020200
-    EqualizerDialog *_equalizerDialog;
-#endif
+    QMap<QSlider*, int> _mapSliders;
+    VlcMediaPlayer *_mediaPlayer;
 };
 
-#endif // VLCQT_TEST_PLAYER_H_
+#endif // EQUALIZERDIALOG_H

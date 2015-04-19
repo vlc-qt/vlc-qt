@@ -25,6 +25,10 @@
 #include "core/Media.h"
 #include "core/MediaPlayer.h"
 
+#if LIBVLC_VERSION >= 0x020200
+    #include "EqualizerDialog.h"
+#endif
+
 #include "TestPlayer.h"
 #include "ui_TestPlayer.h"
 
@@ -32,12 +36,18 @@ TestPlayer::TestPlayer(QWidget *parent)
     : QMainWindow(parent),
       ui(new Ui::TestPlayer),
       _media(0)
+#if LIBVLC_VERSION >= 0x020200
+      , _equalizerDialog(new EqualizerDialog(this))
+#endif
 {
     ui->setupUi(this);
 
     _instance = new VlcInstance(VlcCommon::args(), this);
     _player = new VlcMediaPlayer(_instance);
     _player->setVideoWidget(ui->video);
+#if LIBVLC_VERSION >= 0x020200
+    _equalizerDialog->setMediaPlayer(_player);
+#endif
 
     ui->video->setMediaPlayer(_player);
     ui->volume->setMediaPlayer(_player);
@@ -52,6 +62,11 @@ TestPlayer::TestPlayer(QWidget *parent)
     connect(ui->openUrl, SIGNAL(clicked()), this, SLOT(openUrl()));
     connect(ui->pause, SIGNAL(clicked()), _player, SLOT(pause()));
     connect(ui->stop, SIGNAL(clicked()), _player, SLOT(stop()));
+#if LIBVLC_VERSION >= 0x020200
+    connect(ui->equalizer, SIGNAL(clicked()), _equalizerDialog, SLOT(show()));
+#else
+    ui->equalizer->hide();
+#endif
 }
 
 TestPlayer::~TestPlayer()

@@ -62,6 +62,9 @@ IF(CMAKE_BUILD_TYPE MATCHES Debug)
     ENDIF()
 ENDIF()
 
+# C++11 support
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
 # Show all warnings
 IF(NOT MSVC)
     SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wall -Wextra")
