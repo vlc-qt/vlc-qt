@@ -38,6 +38,11 @@ SET(CMAKE_MODULE_PATH
 
 INCLUDE(ManageString)
 
+# Detect CI
+IF(DEFINED CI)
+    MESSAGE("Automatic CI build")
+ENDIF()
+
 # Set MingW bin dir, if MingW present
 IF(MINGW)
     STRING(REGEX REPLACE "([^ ]+)[/\\].*" "\\1" MINGW_BIN_DIR_TMP "${CMAKE_CXX_COMPILER}")
@@ -63,7 +68,9 @@ IF(CMAKE_BUILD_TYPE MATCHES Debug)
 ENDIF()
 
 # C++11 support
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+IF (NOT (DEFINED CI AND ${CMAKE_SYSTEM_NAME} MATCHES "Linux"))
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+ENDIF()
 
 # Show all warnings
 IF(NOT MSVC)
