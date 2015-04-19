@@ -27,6 +27,13 @@ All development is made in branches. You can also find specific releases by
 browsing tags.
 
 
+## Examples and guides
+VLC-Qt examples are now located in the [examples](https://github.com/vlc-qt/examples)
+repository.
+
+A special guides section will be introduced on the web page soon.
+
+
 ## Requirements
 
 VLC-Qt can be built with any common compiler (g++, clang, MSVC, MinGW).
