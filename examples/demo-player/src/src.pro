@@ -22,14 +22,19 @@ TEMPLATE    = app
 QT          += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-SOURCES     += main.cpp\
-               DemoPlayer.cpp
+SOURCES     += main.cpp \
+    DemoPlayer.cpp \
+    EqualizerDialog.cpp
 
-HEADERS     += DemoPlayer.h
+HEADERS     += DemoPlayer.h \
+    EqualizerDialog.h
 
-FORMS       += DemoPlayer.ui
+FORMS       += DemoPlayer.ui \
+    EqualizerDialog.ui
 
 LIBS        += -lvlc-qt -lvlc-qt-widgets
+
+CONFIG += c++11
 
 # Edit below for custom library location
 #LIBS     += -L/home/tadej/workspace/tanoprojects/install/linux-devel/lib -lvlc-qt -lvlc-qt-widgets

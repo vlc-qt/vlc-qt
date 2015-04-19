@@ -29,6 +29,7 @@
 #include "SharedExportCore.h"
 
 class VlcAudio;
+class VlcEqualizer;
 class VlcInstance;
 class VlcMedia;
 class VlcVideo;
@@ -68,19 +69,25 @@ public:
         \brief Returns libvlc media player object.
         \return libvlc media player (libvlc_media_player_t *)
     */
-    libvlc_media_player_t *core();
+    libvlc_media_player_t *core() const;
 
     /*!
         \brief Returns audio manager object.
         \return audio manager (VlcAudio *)
     */
-    VlcAudio *audio();
+    VlcAudio *audio() const;
 
     /*!
         \brief Returns video manager object.
         \return video manager (VlcVideo *)
     */
-    VlcVideo *video();
+    VlcVideo *video() const;
+
+    /*!
+        \brief Returns equalizer object.
+        \return equalizer (VlcEqualizer *)
+    */
+    VlcEqualizer *equalizer() const;
 
     /*!
         \brief Get the current movie length (in ms).
@@ -92,7 +99,7 @@ public:
         \brief Get current media object
         \return media object (VlcMedia *)
     */
-    VlcMedia *currentMedia();
+    VlcMedia *currentMedia() const;
 
     /*!
         \brief Get current media core object
@@ -150,7 +157,7 @@ public:
         \brief Get current video widget.
         \return current video widget (VlcVideoWidget *)
     */
-    VlcVideoDelegate *videoWidget();
+    VlcVideoDelegate *videoWidget() const;
 
     /*!
         \brief Get current video position.
@@ -318,6 +325,7 @@ private:
 
     VlcAudio *_vlcAudio;
     VlcVideo *_vlcVideo;
+    VlcEqualizer *_vlcEqualizer;
 
     VlcVideoDelegate *_videoWidget;
     WId _currentWId;

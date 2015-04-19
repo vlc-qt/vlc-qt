@@ -29,6 +29,8 @@ class VlcInstance;
 class VlcMedia;
 class VlcMediaPlayer;
 
+#include "EqualizerDialog.h"
+
 class DemoPlayer : public QMainWindow
 {
 Q_OBJECT
@@ -46,6 +48,7 @@ private:
     VlcInstance *_instance;
     VlcMedia *_media;
     VlcMediaPlayer *_player;
+    EqualizerDialog *_equalizerDialog;
 };
 
 #endif // DEMOPLAYER_H_
