@@ -1,5 +1,8 @@
 # VLC-Qt Library
-[![Build Status](https://travis-ci.org/ntadej/vlc-qt.svg?branch=master)](https://travis-ci.org/ntadej/vlc-qt)
+[![Homepage][web-img]][web]
+[![Latest release][release-img]][release]
+[![License][license-img]][license]
+[![Build Status][travis-img]][travis]
 
 VLC-Qt is a free library used to connect [Qt](http://qt.io) and
 [libVLC](http://videolan.org) libraries. It contains core classes for main
@@ -12,7 +15,7 @@ in cross-platform spirit so it may work on other systems but is not supported.
 ## Binaries and source code
 
 You can download VLC-Qt binaries and sources from the [official web page]
-(http://projects.tano.si/vlc-qt/).
+(http://vlc-qt.tano.si).
 
 Latest source is also available via Git:
 ```bash
@@ -45,4 +48,15 @@ distribute the application and spread the word!
 
 This project may be used under the terms of the
 GNU Lesser General Public License version 3.0 as published by the
-Free Software Foundation and appearing in the file LICENSE.LGPL.
+Free Software Foundation and appearing in the file LICENSE.md.
+
+
+[web]: http://vlc-qt.tano.si
+[release]: https://github.com/ntadej/vlc-qt/releases
+[license]: https://github.com/ntadej/vlc-qt/blob/master/LICENSE.md
+[travis]: https://travis-ci.org/ntadej/vlc-qt
+
+[web-img]: https://img.shields.io/badge/web-vlc--qt.tano.si-green.svg
+[license-img]: https://img.shields.io/github/license/ntadej/vlc-qt.svg
+[release-img]: https://img.shields.io/github/release/ntadej/vlc-qt.svg
+[travis-img]: https://travis-ci.org/ntadej/vlc-qt.svg?branch=master
