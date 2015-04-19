@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2015 Tadej Novak <tadej@tano.si>
 *
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published
@@ -18,18 +18,21 @@
 
 #include "core/Common.h"
 
-#include "TestMain.h"
-#include "ui_TestMain.h"
+#include "Tests.h"
+#include "ui_Tests.h"
 
-#include "TestDualInstance.h"
-#include "TestDualPlayer.h"
-#include "TestMetaManager.h"
-#include "TestPlayer.h"
-#include "TestRecorder.h"
+#include "common/dual/DualInstance.h"
+#include "common/dual/DualPlayer.h"
+#include "common/MetaManager.h"
+#include "common/Recorder.h"
+#include "widgets/Player.h"
 
-TestMain::TestMain(QWidget *parent)
+Tests::Tests(QWidget *parent)
     : QMainWindow(parent),
-      ui(new Ui::TestMain),
+      ui(new Ui::Tests),
+#if QT_VERSION >= 0x050000
+      _quickView(0),
+#endif
       _testDualInstance(0),
       _testDualPlayer(0),
       _testPlayer(0)
@@ -42,55 +45,77 @@ TestMain::TestMain(QWidget *parent)
     connect(ui->buttonMetaManager, SIGNAL(clicked()), this, SLOT(metaManager()));
     connect(ui->buttonPlayer, SIGNAL(clicked()), this, SLOT(player()));
     connect(ui->buttonRecorder, SIGNAL(clicked()), this, SLOT(recorder()));
+
+#if QT_VERSION >= 0x050000
+    connect(ui->buttonQml, SIGNAL(clicked()), this, SLOT(qml()));
+#endif
 }
 
-TestMain::~TestMain()
+Tests::~Tests()
 {
     delete ui;
 
     delete _testDualInstance;
     delete _testDualPlayer;
     delete _testPlayer;
+
+#if QT_VERSION >= 0x050000
+    delete _quickView;
+#endif
 }
 
-void TestMain::dualInstance()
+void Tests::dualInstance()
 {
     if(_testDualInstance) {
         delete _testDualInstance;
     }
 
-    _testDualInstance = new TestDualInstance(this);
+    _testDualInstance = new DualInstance(this);
     _testDualInstance->show();
 }
 
-void TestMain::dualPlayer()
+void Tests::dualPlayer()
 {
     if(_testDualPlayer) {
         delete _testDualPlayer;
     }
 
-    _testDualPlayer = new TestDualPlayer(this);
+    _testDualPlayer = new DualPlayer(this);
     _testDualPlayer->show();
 }
 
-void TestMain::metaManager()
+void Tests::metaManager()
 {
-    TestMetaManager test;
+    MetaManager test;
     test.exec();
 }
 
-void TestMain::player()
+void Tests::player()
 {
     if(_testPlayer) {
         delete _testPlayer;
     }
 
-    _testPlayer = new TestPlayer(this);
+    _testPlayer = new Player(this);
     _testPlayer->show();
 }
 
-void TestMain::recorder()
+void Tests::qml()
 {
-    TestRecorder test;
+#if QT_VERSION >= 0x050000
+    if(_quickView) {
+        delete _quickView;
+    }
+
+    _quickView = new QQuickView();
+    _quickView->setSource(QUrl(QStringLiteral("qrc:/qml/video.qml")));
+    _quickView->setResizeMode(QQuickView::SizeRootObjectToView);
+    _quickView->show();
+#endif
+}
+
+void Tests::recorder()
+{
+    Recorder test;
     test.exec();
 }

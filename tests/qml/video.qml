@@ -16,41 +16,18 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_TEST_DUALPLAYER_H_
-#define VLCQT_TEST_DUALPLAYER_H_
+import QtQuick 2.0
+import VLCQt 0.11
 
-// QtGui/QtWidgets
-#include <QMainWindow>
+Rectangle {
+    width: 640
+    height: 480
+    color: "black"
 
-namespace Ui {
-    class TestDual;
+    VlcVideoPlayer {
+        id: vidwidget
+        anchors.fill: parent
+        url: "http://videos.hd-trailers.net/e23ab4b8-a737-46dd-a0e4-259ba36056b6_YsfXbEghC5XywlmkKiYrF0D1oWcPYHA94aPeKmTuUKJJVJBpH4AFbPzcNWMhAJHuRnKZAAatvKg-_8_0.mp4"
+        //url: "http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_640x360.m4v"
+    }
 }
-
-class VlcInstance;
-class VlcMedia;
-class VlcMediaPlayer;
-
-class TestDualPlayer : public QMainWindow
-{
-Q_OBJECT
-public:
-    explicit TestDualPlayer(QWidget *parent = 0);
-    ~TestDualPlayer();
-
-private slots:
-    void open1();
-    void open2();
-
-private:
-    Ui::TestDual *ui;
-
-    VlcInstance *_instance;
-
-    VlcMedia *_media1;
-    VlcMediaPlayer *_player1;
-
-    VlcMedia *_media2;
-    VlcMediaPlayer *_player2;
-};
-
-#endif // VLCQT_TEST_DUALPLAYER_H_

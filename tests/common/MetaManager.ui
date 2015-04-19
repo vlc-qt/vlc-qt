@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>TestMetaManager</class>
- <widget class="QDialog" name="TestMetaManager">
+ <class>MetaManager</class>
+ <widget class="QDialog" name="MetaManager">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -14,8 +14,8 @@
    <string>Meta Manager Test</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../data/logo.qrc">
-    <normaloff>:/vlc-qt/icons/48x48/vlc-qt.png</normaloff>:/vlc-qt/icons/48x48/vlc-qt.png</iconset>
+   <iconset resource="../../data/logo.qrc">
+    <normaloff>:/icons/48x48/vlc-qt.png</normaloff>:/icons/48x48/vlc-qt.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="1">
@@ -116,7 +116,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../data/logo.qrc"/>
+  <include location="../../data/logo.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2013 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2015 Tadej Novak <tadej@tano.si>
 *
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published
@@ -26,12 +26,12 @@
 #include "core/Media.h"
 #include "core/MediaPlayer.h"
 
-#include "TestRecorder.h"
-#include "ui_TestRecorder.h"
+#include "Recorder.h"
+#include "ui_Recorder.h"
 
-TestRecorder::TestRecorder(QWidget *parent)
+Recorder::Recorder(QWidget *parent)
     : QDialog(parent),
-      ui(new Ui::TestRecorder),
+      ui(new Ui::Recorder),
       _media(0)
 {
     ui->setupUi(this);
@@ -54,7 +54,7 @@ TestRecorder::TestRecorder(QWidget *parent)
     connect(ui->buttonStop, SIGNAL(clicked()), this, SLOT(stop()));
 }
 
-TestRecorder::~TestRecorder()
+Recorder::~Recorder()
 {
     delete ui;
     delete _timer;
@@ -63,7 +63,7 @@ TestRecorder::~TestRecorder()
     delete _instance;
 }
 
-void TestRecorder::browse()
+void Recorder::browse()
 {
     QString path =
             QFileDialog::getExistingDirectory(this, QObject::tr("Open directory"),
@@ -73,7 +73,7 @@ void TestRecorder::browse()
     ui->editPath->setText(path);
 }
 
-void TestRecorder::play()
+void Recorder::play()
 {
     qDebug() << "Start";
 
@@ -90,7 +90,7 @@ void TestRecorder::play()
     _timer->start(10000);
 }
 
-void TestRecorder::stop()
+void Recorder::stop()
 {
     _player->stop();
 

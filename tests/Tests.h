@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2013 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2015 Tadej Novak <tadej@tano.si>
 *
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published
@@ -16,41 +16,50 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_TEST_MAIN_H_
-#define VLCQT_TEST_MAIN_H_
+#ifndef VLCQT_TESTS_H_
+#define VLCQT_TESTS_H_
 
 // QtGui/QtWidgets
 #include <QMainWindow>
 
+#if QT_VERSION >= 0x050000
+    #include <QtQuick/QQuickView>
+#endif
+
 namespace Ui
 {
-    class TestMain;
+    class Tests;
 }
 
-class TestDualInstance;
-class TestDualPlayer;
-class TestPlayer;
+class DualInstance;
+class DualPlayer;
+class Player;
 
-class TestMain : public QMainWindow
+class Tests : public QMainWindow
 {
 Q_OBJECT
 public:
-    explicit TestMain(QWidget *parent = 0);
-    ~TestMain();
+    explicit Tests(QWidget *parent = 0);
+    ~Tests();
 
 private slots:
     void dualInstance();
     void dualPlayer();
     void metaManager();
     void player();
+    void qml();
     void recorder();
 
 private:
-    Ui::TestMain *ui;
+    Ui::Tests *ui;
 
-    TestDualInstance *_testDualInstance;
-    TestDualPlayer *_testDualPlayer;
-    TestPlayer *_testPlayer;
+#if QT_VERSION >= 0x050000
+    QQuickView *_quickView;
+#endif
+
+    DualInstance *_testDualInstance;
+    DualPlayer *_testDualPlayer;
+    Player *_testPlayer;
 };
 
-#endif // VLCQT_TEST_MAIN_H_
+#endif // VLCQT_TESTS_H_

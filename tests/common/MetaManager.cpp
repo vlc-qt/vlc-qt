@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2013 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2015 Tadej Novak <tadej@tano.si>
 *
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published
@@ -26,12 +26,12 @@
 #include "core/Media.h"
 #include "core/MetaManager.h"
 
-#include "TestMetaManager.h"
-#include "ui_TestMetaManager.h"
+#include "MetaManager.h"
+#include "ui_MetaManager.h"
 
-TestMetaManager::TestMetaManager(QWidget *parent)
+MetaManager::MetaManager(QWidget *parent)
     : QDialog(parent),
-      ui(new Ui::TestMetaManager),
+      ui(new Ui::MetaManager),
       _media(0),
       _meta(0)
 {
@@ -45,7 +45,7 @@ TestMetaManager::TestMetaManager(QWidget *parent)
     _instance = new VlcInstance(VlcCommon::args(), this);
 }
 
-TestMetaManager::~TestMetaManager()
+MetaManager::~MetaManager()
 {
     delete ui;
     delete _meta;
@@ -53,7 +53,7 @@ TestMetaManager::~TestMetaManager()
     delete _instance;
 }
 
-void TestMetaManager::open()
+void MetaManager::open()
 {
     if(_meta)
         delete _meta;
@@ -65,7 +65,7 @@ void TestMetaManager::open()
     _meta = new VlcMetaManager(_media);
 }
 
-void TestMetaManager::read()
+void MetaManager::read()
 {
     QString album("Album: " + _meta->album());
     QString artist("Artist: " + _meta->artist());
@@ -90,13 +90,13 @@ void TestMetaManager::read()
                            setting + "\n" + title + "\n" + url + "\n" + year + "\n");
 }
 
-void TestMetaManager::save()
+void MetaManager::save()
 {
     if(_meta->saveMeta())
         ui->labelSave->setText("Successfully saved!");
 }
 
-void TestMetaManager::set()
+void MetaManager::set()
 {
     _meta->setAlbum(ui->edit->text());
     _meta->setArtist(ui->edit->text());

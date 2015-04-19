@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2013 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2015 Tadej Novak <tadej@tano.si>
 *
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published
@@ -24,60 +24,55 @@
 #include "core/Media.h"
 #include "core/MediaPlayer.h"
 
-#include "TestDualPlayer.h"
-#include "ui_TestDual.h"
+#include "DualInstance.h"
+#include "ui_Dual.h"
 
-TestDualPlayer::TestDualPlayer(QWidget *parent)
+DualInstance::DualInstance(QWidget *parent)
     : QMainWindow(parent),
-      ui(new Ui::TestDual),
+      ui(new Ui::Dual),
       _media1(0),
       _media2(0)
 {
     ui->setupUi(this);
 
-    _instance = new VlcInstance(VlcCommon::args(), this);
-
-    _player1 = new VlcMediaPlayer(_instance);
+    _instance1 = new VlcInstance(VlcCommon::args(), this);
+    _player1 = new VlcMediaPlayer(_instance1);
     _player1->setVideoWidget(ui->video1);
 
     ui->video1->setMediaPlayer(_player1);
-    ui->volume1->setMediaPlayer(_player1);
-    ui->volume1->setVolume(50);
-    ui->seek1->setMediaPlayer(_player1);
 
     connect(ui->open1, SIGNAL(clicked()), this, SLOT(open1()));
     connect(ui->pause1, SIGNAL(clicked()), _player1, SLOT(pause()));
     connect(ui->stop1, SIGNAL(clicked()), _player1, SLOT(stop()));
 
-    _player2 = new VlcMediaPlayer(_instance);
+    _instance2 = new VlcInstance(VlcCommon::args(), this);
+    _player2 = new VlcMediaPlayer(_instance2);
     _player2->setVideoWidget(ui->video2);
 
     ui->video2->setMediaPlayer(_player2);
-    ui->volume2->setMediaPlayer(_player2);
-    ui->volume2->setVolume(50);
-    ui->seek2->setMediaPlayer(_player2);
 
     connect(ui->open2, SIGNAL(clicked()), this, SLOT(open2()));
     connect(ui->pause2, SIGNAL(clicked()), _player2, SLOT(pause()));
     connect(ui->stop2, SIGNAL(clicked()), _player2, SLOT(stop()));
 
-    ui->group1->setTitle("Player 1");
-    ui->group2->setTitle("Player 2");
+    ui->group1->setTitle("Instance 1");
+    ui->group2->setTitle("Instance 2");
 
-    setWindowTitle("Dual Player Test");
+    setWindowTitle("Dual Instance Test");
 }
 
-TestDualPlayer::~TestDualPlayer()
+DualInstance::~DualInstance()
 {
     delete _media1;
     delete _player1;
     delete _media2;
     delete _player2;
-    delete _instance;
+    delete _instance1;
+    delete _instance2;
     delete ui;
 }
 
-void TestDualPlayer::open1()
+void DualInstance::open1()
 {
     QString file =
         QFileDialog::getOpenFileName(this, tr("Open file"),
@@ -87,12 +82,12 @@ void TestDualPlayer::open1()
     if (file.isEmpty())
         return;
 
-    _media1 = new VlcMedia(file, true, _instance);
+    _media1 = new VlcMedia(file, true, _instance1);
 
     _player1->open(_media1);
 }
 
-void TestDualPlayer::open2()
+void DualInstance::open2()
 {
     QString file =
         QFileDialog::getOpenFileName(this, tr("Open file"),
@@ -102,7 +97,7 @@ void TestDualPlayer::open2()
     if (file.isEmpty())
         return;
 
-    _media2 = new VlcMedia(file, true, _instance);
+    _media2 = new VlcMedia(file, true, _instance2);
 
     _player2->open(_media2);
 }

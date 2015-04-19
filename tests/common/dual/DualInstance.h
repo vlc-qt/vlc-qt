@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2013 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2015 Tadej Novak <tadej@tano.si>
 *
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published
@@ -16,32 +16,41 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef EQUALIZERDIALOG_H
-#define EQUALIZERDIALOG_H
+#ifndef VLCQT_TEST_DUALINSTANCE_H_
+#define VLCQT_TEST_DUALINSTANCE_H_
 
-#include <QDialog>
-#include "ui_EqualizerDialog.h"
+// QtGui/QtWidgets
+#include <QMainWindow>
 
+namespace Ui {
+    class Dual;
+}
+
+class VlcInstance;
+class VlcMedia;
 class VlcMediaPlayer;
 
-class EqualizerDialog : public QDialog, Ui::EqualizerDialog
+class DualInstance : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit EqualizerDialog(QWidget *parent = 0);
+    explicit DualInstance(QWidget *parent = 0);
+    ~DualInstance();
 
-    void setMediaPlayer(VlcMediaPlayer *mediaPlayer);
-
-public slots:
-    void applyChangesForBand(int value);
-
-    void applySelectedPreset();
-
-    void toggle(bool checked);
+private slots:
+    void open1();
+    void open2();
 
 private:
-    QMap<QSlider*, int> _mapSliders;
-    VlcMediaPlayer *_mediaPlayer;
+    Ui::Dual *ui;
+
+    VlcInstance *_instance1;
+    VlcMedia *_media1;
+    VlcMediaPlayer *_player1;
+
+    VlcInstance *_instance2;
+    VlcMedia *_media2;
+    VlcMediaPlayer *_player2;
 };
 
-#endif // EQUALIZERDIALOG_H
+#endif // VLCQT_TEST_DUALINSTANCE_H_

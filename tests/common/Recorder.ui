@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>TestRecorder</class>
- <widget class="QDialog" name="TestRecorder">
+ <class>Recorder</class>
+ <widget class="QDialog" name="Recorder">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>350</height>
+    <height>353</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Recorder Test</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../data/logo.qrc">
-    <normaloff>:/vlc-qt/icons/48x48/vlc-qt.png</normaloff>:/vlc-qt/icons/48x48/vlc-qt.png</iconset>
+   <iconset resource="../../data/logo.qrc">
+    <normaloff>:/icons/48x48/vlc-qt.png</normaloff>:/icons/48x48/vlc-qt.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0" colspan="2">
@@ -139,7 +139,7 @@ Test duration is 10s.</string>
   </layout>
  </widget>
  <resources>
-  <include location="../data/logo.qrc"/>
+  <include location="../../data/logo.qrc"/>
  </resources>
  <connections/>
 </ui>

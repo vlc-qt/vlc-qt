@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2013 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2015 Tadej Novak <tadej@tano.si>
 *
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published
@@ -16,40 +16,41 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_TEST_RECORDER_H_
-#define VLCQT_TEST_RECORDER_H_
+#ifndef VLCQT_TEST_DUALPLAYER_H_
+#define VLCQT_TEST_DUALPLAYER_H_
 
 // QtGui/QtWidgets
-#include <QDialog>
+#include <QMainWindow>
+
+namespace Ui {
+    class Dual;
+}
 
 class VlcInstance;
 class VlcMedia;
 class VlcMediaPlayer;
 
-namespace Ui {
-    class TestRecorder;
-}
-
-class TestRecorder : public QDialog
+class DualPlayer : public QMainWindow
 {
-Q_OBJECT
+    Q_OBJECT
 public:
-    explicit TestRecorder(QWidget *parent = 0);
-    ~TestRecorder();
+    explicit DualPlayer(QWidget *parent = 0);
+    ~DualPlayer();
 
 private slots:
-    void browse();
-    void play();
-    void stop();
+    void open1();
+    void open2();
 
 private:
-    Ui::TestRecorder *ui;
-
-    QTimer *_timer;
+    Ui::Dual *ui;
 
     VlcInstance *_instance;
-    VlcMedia *_media;
-    VlcMediaPlayer *_player;
+
+    VlcMedia *_media1;
+    VlcMediaPlayer *_player1;
+
+    VlcMedia *_media2;
+    VlcMediaPlayer *_player2;
 };
 
-#endif // VLCQT_TEST_RECORDER_H_
+#endif // VLCQT_TEST_DUALPLAYER_H_

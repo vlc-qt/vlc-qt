@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2013 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2015 Tadej Novak <tadej@tano.si>
 *
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published
@@ -29,12 +29,12 @@
     #include "EqualizerDialog.h"
 #endif
 
-#include "TestPlayer.h"
-#include "ui_TestPlayer.h"
+#include "Player.h"
+#include "ui_Player.h"
 
-TestPlayer::TestPlayer(QWidget *parent)
+Player::Player(QWidget *parent)
     : QMainWindow(parent),
-      ui(new Ui::TestPlayer),
+      ui(new Ui::Player),
       _media(0)
 #if LIBVLC_VERSION >= 0x020200
       , _equalizerDialog(new EqualizerDialog(this))
@@ -69,7 +69,7 @@ TestPlayer::TestPlayer(QWidget *parent)
 #endif
 }
 
-TestPlayer::~TestPlayer()
+Player::~Player()
 {
     delete _player;
     delete _media;
@@ -77,7 +77,7 @@ TestPlayer::~TestPlayer()
     delete ui;
 }
 
-void TestPlayer::openLocal()
+void Player::openLocal()
 {
     QString file =
             QFileDialog::getOpenFileName(this, tr("Open file"),
@@ -92,7 +92,7 @@ void TestPlayer::openLocal()
     _player->open(_media);
 }
 
-void TestPlayer::openUrl()
+void Player::openUrl()
 {
     QString url =
             QInputDialog::getText(this, tr("Open Url"), tr("Enter the URL you want to play"));

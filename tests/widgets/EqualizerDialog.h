@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2013 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2015 Tadej Novak <tadej@tano.si>
 *
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published
@@ -16,17 +16,32 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-import QtQuick 2.0
-import VLCQt 0.10
+#ifndef VLCQT_TEST_EQUALIZERDIALOG_H_
+#define VLCQT_TEST_EQUALIZERDIALOG_H_
 
-Rectangle {
-    width: 640
-    height: 480
-    color: "black"
+#include <QDialog>
+#include "ui_EqualizerDialog.h"
 
-    VlcVideoPlayer {
-        id: vidwidget
-        anchors.fill: parent
-        url: "http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_640x360.m4v"
-    }
-}
+class VlcMediaPlayer;
+
+class EqualizerDialog : public QDialog, Ui::EqualizerDialog
+{
+    Q_OBJECT
+public:
+    explicit EqualizerDialog(QWidget *parent = 0);
+
+    void setMediaPlayer(VlcMediaPlayer *mediaPlayer);
+
+public slots:
+    void applyChangesForBand(int value);
+
+    void applySelectedPreset();
+
+    void toggle(bool checked);
+
+private:
+    QMap<QSlider*, int> _mapSliders;
+    VlcMediaPlayer *_mediaPlayer;
+};
+
+#endif // VLCQT_TEST_EQUALIZERDIALOG_H_

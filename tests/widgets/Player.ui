@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>TestPlayer</class>
- <widget class="QMainWindow" name="TestPlayer">
+ <class>Player</class>
+ <widget class="QMainWindow" name="Player">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -14,8 +14,8 @@
    <string>Basic Player Test</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>:/vlc-qt/icons/48x48/vlc-qt.png</normaloff>:/vlc-qt/icons/48x48/vlc-qt.png</iconset>
+   <iconset resource="../../data/logo.qrc">
+    <normaloff>:/icons/48x48/vlc-qt.png</normaloff>:/icons/48x48/vlc-qt.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
@@ -110,7 +110,6 @@
    <addaction name="menuFile"/>
    <addaction name="menuMedia"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionClose">
    <property name="text">
     <string>Close</string>
@@ -141,7 +140,7 @@
   <customwidget>
    <class>VlcWidgetVideo</class>
    <extends>QWidget</extends>
-   <header>../src/widgets/WidgetVideo.h</header>
+   <header>../../src/widgets/WidgetVideo.h</header>
    <container>1</container>
    <slots>
     <signal>fullscreen()</signal>
@@ -151,7 +150,7 @@
   <customwidget>
    <class>VlcWidgetVolumeSlider</class>
    <extends>QWidget</extends>
-   <header>../src/widgets/WidgetVolumeSlider.h</header>
+   <header>../../src/widgets/WidgetVolumeSlider.h</header>
    <container>1</container>
    <slots>
     <slot>mute()</slot>
@@ -162,16 +161,18 @@
   <customwidget>
    <class>VlcWidgetSeek</class>
    <extends>QWidget</extends>
-   <header>../src/widgets/WidgetSeek.h</header>
+   <header>../../src/widgets/WidgetSeek.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../../data/logo.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>actionClose</sender>
    <signal>triggered()</signal>
-   <receiver>TestPlayer</receiver>
+   <receiver>Player</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">

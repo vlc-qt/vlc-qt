@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2013 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2015 Tadej Novak <tadej@tano.si>
 *
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published
@@ -16,47 +16,39 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_TEST_PLAYER_H_
-#define VLCQT_TEST_PLAYER_H_
+#ifndef VLCQT_TEST_METAMANAGER_H_
+#define VLCQT_TEST_METAMANAGER_H_
 
 // QtGui/QtWidgets
-#include <QMainWindow>
-
-#include "Config.h"
-
-namespace Ui {
-    class TestPlayer;
-}
+#include <QDialog>
 
 class VlcInstance;
 class VlcMedia;
-class VlcMediaPlayer;
+class VlcMetaManager;
 
-#if LIBVLC_VERSION >= 0x020200
-    class EqualizerDialog;
-#endif
+namespace Ui {
+    class MetaManager;
+}
 
-class TestPlayer : public QMainWindow
+class MetaManager : public QDialog
 {
-Q_OBJECT
+    Q_OBJECT
 public:
-    explicit TestPlayer(QWidget *parent = 0);
-    ~TestPlayer();
+    explicit MetaManager(QWidget *parent = 0);
+    ~MetaManager();
 
 private slots:
-    void openLocal();
-    void openUrl();
+    void open();
+    void read();
+    void save();
+    void set();
 
 private:
-    Ui::TestPlayer *ui;
+    Ui::MetaManager *ui;
 
     VlcInstance *_instance;
     VlcMedia *_media;
-    VlcMediaPlayer *_player;
-
-#if LIBVLC_VERSION >= 0x020200
-    EqualizerDialog *_equalizerDialog;
-#endif
+    VlcMetaManager *_meta;
 };
 
-#endif // VLCQT_TEST_PLAYER_H_
+#endif //VLCQT_TEST_METAMANAGER_H_

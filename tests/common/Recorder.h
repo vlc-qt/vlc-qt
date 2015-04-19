@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2013 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2015 Tadej Novak <tadej@tano.si>
 *
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published
@@ -16,33 +16,40 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include <QtCore/QCoreApplication>
-#include <QtCore/QTextCodec>
+#ifndef VLCQT_TEST_RECORDER_H_
+#define VLCQT_TEST_RECORDER_H_
 
-#if QT_VERSION >= 0x050000
-    #include <QtWidgets/QApplication>
-#else
-    #include <QtGui/QApplication>
-#endif
+// QtGui/QtWidgets
+#include <QDialog>
 
-#include "core/Common.h"
+class VlcInstance;
+class VlcMedia;
+class VlcMediaPlayer;
 
-#include "TestMain.h"
-
-int main(int argc, char *argv[])
-{
-    QCoreApplication::setApplicationName("Test Widgets");
-    QCoreApplication::setAttribute(Qt::AA_X11InitThreads);
-
-#if QT_VERSION < 0x050000
-    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
-#endif
-
-    QApplication app(argc, argv);
-    VlcCommon::setPluginPath(app.applicationDirPath() + "/../plugins");
-
-    TestMain mainWindow;
-    mainWindow.show();
-
-    return app.exec();
+namespace Ui {
+    class Recorder;
 }
+
+class Recorder : public QDialog
+{
+    Q_OBJECT
+public:
+    explicit Recorder(QWidget *parent = 0);
+    ~Recorder();
+
+private slots:
+    void browse();
+    void play();
+    void stop();
+
+private:
+    Ui::Recorder *ui;
+
+    QTimer *_timer;
+
+    VlcInstance *_instance;
+    VlcMedia *_media;
+    VlcMediaPlayer *_player;
+};
+
+#endif // VLCQT_TEST_RECORDER_H_

@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2013 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2015 Tadej Novak <tadej@tano.si>
 *
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published
@@ -16,39 +16,39 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_TEST_METAMANAGER_H_
-#define VLCQT_TEST_METAMANAGER_H_
+#include <QtCore/QCoreApplication>
+#include <QtCore/QTextCodec>
 
-// QtGui/QtWidgets
-#include <QDialog>
+#if QT_VERSION >= 0x050000
+    #include <QtWidgets/QApplication>
+#else
+    #include <QtGui/QApplication>
+#endif
 
-class VlcInstance;
-class VlcMedia;
-class VlcMetaManager;
+#include "core/Common.h"
 
-namespace Ui {
-    class TestMetaManager;
-}
+#if QT_VERSION >= 0x050000
+    #include "qml/QmlVideoPlayer.h"
+#endif
 
-class TestMetaManager : public QDialog
+#include "Tests.h"
+
+int main(int argc, char *argv[])
 {
-Q_OBJECT
-public:
-    explicit TestMetaManager(QWidget *parent = 0);
-    ~TestMetaManager();
+    QCoreApplication::setApplicationName("VLC-Qt Tests");
+    QCoreApplication::setAttribute(Qt::AA_X11InitThreads);
 
-private slots:
-    void open();
-    void read();
-    void save();
-    void set();
+#if QT_VERSION >= 0x050000
+    VlcQmlVideoPlayer::registerPlugin();
+#else
+    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+#endif
 
-private:
-    Ui::TestMetaManager *ui;
+    QApplication app(argc, argv);
+    VlcCommon::setPluginPath(app.applicationDirPath() + "/../plugins");
 
-    VlcInstance *_instance;
-    VlcMedia *_media;
-    VlcMetaManager *_meta;
-};
+    Tests mainWindow;
+    mainWindow.show();
 
-#endif //VLCQT_TEST_METAMANAGER_H_
+    return app.exec();
+}
