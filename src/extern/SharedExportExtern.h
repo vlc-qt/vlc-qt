@@ -1,0 +1,12 @@
+#ifndef VLCQT_SHARED_EXPORT_EXTERN_H
+#define VLCQT_SHARED_EXPORT_EXTERN_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(VLCQT_EXTERN_LIBRARY)
+#  define VLCQT_EXTERN_EXPORT Q_DECL_EXPORT
+#else
+#  define VLCQT_EXTERN_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // VLCQT_SHARED_EXPORT_EXTERN_H
