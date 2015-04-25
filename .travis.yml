@@ -1,8 +1,8 @@
 os:
   - linux
+  - osx
 
 language: cpp
-compiler: gcc
 
 before_install: . tools/ci/$TRAVIS_OS_NAME/before_install.sh
 install: . tools/ci/$TRAVIS_OS_NAME/install.sh

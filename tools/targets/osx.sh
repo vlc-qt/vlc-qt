@@ -3,11 +3,10 @@ PWD=`pwd`
 BUILD_DIR="${PWD}/release/build"
 OUTPUT_DIR="${PWD}/release/VLC-Qt_${VER}_OSX10.6"
 ARCHIVE_DIR="${PWD}/release"
+PATH=${PATH}:/usr/local/opt/qt5/bin
 
 build() 
 {
-    say "Building VLC-Qt"
-
     if [ -d "${OUTPUT_DIR}" ]; then
         rm -r ${OUTPUT_DIR}
     fi
@@ -25,18 +24,18 @@ build()
     make -j8
     popd
 
-    say "Deploying VLC-Qt"
+    mkdir -p ${OUTPUT_DIR}/VLC-Qt.app/Contents/MacOS/debug
+    cp ${BUILD_DIR}_debug/src/core/libvlc-qt.dylib ${OUTPUT_DIR}/VLC-Qt.app/Contents/MacOS/debug
+    cp ${BUILD_DIR}_debug/src/qml/libvlc-qt-qml.dylib ${OUTPUT_DIR}/VLC-Qt.app/Contents/MacOS/debug
+    cp ${BUILD_DIR}_debug/src/widgets/libvlc-qt-widgets.dylib ${OUTPUT_DIR}/VLC-Qt.app/Contents/MacOS/debug
 
-    mkdir ${OUTPUT_DIR}/debug
-    mkdir ${OUTPUT_DIR}/examples
-    cp ${BUILD_DIR}_debug/src/core/libvlc-qt.dylib ${OUTPUT_DIR}/debug
-    cp ${BUILD_DIR}_debug/src/widgets/libvlc-qt-widgets.dylib ${OUTPUT_DIR}/debug
-    cp -r examples/ ${OUTPUT_DIR}/examples/
-    pushd ${ARCHIVE_DIR}
-    tar -jcvf VLC-Qt_${VER}_OSX10.6.tar.bz2 VLC-Qt_${VER}_OSX10.6
+    pushd ${OUTPUT_DIR}
+    macdeployqt VLC-Qt.app -dmg
     popd
 
-    say "VLC-Qt deployment completed!"
+    pushd ${ARCHIVE_DIR}
+    #tar -jcvf VLC-Qt_${VER}_OSX10.6.tar.bz2 VLC-Qt_${VER}_OSX10.6
+    popd
 }
 
 eval build
