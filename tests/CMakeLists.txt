@@ -78,6 +78,19 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/tests
 )
 
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    SET(Test_Iconset ${CMAKE_SOURCE_DIR}/platform/osx/Project.iconset)
+
+    FILE(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/tests/${VLCQT_TEST}.app/Contents/Resources)
+    FIND_PROGRAM(ICONUTIL_EXECUTABLE NAMES iconutil)
+    ADD_CUSTOM_COMMAND(
+        OUTPUT ${CMAKE_BINARY_DIR}/tests/${VLCQT_TEST}.app/Contents/Resources/${VLCQT_TEST}.icns
+        COMMAND ${ICONUTIL_EXECUTABLE} --convert icns --output ${CMAKE_BINARY_DIR}/tests/${VLCQT_TEST}.app/Contents/Resources/${VLCQT_TEST}.icns
+        ${Test_Iconset}
+    )
+    SET(Test_Srcs ${Test_Srcs} ${CMAKE_BINARY_DIR}/tests/${VLCQT_TEST}.app/Contents/Resources/${VLCQT_TEST}.icns)
+ENDIF()
+
 # This line tells cmake to create the Test program.
 ADD_EXECUTABLE(${VLCQT_TEST} MACOSX_BUNDLE WIN32 ${Test_UIs} ${Test_Resources} ${Test_Srcs})
 ADD_DEPENDENCIES(${VLCQT_TEST} ${VLCQT} ${VLCQT_WIDGETS})

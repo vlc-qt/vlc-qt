@@ -17,6 +17,12 @@
 #############################################################################
 # OS X Extra #
 ##############
+# Set the OS X Bundle specific CMake variables which will be used to populate the plist for
+# the application bundle
+SET(MACOSX_BUNDLE_COPYRIGHT "2015 Tadej Novak")
+SET(MACOSX_BUNDLE_ICON_FILE "${VLCQT_TEST}.icns")
+SET(MACOSX_BUNDLE_GUI_IDENTIFIER "si.tano.${PROJECT_NAME}")
+
 CONFIGURE_FILE(
     ${CMAKE_SOURCE_DIR}/platform/osx/Info.plist.in
     ${CMAKE_BINARY_DIR}/platform/osx/Info.plist
