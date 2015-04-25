@@ -15,10 +15,6 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this library. If not, see <http://www.gnu.org/licenses/>.
 #############################################################################
-
-SET(VLCQT_TEST VLC-Qt)
-
-###################
 # List of sources #
 ###################
 # Define the UI source files
@@ -83,10 +79,15 @@ INCLUDE_DIRECTORIES(
 )
 
 # This line tells cmake to create the Test program.
-ADD_EXECUTABLE(${VLCQT_TEST} ${Test_UIs} ${Test_Resources} ${Test_Srcs})
+ADD_EXECUTABLE(${VLCQT_TEST} MACOSX_BUNDLE WIN32 ${Test_UIs} ${Test_Resources} ${Test_Srcs})
 ADD_DEPENDENCIES(${VLCQT_TEST} ${VLCQT} ${VLCQT_WIDGETS})
 IF(QT_VERSION MATCHES 5)
     ADD_DEPENDENCIES(${VLCQT_TEST} ${VLCQT} ${VLCQT_QML})
+ENDIF()
+
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    SET_TARGET_PROPERTIES(${VLCQT_TEST} PROPERTIES INSTALL_RPATH "@loader_path/lib")
+    SET_TARGET_PROPERTIES(${VLCQT_TEST} PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CMAKE_BINARY_DIR}/platform/osx/Info.plist")
 ENDIF()
 
 # Link the required libraries
@@ -104,4 +105,7 @@ ENDIF()
 ################
 # Installation #
 ################
-INSTALL(TARGETS ${VLCQT_TEST} RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
+INSTALL(TARGETS ${VLCQT_TEST}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
+    BUNDLE DESTINATION .
+)

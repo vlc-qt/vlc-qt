@@ -17,6 +17,11 @@
 #############################################################################
 # OS X Extra #
 ##############
+CONFIGURE_FILE(
+    ${CMAKE_SOURCE_DIR}/platform/osx/Info.plist.in
+    ${CMAKE_BINARY_DIR}/platform/osx/Info.plist
+)
+
 STRING(REGEX REPLACE "include" "" LIBVLC_BIN_DIR "${LIBVLC_INCLUDE_DIR}")
 STRING(REGEX REPLACE "include" "plugins" LIBVLC_PLUGINS_DIR "${LIBVLC_INCLUDE_DIR}")
 STRING(REGEX REPLACE "include" "lib" LIBVLC_LIB_DIR "${LIBVLC_INCLUDE_DIR}")
@@ -30,3 +35,8 @@ FILE(GLOB Vlc_Plugins ${LIBVLC_PLUGINS_DIR}/*.dylib)
 ################
 INSTALL(FILES ${Vlc_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/lib")
 INSTALL(FILES ${Vlc_Plugins} DESTINATION "${CMAKE_INSTALL_PREFIX}/plugins")
+
+IF(${BUILD_TESTS})
+    INSTALL(FILES ${Vlc_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/${VLCQT_TEST}.app/Contents/MacOS/lib")
+    INSTALL(FILES ${Vlc_Plugins} DESTINATION "${CMAKE_INSTALL_PREFIX}/${VLCQT_TEST}.app/Contents/MacOS/plugins")
+ENDIF()
