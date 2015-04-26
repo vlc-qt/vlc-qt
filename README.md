@@ -19,7 +19,7 @@ You can download VLC-Qt binaries and sources from the [official web page]
 
 Latest source is also available via Git:
 ```bash
-  git clone git://github.com/ntadej/vlc-qt.git
+  git clone git://github.com/vlc-qt/vlc-qt.git
 ```
 
 Master branch is considered stable and working on all supported platforms.
@@ -59,11 +59,11 @@ Free Software Foundation and appearing in the file LICENSE.md.
 
 
 [web]: http://vlc-qt.tano.si
-[release]: https://github.com/ntadej/vlc-qt/releases
-[license]: https://github.com/ntadej/vlc-qt/blob/master/LICENSE.md
-[travis]: https://travis-ci.org/ntadej/vlc-qt
+[release]: https://github.com/vlc-qt/vlc-qt/releases
+[license]: https://github.com/vlc-qt/vlc-qt/blob/master/LICENSE.md
+[travis]: https://travis-ci.org/vlc-qt/vlc-qt
 
 [web-img]: https://img.shields.io/badge/web-vlc--qt.tano.si-green.svg
-[license-img]: https://img.shields.io/github/license/ntadej/vlc-qt.svg
-[release-img]: https://img.shields.io/github/release/ntadej/vlc-qt.svg
-[travis-img]: https://travis-ci.org/ntadej/vlc-qt.svg?branch=master
+[license-img]: https://img.shields.io/github/license/vlc-qt/vlc-qt.svg
+[release-img]: https://img.shields.io/github/release/vlc-qt/vlc-qt.svg
+[travis-img]: https://travis-ci.org/vlc-qt/vlc-qt.svg?branch=master
