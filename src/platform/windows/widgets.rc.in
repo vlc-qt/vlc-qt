@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2013 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2015 Tadej Novak <tadej@tano.si>
 *
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published
@@ -34,7 +34,7 @@ BEGIN
             VALUE "CompanyName", "Tadej Novak"
             VALUE "FileDescription", "VLC-Qt - Qt bindings for libVLC"
             VALUE "FileVersion", "@VLCQT_VERSION@"
-            VALUE "LegalCopyright", "Copyright (C) 2013 Tadej Novak."
+            VALUE "LegalCopyright", "Copyright (C) 2015 Tadej Novak."
             VALUE "InternalName", "vlc-qt-widgets"
             VALUE "OriginalFilename", "vlc-qt-widgets.dll"
             VALUE "ProductName", "VLC-Qt"
