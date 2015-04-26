@@ -1,8 +1,7 @@
-# VLC-Qt Library
+# VLC-Qt Library [![Build Status][travis-img]][travis] [![Build status][appveyor-img]][appveyor]
 [![Homepage][web-img]][web]
 [![Latest release][release-img]][release]
 [![License][license-img]][license]
-[![Build Status][travis-img]][travis]
 
 VLC-Qt is a free library used to connect [Qt](http://qt.io) and
 [libVLC](http://videolan.org) libraries. It contains core classes for main
@@ -62,8 +61,10 @@ Free Software Foundation and appearing in the file LICENSE.md.
 [release]: https://github.com/vlc-qt/vlc-qt/releases
 [license]: https://github.com/vlc-qt/vlc-qt/blob/master/LICENSE.md
 [travis]: https://travis-ci.org/vlc-qt/vlc-qt
+[appveyor]: https://ci.appveyor.com/project/ntadej/vlc-qt
 
 [web-img]: https://img.shields.io/badge/web-vlc--qt.tano.si-green.svg
 [license-img]: https://img.shields.io/github/license/vlc-qt/vlc-qt.svg
 [release-img]: https://img.shields.io/github/release/vlc-qt/vlc-qt.svg
 [travis-img]: https://travis-ci.org/vlc-qt/vlc-qt.svg?branch=master
+[appveyor-img]: https://ci.appveyor.com/api/projects/status/whnar8rjduiyktkf/branch/master?svg=true

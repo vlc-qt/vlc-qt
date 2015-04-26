@@ -2,6 +2,10 @@ os:
   - linux
   - osx
 
+branches:
+  except:
+    - project/appveyor
+
 language: cpp
 
 before_install: . tools/ci/$TRAVIS_OS_NAME/before_install.sh
