@@ -40,7 +40,7 @@ SET(CMAKE_MODULE_PATH
 INCLUDE(ManageString)
 
 # Detect CI
-IF(DEFINED CI)
+IF(CI)
     MESSAGE("Automatic CI build")
 ENDIF()
 
@@ -203,7 +203,7 @@ MESSAGE("\nVLC-Qt: You are compiling libvlc-qt ${VLCQT_VERSION_MAJOR}.${VLCQT_VE
 
 # Find Git Version Patch
 FIND_PROGRAM(GIT git)
-IF(GIT)
+IF(GIT AND NOT NO_GIT)
     EXECUTE_PROCESS(
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
         COMMAND ${GIT} rev-parse --short HEAD
