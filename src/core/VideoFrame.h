@@ -39,6 +39,8 @@ struct VLCQT_CORE_EXPORT VlcVideoFrame
     */
     VlcVideoFrame();
 
+    bool inited;
+
     unsigned int width; /*!< frame width */
     unsigned int height; /*!< frame height */
 

@@ -122,28 +122,30 @@ void VlcQmlVideoObject::setAspectRatio(const Vlc::Ratio &aspectRatio)
 void VlcQmlVideoObject::paint(QPainter *painter)
 {
     lock();
+    if( _frame.inited )
+    {
+        if (!_graphicsPainter)
+            _graphicsPainter = new GlslPainter;
 
-    if (!_graphicsPainter)
-        _graphicsPainter = new GlslPainter;
-
-    Q_ASSERT(_graphicsPainter);
-
-    if (!_gotSize || _frameSize.isNull()) {
-        // TODO: do scaling ourselfs?
-        _gotSize = true;
-        _frameSize = QSize(_frame.width, _frame.height);
-        updateBoundingRect();
-    }
-
-    if (!_paintedOnce) {
-        painter->fillRect(_boundingRect, Qt::black);
-        _paintedOnce = true;
-    } else {
         Q_ASSERT(_graphicsPainter);
-        _graphicsPainter->setFrame(&_frame);
-        if (!_graphicsPainter->inited())
-            _graphicsPainter->init();
-        _graphicsPainter->paint(painter, _boundingRect, this);
+
+        if (!_gotSize || _frameSize.isNull()) {
+            // TODO: do scaling ourselfs?
+            _gotSize = true;
+            _frameSize = QSize(_frame.width, _frame.height);
+            updateBoundingRect();
+        }
+
+        if (!_paintedOnce) {
+            painter->fillRect(_boundingRect, Qt::black);
+            _paintedOnce = true;
+        } else {
+            Q_ASSERT(_graphicsPainter);
+            _graphicsPainter->setFrame(&_frame);
+            if (!_graphicsPainter->inited())
+                _graphicsPainter->init();
+            _graphicsPainter->paint(painter, _boundingRect, this);
+        }
     }
 
     unlock();
@@ -268,11 +270,14 @@ unsigned int VlcQmlVideoObject::formatCallback(char *chroma,
         _frame.plane[i].resize(pitches[i] * lines[i]);
     }
 
+    _frame.inited = true;
+
     return bufferSize;
 }
 
 void VlcQmlVideoObject::formatCleanUpCallback()
 {
+    _frame.inited = false;
     // To avoid thread polution do not call reset directly but via the event loop.
     QMetaObject::invokeMethod(this, "reset", Qt::QueuedConnection);
 }
