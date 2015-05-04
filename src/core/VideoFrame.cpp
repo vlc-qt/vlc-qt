@@ -22,7 +22,7 @@
 #include "core/VideoFrame.h"
 
 VlcVideoFrame::VlcVideoFrame()
-    : width(0), height(0)
+    : inited(false), width(0), height(0)
 {
     for (int i = 0; i < 4; ++i) {
         pitch[i] = 0;
