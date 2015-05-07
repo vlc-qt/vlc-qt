@@ -150,10 +150,10 @@ QUrl VlcQmlVideoPlayer::url() const
 
 void VlcQmlVideoPlayer::setUrl(const QUrl &url)
 {
+    _player->stop();
+
     if (_media)
         delete _media;
-
-    _player->stop();
 
     if(url.isLocalFile()) {
         _media = new VlcMedia(url.toLocalFile(), true, _instance);
