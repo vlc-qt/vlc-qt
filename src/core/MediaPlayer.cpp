@@ -402,7 +402,7 @@ float VlcMediaPlayer::sampleAspectRatio()
 {
     if(!_vlcMediaPlayer)
         return 0.0;
-
+#if LIBVLC_VERSION >= 0x020100
     float sar = 0.0;
 
     libvlc_media_track_t **tracks;
@@ -424,6 +424,9 @@ float VlcMediaPlayer::sampleAspectRatio()
     }
 
     return sar;
+#else
+    return 1.0;
+#endif // LIBVLC_VERSION >= 0x020100
 }
 
 void VlcMediaPlayer::setPosition(float pos)
