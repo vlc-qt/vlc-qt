@@ -170,6 +170,12 @@ public:
     */
     float position();
 
+    /*!
+        \brief Get sample aspect ratio for current video track.
+        \return sample aspect ratio (float)
+    */
+    float sampleAspectRatio();
+
 public slots:
     /*! \brief Set the movie position.
 

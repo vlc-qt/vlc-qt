@@ -31,7 +31,6 @@
 VlcQmlVideoPlayer::VlcQmlVideoPlayer(QQuickItem *parent)
     : VlcQmlVideoObject(parent),
       _instance(0),
-      _player(0),
       _media(0),
       _audioManager(0),
       _deinterlacing(Vlc::Disabled),
@@ -153,6 +152,8 @@ void VlcQmlVideoPlayer::setUrl(const QUrl &url)
 {
     if (_media)
         delete _media;
+
+    _player->stop();
 
     if(url.isLocalFile()) {
         _media = new VlcMedia(url.toLocalFile(), true, _instance);
