@@ -96,7 +96,8 @@ public:
      */
     void setCropRatio(const Vlc::Ratio &cropRatio);
 
-
+protected:
+    VlcMediaPlayer *_player;
 private slots:
     void frameReady();
     void reset();

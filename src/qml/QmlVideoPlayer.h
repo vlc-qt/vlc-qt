@@ -345,7 +345,6 @@ private:
     void openInternal();
 
     VlcInstance *_instance;
-    VlcMediaPlayer *_player;
     VlcMedia *_media;
 
     VlcAudio *_audioManager;

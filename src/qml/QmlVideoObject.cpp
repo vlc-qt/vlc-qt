@@ -26,6 +26,7 @@
 
 VlcQmlVideoObject::VlcQmlVideoObject(QQuickItem *parent)
     : QQuickPaintedItem(parent),
+      _player(0),
       _geometry(0, 0, 640, 480),
       _boundingRect(0, 0, 0, 0),
       _frameSize(0, 0),
@@ -232,6 +233,15 @@ void VlcQmlVideoObject::unlockCallback(void *picture, void *const*planes)
 
 void VlcQmlVideoObject::displayCallback(void *picture)
 {
+    if( !_frame.inited )
+    {
+        float sar = _player->sampleAspectRatio();
+        if( sar > 0.0 )
+        {
+            _frame.height *= sar;
+            _frame.inited = true;
+        }
+    }
     Q_UNUSED(picture); // There is only one buffer.
 }
 
@@ -269,8 +279,6 @@ unsigned int VlcQmlVideoObject::formatCallback(char *chroma,
         _frame.lines[i] = lines[i];
         _frame.plane[i].resize(pitches[i] * lines[i]);
     }
-
-    _frame.inited = true;
 
     return bufferSize;
 }
