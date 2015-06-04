@@ -28,7 +28,7 @@ SET(Test_UIs
 
 # Define the resource files
 SET(Test_Resources
-    ../data/logo.qrc
+    ../resources/logo.qrc
 )
 
 # Define the C++ source files
