@@ -80,14 +80,3 @@ test: off
 
 artifacts:
   - path: '*.7z'
-
-deploy:
-  - provider: FTP
-    protocol: ftp
-    host: ftp.tano.si
-    username:
-      secure: qImm6sMYd/idgIHOOorrsg==
-    password:
-      secure: /bgX0wc4Y18bc13QwPD8Iw==
-    folder: vlc-qt/ci/windows
-    active_mode: false
