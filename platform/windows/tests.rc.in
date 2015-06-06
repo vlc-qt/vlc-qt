@@ -18,9 +18,11 @@
 
 #include <windows.h>
 
+IDI_ICON1       ICON        DISCARDABLE "@CMAKE_SOURCE_DIR@/platform/windows/Project.ico"
+
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION @VLCQT_VERSION_MAJOR@,@VLCQT_VERSION_MINOR@,@VLCQT_VERSION_BUGFIX@,0
- PRODUCTVERSION @VLCQT_VERSION_MAJOR@,@VLCQT_VERSION_MINOR@,@VLCQT_VERSION_BUGFIX@,0
+ FILEVERSION @PROJECT_VERSION_MAJOR@,@PROJECT_VERSION_MINOR@,@PROJECT_VERSION_PATCH@,0
+ PRODUCTVERSION @PROJECT_VERSION_MAJOR@,@PROJECT_VERSION_MINOR@,@PROJECT_VERSION_PATCH@,0
  FILEFLAGS 0x0L
  FILEFLAGSMASK 0x3fL
  FILEOS 0x00040004L
@@ -31,14 +33,14 @@ BEGIN
     BEGIN
         BLOCK "000004b0"
         BEGIN
-            VALUE "CompanyName", "Tadej Novak"
-            VALUE "FileDescription", "VLC-Qt - Qt bindings for libVLC"
-            VALUE "FileVersion", "@VLCQT_VERSION@"
-            VALUE "LegalCopyright", "Copyright (C) 2015 Tadej Novak."
-            VALUE "InternalName", "vlc-qt"
-            VALUE "OriginalFilename", "vlc-qt.dll"
-            VALUE "ProductName", "VLC-Qt"
-            VALUE "ProductVersion", "@VLCQT_VERSION@"
+            VALUE "CompanyName", "@PROJECT_AUTHOR@"
+            VALUE "FileDescription", "@PROJECT_DESCRIPTION@"
+            VALUE "FileVersion", "@PROJECT_VERSION@"
+            VALUE "LegalCopyright", "@PROJECT_COPYRIGHT@"
+            VALUE "InternalName", "@PROJECT_NAME_OUT@"
+            VALUE "OriginalFilename", "@PROJECT_NAME_OUT@.exe"
+            VALUE "ProductName", "@PROJECT_NAME_OUT@"
+            VALUE "ProductVersion", "@PROJECT_VERSION@"
         END
     END
     BLOCK "VarFileInfo"

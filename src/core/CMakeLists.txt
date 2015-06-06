@@ -30,8 +30,8 @@ ENDIF()
 
 IF(MINGW OR MSVC)
     CONFIGURE_FILE(
-        ${CMAKE_SOURCE_DIR}/src/platform/windows/core.rc.in
-        ${CMAKE_BINARY_DIR}/src/platform/windows/core.rc
+        ${CMAKE_SOURCE_DIR}/platform/windows/core.rc.in
+        ${CMAKE_BINARY_DIR}/platform/windows/core.rc
     )
 ENDIF()
 
@@ -113,17 +113,17 @@ INCLUDE_DIRECTORIES(
 # Compile resources with windres
 IF(MINGW)
     ADD_CUSTOM_COMMAND(
-        OUTPUT ${CMAKE_BINARY_DIR}/src/platform/windows/core.obj
+        OUTPUT ${CMAKE_BINARY_DIR}/platform/windows/core.obj
         COMMAND ${CMAKE_RC_COMPILER}
-        -i ${CMAKE_BINARY_DIR}/src/platform/windows/core.rc
-        -o ${CMAKE_BINARY_DIR}/src/platform/windows/core.obj
-        WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/src/platform/windows"
+        -i ${CMAKE_BINARY_DIR}/platform/windows/core.rc
+        -o ${CMAKE_BINARY_DIR}/platform/windows/core.obj
+        WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/platform/windows"
     )
-    SET(VLCQT_CORE_SRCS ${VLCQT_CORE_SRCS} ${CMAKE_BINARY_DIR}/src/platform/windows/core.obj)
+    SET(VLCQT_CORE_SRCS ${VLCQT_CORE_SRCS} ${CMAKE_BINARY_DIR}/platform/windows/core.obj)
 ENDIF()
 
 IF(MSVC)
-    SET(VLCQT_CORE_SRCS ${VLCQT_CORE_SRCS} ${CMAKE_BINARY_DIR}/src/platform/windows/core.rc)
+    SET(VLCQT_CORE_SRCS ${VLCQT_CORE_SRCS} ${CMAKE_BINARY_DIR}/platform/windows/core.rc)
 ENDIF()
 
 # Create the library.

@@ -15,6 +15,14 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this library. If not, see <http://www.gnu.org/licenses/>.
 #############################################################################
+IF(MINGW OR MSVC)
+    CONFIGURE_FILE(
+        ${CMAKE_SOURCE_DIR}/platform/windows/tests.rc.in
+        ${CMAKE_BINARY_DIR}/platform/windows/tests.rc
+    )
+ENDIF()
+
+###################
 # List of sources #
 ###################
 # Define the UI source files
@@ -89,6 +97,22 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
         ${Test_Iconset}
     )
     SET(Test_Srcs ${Test_Srcs} ${CMAKE_BINARY_DIR}/tests/${VLCQT_TEST}.app/Contents/Resources/${VLCQT_TEST}.icns)
+ENDIF()
+
+# Compile resources with windres
+IF(MINGW)
+    ADD_CUSTOM_COMMAND(
+        OUTPUT ${CMAKE_BINARY_DIR}/platform/windows/tests.obj
+        COMMAND ${CMAKE_RC_COMPILER}
+        -i ${CMAKE_BINARY_DIR}/platform/windows/tests.rc
+        -o ${CMAKE_BINARY_DIR}/platform/windows/tests.obj
+        WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/platform/windows"
+    )
+    SET(Test_Srcs ${Test_Srcs} ${CMAKE_BINARY_DIR}/platform/windows/tests.obj)
+ENDIF()
+
+IF(MSVC)
+    SET(Test_Srcs ${Test_Srcs} ${CMAKE_BINARY_DIR}/platform/windows/tests.rc)
 ENDIF()
 
 # This line tells cmake to create the Test program.
