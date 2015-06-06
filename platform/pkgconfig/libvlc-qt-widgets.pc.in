@@ -5,6 +5,6 @@ includedir=${prefix}/include
 
 Name: libvlc-qt-widgets
 Description: Qt and libvlc connector library - Widgets component
-Version: @VLCQT_VERSION_MAJOR@.@VLCQT_VERSION_MINOR@.@VLCQT_VERSION_BUGFIX@
-Libs: -L${libdir} -lvlc-qt -lvlc-qt-widgets
+Version: @PROJECT_VERSION_MAJOR@.@PROJECT_VERSION_MINOR@.@PROJECT_VERSION_PATCH@
+Libs: -L${libdir} -lvlc-qt-core -lvlc-qt-widgets
 Cflags: -I${includedir}

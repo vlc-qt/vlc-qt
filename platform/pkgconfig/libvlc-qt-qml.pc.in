@@ -3,8 +3,8 @@ exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include
 
-Name: libvlc-qt
+Name: libvlc-qt-qml
 Description: Qt and libvlc connector library - QML component
-Version: @VLCQT_VERSION_MAJOR@.@VLCQT_VERSION_MINOR@.@VLCQT_VERSION_BUGFIX@
-Libs: -L${libdir} -lvlc-qt -lvlc-qt-qml
+Version: @PROJECT_VERSION_MAJOR@.@PROJECT_VERSION_MINOR@.@PROJECT_VERSION_PATCH@
+Libs: -L${libdir} -lvlc-qt-core -lvlc-qt-qml
 Cflags: -I${includedir}

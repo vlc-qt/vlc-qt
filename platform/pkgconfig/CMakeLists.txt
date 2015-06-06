@@ -1,6 +1,6 @@
 #############################################################################
 # VLC-Qt - Qt and libvlc connector library
-# Copyright (C) 2012 Tadej Novak <tadej@tano.si>
+# Copyright (C) 2015 Tadej Novak <tadej@tano.si>
 #
 # This library is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published
@@ -19,8 +19,8 @@
 #################
 
 CONFIGURE_FILE(
-    "${CMAKE_SOURCE_DIR}/platform/pkgconfig/libvlc-qt.pc.in"
-    "${CMAKE_BINARY_DIR}/platform/pkgconfig/libvlc-qt.pc"
+    "${CMAKE_SOURCE_DIR}/platform/pkgconfig/libvlc-qt-core.pc.in"
+    "${CMAKE_BINARY_DIR}/platform/pkgconfig/libvlc-qt-core.pc"
     @ONLY
 )
 
@@ -42,7 +42,7 @@ ENDIF()
 ################
 # Installation #
 ################
-INSTALL(FILES ${CMAKE_BINARY_DIR}/platform/pkgconfig/libvlc-qt.pc DESTINATION ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/pkgconfig)
+INSTALL(FILES ${CMAKE_BINARY_DIR}/platform/pkgconfig/libvlc-qt-core.pc DESTINATION ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/pkgconfig)
 INSTALL(FILES ${CMAKE_BINARY_DIR}/platform/pkgconfig/libvlc-qt-widgets.pc DESTINATION ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/pkgconfig)
 IF(QT_VERSION MATCHES 5)
     INSTALL(FILES ${CMAKE_BINARY_DIR}/platform/pkgconfig/libvlc-qt-qml.pc DESTINATION ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/pkgconfig)

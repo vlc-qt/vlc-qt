@@ -1,6 +1,6 @@
 #############################################################################
 # VLC-Qt - Qt and libvlc connector library
-# Copyright (C) 2014 Tadej Novak <tadej@tano.si>
+# Copyright (C) 2015 Tadej Novak <tadej@tano.si>
 #
 # This library is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published
@@ -19,7 +19,7 @@
 ##############
 # Set the OS X Bundle specific CMake variables which will be used to populate the plist for
 # the application bundle
-SET(MACOSX_BUNDLE_COPYRIGHT "2015 Tadej Novak")
+SET(MACOSX_BUNDLE_COPYRIGHT "2015 ${PROJECT_AUTHOR}")
 SET(MACOSX_BUNDLE_ICON_FILE "${VLCQT_TEST}.icns")
 SET(MACOSX_BUNDLE_GUI_IDENTIFIER "si.tano.${PROJECT_NAME}")
 
