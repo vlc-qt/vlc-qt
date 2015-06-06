@@ -68,7 +68,7 @@ build_script:
 
 after_build:
   - cd c:\dev\vlc-qt
-  - copy build-release\src\core\*vlc-qt.dll ..\install\debug
+  - copy build-release\src\core\*vlc-qt-core.dll ..\install\debug
   - copy build-release\src\qml\*vlc-qt-qml.dll ..\install\debug
   - copy build-release\src\widgets\*vlc-qt-widgets.dll ..\install\debug
   - cd c:\dev\install
@@ -76,7 +76,10 @@ after_build:
   - 7z a ..\vlc-qt\VLC-Qt_%buildname%_%name%_%suffix%.7z *
   - cd c:\dev\vlc-qt
 
-test: off
+test_script:
+  - cd c:\dev\install\bin
+  - start /wait VLC-Qt.exe test
+  - cd c:\dev\vlc-qt
 
 artifacts:
   - path: '*.7z'
