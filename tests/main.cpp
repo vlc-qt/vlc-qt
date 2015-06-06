@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 #endif
 
     QApplication app(argc, argv);
-    VlcCommon::setPluginPath(app.applicationDirPath() + "/../plugins");
+    VlcCommon::setPluginPath(app.applicationDirPath() + "/plugins");
 
     Tests mainWindow;
     mainWindow.show();

@@ -20,12 +20,17 @@ cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=../install/ -DCI=ON \
 make
 
 mkdir -p ../install/VLC-Qt.app/Contents/MacOS/debug
-cp src/core/libvlc-qt.dylib ../install/VLC-Qt.app/Contents/MacOS/debug
+cp src/core/libvlc-qt-core.dylib ../install/VLC-Qt.app/Contents/MacOS/debug
 cp src/qml/libvlc-qt-qml.dylib ../install/VLC-Qt.app/Contents/MacOS/debug
 cp src/widgets/libvlc-qt-widgets.dylib ../install/VLC-Qt.app/Contents/MacOS/debug
 popd
 
 # Prepare for deployment
+pushd build-release
+make dmg
+popd
+
+# Test execution
 pushd install
-macdeployqt VLC-Qt.app -dmg
+VLC-Qt.app/Contents/MacOS/VLC-Qt test
 popd

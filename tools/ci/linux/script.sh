@@ -23,3 +23,6 @@ popd
 pushd install-qt4
 tar -jcf VLC-Qt.tar.bz2 *
 popd
+
+# Test run (Qt4 only)
+LD_LIBRARY_PATH=install-qt4/lib/ install-qt4/bin/VLC-Qt test

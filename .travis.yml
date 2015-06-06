@@ -20,4 +20,5 @@ addons:
     - libqt4-dev
     - libvlc-dev
     - libvlccore-dev
+    - vlc
     - p7zip-full
