@@ -50,5 +50,9 @@ int main(int argc, char *argv[])
     Tests mainWindow;
     mainWindow.show();
 
+    if (argc > 1 && QString::fromLocal8Bit(argv[1]) == "test") {
+        mainWindow.test();
+    }
+
     return app.exec();
 }

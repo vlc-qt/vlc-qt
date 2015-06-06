@@ -16,6 +16,9 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
+#include <QtCore/QDebug>
+#include <QtCore/QTimer>
+
 #include "core/Common.h"
 
 #include "Tests.h"
@@ -62,6 +65,15 @@ Tests::~Tests()
 #if QT_VERSION >= 0x050000
     delete _quickView;
 #endif
+}
+
+void Tests::test()
+{
+    qDebug() << "Test run, closing in 5 s";
+
+    player();
+
+    QTimer::singleShot(5000, qApp, SLOT(quit()));
 }
 
 void Tests::dualInstance()

@@ -42,6 +42,9 @@ public:
     explicit Tests(QWidget *parent = 0);
     ~Tests();
 
+public:
+    void test();
+
 private slots:
     void dualInstance();
     void dualPlayer();
