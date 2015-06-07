@@ -14,7 +14,7 @@
    <string>Basic Player Test</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../data/logo.qrc">
+   <iconset resource="../../resources/logo.qrc">
     <normaloff>:/icons/48x48/vlc-qt.png</normaloff>:/icons/48x48/vlc-qt.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -166,7 +166,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../data/logo.qrc"/>
+  <include location="../../resources/logo.qrc"/>
  </resources>
  <connections>
   <connection>
