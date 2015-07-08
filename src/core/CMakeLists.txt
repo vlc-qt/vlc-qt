@@ -148,10 +148,16 @@ IF(MSVC)
     SET_TARGET_PROPERTIES(${VLCQT_CORE} PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_PROFILE ".")
 ENDIF()
 
-# Linux/Mac: So version extensions
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    SET_TARGET_PROPERTIES(${VLCQT_CORE} PROPERTIES VERSION ${VLCQT_VERSION}
-                                                   SOVERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}"
+# Linux/Mac: Set framework, version and headers
+SET_TARGET_PROPERTIES(${VLCQT_CORE} PROPERTIES FRAMEWORK ON
+                                               VERSION ${VLCQT_VERSION}
+                                               SOVERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}"
+                                               PUBLIC_HEADER "${VLCQT_CORE_HEADERS}"
+)
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    ADD_CUSTOM_COMMAND(TARGET ${VLCQT_CORE}
+        COMMAND "${CMAKE_COMMAND}" -E create_symlink . vlc-qt
+        WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/src/core/${VLCQT_CORE}.framework/Headers"
     )
 ENDIF()
 
@@ -167,17 +173,14 @@ ENDIF()
 # Installation #
 ################
 INSTALL(TARGETS ${VLCQT_CORE} RUNTIME DESTINATION bin
+        FRAMEWORK DESTINATION lib${LIB_SUFFIX}
         LIBRARY DESTINATION lib${LIB_SUFFIX}
         ARCHIVE DESTINATION lib${LIB_SUFFIX}
+        PUBLIC_HEADER DESTINATION include/vlc-qt
 )
-INSTALL(FILES ${VLCQT_CORE_HEADERS} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/vlc-qt)
 
-IF(${BUILD_TESTS})
-    IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-        INSTALL(TARGETS ${VLCQT_CORE} RUNTIME DESTINATION ${VLCQT_TEST}.app/Contents/MacOS/bin
-                LIBRARY DESTINATION ${VLCQT_TEST}.app/Contents/MacOS/lib${LIB_SUFFIX}
-                ARCHIVE DESTINATION ${VLCQT_TEST}.app/Contents/MacOS/lib${LIB_SUFFIX}
-        )
-        INSTALL(FILES ${VLCQT_CORE_HEADERS} DESTINATION ${CMAKE_INSTALL_PREFIX}/${VLCQT_TEST}.app/Contents/MacOS/include/vlc-qt)
-    ENDIF()
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    INSTALL(FILES ${Vlc_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/${VLCQT_CORE}.framework/Versions/${VLCQT_VERSION}/lib")
+    INSTALL(FILES ${Vlc_Plugins} DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/${VLCQT_CORE}.framework/Versions/${VLCQT_VERSION}/lib/vlc/plugins")
+    INSTALL(CODE "EXECUTE_PROCESS(COMMAND ${CMAKE_SOURCE_DIR}/tools/osx_vlc_plugins_postprocess.sh WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/lib/${VLCQT_CORE}.framework/Versions/${VLCQT_VERSION}/lib/vlc/plugins)")
 ENDIF()

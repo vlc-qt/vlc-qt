@@ -13,17 +13,18 @@ popd
 
 # Configure and build debug
 pushd build-debug
-cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=../install/ -DCI=ON \
+cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=../install-debug/ -DCI=ON \
 	-DLIBVLC_INCLUDE_DIR=../dependencies/VLC.app/Contents/MacOS/include \
 	-DLIBVLC_LIBRARY=../dependencies/VLC.app/Contents/MacOS/lib/libvlc.dylib \
 	-DLIBVLCCORE_LIBRARY=../dependencies/VLC.app/Contents/MacOS/lib/libvlccore.dylib
 make
-
-mkdir -p ../install/VLC-Qt.app/Contents/MacOS/debug
-cp src/core/libvlc-qt-core.dylib ../install/VLC-Qt.app/Contents/MacOS/debug
-cp src/qml/libvlc-qt-qml.dylib ../install/VLC-Qt.app/Contents/MacOS/debug
-cp src/widgets/libvlc-qt-widgets.dylib ../install/VLC-Qt.app/Contents/MacOS/debug
+make install
 popd
+
+cp install-debug/lib/vlc-qt-core.framework/Versions/${VLCQT_VERSION}/vlc-qt-core install-debug/lib/vlc-qt-core.framework/Versions/${VLCQT_VERSION}/vlc-qt-core_debug
+cp install-debug/lib/vlc-qt-qml.framework/Versions/${VLCQT_VERSION}/vlc-qt-qml install-debug/lib/vlc-qt-qml.framework/Versions/${VLCQT_VERSION}/vlc-qt-qml_debug
+cp install-debug/lib/vlc-qt-widgets.framework/Versions/${VLCQT_VERSION}/vlc-qt-widgets install-debug/lib/vlc-qt-widgets.framework/Versions/${VLCQT_VERSION}/vlc-qt-widgets_debug
+
 
 # Prepare for deployment
 pushd build-release

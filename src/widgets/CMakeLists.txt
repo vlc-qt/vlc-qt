@@ -113,10 +113,16 @@ IF(MSVC)
     SET_TARGET_PROPERTIES(${VLCQT_WIDGETS} PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_PROFILE ".")
 ENDIF()
 
-# Linux/Mac: So version extensions
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    SET_TARGET_PROPERTIES(${VLCQT_WIDGETS} PROPERTIES VERSION ${VLCQT_VERSION}
-                                                      SOVERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}"
+# Linux/Mac: Set framework, version and headers
+SET_TARGET_PROPERTIES(${VLCQT_WIDGETS} PROPERTIES FRAMEWORK ON
+                                                  VERSION ${VLCQT_VERSION}
+                                                  SOVERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}"
+                                                  PUBLIC_HEADER "${VLCQT_WIDGETS_HEADERS}"
+)
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    ADD_CUSTOM_COMMAND(TARGET ${VLCQT_WIDGETS}
+        COMMAND "${CMAKE_COMMAND}" -E create_symlink . vlc-qt
+        WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/src/widgets/${VLCQT_WIDGETS}.framework/Headers"
     )
 ENDIF()
 
@@ -136,17 +142,8 @@ ENDIF()
 # Installation #
 ################
 INSTALL(TARGETS ${VLCQT_WIDGETS} RUNTIME DESTINATION bin
+        FRAMEWORK DESTINATION lib${LIB_SUFFIX}
         LIBRARY DESTINATION lib${LIB_SUFFIX}
         ARCHIVE DESTINATION lib${LIB_SUFFIX}
+        PUBLIC_HEADER DESTINATION include/vlc-qt
 )
-INSTALL(FILES ${VLCQT_WIDGETS_HEADERS} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/vlc-qt)
-
-IF(${BUILD_TESTS})
-    IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-        INSTALL(TARGETS ${VLCQT_WIDGETS} RUNTIME DESTINATION ${VLCQT_TEST}.app/Contents/MacOS/bin
-                LIBRARY DESTINATION ${VLCQT_TEST}.app/Contents/MacOS/lib${LIB_SUFFIX}
-                ARCHIVE DESTINATION ${VLCQT_TEST}.app/Contents/MacOS/lib${LIB_SUFFIX}
-        )
-        INSTALL(FILES ${VLCQT_WIDGETS_HEADERS} DESTINATION ${CMAKE_INSTALL_PREFIX}/${VLCQT_TEST}.app/Contents/MacOS/include/vlc-qt)
-    ENDIF()
-ENDIF()

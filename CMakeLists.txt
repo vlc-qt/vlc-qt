@@ -22,6 +22,7 @@ CMAKE_POLICY(VERSION 3.0.2)
 SET(CMAKE_MODULE_PATH
     ${CMAKE_SOURCE_DIR}/cmake
     ${CMAKE_SOURCE_DIR}/config
+    ${CMAKE_SOURCE_DIR}/platform
 )
 
 INCLUDE(ParseVersion)
@@ -61,9 +62,9 @@ ELSEIF(MINGW)
     SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/libvlc-qt-widgets${LS}.dll.a)
     SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/libvlc-qt-qml${LS}.dll.a)
 ELSEIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    SET(VLCQT_CORE_BINARY ${CMAKE_BINARY_DIR}/src/core/libvlc-qt-core${LS}.dylib)
-    SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/libvlc-qt-widgets${LS}.dylib)
-    SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/libvlc-qt-qml${LS}.dylib)
+    SET(VLCQT_CORE_BINARY ${CMAKE_BINARY_DIR}/src/core/vlc-qt-core.framework)
+    SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/vlc-qt-widgets.framework)
+    SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/vlc-qt-qml.framework)
 ELSEIF(MSVC)
     SET(VLCQT_CORE_BINARY ${CMAKE_BINARY_DIR}/src/core/vlc-qt-core${LS}.lib)
     SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/vlc-qt-widgets${LS}.lib)
@@ -78,15 +79,15 @@ ENDIF()
 ###################
 # Compile and set #
 ###################
-ADD_SUBDIRECTORY(src) 
-ADD_SUBDIRECTORY(docs)
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-    ADD_SUBDIRECTORY(platform/pkgconfig)
+    INCLUDE(pkgconfig)
 ELSEIF(MINGW OR MSVC)
-    ADD_SUBDIRECTORY(platform/windows)
+    INCLUDE(Windows)
 ELSEIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    ADD_SUBDIRECTORY(platform/osx)
+    INCLUDE(OSX)
 ENDIF()
+ADD_SUBDIRECTORY(src)
+ADD_SUBDIRECTORY(docs)
 
 
 #########
