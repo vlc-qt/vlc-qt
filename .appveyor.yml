@@ -1,5 +1,4 @@
 version: 0.11.0.{build}
-os: MinGW
 
 branches:
   except:
@@ -13,23 +12,29 @@ environment:
   # MSVC x86
   - name: win32
     platform: amd64_x86
-    qt: msvc2013_opengl
+    qt: 5.5\msvc2013
     suffix: msvc2013 
 
   # MSVC x64
   - name: win64
     platform: amd64
-    qt: msvc2013_64_opengl
+    qt: 5.5\msvc2013_64
     suffix: msvc2013
+
+  # MSVC x64 (Qt 5.4)
+  - name: win64
+    platform: amd64
+    qt: 5.4\msvc2013_64_opengl
+    suffix: msvc2013_5.4
 
   # MinGW
   - name: win32
     platform: mingw
-    qt: mingw491_32
+    qt: 5.5\mingw492_32
     suffix: mingw
 
 init:
-  - set PATH=C:\Qt\5.4\%qt%\bin;%PATH%
+  - set PATH=C:\Qt\%qt%\bin;%PATH%
   - set ORIGPATH=%PATH%
   - if not %platform%==mingw call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" %platform%
   - if not %platform%==mingw (set makefiles="NMake Makefiles") else (set makefiles="MinGW Makefiles")
@@ -55,7 +60,7 @@ before_build:
   - md build-debug
 
 build_script:
-  - if %platform%==mingw set PATH=C:\Qt\5.4\%qt%\bin;C:\Qt\Tools\mingw491_32\bin;C:\Program Files (x86)\CMake\bin
+  - if %platform%==mingw set PATH=C:\Qt\%qt%\bin;C:\Qt\Tools\mingw492_32\bin;C:\Program Files (x86)\CMake\bin
   - cd build-release
   - cmake .. -G %makefiles% -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="c:/dev/install" -DCI=ON -DNO_GIT=%nogitinfo% -DBUILD_TESTS=ON -DLIBVLC_LIBRARY="c:/dev/dependencies/vlc-%name%/sdk/lib/libvlc.lib" -DLIBVLCCORE_LIBRARY="c:/dev/dependencies/vlc-%name%/sdk/lib/libvlccore.lib" -DLIBVLC_INCLUDE_DIR="c:/dev/dependencies/vlc-%name%/sdk/include"
   - if not %platform%==mingw (nmake) else (mingw32-make)
