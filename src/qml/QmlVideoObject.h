@@ -26,9 +26,9 @@
 #include <QtCore/QMutex>
 #include <QtQuick/QQuickPaintedItem>
 
-#include "Enums.h"
-#include "VideoFrame.h"
-#include "VideoMemoryStream.h"
+#include <VLCQtCore/Enums.h>
+#include <VLCQtCore/VideoFrame.h>
+#include <VLCQtCore/VideoMemoryStream.h>
 
 #include "SharedExportQml.h"
 
@@ -37,7 +37,7 @@ class VlcMediaPlayer;
 class GlslPainter;
 
 /*!
-    \class VlcQmlVideoObject QmlVideoObject.h vlc-qt/QmlVideoObject.h
+    \class VlcQmlVideoObject QmlVideoObject.h VLCQtQml/QmlVideoObject.h
     \brief QML video object
 
     A basic QML video object for painting video. It acts as a replacement for video widget.

@@ -32,7 +32,7 @@ class VlcMediaPlayer;
 struct libvlc_media_player_t;
 
 /*!
-    \class VlcVideo Video.h vlc-qt/Video.h
+    \class VlcVideo Video.h VLCQtCore/Video.h
     \brief Video controls
 
     A group of video controls functions.

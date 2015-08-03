@@ -28,7 +28,7 @@ class VlcMediaPlayer;
 struct libvlc_equalizer_t;
 
 /*!
-    \class VlcEqualizer
+    \class VlcEqualizer Equalizer.h VLCQtCore/Equalizer.h
     \brief VlcEqualizer
 
     \since libVLC 2.2

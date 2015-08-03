@@ -22,7 +22,7 @@
 #include "SharedExportCore.h"
 
 /*!
-    \struct VlcStats Stats.h vlc-qt/Stats.h
+    \struct VlcStats Stats.h VLCQtCore/Stats.h
     \brief Statistics container
 
     A direct copy of libvlc stats object to remove dependency to libvlc.

@@ -32,20 +32,8 @@ ELSE()
     MESSAGE("VLC-Qt: Build with Qt5")
 ENDIF()
 
-IF(QT_VERSION MATCHES 5)
-    IF(MINGW OR MSVC)
-        OPTION(WITH_ANGLE "Build with Angle" OFF)
-        MESSAGE("VLC-Qt: Build with Angle: ${WITH_ANGLE}")
-
-        IF(WITH_ANGLE)
-            SET(WITH_GLES ON)
-        ELSE()
-            OPTION(WITH_GLES "Build with OpenGL ES2" OFF)
-        ENDIF()
-    ELSE()
-        OPTION(WITH_GLES "Build with OpenGL ES2" OFF)
-    ENDIF()
-
+IF(QT_VERSION MATCHES 5 AND Qt5Core_VERSION VERSION_LESS "5.5.0")
+    OPTION(WITH_GLES "Build with OpenGL ES2" OFF)
     MESSAGE("VLC-Qt: Build with OpenGL ES2: ${WITH_GLES}")
 ENDIF()
 

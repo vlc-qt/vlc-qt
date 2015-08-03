@@ -42,7 +42,7 @@ struct libvlc_media_t;
 struct libvlc_media_player_t;
 
 /*!
-    \class VlcMediaPlayer MediaPlayer.h vlc-qt/MediaPlayer.h
+    \class VlcMediaPlayer MediaPlayer.h VLCQtCore/MediaPlayer.h
     \brief Media Player
 
     A basic MediaPlayer manager for VLC-Qt library.

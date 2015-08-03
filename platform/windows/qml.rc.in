@@ -35,8 +35,8 @@ BEGIN
             VALUE "FileDescription", "@PROJECT_DESCRIPTION@"
             VALUE "FileVersion", "@PROJECT_VERSION@"
             VALUE "LegalCopyright", "@PROJECT_COPYRIGHT@"
-            VALUE "InternalName", "@VLCQT_QML@"
-            VALUE "OriginalFilename", "@VLCQT_QML@.dll"
+            VALUE "InternalName", "@VLCQT_QML_NAME@"
+            VALUE "OriginalFilename", "@VLCQT_QML_NAME@.dll"
             VALUE "ProductName", "@PROJECT_NAME_OUT@"
             VALUE "ProductVersion", "@PROJECT_VERSION@"
         END

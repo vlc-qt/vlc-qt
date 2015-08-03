@@ -35,6 +35,7 @@ IF(MINGW OR MSVC)
     )
 ENDIF()
 
+
 ###################
 # List of sources #
 ###################
@@ -128,9 +129,9 @@ ENDIF()
 
 # Create the library.
 IF(STATIC)
-    ADD_LIBRARY(${VLCQT_CORE} STATIC ${VLCQT_CORE_SRCS})
+    ADD_LIBRARY(${VLCQT_CORE} STATIC ${VLCQT_CORE_SRCS} ${VLCQT_CORE_HEADERS})
 ELSE()
-    ADD_LIBRARY(${VLCQT_CORE} SHARED ${VLCQT_CORE_SRCS})
+    ADD_LIBRARY(${VLCQT_CORE} SHARED ${VLCQT_CORE_SRCS} ${VLCQT_CORE_HEADERS})
 ENDIF()
 
 # Debug suffix
@@ -150,40 +151,54 @@ ENDIF()
 
 # Linux/Mac: Set framework, version and headers
 SET_TARGET_PROPERTIES(${VLCQT_CORE} PROPERTIES FRAMEWORK ON
+                                               OUTPUT_NAME "${VLCQT_CORE_NAME}"
                                                VERSION ${VLCQT_VERSION}
                                                SOVERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}"
                                                PUBLIC_HEADER "${VLCQT_CORE_HEADERS}"
 )
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    ADD_CUSTOM_COMMAND(TARGET ${VLCQT_CORE}
-        COMMAND "${CMAKE_COMMAND}" -E create_symlink . vlc-qt
-        WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/src/core/${VLCQT_CORE}.framework/Headers"
-    )
-ENDIF()
 
 # Link the required libraries
 IF(QT_VERSION MATCHES 4)
-    TARGET_LINK_LIBRARIES(${VLCQT_CORE} Qt4::QtCore ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY})
+    TARGET_LINK_LIBRARIES(${VLCQT_CORE} PRIVATE Qt4::QtCore ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY})
 ELSE()
-    TARGET_LINK_LIBRARIES(${VLCQT_CORE} Qt5::Core ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY})
+    TARGET_LINK_LIBRARIES(${VLCQT_CORE} PRIVATE Qt5::Core ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY})
+ENDIF()
+
+# Provide valid includes for other modules
+IF(MINGW OR MSVC)
+    FILE(COPY ${VLCQT_CORE_HEADERS} DESTINATION "${CMAKE_BINARY_DIR}/include/${VLCQT_CORE_NAME}")
+ELSE()
+    FILE(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/include")
+    ADD_CUSTOM_COMMAND(TARGET ${VLCQT_CORE}
+        COMMAND "${CMAKE_COMMAND}" -E create_symlink "${CMAKE_SOURCE_DIR}/src/core" "include/${VLCQT_CORE_NAME}"
+        WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
+    )
 ENDIF()
 
 
 ################
 # Installation #
 ################
-INSTALL(TARGETS ${VLCQT_CORE} RUNTIME DESTINATION bin
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    SET(VLCQtCoreIncludeLocation lib/${VLCQT_CORE_NAME}.framework)
+ELSE()
+    SET(VLCQtCoreIncludeLocation include/${VLCQT_CORE_NAME})
+ENDIF()
+
+INSTALL(TARGETS ${VLCQT_CORE} EXPORT VLCQtCoreTargets
+        RUNTIME DESTINATION bin
         FRAMEWORK DESTINATION lib${LIB_SUFFIX}
         LIBRARY DESTINATION lib${LIB_SUFFIX}
         ARCHIVE DESTINATION lib${LIB_SUFFIX}
-        PUBLIC_HEADER DESTINATION include/vlc-qt
+        INCLUDES DESTINATION ${VLCQtCoreIncludeLocation}
+        PUBLIC_HEADER DESTINATION ${VLCQtCoreIncludeLocation}
 )
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    INSTALL(FILES ${Vlc_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/${VLCQT_CORE}.framework/Versions/${VLCQT_VERSION}/lib")
-    INSTALL(FILES ${Vlc_Plugins} DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/${VLCQT_CORE}.framework/Versions/${VLCQT_VERSION}/lib/vlc/plugins")
-    INSTALL(CODE "EXECUTE_PROCESS(COMMAND ${CMAKE_SOURCE_DIR}/tools/osx_vlc_plugins_postprocess.sh WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/lib/${VLCQT_CORE}.framework/Versions/${VLCQT_VERSION}/lib/vlc/plugins)")
+    INSTALL(FILES ${Vlc_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/${VLCQT_CORE_NAME}.framework/Versions/${VLCQT_VERSION}/lib")
+    INSTALL(FILES ${Vlc_Plugins} DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/${VLCQT_CORE_NAME}.framework/Versions/${VLCQT_VERSION}/lib/vlc/plugins")
+    INSTALL(CODE "EXECUTE_PROCESS(COMMAND ${CMAKE_SOURCE_DIR}/tools/osx_vlc_plugins_postprocess.sh WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/lib/${VLCQT_CORE_NAME}.framework/Versions/${VLCQT_VERSION}/lib/vlc/plugins)")
     IF(Qt5Core_VERSION VERSION_LESS "5.5.0")
-        INSTALL(CODE "EXECUTE_PROCESS(COMMAND ${CMAKE_SOURCE_DIR}/tools/osx_qt_old_postprocess.sh ${VLCQT_CORE} WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/lib/${VLCQT_CORE}.framework/Versions/${VLCQT_VERSION}/)")
+        INSTALL(CODE "EXECUTE_PROCESS(COMMAND ${CMAKE_SOURCE_DIR}/tools/osx_qt_old_postprocess.sh ${VLCQT_CORE_NAME} WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/lib/${VLCQT_CORE_NAME}.framework/Versions/${VLCQT_VERSION}/)")
     ENDIF()
 ENDIF()

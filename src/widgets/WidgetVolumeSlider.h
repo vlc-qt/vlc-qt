@@ -30,7 +30,7 @@ class VlcAudio;
 class VlcMediaPlayer;
 
 /*!
-    \class VlcWidgetVolumeSlider WidgetVolumeSlider.h vlc-qt/WidgetVolumeSlider.h
+    \class VlcWidgetVolumeSlider WidgetVolumeSlider.h VLCQtWidgets/WidgetVolumeSlider.h
     \brief Volume slider widget
 
     This is one of VLC-Qt GUI classes.

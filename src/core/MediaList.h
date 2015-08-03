@@ -35,7 +35,7 @@ struct libvlc_media_t;
 struct libvlc_media_list_t;
 
 /*!
-    \class VlcMediaList Media.h vlc-qt/Media.h
+    \class VlcMediaList MediaList.h VLCQtCore/MediaList.h
     \brief Media list item
 
     VlcMediaList holds multiple VlcMedia items to play in sequence.

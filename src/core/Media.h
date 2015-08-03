@@ -34,7 +34,7 @@ struct libvlc_event_manager_t;
 struct libvlc_media_t;
 
 /*!
-    \class VlcMedia Media.h vlc-qt/Media.h
+    \class VlcMedia Media.h VLCQtCore/Media.h
     \brief Media item
 
     An abstract representation of a playable media.

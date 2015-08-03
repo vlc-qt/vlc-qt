@@ -26,7 +26,7 @@
 struct libvlc_instance_t;
 
 /*!
-    \class VlcInstance Instance.h vlc-qt/Instance.h
+    \class VlcInstance Instance.h VLCQtCore/Instance.h
     \brief Main instance
 
     A basic Instance manager for VLC-Qt library.

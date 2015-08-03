@@ -52,10 +52,10 @@ VlcInstance::VlcInstance(const QStringList &args,
 
     // Check if instance is running
     if(_vlcInstance) {
-        qDebug() << "libvlc-qt" << libVersion() << "initialised";
+        qDebug() << "VLC-Qt" << libVersion() << "initialised";
         qDebug() << "Using libvlc version:" << version();
     } else {
-        qDebug() << "libvlc-qt Error: libvlc failed to load!";
+        qDebug() << "VLC-Qt Error: libvlc failed to load!";
         abort();
     }
 }
@@ -130,6 +130,6 @@ void VlcInstance::setUserAgent(const QString &application,
                                const QString &version)
 {
     QString applicationOutput = application + " " + version;
-    QString httpOutput = application + "/" + version + " " + "libvlc-qt" + "/" + libVersion(); // "AppName/1.2.3 libvlc-qt/1.2.3"
+    QString httpOutput = application + "/" + version + " " + "VLC-Qt" + "/" + libVersion(); // "AppName/1.2.3 VLC-Qt/1.2.3"
     libvlc_set_user_agent(_vlcInstance, applicationOutput.toUtf8().data(), httpOutput.toUtf8().data());
 }

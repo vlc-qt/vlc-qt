@@ -27,18 +27,21 @@ SET(CMAKE_MODULE_PATH
 
 INCLUDE(ParseVersion)
 
-PROJECT(vlc-qt
+PROJECT(VLC-Qt
         VERSION ${VLCQT_VERSION})
 
-SET(PROJECT_NAME_OUT VLC-Qt)
+SET(PROJECT_LIBRARY VLCQt)
 SET(PROJECT_AUTHOR "Tadej Novak")
 SET(PROJECT_COPYRIGHT "Copyright (C) 2015 ${PROJECT_AUTHOR}.")
 SET(PROJECT_DESCRIPTION "VLC-Qt - Qt bindings for libVLC")
 
-SET(VLCQT_CORE ${PROJECT_NAME}-core)
-SET(VLCQT_WIDGETS ${PROJECT_NAME}-widgets)
-SET(VLCQT_QML ${PROJECT_NAME}-qml)
-SET(VLCQT_TEST ${PROJECT_NAME_OUT})
+SET(VLCQT_CORE Core)
+SET(VLCQT_WIDGETS Widgets)
+SET(VLCQT_QML Qml)
+SET(VLCQT_TEST ${PROJECT_NAME})
+SET(VLCQT_CORE_NAME ${PROJECT_LIBRARY}Core)
+SET(VLCQT_WIDGETS_NAME ${PROJECT_LIBRARY}Widgets)
+SET(VLCQT_QML_NAME ${PROJECT_LIBRARY}Qml)
 
 INCLUDE(CustomTargets)
 INCLUDE(CompilerConfig)
@@ -54,36 +57,38 @@ MESSAGE("VLC-Qt: Build statically: ${STATIC}")
 
 # Link parameters
 IF(STATIC)
-    SET(VLCQT_CORE_BINARY ${CMAKE_BINARY_DIR}/src/core/libvlc-qt-core${LS}.a)
-    SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/libvlc-qt-widgets${LS}.a)
-    SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/libvlc-qt-qml${LS}.a)
+    SET(VLCQT_CORE_BINARY ${CMAKE_BINARY_DIR}/src/core/lib${VLCQT_CORE_NAME}${LS}.a)
+    SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/lib${VLCQT_WIDGETS_NAME}${LS}.a)
+    SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/lib${VLCQT_QML_NAME}${LS}.a)
 ELSEIF(MINGW)
-    SET(VLCQT_CORE_BINARY ${CMAKE_BINARY_DIR}/src/core/libvlc-qt-core${LS}.dll.a)
-    SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/libvlc-qt-widgets${LS}.dll.a)
-    SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/libvlc-qt-qml${LS}.dll.a)
+    SET(VLCQT_CORE_BINARY ${CMAKE_BINARY_DIR}/src/core/lib${VLCQT_CORE_NAME}${LS}.dll.a)
+    SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/lib${VLCQT_WIDGETS_NAME}${LS}.dll.a)
+    SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/lib${VLCQT_QML_NAME}${LS}.dll.a)
 ELSEIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    SET(VLCQT_CORE_BINARY ${CMAKE_BINARY_DIR}/src/core/vlc-qt-core.framework)
-    SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/vlc-qt-widgets.framework)
-    SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/vlc-qt-qml.framework)
+    SET(VLCQT_CORE_BINARY ${CMAKE_BINARY_DIR}/src/core/${VLCQT_CORE_NAME}.framework/${VLCQT_CORE_NAME})
+    SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/${VLCQT_WIDGETS_NAME}.framework/${VLCQT_WIDGETS_NAME})
+    SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/${VLCQT_QML_NAME}.framework/${VLCQT_QML_NAME})
 ELSEIF(MSVC)
-    SET(VLCQT_CORE_BINARY ${CMAKE_BINARY_DIR}/src/core/vlc-qt-core${LS}.lib)
-    SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/vlc-qt-widgets${LS}.lib)
-    SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/vlc-qt-qml${LS}.lib)
+    SET(VLCQT_CORE_BINARY ${CMAKE_BINARY_DIR}/src/core/${VLCQT_CORE_NAME}${LS}.lib)
+    SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/${VLCQT_WIDGETS_NAME}${LS}.lib)
+    SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/${VLCQT_QML_NAME}${LS}.lib)
 ELSE()
-    SET(VLCQT_CORE_BINARY ${CMAKE_BINARY_DIR}/src/core/libvlc-qt-core${LS}.so)
-    SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/libvlc-qt-widgets${LS}.so)
-    SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/libvlc-qt-qml${LS}.so)
+    SET(VLCQT_CORE_BINARY ${CMAKE_BINARY_DIR}/src/core/lib${VLCQT_CORE_NAME}${LS}.so)
+    SET(VLCQT_WIDGETS_BINARY ${CMAKE_BINARY_DIR}/src/widgets/lib${VLCQT_WIDGETS_NAME}${LS}.so)
+    SET(VLCQT_QML_BINARY ${CMAKE_BINARY_DIR}/src/qml/lib${VLCQT_QML_NAME}${LS}.so)
 ENDIF()
 
 
 ###################
 # Compile and set #
 ###################
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR MINGW)
     INCLUDE(pkgconfig)
-ELSEIF(MINGW OR MSVC)
+ENDIF()
+IF(MINGW OR MSVC)
     INCLUDE(Windows)
-ELSEIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+ENDIF()
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     INCLUDE(OSX)
 ENDIF()
 ADD_SUBDIRECTORY(src)
@@ -99,3 +104,8 @@ MESSAGE("\nVLC-Qt: Build tests: ${BUILD_TESTS}\n")
 IF(${BUILD_TESTS})
     ADD_SUBDIRECTORY(tests)
 ENDIF()
+
+##################################
+# CMake Package files generation #
+##################################
+INCLUDE(Package)

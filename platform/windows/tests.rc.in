@@ -37,8 +37,8 @@ BEGIN
             VALUE "FileDescription", "@PROJECT_DESCRIPTION@"
             VALUE "FileVersion", "@PROJECT_VERSION@"
             VALUE "LegalCopyright", "@PROJECT_COPYRIGHT@"
-            VALUE "InternalName", "@PROJECT_NAME_OUT@"
-            VALUE "OriginalFilename", "@PROJECT_NAME_OUT@.exe"
+            VALUE "InternalName", "@PROJECT_NAME@"
+            VALUE "OriginalFilename", "@PROJECT_NAME@.exe"
             VALUE "ProductName", "@PROJECT_NAME_OUT@"
             VALUE "ProductVersion", "@PROJECT_VERSION@"
         END

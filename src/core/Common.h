@@ -25,7 +25,7 @@
 #include "SharedExportCore.h"
 
 /*!
-	\namespace VlcCommon Common.h vlc-qt/Common.h
+    \namespace VlcCommon Common.h VLCQtCore/Common.h
 	\brief Common functions
 */
 namespace VlcCommon

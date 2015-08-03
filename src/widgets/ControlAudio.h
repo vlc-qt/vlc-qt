@@ -22,7 +22,8 @@
 #include <QtCore/QList>
 #include <QtCore/QMap>
 
-#include "Enums.h"
+#include <VLCQtCore/Enums.h>
+
 #include "SharedExportWidgets.h"
 
 class QAction;
@@ -32,7 +33,7 @@ class VlcAudio;
 class VlcMediaPlayer;
 
 /*!
-    \class VlcControlAudio ControAudiol.h vlc-qt/ControlAudio.h
+    \class VlcControlAudio ControAudiol.h VLCQtWidgets/ControlAudio.h
     \brief Audio control class
 
     This is one of VLC-Qt control classes.

@@ -84,6 +84,7 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_SOURCE_DIR}/src/widgets
     ${CMAKE_BINARY_DIR}/src
     ${CMAKE_BINARY_DIR}/tests
+    ${CMAKE_BINARY_DIR}/include
 )
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
@@ -142,15 +143,22 @@ ENDIF()
 ################
 # Installation #
 ################
+IF (MINGW OR MSVC)
+    SET(VlcQtTestRuntimeDestination test${LS})
+    INSTALL(DIRECTORY ${CMAKE_INSTALL_PREFIX}/bin/
+            DESTINATION test${LS})
+ELSE()
+    SET(VlcQtTestRuntimeDestination bin)
+ENDIF()
 INSTALL(TARGETS ${VLCQT_TEST}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
-    BUNDLE DESTINATION .
+    RUNTIME DESTINATION ${VlcQtTestRuntimeDestination}
+    BUNDLE DESTINATION bin
 )
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    INSTALL(DIRECTORY ${CMAKE_INSTALL_PREFIX}/lib/${VLCQT_CORE}.framework/
-            DESTINATION ${CMAKE_INSTALL_PREFIX}/${VLCQT_TEST}.app/Contents/Frameworks/${VLCQT_CORE}.framework)
-    INSTALL(DIRECTORY ${CMAKE_INSTALL_PREFIX}/lib/${VLCQT_QML}.framework/
-            DESTINATION ${CMAKE_INSTALL_PREFIX}/${VLCQT_TEST}.app/Contents/Frameworks/${VLCQT_QML}.framework)
-    INSTALL(DIRECTORY ${CMAKE_INSTALL_PREFIX}/lib/${VLCQT_WIDGETS}.framework/
-            DESTINATION ${CMAKE_INSTALL_PREFIX}/${VLCQT_TEST}.app/Contents/Frameworks/${VLCQT_WIDGETS}.framework)
+    INSTALL(DIRECTORY ${CMAKE_INSTALL_PREFIX}/lib/${VLCQT_CORE_NAME}.framework/
+            DESTINATION bin/${VLCQT_TEST}.app/Contents/Frameworks/${VLCQT_CORE_NAME}.framework)
+    INSTALL(DIRECTORY ${CMAKE_INSTALL_PREFIX}/lib/${VLCQT_QML_NAME}.framework/
+            DESTINATION bin/${VLCQT_TEST}.app/Contents/Frameworks/${VLCQT_QML_NAME}.framework)
+    INSTALL(DIRECTORY ${CMAKE_INSTALL_PREFIX}/lib/${VLCQT_WIDGETS_NAME}.framework/
+            DESTINATION bin/${VLCQT_TEST}.app/Contents/Frameworks/${VLCQT_WIDGETS_NAME}.framework)
 ENDIF()

@@ -66,9 +66,9 @@ SET(VLCQT_QML_SRCS
 #####################
 INCLUDE_DIRECTORIES(
     ${CMAKE_SOURCE_DIR}/src
-    ${CMAKE_SOURCE_DIR}/src/core
     ${CMAKE_SOURCE_DIR}/src/qml
     ${CMAKE_BINARY_DIR}/src
+    ${CMAKE_BINARY_DIR}/include
 )
 
 INCLUDE_DIRECTORIES(
@@ -95,9 +95,9 @@ ENDIF()
 
 # Create the library.
 IF(STATIC)
-    ADD_LIBRARY(${VLCQT_QML} STATIC ${VLCQT_QML_SRCS})
+    ADD_LIBRARY(${VLCQT_QML} STATIC ${VLCQT_QML_SRCS} ${VLCQT_QML_HEADERS})
 ELSE()
-    ADD_LIBRARY(${VLCQT_QML} SHARED ${VLCQT_QML_SRCS})
+    ADD_LIBRARY(${VLCQT_QML} SHARED ${VLCQT_QML_SRCS} ${VLCQT_QML_HEADERS})
 ENDIF()
 
 ADD_DEPENDENCIES(${VLCQT_QML} ${VLCQT_CORE})
@@ -124,21 +124,16 @@ ENDIF()
 
 # Linux/Mac: Set framework, version and headers
 SET_TARGET_PROPERTIES(${VLCQT_QML} PROPERTIES FRAMEWORK ON
+                                              OUTPUT_NAME "${VLCQT_QML_NAME}"
                                               VERSION ${VLCQT_VERSION}
                                               SOVERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}"
                                               PUBLIC_HEADER "${VLCQT_QML_HEADERS}"
 )
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    ADD_CUSTOM_COMMAND(TARGET ${VLCQT_QML}
-        COMMAND "${CMAKE_COMMAND}" -E create_symlink . vlc-qt
-        WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/src/qml/${VLCQT_QML}.framework/Headers"
-    )
-ENDIF()
 
 # Link the required libraries
-TARGET_LINK_LIBRARIES(${VLCQT_QML} Qt5::Quick ${VLCQT_CORE_BINARY} ${LIBVLCCORE_LIBRARY})
+TARGET_LINK_LIBRARIES(${VLCQT_QML} PRIVATE Qt5::Quick ${VLCQT_CORE_BINARY} ${LIBVLCCORE_LIBRARY})
 
-IF(WITH_GLES)
+IF(Qt5Core_VERSION VERSION_LESS "5.5.0" AND WITH_GLES)
     IF(MSVC)
         TARGET_LINK_LIBRARIES(${VLCQT_QML}
                               ${_qt5Core_install_prefix}/lib/libEGL${LE}.lib
@@ -152,23 +147,31 @@ IF(WITH_GLES)
 ENDIF()
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux" AND WITH_X11)
-    TARGET_LINK_LIBRARIES(${VLCQT_WIDGETS} -lX11)
+    TARGET_LINK_LIBRARIES(${VLCQT_QML} -lX11)
 ENDIF()
 
 
 ################
 # Installation #
 ################
-INSTALL(TARGETS ${VLCQT_QML} RUNTIME DESTINATION bin
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    SET(VLCQtQmlIncludeLocation lib/${VLCQT_QML_NAME}.framework)
+ELSE()
+    SET(VLCQtQmlIncludeLocation include/${VLCQT_QML_NAME})
+ENDIF()
+
+INSTALL(TARGETS ${VLCQT_QML} EXPORT VLCQtQmlTargets
+        RUNTIME DESTINATION bin
         FRAMEWORK DESTINATION lib${LIB_SUFFIX}
         LIBRARY DESTINATION lib${LIB_SUFFIX}
         ARCHIVE DESTINATION lib${LIB_SUFFIX}
-        PUBLIC_HEADER DESTINATION include/vlc-qt
+        INCLUDES DESTINATION ${VLCQtQmlIncludeLocation}
+        PUBLIC_HEADER DESTINATION ${VLCQtQmlIncludeLocation}
 )
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    INSTALL(FILES ${Vlc_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/${VLCQT_QML}.framework/Versions/${VLCQT_VERSION}/lib")
+    INSTALL(FILES ${Vlc_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/${VLCQT_QML_NAME}.framework/Versions/${VLCQT_VERSION}/lib")
     IF(Qt5Core_VERSION VERSION_LESS "5.5.0")
-        INSTALL(CODE "EXECUTE_PROCESS(COMMAND ${CMAKE_SOURCE_DIR}/tools/osx_qt_old_postprocess.sh ${VLCQT_QML} WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/lib/${VLCQT_QML}.framework/Versions/${VLCQT_VERSION}/)")
+        INSTALL(CODE "EXECUTE_PROCESS(COMMAND ${CMAKE_SOURCE_DIR}/tools/osx_qt_old_postprocess.sh ${VLCQT_QML_NAME} WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/lib/${VLCQT_QML_NAME}.framework/Versions/${VLCQT_VERSION}/)")
     ENDIF()
 ENDIF()

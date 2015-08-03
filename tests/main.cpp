@@ -25,8 +25,6 @@
     #include <QtGui/QApplication>
 #endif
 
-#include "core/Common.h"
-
 #if QT_VERSION >= 0x050000
     #include "qml/QmlVideoPlayer.h"
 #endif
@@ -45,7 +43,6 @@ int main(int argc, char *argv[])
 #endif
 
     QApplication app(argc, argv);
-    VlcCommon::setPluginPath(app.applicationDirPath() + "/plugins");
 
     Tests mainWindow;
     mainWindow.show();

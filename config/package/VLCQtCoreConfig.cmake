@@ -1,0 +1,1 @@
+INCLUDE("${CMAKE_CURRENT_LIST_DIR}/VLCQtCoreTargets.cmake")

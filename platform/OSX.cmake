@@ -30,7 +30,7 @@ CONFIGURE_FILE(
 
 IF(${BUILD_TESTS})
     ADD_CUSTOM_TARGET(dmg
-        "${QT_BIN_DIR}/macdeployqt" "${CMAKE_INSTALL_PREFIX}/${VLCQT_TEST}.app" -dmg)
+        "${QT_BIN_DIR}/macdeployqt" "${CMAKE_INSTALL_PREFIX}/bin/${VLCQT_TEST}.app" -dmg)
 ENDIF()
 
 STRING(REGEX REPLACE "include" "" LIBVLC_BIN_DIR "${LIBVLC_INCLUDE_DIR}")

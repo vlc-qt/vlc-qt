@@ -27,14 +27,15 @@
     #include <QtGui/QFrame>
 #endif
 
-#include "Enums.h"
+#include <VLCQtCore/Enums.h>
+#include <VLCQtCore/VideoDelegate.h>
+
 #include "SharedExportWidgets.h"
-#include "VideoDelegate.h"
 
 class VlcMediaPlayer;
 
 /*!
-    \class VlcWidgetVideo WidgetVideo.h vlc-qt/WidgetVideo.h
+    \class VlcWidgetVideo WidgetVideo.h VLCQtWidgets/WidgetVideo.h
     \brief Video widget
 
     This is one of VLC-Qt GUI classes.

@@ -54,42 +54,6 @@ STRING(REGEX REPLACE "\\\\" "/" LIBVLC_INCLUDE_DIR "${LIBVLC_INCLUDE_DIR}")
 STRING(REGEX REPLACE "sdk/include" "" LIBVLC_BIN_DIR "${LIBVLC_INCLUDE_DIR}")
 STRING(REGEX REPLACE "include" "bin" LIBVLC_BIN_DIR "${LIBVLC_BIN_DIR}")
 
-STRING(REGEX REPLACE "bin" "plugins" QT_PLUGINS_DIR "${QT_BIN_DIR}")
-
-SET(Qt4_Libs
-    ${QT_BIN_DIR}/QtCore${LE}4.dll
-    ${QT_BIN_DIR}/QtGui${LE}4.dll
-)
-
-SET(Qt5_Platforms
-    ${QT_PLUGINS_DIR}/platforms/qminimal${LE}.dll
-    ${QT_PLUGINS_DIR}/platforms/qwindows${LE}.dll
-)
-
-SET(Qt5_Libs
-    ${QT_BIN_DIR}/Qt5Core${LE}.dll
-    ${QT_BIN_DIR}/Qt5Gui${LE}.dll
-)
-
-FILE(GLOB Qt5_Libs_Icu ${QT_BIN_DIR}/icu*.dll)
-
-SET(Qt5_Libs_Gles
-    ${QT_BIN_DIR}/libEGL${LE}.dll
-    ${QT_BIN_DIR}/libGLESv2${LE}.dll
-)
-
-FILE(GLOB Qt5_Libs_D3D ${QT_BIN_DIR}/D3DCompiler_*.dll)
-
-SET(Qt5_Libs_Widgets
-    ${QT_BIN_DIR}/Qt5Widgets${LE}.dll
-)
-
-SET(Qt5_Libs_Qml
-    ${QT_BIN_DIR}/Qt5Network${LE}.dll
-    ${QT_BIN_DIR}/Qt5Qml${LE}.dll
-    ${QT_BIN_DIR}/Qt5Quick${LE}.dll
-)
-
 SET(Vlc_Libs
     ${LIBVLC_BIN_DIR}/libvlc.dll
     ${LIBVLC_BIN_DIR}/libvlccore.dll
@@ -110,39 +74,16 @@ IF(Vlc_Std)
     )
 ENDIF()
 
-IF(MINGW)
-    SET(Extra_Libs
-        ${Extra_Libs}
-        ${QT_BIN_DIR}/libgcc_s_${GCC_EH_METHOD}-1.dll
-        ${QT_BIN_DIR}/libstdc++-6.dll
-        ${QT_BIN_DIR}/libwinpthread-1.dll
-    )
+IF(${BUILD_TESTS})
+    ADD_CUSTOM_TARGET(windows
+        "${QT_BIN_DIR}/windeployqt.exe" "${CMAKE_INSTALL_PREFIX}/test${LS}/${VLCQT_TEST}.exe")
 ENDIF()
 
 
 ################
 # Installation #
 ################
-IF(QT_VERSION MATCHES 4)
-    INSTALL(FILES ${Qt4_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
-ELSE()
-    INSTALL(FILES ${Qt5_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
-    INSTALL(FILES ${Qt5_Libs_Icu} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
-    INSTALL(FILES ${Qt5_Platforms} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin/platforms")
-    IF(WITH_GLES)
-        INSTALL(FILES ${Qt5_Libs_Gles} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
-    ENDIF()
-    IF(WITH_ANGLE)
-        INSTALL(FILES ${Qt5_Libs_D3D} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
-    ENDIF()
-    INSTALL(FILES ${Qt5_Libs_Widgets} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
-    IF(QT_VERSION MATCHES 5)
-        INSTALL(FILES ${Qt5_Libs_Qml} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
-    ENDIF()
-ENDIF()
-
 INSTALL(FILES ${Vlc_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
-
 IF(MINGW OR Vlc_Gcc)
     INSTALL(FILES ${Extra_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
 ENDIF()

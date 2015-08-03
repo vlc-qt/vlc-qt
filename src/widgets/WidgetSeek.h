@@ -36,7 +36,7 @@ class QTimer;
 class VlcMediaPlayer;
 
 /*!
-    \class VlcWidgetSeek WidgetSeek.h vlc-qt/WidgetSeek.h
+    \class VlcWidgetSeek WidgetSeek.h VLCQtWidgets/WidgetSeek.h
     \brief Seek widget
 
     This is one of VLC-Qt GUI classes.

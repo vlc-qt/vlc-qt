@@ -32,7 +32,11 @@ ENDIF()
 IF(CMAKE_BUILD_TYPE MATCHES Debug)
     SET(LE d) # For Qt
 
-    OPTION(DEBUG_SUFFIX "Debug library suffix" OFF)
+    IF(MINGW OR MSVC)
+        OPTION(DEBUG_SUFFIX "Debug library suffix" ON)
+    ELSE()
+        OPTION(DEBUG_SUFFIX "Debug library suffix" OFF)
+    ENDIF()
     MESSAGE("VLC-Qt: Debug library suffix ${DEBUG_SUFFIX}")
     IF(DEBUG_SUFFIX)
         SET(LS d) # For VLC-Qt

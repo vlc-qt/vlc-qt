@@ -31,7 +31,7 @@ class VlcMediaPlayer;
 class VlcVideo;
 
 /*!
-    \class VlcQmlVideoPlayer QmlVideoPlayer.h vlc-qt/QmlVideoPlayer.h
+    \class VlcQmlVideoPlayer QmlVideoPlayer.h VLCQtQml/QmlVideoPlayer.h
     \brief QML video player
 
     A simple QML video player that can be used standalone and directly inside QML.

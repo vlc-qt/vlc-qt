@@ -29,7 +29,7 @@ class VlcMediaPlayer;
 struct libvlc_media_player_t;
 
 /*!
-    \class VlcAudio Audio.h vlc-qt/Audio.h
+    \class VlcAudio Audio.h VLCQtCore/Audio.h
     \brief Audio controls
 
     A group of audio controls functions.

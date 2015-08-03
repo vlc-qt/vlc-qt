@@ -22,7 +22,8 @@
 #include <QtCore/QList>
 #include <QtCore/QMap>
 
-#include "Enums.h"
+#include <VLCQtCore/Enums.h>
+
 #include "SharedExportWidgets.h"
 
 class QAction;
@@ -32,7 +33,7 @@ class VlcMediaPlayer;
 class VlcVideo;
 
 /*!
-    \class VlcControlVideo ControlVideo.h vlc-qt/ControlVideo.h
+    \class VlcControlVideo ControlVideo.h VLCQtWidgets/ControlVideo.h
     \brief Video control class
 
     This is one of VLC-Qt control classes.

@@ -17,10 +17,10 @@
 #############################################################################
 # Version #
 ###########
-# libvlc-qt version number
+# VLC-Qt version number
 FILE(READ VERSION VLCQT_VERSION)
 STRING(REGEX REPLACE "\n" "" VLCQT_VERSION "${VLCQT_VERSION}") # get rid of the newline at the end
-MESSAGE("\nVLC-Qt: You are compiling libvlc-qt ${VLCQT_VERSION}\n")
+MESSAGE("\nVLC-Qt: You are compiling VLC-Qt ${VLCQT_VERSION}\n")
 
 # Find Git Version Patch
 FIND_PROGRAM(GIT git)

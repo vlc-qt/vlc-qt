@@ -42,7 +42,7 @@ struct vlc_chroma_description_t;
 class VlcMediaPlayer;
 
 /*!
-    \class VlcVideoMemoryStream VideoMemoryStream.h vlc-qt/VideoMemoryStream.h
+    \class VlcVideoMemoryStream VideoMemoryStream.h VLCQtCore/VideoMemoryStream.h
     \brief Video memory stream
 
     VlcVideoMemoryStream is a template class for creating own video rendering engines.

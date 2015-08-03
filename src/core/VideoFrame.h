@@ -27,7 +27,7 @@
 #include "SharedExportCore.h"
 
 /*!
-    \struct VlcVideoFrame VideoFrame.h vlc-qt/VideoFrame.h
+    \struct VlcVideoFrame VideoFrame.h VLCQtCore/VideoFrame.h
     \brief Video frame data container
 */
 struct VLCQT_CORE_EXPORT VlcVideoFrame
