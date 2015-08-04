@@ -1,25 +1,5 @@
-/****************************************************************************
-* VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2013 Tadej Novak <tadej@tano.si>
-*
-* This library is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Lesser General Public License as published
-* by the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* This library is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public License
-* along with this library. If not, see <http://www.gnu.org/licenses/>.
-*****************************************************************************/
-
 #ifndef VLCQT_WIDGETSEEK_H_
 #define VLCQT_WIDGETSEEK_H_
-
-#include <QtCore/QPoint>
 
 #if QT_VERSION >= 0x050000
     #include <QtWidgets/QWidget>
@@ -32,6 +12,8 @@
 class QLabel;
 class QProgressBar;
 class QTimer;
+class QWidget;
+class QAbstractSlider;
 
 class VlcMediaPlayer;
 
@@ -49,9 +31,20 @@ public:
     /*!
         \brief VlcWidgetSeek constructor
         \param player media player (VlcMediaPlayer *)
+        \param slider widget to be used as slider (QWidget *)
+        \param connectSlider connect the slider to relevant sigals. Set to false if you want to handle everything yourself. (bool)
         \param parent seek widget's parent GUI widget (QWidget *)
     */
-    explicit VlcWidgetSeek(VlcMediaPlayer *player,
+    explicit VlcWidgetSeek(VlcMediaPlayer *player, QWidget *slider = 0, bool connectSlider = true,
+                           QWidget *parent = 0);
+
+    /*!
+        \brief VlcWidgetSeek constructor
+        \param slider widget to be used as slider (QWidget *)
+        \param connectSlider connect the slider to relevant sigals. Set to false if you want to handle everything yourself. (bool)
+        \param parent seek widget's parent GUI widget (QWidget *)
+    */
+    explicit VlcWidgetSeek(QWidget *slider, bool connectSlider,
                            QWidget *parent = 0);
 
     /*!
@@ -84,32 +77,30 @@ public:
         \brief Set media player if initialised without it
         \param player media player (VlcMediaPlayer *)
     */
-    void setMediaPlayer(VlcMediaPlayer *player);
+    virtual void setMediaPlayer(VlcMediaPlayer *player);
+
+    /*!
+        \brief Set slider widget.
+        \param slider widget to be used as slider (QWidget *)
+        \param connectSlider connect the slider to relevant sigals. Set to false if you want to handle everything yourself. (bool)
+    */
+    virtual void setSliderWidget(QWidget *slider, bool updateSlider = true);
+
+protected slots:
+    void end();
+    virtual void updateCurrentTime(int time);
+    virtual void updateFullTime(int time);
 
 protected:
-    void mouseMoveEvent(QMouseEvent *event);
-    void mousePressEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
-    void wheelEvent(QWheelEvent *event);
-
-private slots:
-    void end();
-    void updateCurrentTime(int time);
-    void updateFullTime(int time);
-
-private:
-    void initWidgetSeek();
-    void updateEvent(const QPoint &pos);
-
-    void lock();
-    void unlock();
-
-    bool _lock;
+    void initWidgetSeek(QWidget *slider);
 
     VlcMediaPlayer *_vlcMediaPlayer;
 
     bool _autoHide;
-    QProgressBar *_seek;
+    QWidget * _sliderWidget;
+    QAbstractSlider *_slider;
+    QProgressBar *_progress;
+    bool _connectSlider;
     QLabel *_labelElapsed;
     QLabel *_labelFull;
 };
