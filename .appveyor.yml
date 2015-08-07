@@ -44,7 +44,7 @@ clone_folder: c:\dev\vlc-qt
 
 install:
   - cd c:\dev
-  - md install\debug
+  - md install
   - md dependencies
   - cd dependencies
   - ps: $vlcdl = 'http://download.videolan.org/vlc/' + $env:vlc_version + '/' + $env:name + '/vlc-' + $env:vlc_version + '-' + $env:name + '.7z'
@@ -67,22 +67,20 @@ build_script:
   - if not %platform%==mingw (nmake install) else (mingw32-make install)
   - cd ..
   - cd build-debug
-  - cmake .. -G %makefiles% -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX="c:/dev/install-debug" -DCI=ON -DNO_GIT=%nogitinfo% -DLIBVLC_LIBRARY="c:/dev/dependencies/vlc-%name%/sdk/lib/libvlc.lib" -DLIBVLCCORE_LIBRARY="c:/dev/dependencies/vlc-%name%/sdk/lib/libvlccore.lib" -DLIBVLC_INCLUDE_DIR="c:/dev/dependencies/vlc-%name%/sdk/include"
+  - cmake .. -G %makefiles% -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX="c:/dev/install" -DCI=ON -DNO_GIT=%nogitinfo% -DLIBVLC_LIBRARY="c:/dev/dependencies/vlc-%name%/sdk/lib/libvlc.lib" -DLIBVLCCORE_LIBRARY="c:/dev/dependencies/vlc-%name%/sdk/lib/libvlccore.lib" -DLIBVLC_INCLUDE_DIR="c:/dev/dependencies/vlc-%name%/sdk/include"
   - if not %platform%==mingw (nmake) else (mingw32-make)
+  - if not %platform%==mingw (nmake install) else (mingw32-make install)
   - if %platform%==mingw set PATH=%ORIGPATH%
 
 after_build:
-  - cd c:\dev\vlc-qt
-  - copy build-release\src\core\*vlc-qt-core.dll ..\install\debug
-  - copy build-release\src\qml\*vlc-qt-qml.dll ..\install\debug
-  - copy build-release\src\widgets\*vlc-qt-widgets.dll ..\install\debug
   - cd c:\dev\install
   - if %APPVEYOR_REPO_TAG%==true (buildname=%vlcqt_version%) else (set buildname=%vlcqt_version%_build%APPVEYOR_BUILD_NUMBER%_%APPVEYOR_REPO_COMMIT:~0,7%)
-  - 7z a ..\vlc-qt\VLC-Qt_%buildname%_%name%_%suffix%.7z *
+  - 7z a ..\vlc-qt\VLC-Qt_%buildname%_%name%_%suffix%.7z bin lib include
+  - 7z a ..\vlc-qt\VLC-Qt_Test_%buildname%_%name%_%suffix%.7z test > NUL
   - cd c:\dev\vlc-qt
 
 test_script:
-  - cd c:\dev\install\bin
+  - cd c:\dev\install\test
   - start /wait VLC-Qt.exe test
   - cd c:\dev\vlc-qt
 

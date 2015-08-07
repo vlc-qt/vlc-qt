@@ -18,6 +18,8 @@ wget http://download.qt.io/online/qtsdkrepository/linux_x64/desktop/qt5_54/qt.54
 7z x 5.4.1-0qt5_essentials.7z > /dev/null
 7z x 5.4.1-0icu_53_1_ubuntu_11_10_64.7z > /dev/null
 
+export CC="gcc-4.8"
+export CXX="g++-4.8"
 export PATH=$PWD/cmake-3.2.2-Linux-x86_64/bin/:$PWD/5.4/gcc_64/bin/:$PATH
 
 popd

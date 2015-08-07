@@ -4,9 +4,7 @@ set -ev
 # Prepare build environment
 mkdir dependencies
 mkdir install
-mkdir install-debug
-mkdir build-release
-mkdir build-debug
+mkdir build
 
 export VLCQT_VERSION=`cat VERSION`
 

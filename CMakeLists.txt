@@ -47,11 +47,6 @@ INCLUDE(CustomTargets)
 INCLUDE(CompilerConfig)
 INCLUDE(Dependencies)
 
-# Detect CI
-IF(CI)
-    MESSAGE("Automatic CI build")
-ENDIF()
-
 OPTION(STATIC "Build statically" OFF)
 MESSAGE("VLC-Qt: Build statically: ${STATIC}")
 
