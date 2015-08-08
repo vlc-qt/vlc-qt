@@ -25,7 +25,9 @@ it can be resolved it as fast as possible:
 
 ## Writing guides
 
-I will prepare a special space on the web page for guides. More information soon.
+You can write guides [here](http://discuss.tano.si). Classic markdown and code
+formatting is supported. For full examples, open pull request on the
+[examples repository](https://github.com/vlc-qt/examples).
 
 
 ## Pull Requests

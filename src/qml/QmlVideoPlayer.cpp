@@ -19,6 +19,8 @@
 #include <QtCore/QDebug>
 #include <QtQml/QQmlEngine>
 
+#include "Config.h"
+
 #include "core/Video.h"
 #include "core/Audio.h"
 #include "core/Common.h"
@@ -63,7 +65,7 @@ VlcQmlVideoPlayer::~VlcQmlVideoPlayer()
 
 void VlcQmlVideoPlayer::registerPlugin()
 {
-    qmlRegisterType<VlcQmlVideoPlayer>("VLCQt", VlcInstance::libVersionMajor(), VlcInstance::libVersionMinor(), "VlcVideoPlayer");
+    qmlRegisterType<VlcQmlVideoPlayer>("VLCQt", LIBVLCQT_VERSION_QML_MAJOR, LIBVLCQT_VERSION_QML_MINOR, "VlcVideoPlayer");
 }
 
 void VlcQmlVideoPlayer::openInternal()
