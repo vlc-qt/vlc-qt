@@ -25,7 +25,8 @@ pushd .. > /dev/null
 DEVEL=""
 TARGET=""
 BUILD="1"
-while getopts "hdt:b:" OPTION
+LIBVLC_VERSION=""
+while getopts "hdt:b:v:" OPTION
 do
   case $OPTION in
       h)
@@ -34,6 +35,7 @@ do
           echo "Use -t to specify target (in targets directory)"
           echo "Use -d to ignore dependency requests"
           echo "Use -b to specify build number (defaults to 1)"
+          echo "Use -v to specify libVLC version in base 16 format (like 0x020200)"
           exit 0
           ;;
       d)
@@ -44,6 +46,9 @@ do
           ;;
       b)
           BUILD="$OPTARG"
+          ;;
+      v)
+          LIBVLC_VERSION="$OPTARG"
           ;;
   esac
 done

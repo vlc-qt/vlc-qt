@@ -1,11 +1,15 @@
 #!/usr/bin/make -f
 export DH_VERBOSE=1
 
+ifndef LIBVLC_VERSION
+	LIBVLC_VERSION=0x020200
+endif
+
 %:
 	dh $@
 
 override_dh_auto_configure:
-	dh_auto_configure
+	dh_auto_configure -- -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo -DLIBVLC_VERSION=${LIBVLC_VERSION}
 
 override_dh_strip:
 	dh_strip --dbg-package=libvlc-qt-dbg

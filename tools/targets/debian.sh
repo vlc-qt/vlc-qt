@@ -8,6 +8,10 @@ VER=`cat VERSION`
 
 build() 
 {
+    if [ "${LIBVLC_VERSION}" != "" ]; then
+        export LIBVLC_VERSION
+    fi
+
     echo >${CHANGELOG} "libvlc-qt (${VER}-${BUILD}${DEBSUFFIX}) ${DEBDIST}; urgency=low"
     echo >>${CHANGELOG}
     echo >>${CHANGELOG} "  * The full changelog can be found in CHANGELOG"
