@@ -69,6 +69,7 @@ ENDIF()
 FILE(GLOB Vlc_Std "${LIBVLC_BIN_DIR}/libstdc++-6.dll")
 IF(Vlc_Std)
     SET(Extra_Libs
+        ${Extra_Libs}
         ${LIBVLC_BIN_DIR}/libstdc++-6.dll
         ${LIBVLC_BIN_DIR}/libwinpthread-1.dll
     )
@@ -84,7 +85,7 @@ ENDIF()
 # Installation #
 ################
 INSTALL(FILES ${Vlc_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
-IF(MINGW OR Vlc_Gcc)
+IF(Vlc_Gcc OR Vlc_Std)
     INSTALL(FILES ${Extra_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
 ENDIF()
 

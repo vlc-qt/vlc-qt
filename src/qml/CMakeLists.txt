@@ -155,9 +155,11 @@ ENDIF()
 # Installation #
 ################
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    SET(VLCQtQmlIncludeLocation lib/${VLCQT_QML_NAME}.framework)
+    SET(VLCQtQmlIncludesLocation lib/${VLCQT_QML_NAME}.framework)
+    SET(VLCQtQmlPublicHeaderLocation lib/${VLCQT_QML_NAME}.framework)
 ELSE()
-    SET(VLCQtQmlIncludeLocation include/${VLCQT_QML_NAME})
+    SET(VLCQtQmlIncludesLocation include)
+    SET(VLCQtQmlPublicHeaderLocation include/${VLCQT_QML_NAME})
 ENDIF()
 
 INSTALL(TARGETS ${VLCQT_QML} EXPORT VLCQtQmlTargets
@@ -165,8 +167,8 @@ INSTALL(TARGETS ${VLCQT_QML} EXPORT VLCQtQmlTargets
         FRAMEWORK DESTINATION lib${LIB_SUFFIX}
         LIBRARY DESTINATION lib${LIB_SUFFIX}
         ARCHIVE DESTINATION lib${LIB_SUFFIX}
-        INCLUDES DESTINATION ${VLCQtQmlIncludeLocation}
-        PUBLIC_HEADER DESTINATION ${VLCQtQmlIncludeLocation}
+        INCLUDES DESTINATION ${VLCQtQmlIncludesLocation}
+        PUBLIC_HEADER DESTINATION ${VLCQtQmlPublicHeaderLocation}
 )
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")

@@ -22,12 +22,6 @@ SET(CMAKE_AUTORCC ON)
 # Verbose makefile
 SET(CMAKE_VERBOSE_MAKEFILE ON)
 
-# Set MingW bin dir, if MingW present
-IF(MINGW)
-    STRING(REGEX REPLACE "([^ ]+)[/\\].*" "\\1" MINGW_BIN_DIR_TMP "${CMAKE_CXX_COMPILER}")
-    STRING(REGEX REPLACE "\\\\" "/" MINGW_BIN_DIR "${MINGW_BIN_DIR_TMP}") # Replace back slashes to slashes
-ENDIF()
-
 # Detect debug build
 IF(CMAKE_BUILD_TYPE MATCHES Debug)
     SET(LE d) # For Qt
@@ -70,11 +64,6 @@ IF(MSVC)
     SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -nologo -Zc:wchar_t")
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -nologo -Zc:wchar_t -w34100 -w34189")
     SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NOLOGO /DYNAMICBASE /NXCOMPAT")
-ENDIF()
-
-IF(MINGW)
-    #Select gcc exception handling method
-    set(GCC_EH_METHOD "dw2" CACHE STRING "Gcc exception handling method(dw2/sjlj)")
 ENDIF()
 
 # Support OS X 10.6 or later (64-bit only)
