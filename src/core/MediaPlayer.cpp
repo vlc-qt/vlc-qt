@@ -410,7 +410,7 @@ float VlcMediaPlayer::sampleAspectRatio()
     tracksCount = libvlc_media_tracks_get( _media->core(), &tracks );
     if( tracksCount > 0 )
     {
-        for( int i = 0; i < tracksCount; i++ )
+        for(unsigned i = 0; i < tracksCount; i++)
         {
             libvlc_media_track_t *track = tracks[i];
             if( track->i_type == libvlc_track_video && track->i_id == 0 )

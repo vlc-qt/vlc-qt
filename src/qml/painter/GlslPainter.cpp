@@ -121,11 +121,6 @@ void GlslPainter::paint(QPainter *painter,
     initTextures();
     //////////////////////////////////////////////////////////////
 
-    // As seen on the telly
-#ifdef __GNUC__
-#warning DUPLICATED CODE
-#endif
-
     const float textureCoordinates[] = {
         0, 1, // bottom left
         1, 1, // bottom right
