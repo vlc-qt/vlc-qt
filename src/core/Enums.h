@@ -27,6 +27,7 @@
 
 /*!
     \class Vlc Enums.h VLCQtCore/Enums.h
+    \ingroup VLCQtCore
     \brief Common enumerations
 */
 class VLCQT_CORE_EXPORT Vlc : public QObject

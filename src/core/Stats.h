@@ -23,6 +23,7 @@
 
 /*!
     \struct VlcStats Stats.h VLCQtCore/Stats.h
+    \ingroup VLCQtCore
     \brief Statistics container
 
     A direct copy of libvlc stats object to remove dependency to libvlc.

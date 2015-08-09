@@ -36,6 +36,7 @@ struct libvlc_media_list_t;
 
 /*!
     \class VlcMediaList MediaList.h VLCQtCore/MediaList.h
+    \ingroup VLCQtCore
     \brief Media list item
 
     VlcMediaList holds multiple VlcMedia items to play in sequence.
@@ -115,35 +116,35 @@ public:
 signals:
     /*!
         \brief Signal sent on item added
-        \param libvlc_media_t * item
-        \param int index
+        \param item item that was added
+        \param index index of item
     */
-    void itemAdded(libvlc_media_t *,
-                   int);
+    void itemAdded(libvlc_media_t *item,
+                   int index);
 
     /*!
         \brief Signal sent when item will be added
-        \param libvlc_media_t * item
-        \param int index
+        \param item item that will be added
+        \param index index of item
     */
-    void willAddItem(libvlc_media_t *,
-                     int);
+    void willAddItem(libvlc_media_t *item,
+                     int index);
 
     /*!
         \brief Signal sent on item deleted
-        \param libvlc_media_t * item
-        \param int index
+        \param item item that was added
+        \param index index of item
     */
-    void itemDeleted(libvlc_media_t *,
-                     int);
+    void itemDeleted(libvlc_media_t *item,
+                     int index);
 
     /*!
         \brief Signal sent when item will be deleted
-        \param libvlc_media_t * item
-        \param int index
+        \param item item that will be deleted
+        \param index index of item
     */
-    void willDeleteItem(libvlc_media_t *,
-                        int);
+    void willDeleteItem(libvlc_media_t *item,
+                        int index);
 
 
 private:

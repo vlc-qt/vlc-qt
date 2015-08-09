@@ -35,6 +35,7 @@ struct libvlc_media_t;
 
 /*!
     \class VlcMedia Media.h VLCQtCore/Media.h
+    \ingroup VLCQtCore
     \brief Media item
 
     An abstract representation of a playable media.
@@ -263,39 +264,39 @@ public:
 signals:
     /*!
         \brief Signal sent on meta change
-        \param libvlc_meta_t * meta
+        \param meta new meta
     */
-    void metaChanged(const Vlc::Meta &);
+    void metaChanged(const Vlc::Meta &meta);
 
     /*!
         \brief Signal sent on subitem added
-        \param libvlc_media_t * subitem
+        \param subitem subitem that was added
     */
-    void subitemAdded(libvlc_media_t *);
+    void subitemAdded(libvlc_media_t *subitem);
 
     /*!
         \brief Signal sent on duration change
-        \param int duration
+        \param duration new duration
     */
-    void durationChanged(int);
+    void durationChanged(int duration);
 
     /*!
         \brief Signal sent on parsed change
-        \param int status
+        \param status new parsed status
     */
-    void parsedChanged(int);
+    void parsedChanged(int status);
 
     /*!
         \brief Signal sent on freed
-        \param libvlc_media_t * media
+        \param media freed libvlc_media_t object
     */
-    void freed(libvlc_media_t *);
+    void freed(libvlc_media_t *media);
 
     /*!
         \brief Signal sent on state change
-        \param Vlc::State state
+        \param state new state
     */
-    void stateChanged(const Vlc::State &);
+    void stateChanged(const Vlc::State &state);
 
 
 private:

@@ -43,6 +43,7 @@ class VlcMediaPlayer;
 
 /*!
     \class VlcVideoMemoryStream VideoMemoryStream.h VLCQtCore/VideoMemoryStream.h
+    \ingroup VLCQtCore
     \brief Video memory stream
 
     VlcVideoMemoryStream is a template class for creating own video rendering engines.

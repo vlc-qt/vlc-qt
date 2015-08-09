@@ -33,6 +33,7 @@ struct libvlc_media_player_t;
 
 /*!
     \class VlcVideo Video.h VLCQtCore/Video.h
+    \ingroup VLCQtCore
     \brief Video controls
 
     A group of video controls functions.
@@ -145,11 +146,14 @@ public:
 
     /*!
         \brief Show logo.
-        \param file logo file (QString)
+        \param text text to display (QString)
         \param x x-coordinate (int)
         \param y y-coordinate (int)
-        \param opacity logo opacity (int)
-        \param refresh rate (int)
+        \param timeout marquee timeout
+        \param opacity opacity from 0 to 255 (int)
+        \param size size (int)
+        \param color color in base 16 int (int)
+        \param refresh refresh rate (int)
     */
     void showMarquee(const QString &text,
                      int x,

@@ -28,6 +28,7 @@ class VlcMedia;
 
 /*!
     \class VlcMetaManager MetaManager.h VLCQtCore/MetaManager.h
+    \ingroup VLCQtCore
     \brief Media meta information manager
 
     A manager and editor of media's meta information.

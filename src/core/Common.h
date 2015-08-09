@@ -25,7 +25,13 @@
 #include "SharedExportCore.h"
 
 /*!
+    \defgroup VLCQtCore
+    \brief Core classes and functionality for main media playback
+ */
+
+/*!
     \namespace VlcCommon Common.h VLCQtCore/Common.h
+    \ingroup VLCQtCore
 	\brief Common functions
 */
 namespace VlcCommon

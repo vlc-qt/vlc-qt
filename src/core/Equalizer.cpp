@@ -110,9 +110,9 @@ void VlcEqualizer::setAmplificationForBandAt(float amp, uint bandIndex)
     VlcError::showErrmsg();
 }
 
-void VlcEqualizer::setEnabled(bool b)
+void VlcEqualizer::setEnabled(bool enabled)
 {
-    if (b && _vlcEqualizer != NULL) {
+    if (enabled && _vlcEqualizer != NULL) {
         libvlc_media_player_set_equalizer(_vlcMediaPlayer->core(), _vlcEqualizer);
     } else {
         libvlc_media_player_set_equalizer(_vlcMediaPlayer->core(), NULL);

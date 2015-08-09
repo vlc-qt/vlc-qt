@@ -53,7 +53,7 @@ Description: VLC-Qt - Qt and libvlc connector library
  It contains core classes for main media playback and also some GUI
  classes for faster media player developement.
  .
- This package contains some QML classes for faster media player developement.
+ This package contains some QML classes for controlling video and media playback.
 
 Package: libvlc-qt-widgets2
 Section: libs

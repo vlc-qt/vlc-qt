@@ -29,7 +29,8 @@ struct libvlc_equalizer_t;
 
 /*!
     \class VlcEqualizer Equalizer.h VLCQtCore/Equalizer.h
-    \brief VlcEqualizer
+    \ingroup VLCQtCore
+    \brief Audio equalizer
 
     \since libVLC 2.2
 */
@@ -38,7 +39,7 @@ class VLCQT_CORE_EXPORT VlcEqualizer : public QObject
     Q_OBJECT
 public:
     /*!
-        \brief VlcEqualizer constructor.
+        \brief VlcEqualizer constructor
     */
     explicit VlcEqualizer(VlcMediaPlayer *vlcMediaPlayer);
 
@@ -49,7 +50,7 @@ public:
 
     /*!
         \brief Get the amplification value for a particular equalizer frequency band.
-        \param index, counting from zero, of the frequency band to get
+        \param bandIndex index, counting from zero, of the frequency band to get
         \return amplification value (Hz); -1.0 if there is no such frequency band
      */
     float amplificationForBandAt(uint bandIndex) const;
@@ -62,8 +63,10 @@ public:
 
     /*!
         \brief Get a particular equalizer band frequency.
-        \details This value can be used, for example, to create a label for an equalizer band control in a user interface.
-        \param index of the band, counting from zero
+
+        This value can be used, for example, to create a label for an equalizer band control in a user interface.
+
+        \param bandIndex index of the band, counting from zero
         \return equalizer band frequency (Hz), or -1 if there is no such band
      */
     float bandFrequency(uint bandIndex) const;
@@ -82,35 +85,52 @@ public:
 
     /*!
         \brief Get the name of a particular equalizer preset.
-        \details This name can be used, for example, to prepare a preset label or menu in a user interface.
-        \param index of the preset, counting from zero
+
+        This name can be used, for example, to prepare a preset label or menu in a user interface.
+
+        \param index index of the preset, counting from zero
         \return preset name, or an empty string if there is no such preset
      */
     QString presetNameAt(uint index) const;
 
 public slots:
+    /*!
+        \brief Load from preset
+        \param index index of the preset, counting from zero
+     */
     void loadFromPreset(uint index);
 
     /*!
         \brief Set a new amplification value for a particular equalizer frequency band.
-        \details The new equalizer settings are subsequently applied to a media player by invoking libvlc_media_player_set_equalizer().
-            The supplied amplification value will be clamped to the -20.0 to +20.0 range.
-        \param amp, amplification value (-20.0 to 20.0 Hz)
-        \param bandIndex, counting from zero, of the frequency band to set
+
+        The new equalizer settings are subsequently applied to a media player by invoking libvlc_media_player_set_equalizer().
+        The supplied amplification value will be clamped to the -20.0 to +20.0 range.
+
+        \param amp amplification value (-20.0 to 20.0 Hz)
+        \param bandIndex counting from zero, of the frequency band to set
      */
     void setAmplificationForBandAt(float amp, uint bandIndex);
 
-    void setEnabled(bool b);
+    /*!
+        \brief Enable or disable equalizer
+        \param enabled toggle flag
+     */
+    void setEnabled(bool enabled);
 
     /*!
         \brief Set a new pre-amplification value for an equalizer.
-        \details The new equalizer settings are subsequently applied to a media player by invoking libvlc_media_player_set_equalizer().
-            The supplied amplification value will be clamped to the -20.0 to +20.0 range.
-        \param preamp value in (-20.0 to 20.0 Hz)
+
+        The new equalizer settings are subsequently applied to a media player by invoking libvlc_media_player_set_equalizer().
+        The supplied amplification value will be clamped to the -20.0 to +20.0 range.
+
+        \param value preamp value in (-20.0 to 20.0 Hz)
      */
     void setPreamplification(float value);
 
 signals:
+    /*!
+        \brief Emitted when preset is loaded
+     */
     void presetLoaded();
 
 private:

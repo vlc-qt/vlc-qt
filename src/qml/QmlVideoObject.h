@@ -38,6 +38,7 @@ class GlslPainter;
 
 /*!
     \class VlcQmlVideoObject QmlVideoObject.h VLCQtQml/QmlVideoObject.h
+    \ingroup VLCQtQml
     \brief QML video object
 
     A basic QML video object for painting video. It acts as a replacement for video widget.
@@ -49,7 +50,7 @@ Q_OBJECT
 public:
     /*!
         \brief VlcQmlVideoObject constructor.
-        \param parent parent item (QQuickItem *)
+        \param parent parent item
      */
     explicit VlcQmlVideoObject(QQuickItem *parent = 0);
 
@@ -61,43 +62,47 @@ public:
 
     /*!
         \brief Connect to media player
-        \param player media player (VlcMediaPlayer *)
+        \param player media player
      */
-    void connectToMediaPlayer(VlcMediaPlayer *mediaObject);
+    void connectToMediaPlayer(VlcMediaPlayer *player);
 
     /*!
         \brief Disconnect from media player
-        \param player media player (VlcMediaPlayer *)
+        \param player media player
      */
-    void disconnectFromMediaPlayer(VlcMediaPlayer *mediaObject);
+    void disconnectFromMediaPlayer(VlcMediaPlayer *player);
 
 
     /*!
         \brief Get current aspect ratio
-        \return aspect ratio (Vlc::Ratio)
+        \return aspect ratio
      */
     Vlc::Ratio aspectRatio() const;
 
     /*!
         \brief Set aspect ratio
-        \param aspectRatio new aspect ratio (Vlc::Ratio)
+        \param aspectRatio new aspect ratio
      */
     void setAspectRatio(const Vlc::Ratio &aspectRatio);
 
     /*!
         \brief Get current crop ratio
-        \return crop ratio (Vlc::Ratio)
+        \return crop ratio
      */
     Vlc::Ratio cropRatio() const;
 
     /*!
         \brief Set crop ratio
-        \param cropRatio new crop ratio (Vlc::Ratio)
+        \param cropRatio new crop ratio
      */
     void setCropRatio(const Vlc::Ratio &cropRatio);
 
 protected:
+    /*!
+        \brief Core media player
+     */
     VlcMediaPlayer *_player;
+
 private slots:
     void frameReady();
     void reset();

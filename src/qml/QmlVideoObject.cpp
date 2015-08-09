@@ -180,19 +180,19 @@ void VlcQmlVideoObject::reset()
     }
 }
 
-void VlcQmlVideoObject::connectToMediaPlayer(VlcMediaPlayer *mediaObject)
+void VlcQmlVideoObject::connectToMediaPlayer(VlcMediaPlayer *player)
 {
-    setCallbacks(mediaObject);
+    setCallbacks(player);
 }
 
-void VlcQmlVideoObject::disconnectFromMediaPlayer(VlcMediaPlayer *mediaObject)
+void VlcQmlVideoObject::disconnectFromMediaPlayer(VlcMediaPlayer *player)
 {
     // Try to prevent callbacks called after this object is being deleted
-    if (mediaObject) {
-        mediaObject->stop();
+    if (player) {
+        player->stop();
     }
 
-    unsetCallbacks(mediaObject);
+    unsetCallbacks(player);
 }
 
 void VlcQmlVideoObject::lock()

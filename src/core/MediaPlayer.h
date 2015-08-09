@@ -43,6 +43,7 @@ struct libvlc_media_player_t;
 
 /*!
     \class VlcMediaPlayer MediaPlayer.h VLCQtCore/MediaPlayer.h
+    \ingroup VLCQtCore
     \brief Media Player
 
     A basic MediaPlayer manager for VLC-Qt library.
@@ -219,15 +220,15 @@ signals:
 
     /*!
         \brief Signal sent on buffering
-        \param float buffer in percent
+        \param buffer buffer status in percent
     */
-    void buffering(float);
+    void buffering(float buffer);
 
     /*!
         \brief Signal sent on buffering
-        \param int buffer in percent
+        \param buffer buffer status in percent
     */
-    void buffering(int);
+    void buffering(int buffer);
 
     /*!
         \brief Signal sent when end reached
@@ -246,15 +247,15 @@ signals:
 
     /*!
         \brief Signal sent on length change
-        \param int length
+        \param length new length
     */
-    void lengthChanged(int);
+    void lengthChanged(int length);
 
     /*!
         \brief Signal sent on media change
-        \param libvlc_media_t * media
+        \param media new media object
     */
-    void mediaChanged(libvlc_media_t *);
+    void mediaChanged(libvlc_media_t *media);
 
     /*!
         \brief Signal sent nothing speciall happened
@@ -268,9 +269,9 @@ signals:
 
     /*!
         \brief Signal sent on pausable change
-        \param bool pausable
+        \param pausable pausable status
     */
-    void pausableChanged(bool);
+    void pausableChanged(bool pausable);
 
     /*!
         \brief Signal sent when paused
@@ -284,21 +285,21 @@ signals:
 
     /*!
         \brief Signal sent on position change
-        \param float position
+        \param position new position
     */
-    void positionChanged(float);
+    void positionChanged(float position);
 
     /*!
         \brief Signal sent on seekable change
-        \param bool seekable
+        \param seekable seekable status
     */
-    void seekableChanged(bool);
+    void seekableChanged(bool seekable);
 
     /*!
         \brief Signal sent on snapshot taken
-        \param QString filename
+        \param filename filename of the snapshot
     */
-    void snapshotTaken(const QString &);
+    void snapshotTaken(const QString &filename);
 
     /*!
         \brief Signal sent when stopped
@@ -307,21 +308,21 @@ signals:
 
     /*!
         \brief Signal sent on time change
-        \param int time
+        \param time new time
     */
-    void timeChanged(int);
+    void timeChanged(int time);
 
     /*!
         \brief Signal sent on title change
-        \param int title
+        \param title new title
     */
-    void titleChanged(int);
+    void titleChanged(int title);
 
     /*!
         \brief Signal sent when video output is available
-        \param int vout count
+        \param count number of video outputs available
     */
-    void vout(int);
+    void vout(int count);
 
     /*!
         \brief Signal sent when state of the player changed

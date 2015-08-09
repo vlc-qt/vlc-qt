@@ -28,6 +28,7 @@
 
 /*!
     \struct VlcVideoFrame VideoFrame.h VLCQtCore/VideoFrame.h
+    \ingroup VLCQtCore
     \brief Video frame data container
 */
 struct VLCQT_CORE_EXPORT VlcVideoFrame
@@ -39,7 +40,7 @@ struct VLCQT_CORE_EXPORT VlcVideoFrame
     */
     VlcVideoFrame();
 
-    bool inited;
+    bool inited; /*!< initialisation status */
 
     unsigned int width; /*!< frame width */
     unsigned int height; /*!< frame height */

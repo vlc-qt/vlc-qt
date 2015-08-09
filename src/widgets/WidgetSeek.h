@@ -37,6 +37,7 @@ class VlcMediaPlayer;
 
 /*!
     \class VlcWidgetSeek WidgetSeek.h VLCQtWidgets/WidgetSeek.h
+    \ingroup VLCQtWidgets
     \brief Seek widget
 
     This is one of VLC-Qt GUI classes.
@@ -48,15 +49,15 @@ Q_OBJECT
 public:
     /*!
         \brief VlcWidgetSeek constructor
-        \param player media player (VlcMediaPlayer *)
-        \param parent seek widget's parent GUI widget (QWidget *)
+        \param player media player
+        \param parent seek widget's parent GUI widget
     */
     explicit VlcWidgetSeek(VlcMediaPlayer *player,
                            QWidget *parent = 0);
 
     /*!
         \brief VlcWidgetSeek constructor
-        \param parent seek widget's parent GUI widget (QWidget *)
+        \param parent seek widget's parent GUI widget
     */
     explicit VlcWidgetSeek(QWidget *parent = 0);
 
@@ -67,7 +68,7 @@ public:
 
     /*!
         \brief Get auto-hide option.
-        \return auto-hide option status, true if enabled (bool)
+        \return auto-hide option status, true if enabled
     */
     bool autoHide() const { return _autoHide; }
 
@@ -76,21 +77,16 @@ public:
 
         This option will automatically hide seek widget, if enabled.
 
-        \param autoHide new auto-hide option (bool)
+        \param autoHide new auto-hide option
     */
     void setAutoHide(bool autoHide);
 
     /*!
         \brief Set media player if initialised without it
-        \param player media player (VlcMediaPlayer *)
+        \param player media player
     */
     void setMediaPlayer(VlcMediaPlayer *player);
 
-protected:
-    void mouseMoveEvent(QMouseEvent *event);
-    void mousePressEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
-    void wheelEvent(QWheelEvent *event);
 
 private slots:
     void end();
@@ -98,6 +94,11 @@ private slots:
     void updateFullTime(int time);
 
 private:
+    void mouseMoveEvent(QMouseEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+    void wheelEvent(QWheelEvent *event);
+
     void initWidgetSeek();
     void updateEvent(const QPoint &pos);
 

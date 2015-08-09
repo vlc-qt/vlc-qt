@@ -31,6 +31,7 @@ class VlcMediaPlayer;
 
 /*!
     \class VlcWidgetVolumeSlider WidgetVolumeSlider.h VLCQtWidgets/WidgetVolumeSlider.h
+    \ingroup VLCQtWidgets
     \brief Volume slider widget
 
     This is one of VLC-Qt GUI classes.
@@ -43,15 +44,15 @@ public:
     /*!
         \brief VlcWidgetVolumeSlider constructor
 
-        \param player media player (VlcMediaPlayer *)
-        \param parent volume slider's parent GUI widget (QWidget)
+        \param player media player
+        \param parent volume slider's parent GUI widget
     */
     explicit VlcWidgetVolumeSlider(VlcMediaPlayer *player,
                                    QWidget *parent = 0);
 
     /*!
         \brief VlcWidgetVolumeSlider constructor
-        \param parent volume slider's parent GUI widget (QWidget)
+        \param parent volume slider's parent GUI widget
     */
     explicit VlcWidgetVolumeSlider(QWidget *parent = 0);
 
@@ -63,32 +64,32 @@ public:
 
     /*!
         \brief Set media player if initialised without it
-        \param player media player (VlcMediaPlayer *)
+        \param player media player
     */
     void setMediaPlayer(VlcMediaPlayer *player);
 
 public slots:
     /*!
         \brief Mute status
-        \return bool current mute status (const bool)
+        \return bool current mute status
     */
     bool mute() const;
 
     /*!
         \brief Toggle mute
-        \param enabled new mutte status (bool)
+        \param enabled new mutte status
     */
     void setMute(bool enabled);
 
     /*!
         \brief Set volume for current media
-        \param volume number from 0 to 200 (int)
+        \param volume number from 0 to 200
     */
     void setVolume(int volume);
 
     /*!
         \brief Get volume for current media
-        \return volume number from 0 to 200 (const int)
+        \return volume number from 0 to 200
     */
     int volume() const;
 
@@ -97,7 +98,7 @@ public slots:
 
         Limits from 0 to 200 apply to this function.
 
-        \param up if true increases the volume (bool)
+        \param up if true increases the volume
     */
     void volumeControl(bool up);
 
@@ -122,18 +123,17 @@ public slots:
 signals:
     /*!
         \brief Signal for new volume
-        \param int new volume (int)
+        \param volume new volume
     */
-    void newVolume(int);
-
-protected:
-    void mousePressEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
+    void newVolume(int volume);
 
 private slots:
     void updateVolume();
 
 private:
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+
     void initWidgetVolumeSlider();
 
     bool _lock;

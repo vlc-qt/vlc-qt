@@ -35,7 +35,13 @@
 class VlcMediaPlayer;
 
 /*!
+    \defgroup VLCQtWidgets
+    \brief Widget classes for faster media player developement
+ */
+
+/*!
     \class VlcWidgetVideo WidgetVideo.h VLCQtWidgets/WidgetVideo.h
+    \ingroup VLCQtWidgets
     \brief Video widget
 
     This is one of VLC-Qt GUI classes.
@@ -47,15 +53,15 @@ Q_OBJECT
 public:
     /*!
         \brief VlcWidgetVideo constructor
-        \param player media player (VlcMediaPlayer *)
-        \param parent video widget's parent GUI widget (QWidget)
+        \param player media player
+        \param parent video widget's parent GUI widget
     */
     explicit VlcWidgetVideo(VlcMediaPlayer *player,
                             QWidget *parent = 0);
 
     /*!
         \brief VlcWidgetVideo constructor
-        \param parent video widget's parent GUI widget (QWidget)
+        \param parent video widget's parent GUI widget
     */
     explicit VlcWidgetVideo(QWidget *parent = 0);
 
@@ -66,103 +72,103 @@ public:
 
     /*!
         \brief Get current aspect ratio setting
-        \return current aspect ratio (const Vlc::Ratio)
+        \return current aspect ratio
     */
     inline Vlc::Ratio currentAspectRatio() const { return _currentAspectRatio; }
 
     /*!
         \brief Get default aspect ratio setting
-        \return default aspect ratio (const Vlc::Ratio)
+        \return default aspect ratio
     */
     inline Vlc::Ratio defaultAspectRatio() const { return _defaultAspectRatio; }
 
     /*!
         \brief Set current aspect ratio setting
-        \param ratio current aspect ratio (const Vlc::Ratio)
+        \param ratio current aspect ratio
     */
     void setCurrentAspectRatio(const Vlc::Ratio &ratio);
 
     /*!
         \brief Set default aspect ratio setting
-        \param ratio default aspect ratio (const Vlc::Ratio)
+        \param ratio default aspect ratio
     */
     void setDefaultAspectRatio(const Vlc::Ratio &ratio);
 
     /*!
         \brief Get current crop ratio setting
-        \return current crop ratio (const Vlc::Ratio)
+        \return current crop ratio
     */
     inline Vlc::Ratio currentCropRatio() const { return _currentCropRatio; }
 
     /*!
         \brief Get default crop ratio setting
-        \return default crop ratio (const Vlc::Ratio)
+        \return default crop ratio
     */
     inline Vlc::Ratio defaultCropRatio() const { return _defaultCropRatio; }
 
     /*!
         \brief Set current crop ratio setting
-        \param ratio current crop ratio (const Vlc::Ratio)
+        \param ratio current crop ratio
     */
     void setCurrentCropRatio(const Vlc::Ratio &ratio);
 
     /*!
         \brief Set default crop ratio setting
-        \param ratio default crop ratio (const Vlc::Ratio)
+        \param ratio default crop ratio
     */
     void setDefaultCropRatio(const Vlc::Ratio &ratio);
 
     /*!
         \brief Get current deinterlacing filter setting
-        \return current deinterlacing filter (const Vlc::Deinterlacing)
+        \return current deinterlacing filter
     */
     inline Vlc::Deinterlacing currentDeinterlacing() const { return _currentDeinterlacing; }
 
     /*!
         \brief Get default deinterlacing filter setting
-        \return current deinterlacing filter (const Vlc::Deinterlacing)
+        \return current deinterlacing filter
     */
     inline Vlc::Deinterlacing defaultDeinterlacing() const { return _defaultDeinterlacing; }
 
     /*!
         \brief Set current deinterlacing filter setting
-        \param ratio current deinterlacing filter (const Vlc::Deinterlacing)
+        \param deinterlacing current deinterlacing filter
     */
     void setCurrentDeinterlacing(const Vlc::Deinterlacing &deinterlacing);
 
     /*!
         \brief Set default deinterlacing filter setting
-        \param ratio default deinterlacing filter (const Vlc::Deinterlacing)
+        \param deinterlacing default deinterlacing filter
     */
     void setDefaultDeinterlacing(const Vlc::Deinterlacing &deinterlacing);
 
     /*!
         \brief Get current scale ratio setting
-        \return current scale ratio (const Vlc::Scale)
+        \return current scale ratio
     */
     inline Vlc::Scale currentScale() const { return _currentScale; }
 
     /*!
         \brief Get default scale ratio setting
-        \return default scale ratio (const Vlc::Scale)
+        \return default scale ratio
     */
     inline Vlc::Scale defaultScale() const { return _defaultScale; }
 
     /*!
         \brief Set current scale ratio setting
-        \param scale current scale ratio (const Vlc::Scale)
+        \param scale current scale ratio
     */
     void setCurrentScale(const Vlc::Scale &scale);
 
     /*!
         \brief Set default scale ratio setting
-        \param scale default scale ratio (const Vlc::Scale)
+        \param scale default scale ratio
     */
     void setDefaultScale(const Vlc::Scale &scale);
 
     /*!
         \brief Set media player if initialised without it
-        \param player media player (VlcMediaPlayer *)
+        \param player media player
     */
     void setMediaPlayer(VlcMediaPlayer *player);
 
@@ -170,7 +176,7 @@ public:
         \brief Request new video frame.
 
         Request new video frame and its widget ID to set it in the instance.
-        \return widget ID (WId)
+        \return widget ID
         \sa VlcMediaPlayer::VlcMediaPlayer()
     */
     WId request();
@@ -205,25 +211,25 @@ public slots:
 
     /*!
         \brief Set aspect ratio
-        \param ratio aspect ratio (const Vlc::Ratio)
+        \param ratio aspect ratio
     */
     void setAspectRatio(const Vlc::Ratio &ratio);
 
     /*!
         \brief Set crop ratio
-        \param ratio crop ratio (const Vlc::Ratio)
+        \param ratio crop ratio
     */
     void setCropRatio(const Vlc::Ratio &ratio);
 
     /*!
         \brief Set deinterlace filter
-        \param ratio crop ratio (const Vlc::Deinterlacing)
+        \param deinterlacing deinterlacing filter
     */
     void setDeinterlacing(const Vlc::Deinterlacing &deinterlacing);
 
     /*!
         \brief Set scale ratio
-        \param scale scale ratio (const Vlc::Scale)
+        \param scale scale ratio
     */
     void setScale(const Vlc::Scale &scale);
 

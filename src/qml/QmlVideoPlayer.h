@@ -31,7 +31,13 @@ class VlcMediaPlayer;
 class VlcVideo;
 
 /*!
+    \defgroup VLCQtQml
+    \brief QML classes for controlling video and media playback
+ */
+
+/*!
     \class VlcQmlVideoPlayer QmlVideoPlayer.h VLCQtQml/QmlVideoPlayer.h
+    \ingroup VLCQtQml
     \brief QML video player
 
     A simple QML video player that can be used standalone and directly inside QML.
@@ -164,7 +170,7 @@ public:
 
     /*!
         \brief Set volume
-        \param volume new volume (int)
+        \param volume new volume
 
         Used as property in QML.
      */
@@ -172,7 +178,7 @@ public:
 
     /*!
         \brief Get current aspect ratio
-        \return current aspect ratio (int)
+        \return current aspect ratio
 
         Used as property in QML.
      */
@@ -180,7 +186,7 @@ public:
 
     /*!
         \brief Set aspect ratio
-        \param aspectRatio new aspect ratio (int)
+        \param aspectRatio new aspect ratio
 
         Used as property in QML.
      */
@@ -188,7 +194,7 @@ public:
 
     /*!
         \brief Get current crop ratio
-        \return current crop ratio (int)
+        \return current crop ratio
 
         Used as property in QML.
      */
@@ -196,7 +202,7 @@ public:
 
     /*!
         \brief Set crop ratio
-        \param cropRatio new crop ratio (int)
+        \param cropRatio new crop ratio
 
         Used as property in QML.
      */
@@ -204,7 +210,7 @@ public:
 
     /*!
         \brief Get current media URL
-        \return current media URL (QUrl)
+        \return current media URL
 
         Used as property in QML.
      */
@@ -212,7 +218,7 @@ public:
 
     /*!
         \brief Set media URL
-        \param url new media URL (QUrl)
+        \param url new media URL
 
         Used as property in QML.
      */
@@ -220,7 +226,7 @@ public:
 
     /*!
         \brief Get current autoplay setting
-        \return current autoplay setting (bool)
+        \return current autoplay setting
 
         Used as property in QML.
      */
@@ -228,7 +234,7 @@ public:
 
     /*!
         \brief Set autoplay setting
-        \param autoplay new autoplay setting (bool)
+        \param autoplay new autoplay setting
 
         Used as property in QML.
      */
@@ -236,7 +242,7 @@ public:
 
     /*!
         \brief Get current deinterlacing() mode
-        \return current deinterlacing mode (int)
+        \return current deinterlacing mode
 
         Used as property in QML.
      */
@@ -244,7 +250,7 @@ public:
 
     /*!
         \brief Set deinterlacing mode
-        \param deinterlacing new deinterlacing mode (int)
+        \param deinterlacing new deinterlacing mode
 
         Used as property in QML.
      */
@@ -252,7 +258,7 @@ public:
 
     /*!
         \brief Get current state
-        \return current state (int)
+        \return current state
 
         Used as property in QML.
      */
@@ -260,7 +266,7 @@ public:
 
     /*!
         \brief Get current seekable status
-        \return current seekable status (bool)
+        \return current seekable status
 
         Used as property in QML.
      */
@@ -268,7 +274,7 @@ public:
 
     /*!
         \brief Get current media length
-        \return current media length(int)
+        \return current media length
 
         Used as property in QML.
      */
@@ -276,7 +282,7 @@ public:
 
     /*!
         \brief Get current media time
-        \return current media time(int)
+        \return current media time
 
         Used as property in QML.
      */
@@ -284,7 +290,7 @@ public:
 
     /*!
         \brief Set current media time
-        \param current media time(int)
+        \param time current media time
 
         Used as property in QML.
      */
@@ -292,7 +298,7 @@ public:
 
     /*!
         \brief Get current media position
-        \return current media position from 0 to 1(float)
+        \return current media position from 0 to 1
 
         Used as property in QML.
      */
@@ -300,7 +306,7 @@ public:
 
     /*!
         \brief Set current media position
-        \param position media position from 0 to 1(float)
+        \param position media position from 0 to 1
 
         Used as property in QML.
      */

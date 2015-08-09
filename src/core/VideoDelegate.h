@@ -28,6 +28,7 @@ class VlcMediaPlayer;
 
 /*!
     \class VlcVideoDelegate VideoDelegate.h VLCQtCore/VideoDelegate.h
+    \ingroup VLCQtCore
     \brief Video delegate
 
     This is a helper class, to separate core from display.

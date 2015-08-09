@@ -36,6 +36,7 @@ struct libvlc_media_list_player_t;
 
 /*!
     \class VlcMediaListPlayer MediaListPlayer.h VLCQtCore/MediaListPlayer.h
+    \ingroup VLCQtCore
     \brief Media List Player
 
     A basic MediaListPlayer manager for VLC-Qt library.
@@ -144,9 +145,9 @@ signals:
 
     /*!
         \brief Signal sent on next item set
-        \param libvlc_media_t * media
+        \param media next media item
     */
-    void nextItemSet(libvlc_media_t *);
+    void nextItemSet(libvlc_media_t *media);
 
     /*!
         \brief Signal sent when stopped
