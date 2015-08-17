@@ -46,6 +46,7 @@ public:
 private slots:
     void openLocal();
     void openUrl();
+    void functionTest();
 
 private:
     Ui::Player *ui;

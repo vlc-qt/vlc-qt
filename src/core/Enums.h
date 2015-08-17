@@ -35,6 +35,7 @@ class VLCQT_CORE_EXPORT Vlc : public QObject
 Q_OBJECT
 
 Q_ENUMS(ActionsType)
+Q_ENUMS(AudioChannel)
 Q_ENUMS(AudioCodec)
 Q_ENUMS(AudioOutput)
 Q_ENUMS(Deinterlacing)
@@ -67,6 +68,19 @@ public:
         Subtitles,
         VideoTrack,
         Other
+    };
+
+    /*!
+        \enum AudioChannel
+        \brief Audio channel options
+    */
+    enum AudioChannel {
+        AudioChannelError = -1,
+        Stereo = 1,
+        RStereo = 2,
+        Left = 3,
+        Right = 4,
+        Dolbys = 5
     };
 
     /*!

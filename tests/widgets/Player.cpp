@@ -16,10 +16,12 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
+#include <QtCore/QDebug>
 // QtGui/QtWidgets
 #include <QFileDialog>
 #include <QInputDialog>
 
+#include "core/Audio.h"
 #include "core/Common.h"
 #include "core/Instance.h"
 #include "core/Media.h"
@@ -67,6 +69,7 @@ Player::Player(QWidget *parent)
 #else
     ui->equalizer->hide();
 #endif
+    connect(ui->functionTest, SIGNAL(clicked()), this, SLOT(functionTest()));
 }
 
 Player::~Player()
@@ -103,4 +106,17 @@ void Player::openUrl()
     _media = new VlcMedia(url, _instance);
 
     _player->open(_media);
+}
+
+void Player::functionTest()
+{
+    // Testing placeholder function
+
+    VlcAudio *audio = new VlcAudio(_player);
+
+    qDebug() << audio->channel();
+
+    audio->setChannel(Vlc::Left);
+
+    qDebug() << audio->channel();
 }

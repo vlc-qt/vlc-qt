@@ -209,3 +209,25 @@ int VlcAudio::volume() const
 
     return volume;
 }
+
+Vlc::AudioChannel VlcAudio::channel() const
+{
+    Vlc::AudioChannel channel = Vlc::AudioChannelError;
+    if (_vlcMediaPlayer) {
+        channel = Vlc::AudioChannel(libvlc_audio_get_channel(_vlcMediaPlayer));
+        VlcError::showErrmsg();
+    }
+
+    return channel;
+}
+
+void VlcAudio::setChannel(Vlc::AudioChannel channel)
+{
+    if (_vlcMediaPlayer) {
+        // Don't change if channel is the same
+        if (channel != VlcAudio::channel()) {
+            libvlc_audio_set_channel(_vlcMediaPlayer, channel);
+            VlcError::showErrmsg();
+        }
+    }
+}

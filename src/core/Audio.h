@@ -22,6 +22,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QStringList>
 
+#include "Enums.h"
+
 #include "SharedExportCore.h"
 
 class VlcMediaPlayer;
@@ -80,6 +82,12 @@ public slots:
     */
     bool toggleMute() const;
 
+    /*!
+        \brief Set audio channel.
+        \param channel new audio channel
+    */
+    void setChannel(Vlc::AudioChannel channel);
+
 
 public:
     /*!
@@ -117,6 +125,12 @@ public:
         \return current audio level, -1 if media is not playing (const int)
     */
     int volume() const;
+
+    /*!
+        \brief Get audio channel.
+        \return current audio channel, -1 if error
+    */
+    Vlc::AudioChannel channel() const;
 
 
 signals:
