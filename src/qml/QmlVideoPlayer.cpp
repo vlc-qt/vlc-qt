@@ -160,7 +160,7 @@ void VlcQmlVideoPlayer::setUrl(const QUrl &url)
     if(url.isLocalFile()) {
         _media = new VlcMedia(url.toLocalFile(), true, _instance);
     } else {
-        _media = new VlcMedia(url.toString(), false, _instance);
+        _media = new VlcMedia(url.toString(QUrl::FullyEncoded), false, _instance);
     }
 
     openInternal();
