@@ -13,7 +13,7 @@ environment:
   - name: win32
     platform: amd64_x86
     qt: 5.5\msvc2013
-    suffix: msvc2013 
+    suffix: msvc2013
 
   # MSVC x64
   - name: win64
@@ -74,7 +74,7 @@ build_script:
 
 after_build:
   - cd c:\dev\install
-  - if %APPVEYOR_REPO_TAG%==true (buildname=%vlcqt_version%) else (set buildname=%vlcqt_version%_build%APPVEYOR_BUILD_NUMBER%_%APPVEYOR_REPO_COMMIT:~0,7%)
+  - if %APPVEYOR_REPO_TAG%==true (set buildname=%vlcqt_version%) else (set buildname=%vlcqt_version%_build%APPVEYOR_BUILD_NUMBER%_%APPVEYOR_REPO_COMMIT:~0,7%)
   - 7z a ..\vlc-qt\VLC-Qt_%buildname%_%name%_%suffix%.7z bin lib include
   - 7z a ..\vlc-qt\VLC-Qt_Test_%buildname%_%name%_%suffix%.7z test > NUL
   - cd c:\dev\vlc-qt
