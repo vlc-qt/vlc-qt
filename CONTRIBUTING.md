@@ -22,6 +22,8 @@ it can be resolved it as fast as possible:
 - Please include information on what VLC, Qt, VLC-Qt version you are using
   and what operating system you are running.
 
+Your issue will be closed when not replied for a month or longer. Feel free to reopen it later if still encountering the problem.
+
 
 ## Writing guides
 
@@ -39,14 +41,14 @@ To ease the pull request merge into mainline, please follow these requirements:
 - VLC 2.0 is still supported and VLC-Qt must build against it. Wrap libVLC functions
   from version newer than 2.0 in compiler if clauses to maintain backwards
   compatibility. Version should be defined as a base 16 integer (similar to Qt).
-  
+
   ```c++
   #if LIBVLC_VERSION >= 0x020200
       _vlcEqualizer = new VlcEqualizer(this);
   #endif
   ```
 - Use similar coding style as you see in existing code, notably:
-  
+
   - use 4 spaces indentation not tabs
   - private variables have underscore as a prefix ```_vlcInstance```
   - all public functions should be documented, for better readability put each
