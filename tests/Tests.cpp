@@ -28,6 +28,7 @@
 #include "common/dual/DualPlayer.h"
 #include "common/MetaManager.h"
 #include "common/Recorder.h"
+#include "widgets/MediaList.h"
 #include "widgets/Player.h"
 
 Tests::Tests(QWidget *parent)
@@ -38,6 +39,7 @@ Tests::Tests(QWidget *parent)
 #endif
       _testDualInstance(0),
       _testDualPlayer(0),
+      _testMediaList(0),
       _testPlayer(0)
 {
     ui->setupUi(this);
@@ -48,6 +50,7 @@ Tests::Tests(QWidget *parent)
     connect(ui->buttonMetaManager, SIGNAL(clicked()), this, SLOT(metaManager()));
     connect(ui->buttonPlayer, SIGNAL(clicked()), this, SLOT(player()));
     connect(ui->buttonRecorder, SIGNAL(clicked()), this, SLOT(recorder()));
+    connect(ui->buttonList, SIGNAL(clicked(bool)), this, SLOT(mediaList()));
 
 #if QT_VERSION >= 0x050000
     connect(ui->buttonQml, SIGNAL(clicked()), this, SLOT(qml()));
@@ -94,6 +97,16 @@ void Tests::dualPlayer()
 
     _testDualPlayer = new DualPlayer(this);
     _testDualPlayer->show();
+}
+
+void Tests::mediaList()
+{
+    if(_testMediaList) {
+        delete _testMediaList;
+    }
+
+    _testMediaList = new MediaList(this);
+    _testMediaList->show();
 }
 
 void Tests::metaManager()

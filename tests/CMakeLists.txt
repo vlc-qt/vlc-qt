@@ -31,6 +31,7 @@ SET(Test_UIs
     common/MetaManager.ui
     common/Recorder.ui
     common/dual/Dual.ui
+    widgets/MediaList.ui
     widgets/Player.ui
 )
 
@@ -47,6 +48,7 @@ SET(Test_Srcs
     common/Recorder.cpp
     common/dual/DualInstance.cpp
     common/dual/DualPlayer.cpp
+    widgets/MediaList.cpp
     widgets/Player.cpp
 )
 

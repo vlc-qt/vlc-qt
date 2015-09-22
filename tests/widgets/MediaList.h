@@ -16,56 +16,37 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_TESTS_H_
-#define VLCQT_TESTS_H_
+#ifndef VLCQT_TEST_MEDIALIST_H_
+#define VLCQT_TEST_MEDIALIST_H_
 
 // QtGui/QtWidgets
 #include <QMainWindow>
 
-#if QT_VERSION >= 0x050000
-    #include <QtQuick/QQuickView>
-#endif
+#include "Config.h"
 
-namespace Ui
-{
-    class Tests;
+namespace Ui {
+    class MediaList;
 }
 
-class DualInstance;
-class DualPlayer;
-class MediaList;
-class Player;
+class VlcInstance;
+class VlcMediaList;
+class VlcMediaListPlayer;
+class VlcMediaPlayer;
 
-class Tests : public QMainWindow
+class MediaList : public QMainWindow
 {
-Q_OBJECT
+    Q_OBJECT
 public:
-    explicit Tests(QWidget *parent = 0);
-    ~Tests();
-
-public:
-    void test();
-
-private slots:
-    void dualInstance();
-    void dualPlayer();
-    void mediaList();
-    void metaManager();
-    void player();
-    void qml();
-    void recorder();
+    explicit MediaList(QWidget *parent = 0);
+    ~MediaList();
 
 private:
-    Ui::Tests *ui;
+    Ui::MediaList *ui;
 
-#if QT_VERSION >= 0x050000
-    QQuickView *_quickView;
-#endif
-
-    DualInstance *_testDualInstance;
-    DualPlayer *_testDualPlayer;
-    MediaList *_testMediaList;
-    Player *_testPlayer;
+    VlcInstance *_instance;
+    VlcMediaList *_mediaList;
+    VlcMediaListPlayer *_listPlayer;
+    VlcMediaPlayer *_player;
 };
 
-#endif // VLCQT_TESTS_H_
+#endif // VLCQT_TEST_MEDIALIST_H_
