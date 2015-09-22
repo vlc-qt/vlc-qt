@@ -3,6 +3,7 @@ version: 1.0.0.{build}
 branches:
   except:
     - project/travis
+    - feature/experiments
 
 environment:
   vlcqt_version: 1.0.0
