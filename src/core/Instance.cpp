@@ -25,6 +25,7 @@
 #include "core/Enums.h"
 #include "core/Error.h"
 #include "core/Instance.h"
+#include "core/ModuleDescription.h"
 
 VlcInstance::VlcInstance(const QStringList &args,
                          QObject *parent)
@@ -132,4 +133,52 @@ void VlcInstance::setUserAgent(const QString &application,
     QString applicationOutput = application + " " + version;
     QString httpOutput = application + "/" + version + " " + "VLC-Qt" + "/" + libVersion(); // "AppName/1.2.3 VLC-Qt/1.2.3"
     libvlc_set_user_agent(_vlcInstance, applicationOutput.toUtf8().data(), httpOutput.toUtf8().data());
+}
+
+QList<VlcModuleDescription *> VlcInstance::audioFilterList() const
+{
+    libvlc_module_description_t *original = libvlc_video_filter_list_get(_vlcInstance);
+    if (original == NULL) {
+        return QList<VlcModuleDescription *>();
+    }
+
+    libvlc_module_description_t *list = original;
+    QList<VlcModuleDescription *> audioFilters;
+    do {
+        VlcModuleDescription *module = new VlcModuleDescription(VlcModuleDescription::AudioFilter, list->psz_name);
+        module->setLongName(list->psz_longname);
+        module->setShortName(list->psz_shortname);
+        module->setHelp(list->psz_help);
+        audioFilters << module;
+
+        list = list->p_next;
+    } while (list->p_next);
+
+    libvlc_module_description_list_release(original);
+
+    return audioFilters;
+}
+
+QList<VlcModuleDescription *> VlcInstance::videoFilterList() const
+{
+    libvlc_module_description_t *original = libvlc_video_filter_list_get(_vlcInstance);
+    if (original == NULL) {
+        return QList<VlcModuleDescription *>();
+    }
+
+    libvlc_module_description_t *list = original;
+    QList<VlcModuleDescription *> videoFilters;
+    do {
+        VlcModuleDescription *module = new VlcModuleDescription(VlcModuleDescription::VideoFilter, list->psz_name);
+        module->setLongName(list->psz_longname);
+        module->setShortName(list->psz_shortname);
+        module->setHelp(list->psz_help);
+        videoFilters << module;
+
+        list = list->p_next;
+    } while (list->p_next);
+
+    libvlc_module_description_list_release(original);
+
+    return videoFilters;
 }

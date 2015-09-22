@@ -23,6 +23,8 @@
 
 #include "SharedExportCore.h"
 
+class VlcModuleDescription;
+
 struct libvlc_instance_t;
 
 /*!
@@ -105,6 +107,18 @@ public:
     */
     void setUserAgent(const QString &application,
                       const QString &version);
+
+    /*!
+        \brief List audio filter modules
+        \return audio filter module description list
+    */
+    QList<VlcModuleDescription *> audioFilterList() const;
+
+    /*!
+        \brief List video filter modules
+        \return video filter module description list
+    */
+    QList<VlcModuleDescription *> videoFilterList() const;
 
 private:
     libvlc_instance_t *_vlcInstance;

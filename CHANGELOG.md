@@ -1,6 +1,8 @@
 # VLC-Qt Changelog
 
 ## master
+ - Add audio and video filter module list (issue #112)
+ - Expose protected methods on widgets to enable subclassing
 
 ---
 

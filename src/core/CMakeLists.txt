@@ -51,6 +51,7 @@ SET(VLCQT_CORE_SRCS
     MediaListPlayer.cpp
     MediaPlayer.cpp
     MetaManager.cpp
+    ModuleDescription.cpp
     SharedExportCore.h
     Stats.h
     Video.cpp
@@ -71,6 +72,7 @@ SET(VLCQT_CORE_HEADERS
     MediaListPlayer.h
     MediaPlayer.h
     MetaManager.h
+    ModuleDescription.h
     SharedExportCore.h
     Stats.h
     Video.h
