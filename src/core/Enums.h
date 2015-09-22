@@ -174,6 +174,7 @@ public:
     */
     enum Ratio {
         Original,
+        Ignore, /*!< QML aspect ratio only */
         R_16_9,
         R_16_10,
         R_185_100,

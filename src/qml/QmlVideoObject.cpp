@@ -58,7 +58,11 @@ void VlcQmlVideoObject::updateBoundingRect()
     updateAspectRatio();
 
     QSizeF scaledFrameSize = _boundingRect.size();
-    scaledFrameSize.scale(_geometry.size(), Qt::KeepAspectRatio);
+    if (_aspectRatio == Vlc::Ignore) {
+        scaledFrameSize.scale(_geometry.size(), Qt::IgnoreAspectRatio);
+    } else {
+        scaledFrameSize.scale(_geometry.size(), Qt::KeepAspectRatio);
+    }
     _boundingRect.setSize( scaledFrameSize );
 
     updateCropRatio();

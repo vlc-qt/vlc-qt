@@ -80,7 +80,8 @@ Vlc::Scale VlcVideo::scale() const
 void VlcVideo::setAspectRatio(const Vlc::Ratio &ratio)
 {
     if (_vlcMediaPlayer && libvlc_media_player_has_vout(_vlcMediaPlayer)) {
-        libvlc_video_set_aspect_ratio(_vlcMediaPlayer, Vlc::ratio()[ratio].toUtf8().data());
+        QString ratioOut = ratio == Vlc::Ignore ? "" : Vlc::ratio()[ratio];
+        libvlc_video_set_aspect_ratio(_vlcMediaPlayer, ratioOut.toUtf8().data());
         VlcError::showErrmsg();
     }
 }
@@ -88,7 +89,8 @@ void VlcVideo::setAspectRatio(const Vlc::Ratio &ratio)
 void VlcVideo::setCropGeometry(const Vlc::Ratio &ratio)
 {
     if (_vlcMediaPlayer && libvlc_media_player_has_vout(_vlcMediaPlayer)) {
-        libvlc_video_set_crop_geometry(_vlcMediaPlayer, Vlc::ratio()[ratio].toUtf8().data());
+        QString ratioOut = ratio == Vlc::Ignore ? "" : Vlc::ratio()[ratio];
+        libvlc_video_set_crop_geometry(_vlcMediaPlayer, ratioOut.toUtf8().data());
         VlcError::showErrmsg();
     }
 }

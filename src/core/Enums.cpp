@@ -86,6 +86,7 @@ QStringList Vlc::ratio()
 {
     QStringList list;
     list << ""
+         << "ignore"
          << "16:9"
          << "16:10"
          << "185:100"
@@ -104,6 +105,7 @@ QStringList Vlc::ratioHuman()
 {
     QStringList list;
     list << ""
+         << ""
          << "16:9"
          << "16:10"
          << "1.85:1"
@@ -122,10 +124,6 @@ QSizeF Vlc::ratioSize(const Vlc::Ratio &ratio)
 {
     switch(ratio)
     {
-        default:
-        case Vlc::Original:
-            return QSizeF(0,0);
-            break;
         case Vlc::R_16_9:
             return QSizeF(16,9);
             break;
@@ -155,6 +153,11 @@ QSizeF Vlc::ratioSize(const Vlc::Ratio &ratio)
             break;
         case Vlc::R_1_1:
             return QSizeF(1,1);
+            break;
+        case Vlc::Original:
+        case Vlc::Ignore:
+        default:
+            return QSizeF(0,0);
             break;
     }
 
