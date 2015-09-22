@@ -3,6 +3,7 @@
 ## master
  - Add audio and video filter module list (issue #112)
  - Add "Ignore" ratio that enables QML player to stretch video to container (issue #113)
+ - QML player should have enum values as strings not integers, as enums can change unexpectedly
  - Expose protected methods on widgets to enable subclassing
 
 ---

@@ -80,14 +80,14 @@ void VlcQmlVideoPlayer::openInternal()
     _hasMedia = true;
 }
 
-int VlcQmlVideoPlayer::deinterlacing() const
+QString VlcQmlVideoPlayer::deinterlacing() const
 {
-    return (int)_deinterlacing;
+    return Vlc::deinterlacing()[_deinterlacing];
 }
 
-void VlcQmlVideoPlayer::setDeinterlacing(int deinterlacing)
+void VlcQmlVideoPlayer::setDeinterlacing(const QString &deinterlacing)
 {
-    _deinterlacing = (Vlc::Deinterlacing) deinterlacing;
+    _deinterlacing = (Vlc::Deinterlacing) Vlc::deinterlacing().indexOf(deinterlacing);
     _player->video()->setDeinterlace(_deinterlacing);
 }
 
@@ -193,22 +193,22 @@ void VlcQmlVideoPlayer::setVolume(int volume)
     emit volumeChanged();
 }
 
-int VlcQmlVideoPlayer::aspectRatio()
+QString VlcQmlVideoPlayer::aspectRatio() const
 {
-    return (int) VlcQmlVideoObject::aspectRatio();
+    return Vlc::ratio()[VlcQmlVideoObject::aspectRatio()];
 }
 
-void VlcQmlVideoPlayer::setAspectRatio(int aspectRatio)
+void VlcQmlVideoPlayer::setAspectRatio(const QString &aspectRatio)
 {
-    VlcQmlVideoObject::setAspectRatio( (Vlc::Ratio)aspectRatio );
+    VlcQmlVideoObject::setAspectRatio( (Vlc::Ratio) Vlc::ratio().indexOf(aspectRatio) );
 }
 
-int VlcQmlVideoPlayer::cropRatio()
+QString VlcQmlVideoPlayer::cropRatio() const
 {
-    return (int) VlcQmlVideoObject::cropRatio();
+    return Vlc::ratio()[VlcQmlVideoObject::cropRatio()];
 }
 
-void VlcQmlVideoPlayer::setCropRatio(int cropRatio)
+void VlcQmlVideoPlayer::setCropRatio(const QString &cropRatio)
 {
-    VlcQmlVideoObject::setCropRatio( (Vlc::Ratio)cropRatio );
+    VlcQmlVideoObject::setCropRatio( (Vlc::Ratio) Vlc::ratio().indexOf(cropRatio) );
 }

@@ -57,19 +57,19 @@ public:
         \brief Current aspect ratio
         \see setAspectRatio
      */
-    Q_PROPERTY(int aspectRatio READ aspectRatio WRITE setAspectRatio)
+    Q_PROPERTY(QString aspectRatio READ aspectRatio WRITE setAspectRatio)
 
     /*!
         \brief Current crop ratio
         \see setCropRatio
      */
-    Q_PROPERTY(int cropRatio READ cropRatio WRITE setCropRatio)
+    Q_PROPERTY(QString cropRatio READ cropRatio WRITE setCropRatio)
 
     /*!
         \brief Current deinterlacing mode
         \see setDeinterlacing
      */
-    Q_PROPERTY(int deinterlacing READ deinterlacing WRITE setDeinterlacing)
+    Q_PROPERTY(QString deinterlacing READ deinterlacing WRITE setDeinterlacing)
 
     /*!
         \brief Current media URL
@@ -182,7 +182,7 @@ public:
 
         Used as property in QML.
      */
-    int aspectRatio();
+    QString aspectRatio() const;
 
     /*!
         \brief Set aspect ratio
@@ -190,7 +190,7 @@ public:
 
         Used as property in QML.
      */
-    void setAspectRatio(int aspectRatio);
+    void setAspectRatio(const QString &aspectRatio);
 
     /*!
         \brief Get current crop ratio
@@ -198,7 +198,7 @@ public:
 
         Used as property in QML.
      */
-    int cropRatio();
+    QString cropRatio() const;
 
     /*!
         \brief Set crop ratio
@@ -206,7 +206,7 @@ public:
 
         Used as property in QML.
      */
-    void setCropRatio(int cropRatio);
+    void setCropRatio(const QString &cropRatio);
 
     /*!
         \brief Get current media URL
@@ -246,7 +246,7 @@ public:
 
         Used as property in QML.
      */
-    int deinterlacing() const;
+    QString deinterlacing() const;
 
     /*!
         \brief Set deinterlacing mode
@@ -254,7 +254,7 @@ public:
 
         Used as property in QML.
      */
-    void setDeinterlacing(int deinterlacing);
+    void setDeinterlacing(const QString &deinterlacing);
 
     /*!
         \brief Get current state
