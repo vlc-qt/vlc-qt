@@ -54,16 +54,36 @@ public:
     */
     ~VlcWidgetSeekProgress();
 
+protected:
+    /*!
+        \brief Mouse move event override
+        \param event mouse event
+    */
+    void mouseMoveEvent(QMouseEvent *event);
+
+    /*!
+        \brief Mouse press event override
+        \param event mouse event
+    */
+    void mousePressEvent(QMouseEvent *event);
+
+    /*!
+        \brief Mouse release event override
+        \param event mouse event
+    */
+    void mouseReleaseEvent(QMouseEvent *event);
+
+    /*!
+        \brief Mouse wheel event override
+        \param event mouse event
+    */
+    void wheelEvent(QWheelEvent *event);
 
 private slots:
     virtual void updateCurrentTime(int time);
     virtual void updateFullTime(int time);
 
 private:
-    void mouseMoveEvent(QMouseEvent *event);
-    void mousePressEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
-    void wheelEvent(QWheelEvent *event);
 
     virtual void setSliderWidget(QWidget *slider,
                                  bool updateSlider = true);

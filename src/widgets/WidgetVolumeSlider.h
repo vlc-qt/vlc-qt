@@ -127,13 +127,23 @@ signals:
     */
     void newVolume(int volume);
 
+protected:
+    /*!
+        \brief Mouse press event override
+        \param event mouse event
+    */
+    void mousePressEvent(QMouseEvent *event);
+
+    /*!
+        \brief Mouse release event override
+        \param event mouse event
+    */
+    void mouseReleaseEvent(QMouseEvent *event);
+
 private slots:
     void updateVolume();
 
 private:
-    void mousePressEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
-
     void initWidgetVolumeSlider();
 
     bool _lock;
