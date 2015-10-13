@@ -72,6 +72,13 @@ SET(VLCQT_CORE_HEADERS_DEPRECATED
     VideoMemoryStream.h
 )
 
+IF(IOS)
+    SET(VLCQT_CORE_SRCS
+        ${VLCQT_CORE_SRCS}
+        platform/VlcPluginsIOS.c
+    )
+ENDIF()
+
 # Define the Include files
 SET(VLCQT_CORE_HEADERS
     AbstractVideoStream.h

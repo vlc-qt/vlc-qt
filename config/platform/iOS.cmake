@@ -1,6 +1,6 @@
 #############################################################################
 # VLC-Qt - Qt and libvlc connector library
-# Copyright (C) 2016 Tadej Novak <tadej@tano.si>
+# Copyright (C) 2015 Tadej Novak <tadej@tano.si>
 #
 # This library is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published
@@ -15,21 +15,13 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this library. If not, see <http://www.gnu.org/licenses/>.
 #############################################################################
-# Set platform specific settings #
-##################################
-IF(MINGW OR MSVC)
-    INCLUDE(Windows)
-ENDIF()
+# iOS Extra #
+#############
+SET(LIBVLC_INCLUDE_DIR ${VLCKIT_PATH}/MobileVLCKit/ImportedSources/vlc/install-ios-iPhoneOS/arm64/include)
 
-IF(NOT IOS AND ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    INCLUDE(OSX)
-ENDIF()
+INCLUDE_DIRECTORIES(${VLCKIT_PATH}/MobileVLCKit/)
 
-# Mobile
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Android")
-    INCLUDE(Android)
-ENDIF()
+ADD_CUSTOM_TARGET(prepare
+    "${CMAKE_SOURCE_DIR}/scripts/ios/vlc_prepare_static.sh" "${VLCKIT_PATH}" "${CMAKE_BINARY_DIR}/libvlc-static/" "${IOS_PLATFORM}")
 
-IF(IOS AND ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    INCLUDE(iOS)
-ENDIF()
+INSTALL(FILES ${CMAKE_BINARY_DIR}/libvlc-static/libvlc.a DESTINATION "${CMAKE_INSTALL_PREFIX}/lib")
