@@ -58,11 +58,11 @@ Player::Player(QWidget *parent)
 
     connect(ui->actionOpenLocal, SIGNAL(triggered()), this, SLOT(openLocal()));
     connect(ui->actionOpenUrl, SIGNAL(triggered()), this, SLOT(openUrl()));
-    connect(ui->actionPause, SIGNAL(triggered()), _player, SLOT(pause()));
+    connect(ui->actionPause, SIGNAL(toggled(bool)), _player, SLOT(togglePause()));
     connect(ui->actionStop, SIGNAL(triggered()), _player, SLOT(stop()));
     connect(ui->openLocal, SIGNAL(clicked()), this, SLOT(openLocal()));
     connect(ui->openUrl, SIGNAL(clicked()), this, SLOT(openUrl()));
-    connect(ui->pause, SIGNAL(clicked()), _player, SLOT(pause()));
+    connect(ui->pause, SIGNAL(toggled(bool)), _player, SLOT(togglePause()));
     connect(ui->stop, SIGNAL(clicked()), _player, SLOT(stop()));
 #if LIBVLC_VERSION >= 0x020200
     connect(ui->equalizer, SIGNAL(clicked()), _equalizerDialog, SLOT(show()));

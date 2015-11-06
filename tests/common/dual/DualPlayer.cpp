@@ -43,7 +43,6 @@ DualPlayer::DualPlayer(QWidget *parent)
     ui->video1->setMediaPlayer(_player1);
 
     connect(ui->open1, SIGNAL(clicked()), this, SLOT(open1()));
-    connect(ui->pause1, SIGNAL(clicked()), _player1, SLOT(pause()));
     connect(ui->stop1, SIGNAL(clicked()), _player1, SLOT(stop()));
 
     _player2 = new VlcMediaPlayer(_instance);
@@ -52,7 +51,6 @@ DualPlayer::DualPlayer(QWidget *parent)
     ui->video2->setMediaPlayer(_player2);
 
     connect(ui->open2, SIGNAL(clicked()), this, SLOT(open2()));
-    connect(ui->pause2, SIGNAL(clicked()), _player2, SLOT(pause()));
     connect(ui->stop2, SIGNAL(clicked()), _player2, SLOT(stop()));
 
     ui->group1->setTitle("Player 1");
