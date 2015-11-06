@@ -262,6 +262,11 @@ void VlcMediaPlayer::resume()
 
 void VlcMediaPlayer::setTime(int time)
 {
+    if (!(state() == Vlc::Buffering ||
+        state() == Vlc::Playing ||
+        state() == Vlc::Paused))
+        return;
+
     libvlc_media_player_set_time(_vlcMediaPlayer, time);
 
     VlcError::showErrmsg();
