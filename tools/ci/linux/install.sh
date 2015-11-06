@@ -5,7 +5,7 @@ set -ev
 pushd dependencies
 
 # Install CMake 3.2.2
-wget http://www.cmake.org/files/v3.2/cmake-3.2.2-Linux-x86_64.tar.gz
+wget http://www.cmake.org/files/v3.2/cmake-3.2.2-Linux-x86_64.tar.gz --no-check-certificate
 
 tar xf cmake-3.2.2-Linux-x86_64.tar.gz
 
