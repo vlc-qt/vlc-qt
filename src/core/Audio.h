@@ -88,14 +88,14 @@ public slots:
     */
     void setChannel(Vlc::AudioChannel channel);
 
-
-public:
     /*!
         \brief Set mute state.
         \param mute mute state (bool)
     */
     void setMute(bool mute) const;
 
+
+public:
     /*!
         \brief Get current audio track.
         \return the number of current audio track, or -1 if none (const int)
