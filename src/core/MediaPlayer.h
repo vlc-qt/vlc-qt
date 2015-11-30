@@ -166,8 +166,8 @@ public:
     VlcVideoDelegate *videoWidget() const;
 
     /*!
-        \brief Get current video position.
-        \return current video position (float)
+        \brief Get media content position.
+        \return current media position (float)
     */
     float position();
 
@@ -177,14 +177,26 @@ public:
     */
     float sampleAspectRatio();
 
+    /*!
+        \brief Get current media playback rate.
+        \return current media playback rate (float)
+    */
+    float playbackRate();
+
 public slots:
-    /*! \brief Set the movie position.
+    /*! \brief Set the media position.
 
         This has no effect if no media is being played. Not all formats and protocols support this.
 
-        \param pos the movie position (float)
+        \param pos the media position (float)
     */
     void setPosition(float pos);
+
+    /*! \brief Set the media playback rate.
+
+        \param rate the media playback rate (float)
+    */
+    void setPlaybackRate(float rate);
 
     /*!
         \brief Starts playing current media if possible
