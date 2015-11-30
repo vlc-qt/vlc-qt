@@ -30,7 +30,8 @@
 VlcInstance::VlcInstance(const QStringList &args,
                          QObject *parent)
     : QObject(parent),
-      _vlcInstance(0)
+      _vlcInstance(0),
+      _status(false)
 {
 // Convert arguments to required format
 #if defined(Q_OS_WIN32) // Will be removed on Windows if confirmed working
@@ -53,22 +54,29 @@ VlcInstance::VlcInstance(const QStringList &args,
 
     // Check if instance is running
     if(_vlcInstance) {
+        _status = true;
         qDebug() << "VLC-Qt" << libVersion() << "initialised";
         qDebug() << "Using libvlc version:" << version();
     } else {
         qDebug() << "VLC-Qt Error: libvlc failed to load!";
-        abort();
     }
 }
 
 VlcInstance::~VlcInstance()
 {
-    libvlc_release(_vlcInstance);
+    if (_status && _vlcInstance) {
+        libvlc_release(_vlcInstance);
+    }
 }
 
 libvlc_instance_t *VlcInstance::core()
 {
     return _vlcInstance;
+}
+
+bool VlcInstance::status() const
+{
+    return _status;
 }
 
 QString VlcInstance::libVersion()

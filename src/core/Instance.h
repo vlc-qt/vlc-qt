@@ -62,6 +62,13 @@ public:
     libvlc_instance_t *core();
 
     /*!
+        \brief Returns libvlc initialisation status.
+        \return libvlc status (bool)
+    */
+    bool status() const;
+
+
+    /*!
         \brief VLC-Qt version info
         \return a string containing the VLC-Qt version (QString)
     */
@@ -122,6 +129,7 @@ public:
 
 private:
     libvlc_instance_t *_vlcInstance;
+    bool _status;
 };
 
 #endif // VLCQT_VLCINSTANCE_H_

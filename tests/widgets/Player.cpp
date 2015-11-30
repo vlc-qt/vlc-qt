@@ -45,25 +45,29 @@ Player::Player(QWidget *parent)
     ui->setupUi(this);
 
     _instance = new VlcInstance(VlcCommon::args(), this);
-    _player = new VlcMediaPlayer(_instance);
-    _player->setVideoWidget(ui->video);
+    if (_instance->status()) {
+        _player = new VlcMediaPlayer(_instance);
+        _player->setVideoWidget(ui->video);
 #if LIBVLC_VERSION >= 0x020200
-    _equalizerDialog->setMediaPlayer(_player);
+        _equalizerDialog->setMediaPlayer(_player);
 #endif
 
-    ui->video->setMediaPlayer(_player);
-    ui->volume->setMediaPlayer(_player);
-    ui->volume->setVolume(50);
-    ui->seek->setMediaPlayer(_player);
+        ui->video->setMediaPlayer(_player);
+        ui->volume->setMediaPlayer(_player);
+        ui->volume->setVolume(50);
+        ui->seek->setMediaPlayer(_player);
+    }
 
     connect(ui->actionOpenLocal, SIGNAL(triggered()), this, SLOT(openLocal()));
     connect(ui->actionOpenUrl, SIGNAL(triggered()), this, SLOT(openUrl()));
-    connect(ui->actionPause, SIGNAL(toggled(bool)), _player, SLOT(togglePause()));
-    connect(ui->actionStop, SIGNAL(triggered()), _player, SLOT(stop()));
     connect(ui->openLocal, SIGNAL(clicked()), this, SLOT(openLocal()));
     connect(ui->openUrl, SIGNAL(clicked()), this, SLOT(openUrl()));
-    connect(ui->pause, SIGNAL(toggled(bool)), _player, SLOT(togglePause()));
-    connect(ui->stop, SIGNAL(clicked()), _player, SLOT(stop()));
+    if (_instance->status()) {
+        connect(ui->actionPause, SIGNAL(toggled(bool)), _player, SLOT(togglePause()));
+        connect(ui->actionStop, SIGNAL(triggered()), _player, SLOT(stop()));
+        connect(ui->pause, SIGNAL(toggled(bool)), _player, SLOT(togglePause()));
+        connect(ui->stop, SIGNAL(clicked()), _player, SLOT(stop()));
+    }
 #if LIBVLC_VERSION >= 0x020200
     connect(ui->equalizer, SIGNAL(clicked()), _equalizerDialog, SLOT(show()));
 #else
@@ -74,8 +78,10 @@ Player::Player(QWidget *parent)
 
 Player::~Player()
 {
-    delete _player;
-    delete _media;
+    if (_instance->status()) {
+        delete _player;
+        delete _media;
+    }
     delete _instance;
     delete ui;
 }
@@ -90,9 +96,11 @@ void Player::openLocal()
     if (file.isEmpty())
         return;
 
-    _media = new VlcMedia(file, true, _instance);
+    if (_instance->status()) {
+        _media = new VlcMedia(file, true, _instance);
 
-    _player->open(_media);
+        _player->open(_media);
+    }
 }
 
 void Player::openUrl()
@@ -103,20 +111,15 @@ void Player::openUrl()
     if (url.isEmpty())
         return;
 
-    _media = new VlcMedia(url, _instance);
+    if (_instance->status()) {
+        _media = new VlcMedia(url, _instance);
 
-    _player->open(_media);
+        _player->open(_media);
+    }
 }
 
 void Player::functionTest()
 {
     // Testing placeholder function
 
-    VlcAudio *audio = new VlcAudio(_player);
-
-    qDebug() << audio->channel();
-
-    audio->setChannel(Vlc::Left);
-
-    qDebug() << audio->channel();
 }
