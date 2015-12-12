@@ -37,7 +37,7 @@ BEGIN
             VALUE "LegalCopyright", "@PROJECT_COPYRIGHT@"
             VALUE "InternalName", "@VLCQT_WIDGETS_NAME@"
             VALUE "OriginalFilename", "@VLCQT_WIDGETS_NAME@.dll"
-            VALUE "ProductName", "@PROJECT_NAME_OUT@"
+            VALUE "ProductName", "@PROJECT_NAME@"
             VALUE "ProductVersion", "@PROJECT_VERSION@"
         END
     END
