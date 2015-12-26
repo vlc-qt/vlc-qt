@@ -23,3 +23,13 @@ CONFIGURE_FILE(
     "${CMAKE_BINARY_DIR}/docs/Doxyfile"
     @ONLY
 )
+
+CONFIGURE_FILE(
+    "${CMAKE_SOURCE_DIR}/CHANGELOG.md"
+    "${CMAKE_BINARY_DIR}/docs/changelog.md"
+    COPYONLY)
+
+CONFIGURE_FILE(
+    "${CMAKE_SOURCE_DIR}/docs/index.md"
+    "${CMAKE_BINARY_DIR}/docs/index.md"
+    COPYONLY)
