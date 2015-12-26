@@ -5,6 +5,7 @@ os:
 branches:
   except:
     - project/appveyor
+    - project/docs
     - feature/experiments
 
 language: cpp
