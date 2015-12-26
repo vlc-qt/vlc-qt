@@ -1,6 +1,7 @@
 # VLC-Qt Library [![Build Status][travis-img]][travis] [![Build status][appveyor-img]][appveyor]
 [![Homepage][web-img]][web]
 [![Latest release][release-img]][release]
+[![Download][download-img]][download]
 [![License][license-img]][license]
 
 VLC-Qt is a free library used to connect [Qt](http://qt.io) and
@@ -10,18 +11,17 @@ media playback and also some GUI classes for faster media player development.
 VLC-Qt runs on supported versions of Linux, OS X and Windows. It is developed
 in cross-platform spirit so it may work on other systems but is not supported.
 
-## Important changes
+## Important changes with 1.0
 
-**In preparation for 1.0 release, libraries were renamed and includes prefix changed
+**Since 1.0 release, libraries were renamed and includes prefix changed
 to make them fully modular. Please, update CMake search scripts, configure scripts
 and/or makefiles before updating to latest version.
-See [library reference](http://vlc-qt.tano.si/reference/git/) for more information.**
+See [library reference](https://vlc-qt.tano.si/reference/git/) for more information.**
 
 
 ## Binaries and source code
 
-You can download VLC-Qt binaries and sources from the [official web page]
-(http://vlc-qt.tano.si).
+You can download VLC-Qt binaries and sources from the [official web page](https://vlc-qt.tano.si) or [GitHub releases](https://github.com/vlc-qt/vlc-qt/releases).
 
 Latest source is also available via Git:
 ```bash
@@ -37,7 +37,7 @@ browsing tags.
 VLC-Qt examples are now located in the [examples](https://github.com/vlc-qt/examples)
 repository.
 
-All discussions that are not bug related can be made [here](http://discuss.tano.si).
+All discussions that are not bug related can be made [here](https://discuss.tano.si).
 This is also a place where you can publish your guides.
 
 
@@ -84,8 +84,9 @@ GNU Lesser General Public License version 3.0 as published by the
 Free Software Foundation and appearing in the file LICENSE.md.
 
 
-[web]: http://vlc-qt.tano.si
-[release]: https://github.com/vlc-qt/vlc-qt/releases
+[web]: https://vlc-qt.tano.si
+[release]: https://github.com/vlc-qt/vlc-qt/releases/latest
+[download]: https://github.com/vlc-qt/vlc-qt/releases
 [license]: https://github.com/vlc-qt/vlc-qt/blob/master/LICENSE.md
 [travis]: https://travis-ci.org/vlc-qt/vlc-qt
 [appveyor]: https://ci.appveyor.com/project/ntadej/vlc-qt
@@ -93,5 +94,6 @@ Free Software Foundation and appearing in the file LICENSE.md.
 [web-img]: https://img.shields.io/badge/web-vlc--qt.tano.si-green.svg
 [license-img]: https://img.shields.io/github/license/vlc-qt/vlc-qt.svg
 [release-img]: https://img.shields.io/github/release/vlc-qt/vlc-qt.svg
+[download-img]: https://img.shields.io/github/downloads/vlc-qt/vlc-qt/total.svg
 [travis-img]: https://travis-ci.org/vlc-qt/vlc-qt.svg?branch=master
 [appveyor-img]: https://ci.appveyor.com/api/projects/status/whnar8rjduiyktkf/branch/master?svg=true

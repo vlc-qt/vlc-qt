@@ -3,8 +3,11 @@
 ## master
  - Add audio and video filter module list (issue #112)
  - Add "Ignore" ratio that enables QML player to stretch video to container (issue #113)
+ - Add ability to set playback rate (issue #127)
+ - Do not abort if libVLC fails to initialise but leave this for application to handle (issue #124)
  - QML player should have enum values as strings not integers, as enums can change unexpectedly
  - Expose protected methods on widgets to enable subclassing
+ - Fix: Do not set time, if not playing (issue #120)
 
 ---
 
