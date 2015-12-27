@@ -24,7 +24,7 @@
 class QProgressBar;
 
 /*!
-    \class VlcWidgetSeekProgress VlcWidgetSeekProgress.h VLCQtWidgets/VlcWidgetSeekProgress.h
+    \class VlcWidgetSeekProgress WidgetSeekProgress.h VLCQtWidgets/WidgetSeekProgress.h
     \ingroup VLCQtWidgets
     \brief Seek widget
 

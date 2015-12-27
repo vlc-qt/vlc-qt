@@ -97,7 +97,7 @@ public:
 
     /*!
         \brief Set module help
-        \param name new module help
+        \param help new module help
     */
     void setHelp(const QString &help);
 

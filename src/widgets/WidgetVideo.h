@@ -35,7 +35,7 @@
 class VlcMediaPlayer;
 
 /*!
-    \defgroup VLCQtWidgets
+    \defgroup VLCQtWidgets VLC-Qt Widgets (VLCQtWidgets)
     \brief Widget classes for faster media player developement
  */
 

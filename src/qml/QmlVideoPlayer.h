@@ -31,7 +31,7 @@ class VlcMediaPlayer;
 class VlcVideo;
 
 /*!
-    \defgroup VLCQtQml
+    \defgroup VLCQtQml VLC-Qt Qml (VLCQtQml)
     \brief QML classes for controlling video and media playback
  */
 
