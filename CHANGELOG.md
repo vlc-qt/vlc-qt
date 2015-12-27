@@ -1,6 +1,6 @@
 # VLC-Qt Changelog
 
-## master
+## 1.0.0 (2015-12-27)
  - Add audio and video filter module list (issue #112)
  - Add "Ignore" ratio that enables QML player to stretch video to container (issue #113)
  - Add ability to set playback rate (issue #127)
@@ -8,8 +8,6 @@
  - QML player should have enum values as strings not integers, as enums can change unexpectedly
  - Expose protected methods on widgets to enable subclassing
  - Fix: Do not set time, if not playing (issue #120)
-
----
 
 ## 0.90.0 - 1.0 beta 1 (2015-09-20)
  - Renamed to VLCQtCore, VLCQtQml and VLCQtWidgets

@@ -67,6 +67,7 @@ build_script:
   - cmake .. -G %makefiles% -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="c:/dev/install" -DCI=ON -DNO_GIT=%nogitinfo% -DBUILD_TESTS=ON -DLIBVLC_LIBRARY="c:/dev/dependencies/vlc-%name%/sdk/lib/libvlc.lib" -DLIBVLCCORE_LIBRARY="c:/dev/dependencies/vlc-%name%/sdk/lib/libvlccore.lib" -DLIBVLC_INCLUDE_DIR="c:/dev/dependencies/vlc-%name%/sdk/include"
   - if not %platform%==mingw (nmake) else (mingw32-make)
   - if not %platform%==mingw (nmake install) else (mingw32-make install)
+  - if not %platform%==mingw (nmake windows) else (mingw32-make windows)
   - cd ..
   - cd build-debug
   - cmake .. -G %makefiles% -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX="c:/dev/install" -DCI=ON -DNO_GIT=%nogitinfo% -DLIBVLC_LIBRARY="c:/dev/dependencies/vlc-%name%/sdk/lib/libvlc.lib" -DLIBVLCCORE_LIBRARY="c:/dev/dependencies/vlc-%name%/sdk/lib/libvlccore.lib" -DLIBVLC_INCLUDE_DIR="c:/dev/dependencies/vlc-%name%/sdk/include"
