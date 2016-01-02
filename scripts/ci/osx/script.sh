@@ -11,6 +11,8 @@ cmake .. -GNinja -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=../install/ \
 ninja prepare
 cmake ..
 ninja -v
+ninja test -v
 ninja install -v
 ninja dmg -v
+
 popd

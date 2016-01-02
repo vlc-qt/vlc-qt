@@ -73,6 +73,7 @@ To ease the pull request merge into mainline, please follow these requirements:
   squash them before sending them to us.
 - Use git's [interactive rebase](https://help.github.com/articles/interactive-rebase)
 feature to tidy up your commits before submitting the pull request.
+- Tests needs to be written for new features. Code coverage should never decrease.
 - Your PRs must pass build tests on Travis and AppVeyor. We can assist you
   with support for other platforms that you work on, so please note where you
   tested the code before submitting the PR.

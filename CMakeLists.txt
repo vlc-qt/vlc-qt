@@ -1,6 +1,6 @@
 #############################################################################
 # VLC-Qt - Qt and libvlc connector library
-# Copyright (C) 2015 Tadej Novak <tadej@tano.si>
+# Copyright (C) 2016 Tadej Novak <tadej@tano.si>
 #
 # This library is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published
@@ -97,7 +97,13 @@ OPTION(BUILD_TESTS "Build tests" OFF)
 MESSAGE("\nVLC-Qt: Build tests: ${BUILD_TESTS}\n")
 
 IF(${BUILD_TESTS})
-    ADD_SUBDIRECTORY(tests)
+    IF(QT_VERSION MATCHES 5)
+        ENABLE_TESTING(true)
+        ADD_SUBDIRECTORY(tests)
+    ENDIF()
+
+# Old Testing app - to be replaced with proper tests
+    ADD_SUBDIRECTORY(tests-old)
 ENDIF()
 
 ##################################

@@ -48,6 +48,9 @@ $ make dmg
 Build as a normal library or application. Install required libraries using
 `make windows`.
 
+Make sure you always use debug libraries with debug build and release libraries
+with release build after using it in your project.
+
 Supported generators for MSVC are `nmake`, `jom` and `ninja`;
 for MinGW: `mingw32-make` and `ninja`.
 Run specific Qt shell to select its version. VLC path needs to be specified manually.

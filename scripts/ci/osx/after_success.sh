@@ -1,6 +1,9 @@
 #!/bin/bash
 set -ev
 
+# Report code coverage
+bash <(curl -s https://codecov.io/bash)
+
 # Deploy builds
 pushd install
 7z a VLC-Qt.7z lib > /dev/null

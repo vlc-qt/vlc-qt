@@ -4,7 +4,7 @@ branches:
   except:
     - project/travis
     - project/docs
-    - feature/experiments
+    - platform/mobile
 
 environment:
   vlcqt_version: 1.1.0
@@ -77,6 +77,10 @@ after_build:
   - cd c:\dev\vlc-qt
 
 test_script:
+  - cd c:\dev\vlc-qt\build-release
+  - if %platform%==mingw set PATH=C:\Qt\%qt%\bin;C:\Qt\Tools\mingw492_32\bin;C:\Program Files (x86)\CMake\bin
+  - if not %platform%==mingw (nmake test) else (mingw32-make test)
+  - if %platform%==mingw set PATH=%ORIGPATH%
   - cd c:\dev\install\test
   - start /wait VLC-Qt.exe test
   - cd c:\dev\vlc-qt

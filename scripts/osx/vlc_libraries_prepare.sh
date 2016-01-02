@@ -49,11 +49,11 @@ done
 $SCRIPTPATH/vlc_symlink_fix.sh $PROCESSED
 
 echo "[$SCRIPT] Copying plugins"
-if [ ! -d $PROCESSED/plugins ]; then
-    mkdir $PROCESSED/plugins
+if [ ! -d $PROCESSED/vlc/plugins ]; then
+    mkdir -p $PROCESSED/vlc/plugins
 fi
-cp $DIR/plugins/* $PROCESSED/plugins
-for f in $PROCESSED/plugins/*.dylib
+cp $DIR/plugins/* $PROCESSED/vlc/plugins
+for f in $PROCESSED/vlc/plugins/*.dylib
 do
 	$SCRIPTPATH/vlc_rpath_fix.sh $f
 done
