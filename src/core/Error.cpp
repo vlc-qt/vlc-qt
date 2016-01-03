@@ -37,7 +37,7 @@ void VlcError::showErrmsg()
 	// Outputs libvlc error message if there is any
     QString error = errmsg();
     if(!error.isEmpty()) {
-        qDebug() << "libvlc" << "Error:" << error;
+        qWarning() << "libvlc" << "Error:" << error;
 	}
 }
 

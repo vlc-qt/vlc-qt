@@ -83,8 +83,6 @@ void VlcMedia::initMedia(const QString &location,
     createCoreConnections();
 
     VlcError::showErrmsg();
-
-    qDebug() << "libvlc" << "Media:" << location << "Local:" << localFile;
 }
 
 void VlcMedia::createCoreConnections()
