@@ -23,12 +23,6 @@ environment:
     qt: 5.5\msvc2013_64
     suffix: msvc2013
 
-  # MSVC x64 (Qt 5.4)
-  - name: win64
-    platform: amd64
-    qt: 5.4\msvc2013_64_opengl
-    suffix: msvc2013_5.4
-
   # MinGW
   - name: win32
     platform: mingw
