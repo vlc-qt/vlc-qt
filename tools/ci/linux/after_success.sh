@@ -2,10 +2,9 @@
 set -ev
 
 # Deploy builds
-pushd install-qt5
-mv VLC-Qt.tar.bz2 ../install/artifacts/VLC-Qt_${VLCQT_VERSION}_build${TRAVIS_BUILD_NUMBER}_${TRAVIS_COMMIT:0:7}_qt5.tar.bz2
-popd
+pushd install
+tar -jcf VLC-Qt.tar.bz2 *
 
-pushd install-qt4
-mv VLC-Qt.tar.bz2 ../install/artifacts/VLC-Qt_${VLCQT_VERSION}_build${TRAVIS_BUILD_NUMBER}_${TRAVIS_COMMIT:0:7}_qt4.tar.bz2
+mkdir artifacts
+mv VLC-Qt.tar.bz2 artifacts/VLC-Qt_${VLCQT_VERSION}_build${TRAVIS_BUILD_NUMBER}_${TRAVIS_COMMIT:0:7}_qt${QT_VERSION}.tar.bz2
 popd

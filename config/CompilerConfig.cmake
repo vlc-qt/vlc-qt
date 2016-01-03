@@ -1,6 +1,6 @@
 #############################################################################
 # VLC-Qt - Qt and libvlc connector library
-# Copyright (C) 2015 Tadej Novak <tadej@tano.si>
+# Copyright (C) 2016 Tadej Novak <tadej@tano.si>
 #
 # This library is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published
@@ -68,8 +68,15 @@ ENDIF()
 
 # Support OS X 10.6 or later (64-bit only)
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    SET(CMAKE_MACOSX_RPATH ON)
-    SET(CMAKE_INSTALL_RPATH "@loader_path/../lib")
-    SET(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
+    OPTION(HOMEBREW "Build using Homebrew provided Qt" OFF)
+    MESSAGE("VLC-Qt: Build using Homebrew provided Qt: ${HOMEBREW}")
+
+    IF(HOMEBREW)
+        SET(CMAKE_MACOSX_RPATH OFF)
+    ELSE()
+        SET(CMAKE_MACOSX_RPATH ON)
+        SET(CMAKE_INSTALL_RPATH "@loader_path/../lib")
+        SET(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
+    ENDIF()
     SET(CMAKE_OSX_ARCHITECTURES x86_64)
 ENDIF()

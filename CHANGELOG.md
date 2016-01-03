@@ -1,5 +1,10 @@
 # VLC-Qt Changelog
 
+## Unreleased
+ - Support Homebrew provided Qt (issue #128)
+
+---
+
 ## 1.0.0 (2015-12-27)
  - Add audio and video filter module list (issue #112)
  - Add "Ignore" ratio that enables QML player to stretch video to container (issue #113)

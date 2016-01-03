@@ -1,6 +1,6 @@
 #############################################################################
 # VLC-Qt - Qt and libvlc connector library
-# Copyright (C) 2014 Tadej Novak <tadej@tano.si>
+# Copyright (C) 2016 Tadej Novak <tadej@tano.si>
 #
 # This library is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published
@@ -94,6 +94,18 @@ IF(${LIBVLC_VERSION} EQUAL 0x020200 OR ${LIBVLC_VERSION} GREATER 0x020200)
         ${VLCQT_CORE_HEADERS}
 
         Equalizer.h
+    )
+ENDIF()
+
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    SET(VLCQT_CORE_SRCS
+        ${VLCQT_CORE_SRCS}
+        ${Vlc_Libs}
+    )
+    SET_SOURCE_FILES_PROPERTIES (
+        ${Vlc_Libs}
+        PROPERTIES
+        MACOSX_PACKAGE_LOCATION lib
     )
 ENDIF()
 
@@ -199,7 +211,6 @@ INSTALL(TARGETS ${VLCQT_CORE} EXPORT VLCQtCoreTargets
 )
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    INSTALL(FILES ${Vlc_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/${VLCQT_CORE_NAME}.framework/Versions/${VLCQT_VERSION}/lib")
     INSTALL(FILES ${Vlc_Plugins} DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/${VLCQT_CORE_NAME}.framework/Versions/${VLCQT_VERSION}/lib/vlc/plugins")
     INSTALL(CODE "EXECUTE_PROCESS(COMMAND ${CMAKE_SOURCE_DIR}/tools/osx_vlc_plugins_postprocess.sh WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/lib/${VLCQT_CORE_NAME}.framework/Versions/${VLCQT_VERSION}/lib/vlc/plugins)")
     IF(Qt5Core_VERSION VERSION_LESS "5.5.0")

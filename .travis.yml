@@ -2,6 +2,15 @@ os:
   - linux
   - osx
 
+env:
+  - QT_VERSION=5
+  - QT_VERSION=4
+
+matrix:
+  exclude:
+    - os: osx
+      env: QT_VERSION=4
+
 branches:
   except:
     - project/appveyor
