@@ -51,6 +51,8 @@ VlcQmlVideoPlayer::VlcQmlVideoPlayer(QQuickItem *parent)
     connect(_player, SIGNAL(lengthChanged(int)), this, SIGNAL(lengthChanged()));
     connect(_player, SIGNAL(timeChanged(int)), this, SIGNAL(timeChanged()));
     connect(_player, SIGNAL(positionChanged(float)), this, SIGNAL(positionChanged()));
+
+    _audioTracksModel = new TracksModel(this);
 }
 
 VlcQmlVideoPlayer::~VlcQmlVideoPlayer()
@@ -78,6 +80,22 @@ void VlcQmlVideoPlayer::openInternal()
     connectToMediaPlayer(_player);
 
     _hasMedia = true;
+}
+
+TracksModel *VlcQmlVideoPlayer::audioTracksModel() const
+{
+    return _audioTracksModel;
+}
+
+int VlcQmlVideoPlayer::audioTrack() const
+{
+    return _audioManager->track();
+}
+
+void VlcQmlVideoPlayer::setAudioTrack(int audioTrack)
+{
+    _audioManager->setTrack(audioTrack);
+    emit audioTrackChanged();
 }
 
 QString VlcQmlVideoPlayer::deinterlacing() const
@@ -132,6 +150,17 @@ void VlcQmlVideoPlayer::seekableChangedPrivate(bool seekable)
     emit seekableChanged();
 }
 
+void VlcQmlVideoPlayer::mediaParsed(int parsed)
+{
+    if(parsed == 1)
+    {
+        _audioTracksModel->clear();
+        _audioTracksModel->load(_audioManager->tracks());
+
+        setAudioTrack(_audioManager->track());
+    }
+}
+
 bool VlcQmlVideoPlayer::autoplay() const
 {
     return _autoplay;
@@ -155,13 +184,15 @@ void VlcQmlVideoPlayer::setUrl(const QUrl &url)
     _player->stop();
 
     if (_media)
-        delete _media;
+        _media->deleteLater();
 
     if(url.isLocalFile()) {
         _media = new VlcMedia(url.toLocalFile(), true, _instance);
     } else {
         _media = new VlcMedia(url.toString(QUrl::FullyEncoded), false, _instance);
     }
+
+    connect(_media, &VlcMedia::parsedChanged, this, &VlcQmlVideoPlayer::mediaParsed);
 
     openInternal();
 }

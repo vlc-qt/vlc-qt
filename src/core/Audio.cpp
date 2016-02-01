@@ -199,6 +199,31 @@ QList<int> VlcAudio::trackIds() const
     return ids;
 }
 
+QMap<int, QString> VlcAudio::tracks() const
+{
+    QMap<int, QString> tracks;
+
+    if (_vlcMediaPlayer) {
+        libvlc_track_description_t *desc, *first;
+        first = desc = libvlc_audio_get_track_description(_vlcMediaPlayer);
+        VlcError::showErrmsg();
+
+        if(desc != NULL)
+        {
+            tracks.insert(desc->i_id, QString().fromUtf8(desc->psz_name));
+            if (trackCount() > 1) {
+                for(int i = 1; i < trackCount(); i++) {
+                    desc = desc->p_next;
+                    tracks.insert(desc->i_id, QString().fromUtf8(desc->psz_name));
+                }
+            }
+            libvlc_track_description_list_release(first);
+        }
+    }
+
+    return tracks;
+}
+
 int VlcAudio::volume() const
 {
     int volume = -1;

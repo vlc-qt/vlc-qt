@@ -24,6 +24,8 @@
 #include "QmlVideoObject.h"
 #include "SharedExportQml.h"
 
+#include "TracksModel.h"
+
 class VlcAudio;
 class VlcInstance;
 class VlcMedia;
@@ -115,6 +117,19 @@ public:
         \see positionChanged
      */
     Q_PROPERTY(float position READ position WRITE setPosition NOTIFY positionChanged)
+
+    /*!
+        \brief Current audio track
+        \see audioTrack
+        \see audioTrackChanged
+     */
+    Q_PROPERTY(int audioTrack READ audioTrack WRITE setAudioTrack NOTIFY audioTrackChanged)
+
+    /*!
+        \brief Audio tracks model
+        \see audioTracksModel
+     */
+    Q_PROPERTY(TracksModel *audioTracksModel READ audioTracksModel CONSTANT)
 
     /*!
         \brief VlcQmlVideoPlayer constructor.
@@ -312,6 +327,29 @@ public:
      */
     void setPosition(float position);
 
+    /*!
+        \brief Get current audio track.
+        \return the id of current audio track, or -1 if none (const int)
+
+        Used as property in QML.
+     */
+    int audioTrack() const;
+
+    /*!
+        \brief Set current audio track.
+        \param audioTrack new audio track (int)
+
+        Used as property in QML.
+     */
+    void setAudioTrack(int audioTrack);
+
+    /*!
+        \brief Get audio tracks model.
+        \return audio tracks model poiner(const TracksModel*)
+
+        Used as property in QML.
+     */
+    TracksModel *audioTracksModel() const;
 
 signals:
     /*!
@@ -344,8 +382,14 @@ signals:
     */
     void positionChanged();
 
+    /*!
+        \brief Audio track changed signal
+    */
+    void audioTrackChanged();
+
 private slots:
     void seekableChangedPrivate(bool);
+    void mediaParsed(int);
 
 private:
     void openInternal();
@@ -360,6 +404,8 @@ private:
     bool _hasMedia;
     bool _autoplay;
     bool _seekable;
+
+    TracksModel *_audioTracksModel;
 };
 
 #endif // VLCQT_QMLVIDEOPLAYER_H_
