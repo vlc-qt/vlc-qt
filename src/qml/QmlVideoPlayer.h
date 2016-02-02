@@ -24,6 +24,8 @@
 #include "QmlVideoObject.h"
 #include "SharedExportQml.h"
 
+#include "TracksModel.h"
+
 class VlcAudio;
 class VlcInstance;
 class VlcMedia;
@@ -115,6 +117,59 @@ public:
         \see positionChanged
      */
     Q_PROPERTY(float position READ position WRITE setPosition NOTIFY positionChanged)
+
+    /*!
+        \brief Current audio track
+        \see audioTrack
+        \see audioTrackChanged
+     */
+    Q_PROPERTY(int audioTrack READ audioTrack WRITE setAudioTrack NOTIFY audioTrackChanged)
+
+    /*!
+        \brief Audio tracks model
+        \see audioTracksModel
+     */
+    Q_PROPERTY(TracksModel *audioTracksModel READ audioTracksModel CONSTANT)
+
+    /*!
+        \brief Current audio preferred language
+        \see audioPreferredLanguage
+        \see audioPreferredLanguageChanged
+     */
+    Q_PROPERTY(QString audioPreferredLanguage READ audioPreferredLanguage WRITE setAudioPreferredLanguage NOTIFY audioPreferredLanguageChanged)
+
+    /*!
+        \brief Current subtitle track
+        \see subtitleTrack
+        \see subtitleTrackChanged
+     */
+    Q_PROPERTY(int subtitleTrack READ subtitleTrack WRITE setSubtitleTrack NOTIFY subtitleTrackChanged)
+
+    /*!
+        \brief Subtitle tracks model
+        \see subtitleTracksModel
+     */
+    Q_PROPERTY(TracksModel *subtitleTracksModel READ subtitleTracksModel CONSTANT)
+
+    /*!
+        \brief Current subtitle preferred language
+        \see subtitlePreferredLanguage
+        \see subtitlePreferredLanguageChanged
+     */
+    Q_PROPERTY(QString subtitlePreferredLanguage READ subtitlePreferredLanguage WRITE setSubtitlePreferredLanguage NOTIFY subtitlePreferredLanguageChanged)
+
+    /*!
+        \brief Current video track
+        \see videoTrack
+        \see videoTrackChanged
+     */
+    Q_PROPERTY(int videoTrack READ videoTrack WRITE setVideoTrack NOTIFY videoTrackChanged)
+
+    /*!
+        \brief Video tracks model
+        \see videoTracksModel
+     */
+    Q_PROPERTY(TracksModel *videoTracksModel READ videoTracksModel CONSTANT)
 
     /*!
         \brief VlcQmlVideoPlayer constructor.
@@ -312,6 +367,109 @@ public:
      */
     void setPosition(float position);
 
+    /*!
+        \brief Get current audio track.
+        \return the id of current audio track, or -1 if none (const int)
+
+        Used as property in QML.
+     */
+    int audioTrack() const;
+
+    /*!
+        \brief Set current audio track.
+        \param audioTrack new audio track (int)
+
+        Used as property in QML.
+     */
+    void setAudioTrack(int audioTrack);
+
+    /*!
+        \brief Get audio tracks model.
+        \return audio tracks model poiner(const TracksModel*)
+
+        Used as property in QML.
+     */
+    TracksModel *audioTracksModel() const;
+
+    /*!
+        \brief Get preferred audio language.
+        \return comma separated languages(const QString)
+
+        Used as property in QML.
+     */
+    QString audioPreferredLanguage() const;
+
+    /*!
+        \brief Set preferred audio language.
+        \param audioPreferredLanguage comma separated languages (QString)
+
+        Used as property in QML.
+     */
+    void setAudioPreferredLanguage(const QString &audioPreferredLanguage);
+
+    /*!
+        \brief Get current subtitle track.
+        \return the id of current subtitle track, or -1 if none (const int)
+
+        Used as property in QML.
+     */
+    int subtitleTrack() const;
+
+    /*!
+        \brief Set current subtitle track.
+        \param subtitleTrack new subtitle track (int)
+
+        Used as property in QML.
+     */
+    void setSubtitleTrack(int subtitleTrack);
+
+    /*!
+        \brief Get subtitle tracks model.
+        \return subtitle tracks model poiner(const TracksModel*)
+
+        Used as property in QML.
+     */
+    TracksModel *subtitleTracksModel() const;
+
+    /*!
+        \brief Get preferred subtitle language.
+        \return comma separated languages(const QString)
+
+        Used as property in QML.
+     */
+    QString subtitlePreferredLanguage() const;
+
+    /*!
+        \brief Set preferred subtitle language.
+        \param subtitlePreferredLanguage comma separated languages, empty string if disabled (QString)
+
+        Used as property in QML.
+     */
+    void setSubtitlePreferredLanguage(const QString &subtitlePreferredLanguage);
+
+    /*!
+        \brief Get current video track.
+        \return the id of current video track, or -1 if none (const int)
+
+        Used as property in QML.
+     */
+    int videoTrack() const;
+
+    /*!
+        \brief Set current video track.
+        \param videoTrack new video track (int)
+
+        Used as property in QML.
+     */
+    void setVideoTrack(int videoTrack);
+
+    /*!
+        \brief Get video tracks model.
+        \return video tracks model poiner(const TracksModel*)
+
+        Used as property in QML.
+     */
+    TracksModel *videoTracksModel() const;
 
 signals:
     /*!
@@ -344,22 +502,58 @@ signals:
     */
     void positionChanged();
 
+    /*!
+        \brief Audio track changed signal
+    */
+    void audioTrackChanged();
+
+    /*!
+        \brief Audio preferred language changed signal
+    */
+    void audioPreferredLanguageChanged();
+
+    /*!
+        \brief Subtitle track changed signal
+    */
+    void subtitleTrackChanged();
+
+    /*!
+        \brief Subtitle preferred language changed signal
+    */
+    void subtitlePreferredLanguageChanged();
+
+    /*!
+        \brief Video track changed signal
+    */
+    void videoTrackChanged();
+
 private slots:
     void seekableChangedPrivate(bool);
-
+    void mediaParsed(int);
+    void mediaPlayerVout(int);
 private:
     void openInternal();
+    int preferredAudioTrackId();
+    int preferredSubtitleTrackId();
 
     VlcInstance *_instance;
     VlcMedia *_media;
 
     VlcAudio *_audioManager;
+    VlcVideo *_videoManager;
 
     Vlc::Deinterlacing _deinterlacing;
 
     bool _hasMedia;
     bool _autoplay;
     bool _seekable;
+
+    TracksModel *_audioTracksModel;
+    TracksModel *_subtitleTracksModel;
+    TracksModel *_videoTracksModel;
+
+    QString _audioPreferredLanguage;
+    QString _subtitlePreferredLanguage;
 };
 
 #endif // VLCQT_QMLVIDEOPLAYER_H_

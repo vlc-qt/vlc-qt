@@ -1,6 +1,6 @@
 #############################################################################
 # VLC-Qt - Qt and libvlc connector library
-# Copyright (C) 2015 Tadej Novak <tadej@tano.si>
+# Copyright (C) 2016 Tadej Novak <tadej@tano.si>
 #
 # This library is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published
@@ -49,6 +49,14 @@ IF(NOT DEFINED LIBVLC_VERSION)
 ENDIF()
 # Include libVLC library
 FIND_PACKAGE(LIBVLC REQUIRED)
+IF(MINGW OR MSVC)
+    STRING(REGEX REPLACE "\\\\" "/" LIBVLC_INCLUDE_DIR "${LIBVLC_INCLUDE_DIR}")
+    STRING(REGEX REPLACE "sdk/include" "" LIBVLC_BIN_DIR "${LIBVLC_INCLUDE_DIR}")
+ELSE()
+    STRING(REGEX REPLACE "include" "" LIBVLC_BIN_DIR "${LIBVLC_INCLUDE_DIR}")
+ENDIF()
+SET(LIBVLC_PLUGINS_DIR "${LIBVLC_BIN_DIR}/plugins")
+SET(LIBVLC_LIB_DIR "${LIBVLC_BIN_DIR}/lib")
 
 # Set Qt bin dir to find QtCoreX.dll and other libs to install
 STRING(REGEX REPLACE "([^ ]+)[/\\].*" "\\1" QT_BIN_DIR_TMP "${QT_MOC_EXECUTABLE}")

@@ -23,6 +23,7 @@
 #include <QtCore/QSize>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
+#include <QtCore/QMap>
 
 #include "Enums.h"
 #include "SharedExportCore.h"
@@ -195,6 +196,12 @@ public:
     QList<int> subtitleIds() const;
 
     /*!
+        \brief Get available video subtitles.
+        \return dictionary with available video subtitles (const QMap<int, QString>)
+    */
+    QMap<int, QString> subtitles() const;
+
+    /*!
         \brief Take a snapshot of current video (currently primary only)
         \param path output path (QString)
         \return true if successfull (bool)
@@ -235,6 +242,12 @@ public:
         \return list with ids of available video tracks (const QList<int>)
     */
     QList<int> trackIds() const;
+
+    /*!
+        \brief Get available video tracks.
+        \return dictionary with available video tracks (const QMap<int, QString>)
+    */
+    QMap<int, QString> tracks() const;
 
 private:
     libvlc_media_player_t *_vlcMediaPlayer;

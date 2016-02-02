@@ -7,7 +7,6 @@ pushd install
 
 pushd artifacts
 mv ../VLC-Qt.7z VLC-Qt_${VLCQT_VERSION}_build${TRAVIS_BUILD_NUMBER}_${TRAVIS_COMMIT:0:7}.7z
-mv ../bin/VLC-Qt.dmg VLC-Qt_Test_${VLCQT_VERSION}_build${TRAVIS_BUILD_NUMBER}_${TRAVIS_COMMIT:0:7}.dmg
 
 popd
 popd
