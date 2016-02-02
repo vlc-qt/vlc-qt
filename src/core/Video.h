@@ -23,6 +23,7 @@
 #include <QtCore/QSize>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
+#include <QtCore/QMap>
 
 #include "Enums.h"
 #include "SharedExportCore.h"
@@ -193,6 +194,12 @@ public:
         \return list with ids of available video subtitles (const QList<int>)
     */
     QList<int> subtitleIds() const;
+
+    /*!
+        \brief Get available video subtitles.
+        \return dictionary with available video subtitles (const QMap<int, QString>)
+    */
+    QMap<int, QString> subtitles() const;
 
     /*!
         \brief Take a snapshot of current video (currently primary only)

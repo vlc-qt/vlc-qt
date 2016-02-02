@@ -132,6 +132,19 @@ public:
     Q_PROPERTY(TracksModel *audioTracksModel READ audioTracksModel CONSTANT)
 
     /*!
+        \brief Current subtitle track
+        \see subtitleTrack
+        \see subtitleTrackChanged
+     */
+    Q_PROPERTY(int subtitleTrack READ subtitleTrack WRITE setSubtitleTrack NOTIFY subtitleTrackChanged)
+
+    /*!
+        \brief Subtitle tracks model
+        \see subtitleTracksModel
+     */
+    Q_PROPERTY(TracksModel *subtitleTracksModel READ subtitleTracksModel CONSTANT)
+
+    /*!
         \brief VlcQmlVideoPlayer constructor.
         \param parent parent item (QQuickItem *)
      */
@@ -351,6 +364,30 @@ public:
      */
     TracksModel *audioTracksModel() const;
 
+    /*!
+        \brief Get current subtitle track.
+        \return the id of current subtitle track, or -1 if none (const int)
+
+        Used as property in QML.
+     */
+    int subtitleTrack() const;
+
+    /*!
+        \brief Set current subtitle track.
+        \param subtitleTrack new subtitle track (int)
+
+        Used as property in QML.
+     */
+    void setSubtitleTrack(int subtitleTrack);
+
+    /*!
+        \brief Get subtitle tracks model.
+        \return subtitle tracks model poiner(const TracksModel*)
+
+        Used as property in QML.
+     */
+    TracksModel *subtitleTracksModel() const;
+
 signals:
     /*!
         \brief Volume changed signal
@@ -387,10 +424,15 @@ signals:
     */
     void audioTrackChanged();
 
+    /*!
+        \brief Subtitle track changed signal
+    */
+    void subtitleTrackChanged();
+
 private slots:
     void seekableChangedPrivate(bool);
     void mediaParsed(int);
-
+    void mediaPlayerVout(int);
 private:
     void openInternal();
 
@@ -398,6 +440,7 @@ private:
     VlcMedia *_media;
 
     VlcAudio *_audioManager;
+    VlcVideo *_videoManager;
 
     Vlc::Deinterlacing _deinterlacing;
 
@@ -406,6 +449,7 @@ private:
     bool _seekable;
 
     TracksModel *_audioTracksModel;
+    TracksModel *_subtitleTracksModel;
 };
 
 #endif // VLCQT_QMLVIDEOPLAYER_H_

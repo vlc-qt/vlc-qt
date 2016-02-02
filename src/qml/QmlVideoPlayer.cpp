@@ -35,6 +35,7 @@ VlcQmlVideoPlayer::VlcQmlVideoPlayer(QQuickItem *parent)
       _instance(0),
       _media(0),
       _audioManager(0),
+      _videoManager(0),
       _deinterlacing(Vlc::Disabled),
       _hasMedia(false),
       _autoplay(true),
@@ -45,14 +46,17 @@ VlcQmlVideoPlayer::VlcQmlVideoPlayer(QQuickItem *parent)
     _instance->setUserAgent(qApp->applicationName(), qApp->applicationVersion());
     _player = new VlcMediaPlayer(_instance);
     _audioManager = new VlcAudio(_player);
+    _videoManager = new VlcVideo(_player);
 
     connect(_player, SIGNAL(stateChanged()), this, SIGNAL(stateChanged()));
     connect(_player, SIGNAL(seekableChanged(bool)), this, SLOT(seekableChangedPrivate(bool)));
     connect(_player, SIGNAL(lengthChanged(int)), this, SIGNAL(lengthChanged()));
     connect(_player, SIGNAL(timeChanged(int)), this, SIGNAL(timeChanged()));
     connect(_player, SIGNAL(positionChanged(float)), this, SIGNAL(positionChanged()));
+    connect(_player, SIGNAL(vout(int)), this, SLOT(mediaPlayerVout(int)));
 
     _audioTracksModel = new TracksModel(this);
+    _subtitleTracksModel = new TracksModel(this);
 }
 
 VlcQmlVideoPlayer::~VlcQmlVideoPlayer()
@@ -60,6 +64,7 @@ VlcQmlVideoPlayer::~VlcQmlVideoPlayer()
     _player->stop();
 
     delete _audioManager;
+    delete _videoManager;
     delete _media;
     delete _player;
     delete _instance;
@@ -96,6 +101,22 @@ void VlcQmlVideoPlayer::setAudioTrack(int audioTrack)
 {
     _audioManager->setTrack(audioTrack);
     emit audioTrackChanged();
+}
+
+int VlcQmlVideoPlayer::subtitleTrack() const
+{
+    return _videoManager->subtitle();
+}
+
+void VlcQmlVideoPlayer::setSubtitleTrack(int subtitleTrack)
+{
+    _videoManager->setSubtitle(subtitleTrack);
+    emit subtitleTrackChanged();
+}
+
+TracksModel *VlcQmlVideoPlayer::subtitleTracksModel() const
+{
+    return _subtitleTracksModel;
 }
 
 QString VlcQmlVideoPlayer::deinterlacing() const
@@ -159,6 +180,14 @@ void VlcQmlVideoPlayer::mediaParsed(int parsed)
 
         setAudioTrack(_audioManager->track());
     }
+}
+
+void VlcQmlVideoPlayer::mediaPlayerVout(int)
+{
+    _subtitleTracksModel->clear();
+    _subtitleTracksModel->load(_videoManager->subtitles());
+
+    setSubtitleTrack(_videoManager->subtitle());
 }
 
 bool VlcQmlVideoPlayer::autoplay() const
