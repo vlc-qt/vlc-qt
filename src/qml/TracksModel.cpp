@@ -35,16 +35,22 @@ QVariant TracksModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
         return QVariant();
-    if (index.row() > (_tracks.count() - 1))
+
+    return data(index.row(), role);
+}
+
+QVariant TracksModel::data(const int row, int role) const
+{
+    if (row > (_tracks.count() - 1))
         return QVariant();
 
     switch (role)
     {
     case Qt::DisplayRole:
     case TitleRole:
-        return QVariant::fromValue(_tracks.value(_tracks.keys().at(index.row())));
+        return QVariant::fromValue(_tracks.value(_tracks.keys().at(row)));
     case IdRole:
-        return QVariant::fromValue(_tracks.keys().at(index.row()));
+        return QVariant::fromValue(_tracks.keys().at(row));
     case Qt::DecorationRole:
     default:
         return QVariant();

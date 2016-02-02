@@ -132,6 +132,13 @@ public:
     Q_PROPERTY(TracksModel *audioTracksModel READ audioTracksModel CONSTANT)
 
     /*!
+        \brief Current audio preferred language
+        \see audioPreferredLanguage
+        \see audioPreferredLanguageChanged
+     */
+    Q_PROPERTY(QString audioPreferredLanguage READ audioPreferredLanguage WRITE setAudioPreferredLanguage NOTIFY audioPreferredLanguageChanged)
+
+    /*!
         \brief Current subtitle track
         \see subtitleTrack
         \see subtitleTrackChanged
@@ -378,6 +385,22 @@ public:
     TracksModel *audioTracksModel() const;
 
     /*!
+        \brief Get preferred audio language.
+        \return comma separated languages(const QString)
+
+        Used as property in QML.
+     */
+    QString audioPreferredLanguage() const;
+
+    /*!
+        \brief Set preferred audio language.
+        \param audioPreferredLanguage comma separated languages (QString)
+
+        Used as property in QML.
+     */
+    void setAudioPreferredLanguage(const QString &audioPreferredLanguage);
+
+    /*!
         \brief Get current subtitle track.
         \return the id of current subtitle track, or -1 if none (const int)
 
@@ -462,6 +485,11 @@ signals:
     void audioTrackChanged();
 
     /*!
+        \brief Audio preferred language changed signal
+    */
+    void audioPreferredLanguageChanged();
+
+    /*!
         \brief Subtitle track changed signal
     */
     void subtitleTrackChanged();
@@ -477,6 +505,7 @@ private slots:
     void mediaPlayerVout(int);
 private:
     void openInternal();
+    int preferredAudioTrackId();
 
     VlcInstance *_instance;
     VlcMedia *_media;
@@ -493,6 +522,8 @@ private:
     TracksModel *_audioTracksModel;
     TracksModel *_subtitleTracksModel;
     TracksModel *_videoTracksModel;
+
+    QString _audioPreferredLanguage;
 };
 
 #endif // VLCQT_QMLVIDEOPLAYER_H_

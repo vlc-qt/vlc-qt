@@ -20,6 +20,7 @@ public:
     int rowCount(const QModelIndex &parent) const;
     QHash<int, QByteArray> roleNames() const;
     QVariant data(const QModelIndex &index, int role) const;
+    QVariant data(const int row, int role) const;
 
     void clear();
     void load(const QMap<int, QString> &data);

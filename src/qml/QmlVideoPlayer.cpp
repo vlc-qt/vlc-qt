@@ -88,6 +88,32 @@ void VlcQmlVideoPlayer::openInternal()
     _hasMedia = true;
 }
 
+int VlcQmlVideoPlayer::preferredAudioTrackId()
+{
+    QStringList languages = _audioPreferredLanguage.split(",", QString::SkipEmptyParts, Qt::CaseInsensitive);
+
+    int currentTrackId = _audioManager->track();
+    if(_audioTracksModel->count() > 0 && languages.count() > 0)
+    {
+        bool found = false;
+
+        for(int j = 0; j < languages.count() && !found; j++)
+        {
+            for(int i = 0; i < _audioTracksModel->count() && !found; i++)
+            {
+                QString trackTitle = _audioTracksModel->data(i, TracksModel::TitleRole).toString();
+                if(trackTitle.contains(languages.at(j)))
+                {
+                    currentTrackId = _audioTracksModel->data(i, TracksModel::IdRole).toInt();
+                    found = true;
+                }
+            }
+        }
+    }
+
+    return currentTrackId;
+}
+
 TracksModel *VlcQmlVideoPlayer::audioTracksModel() const
 {
     return _audioTracksModel;
@@ -102,6 +128,17 @@ void VlcQmlVideoPlayer::setAudioTrack(int audioTrack)
 {
     _audioManager->setTrack(audioTrack);
     emit audioTrackChanged();
+}
+
+QString VlcQmlVideoPlayer::audioPreferredLanguage() const
+{
+    return _audioPreferredLanguage;
+}
+
+void VlcQmlVideoPlayer::setAudioPreferredLanguage(const QString &audioPreferredLanguage)
+{
+    _audioPreferredLanguage = audioPreferredLanguage;
+    emit audioPreferredLanguageChanged();
 }
 
 int VlcQmlVideoPlayer::subtitleTrack() const
@@ -195,7 +232,7 @@ void VlcQmlVideoPlayer::mediaParsed(int parsed)
         _audioTracksModel->clear();
         _audioTracksModel->load(_audioManager->tracks());
 
-        setAudioTrack(_audioManager->track());
+        setAudioTrack(preferredAudioTrackId());
     }
 }
 
