@@ -57,6 +57,7 @@ VlcQmlVideoPlayer::VlcQmlVideoPlayer(QQuickItem *parent)
 
     _audioTracksModel = new TracksModel(this);
     _subtitleTracksModel = new TracksModel(this);
+    _videoTracksModel = new TracksModel(this);
 }
 
 VlcQmlVideoPlayer::~VlcQmlVideoPlayer()
@@ -117,6 +118,22 @@ void VlcQmlVideoPlayer::setSubtitleTrack(int subtitleTrack)
 TracksModel *VlcQmlVideoPlayer::subtitleTracksModel() const
 {
     return _subtitleTracksModel;
+}
+
+int VlcQmlVideoPlayer::videoTrack() const
+{
+    return _videoManager->track();
+}
+
+void VlcQmlVideoPlayer::setVideoTrack(int videoTrack)
+{
+    _videoManager->setTrack(videoTrack);
+    emit videoTrackChanged();
+}
+
+TracksModel *VlcQmlVideoPlayer::videoTracksModel() const
+{
+    return _videoTracksModel;
 }
 
 QString VlcQmlVideoPlayer::deinterlacing() const
@@ -188,6 +205,11 @@ void VlcQmlVideoPlayer::mediaPlayerVout(int)
     _subtitleTracksModel->load(_videoManager->subtitles());
 
     setSubtitleTrack(_videoManager->subtitle());
+
+    _videoTracksModel->clear();
+    _videoTracksModel->load(_videoManager->tracks());
+
+    setVideoTrack(_videoManager->track());
 }
 
 bool VlcQmlVideoPlayer::autoplay() const

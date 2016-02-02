@@ -145,6 +145,19 @@ public:
     Q_PROPERTY(TracksModel *subtitleTracksModel READ subtitleTracksModel CONSTANT)
 
     /*!
+        \brief Current video track
+        \see videoTrack
+        \see videoTrackChanged
+     */
+    Q_PROPERTY(int videoTrack READ videoTrack WRITE setVideoTrack NOTIFY videoTrackChanged)
+
+    /*!
+        \brief Video tracks model
+        \see videoTracksModel
+     */
+    Q_PROPERTY(TracksModel *videoTracksModel READ videoTracksModel CONSTANT)
+
+    /*!
         \brief VlcQmlVideoPlayer constructor.
         \param parent parent item (QQuickItem *)
      */
@@ -388,6 +401,30 @@ public:
      */
     TracksModel *subtitleTracksModel() const;
 
+    /*!
+        \brief Get current video track.
+        \return the id of current video track, or -1 if none (const int)
+
+        Used as property in QML.
+     */
+    int videoTrack() const;
+
+    /*!
+        \brief Set current video track.
+        \param videoTrack new video track (int)
+
+        Used as property in QML.
+     */
+    void setVideoTrack(int videoTrack);
+
+    /*!
+        \brief Get video tracks model.
+        \return video tracks model poiner(const TracksModel*)
+
+        Used as property in QML.
+     */
+    TracksModel *videoTracksModel() const;
+
 signals:
     /*!
         \brief Volume changed signal
@@ -429,6 +466,11 @@ signals:
     */
     void subtitleTrackChanged();
 
+    /*!
+        \brief Video track changed signal
+    */
+    void videoTrackChanged();
+
 private slots:
     void seekableChangedPrivate(bool);
     void mediaParsed(int);
@@ -450,6 +492,7 @@ private:
 
     TracksModel *_audioTracksModel;
     TracksModel *_subtitleTracksModel;
+    TracksModel *_videoTracksModel;
 };
 
 #endif // VLCQT_QMLVIDEOPLAYER_H_

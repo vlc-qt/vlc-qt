@@ -243,6 +243,12 @@ public:
     */
     QList<int> trackIds() const;
 
+    /*!
+        \brief Get available video tracks.
+        \return dictionary with available video tracks (const QMap<int, QString>)
+    */
+    QMap<int, QString> tracks() const;
+
 private:
     libvlc_media_player_t *_vlcMediaPlayer;
 };
