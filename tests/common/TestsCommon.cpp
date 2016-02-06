@@ -16,10 +16,26 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_TESTSCONFIG_H_
-#define VLCQT_TESTSCONFIG_H_
+#include <QtTest/QtTest>
 
-#define SAMPLES_DIR "@CMAKE_SOURCE_DIR@/tests/samples/"
-#define LIBVLC_PLUGINS_DIR "@LIBVLC_PLUGINS_DIR@"
+#include "TestsConfig.h"
+#include "TestsCommon.h"
 
-#endif // VLCQT_TESTSCONFIG_H_
+#include "core/Common.h"
+#include "core/Instance.h"
+
+void TestsCommon::init()
+{
+    qunsetenv("VLC_PLUGIN_PATH");
+
+#ifndef Q_OS_DARWIN
+    VlcCommon::setPluginPath(QString(LIBVLC_PLUGINS_DIR));
+#endif
+
+    _instance = new VlcInstance(VlcCommon::args(), this);
+}
+
+void TestsCommon::cleanup()
+{
+    delete _instance;
+}

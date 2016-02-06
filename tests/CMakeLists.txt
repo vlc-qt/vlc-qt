@@ -22,8 +22,10 @@ IF(MSVC OR MINGW)
     STRING(REGEX REPLACE "/" "\\\\" WINDOWS_TEST_PATH "${WINDOWS_TEST_PATH}")
 ENDIF()
 
+SET(TestCommonFiles ${CMAKE_SOURCE_DIR}/tests/common/TestsCommon.cpp)
+
 MACRO(ADD_AUTO_TEST TestName TestSrc)
-    SET(Test_${TestName}_Srcs ${TestSrc})
+    SET(Test_${TestName}_Srcs ${TestSrc} ${TestCommonFiles})
 
     ADD_EXECUTABLE(Test_${TestName} ${Test_${TestName}_Srcs})
     ADD_DEPENDENCIES(Test_${TestName} ${VLCQT_CORE})
@@ -51,6 +53,7 @@ CONFIGURE_FILE(
 
 INCLUDE_DIRECTORIES(
     ${CMAKE_SOURCE_DIR}/src
+    ${CMAKE_SOURCE_DIR}/tests/common
     ${CMAKE_BINARY_DIR}/tests
     ${CMAKE_BINARY_DIR}/tests/core
 )

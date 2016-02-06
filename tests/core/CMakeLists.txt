@@ -17,3 +17,4 @@
 #############################################################################
 
 ADD_AUTO_TEST(CoreInstance TestInstance.cpp)
+ADD_AUTO_TEST(CoreMetaManager TestMetaManager.cpp)

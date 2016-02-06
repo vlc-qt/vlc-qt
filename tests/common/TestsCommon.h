@@ -16,10 +16,22 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_TESTSCONFIG_H_
-#define VLCQT_TESTSCONFIG_H_
+#ifndef VLCQT_TESTSCOMMON_H_
+#define VLCQT_TESTSCOMMON_H_
 
-#define SAMPLES_DIR "@CMAKE_SOURCE_DIR@/tests/samples/"
-#define LIBVLC_PLUGINS_DIR "@LIBVLC_PLUGINS_DIR@"
+#include <QtCore/QObject>
 
-#endif // VLCQT_TESTSCONFIG_H_
+class VlcInstance;
+
+class TestsCommon : public QObject
+{
+    Q_OBJECT
+private slots:
+    void init();
+    void cleanup();
+
+protected:
+    VlcInstance *_instance;
+};
+
+#endif // VLCQT_TESTSCOMMON_H_
