@@ -37,7 +37,6 @@ QStringList Vlc::audioCodec()
 QStringList Vlc::audioOutput()
 {
     QStringList list;
-
     list << "default";
 
     return list;
@@ -46,7 +45,6 @@ QStringList Vlc::audioOutput()
 QStringList Vlc::audioOutputHuman()
 {
     QStringList list;
-
     list << "default";
 
     return list;
@@ -198,6 +196,7 @@ QStringList Vlc::videoCodec()
 QStringList Vlc::videoOutput()
 {
     QStringList list;
+    list << "default";
 
 #if defined(Q_OS_LINUX)
     list << "x11"
@@ -209,14 +208,13 @@ QStringList Vlc::videoOutput()
          << "opengl";
 #endif
 
-    list << "default";
-
     return list;
 }
 
 QStringList Vlc::videoOutputHuman()
 {
     QStringList list;
+    list << "default";
 
 #if defined(Q_OS_LINUX)
     list << "X11"
@@ -227,8 +225,6 @@ QStringList Vlc::videoOutputHuman()
          << "Direct3D"
          << "OpenGL";
 #endif
-
-    list << "default";
 
     return list;
 }
