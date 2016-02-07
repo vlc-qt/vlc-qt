@@ -160,18 +160,18 @@ ENDIF()
 # Installation #
 ################
 IF(NOT STATIC AND ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    SET(VLCQtQmlIncludesLocation lib/${VLCQT_QML_NAME}.framework)
-    SET(VLCQtQmlPublicHeaderLocation lib/${VLCQT_QML_NAME}.framework)
+    SET(VLCQtQmlIncludesLocation ${CMAKE_INSTALL_LIBDIR}/${VLCQT_QML_NAME}.framework)
+    SET(VLCQtQmlPublicHeaderLocation ${CMAKE_INSTALL_LIBDIR}/${VLCQT_QML_NAME}.framework)
 ELSE()
-    SET(VLCQtQmlIncludesLocation include)
-    SET(VLCQtQmlPublicHeaderLocation include/${VLCQT_QML_NAME})
+    SET(VLCQtQmlIncludesLocation ${CMAKE_INSTALL_INCLUDEDIR})
+    SET(VLCQtQmlPublicHeaderLocation ${CMAKE_INSTALL_INCLUDEDIR}/${VLCQT_QML_NAME})
 ENDIF()
 
 INSTALL(TARGETS ${VLCQT_QML} EXPORT VLCQtQmlTargets
-        RUNTIME DESTINATION bin
-        FRAMEWORK DESTINATION lib${LIB_SUFFIX}
-        LIBRARY DESTINATION lib${LIB_SUFFIX}
-        ARCHIVE DESTINATION lib${LIB_SUFFIX}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         INCLUDES DESTINATION ${VLCQtQmlIncludesLocation}
         PUBLIC_HEADER DESTINATION ${VLCQtQmlPublicHeaderLocation}
 )
