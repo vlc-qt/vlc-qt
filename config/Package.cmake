@@ -25,7 +25,7 @@ WRITE_BASIC_PACKAGE_VERSION_FILE(
 CONFIGURE_FILE(config/package/VLCQtConfig.cmake
     "${CMAKE_BINARY_DIR}/package/VLCQt/VLCQtConfig.cmake"
 )
-SET(VlcQtConfigPackageLocation lib/cmake/VLCQt)
+SET(VlcQtConfigPackageLocation lib${LIB_SUFFIX}/cmake/VLCQt)
 INSTALL(
     FILES
         config/package/VLCQtConfig.cmake
@@ -46,7 +46,7 @@ EXPORT(EXPORT VLCQtCoreTargets
 CONFIGURE_FILE(config/package/VLCQtCoreConfig.cmake
     "${CMAKE_BINARY_DIR}/package/VLCQtCore/VLCQtCoreConfig.cmake"
 )
-SET(VlcQtCoreConfigPackageLocation lib/cmake/VLCQtCore)
+SET(VlcQtCoreConfigPackageLocation lib${LIB_SUFFIX}/cmake/VLCQtCore)
 INSTALL(EXPORT VLCQtCoreTargets
         FILE VLCQtCoreTargets.cmake
         NAMESPACE VLCQt::
@@ -72,7 +72,7 @@ EXPORT(EXPORT VLCQtWidgetsTargets
 CONFIGURE_FILE(config/package/VLCQtWidgetsConfig.cmake
     "${CMAKE_BINARY_DIR}/package/VLCQtWidgets/VLCQtWidgetsConfig.cmake"
 )
-SET(VlcQtWidgetsConfigPackageLocation lib/cmake/VLCQtWidgets)
+SET(VlcQtWidgetsConfigPackageLocation lib${LIB_SUFFIX}/cmake/VLCQtWidgets)
 INSTALL(EXPORT VLCQtWidgetsTargets
         FILE VLCQtWidgetsTargets.cmake
         NAMESPACE VLCQt::
@@ -99,7 +99,7 @@ IF(QT_VERSION MATCHES 5)
     CONFIGURE_FILE(config/package/VLCQtQmlConfig.cmake
         "${CMAKE_BINARY_DIR}/package/VLCQtQml/VLCQtQmlConfig.cmake"
     )
-    SET(VlcQtQmlConfigPackageLocation lib/cmake/VLCQtQml)
+    SET(VlcQtQmlConfigPackageLocation lib${LIB_SUFFIX}/cmake/VLCQtQml)
     INSTALL(EXPORT VLCQtQmlTargets
             FILE VLCQtQmlTargets.cmake
             NAMESPACE VLCQt::
