@@ -1,29 +1,29 @@
-#include "TracksModel.h"
+#include "VlcTrackModel.h"
 
-TracksModel::TracksModel(QObject *parent):
+VlcTrackModel::VlcTrackModel(QObject *parent):
     QAbstractListModel(parent)
 {
 }
 
-TracksModel::TracksModel(const QMap<int, QString> &tracks, QObject *parent):
+VlcTrackModel::VlcTrackModel(const QMap<int, QString> &tracks, QObject *parent):
     QAbstractListModel(parent),
     _tracks(tracks)
 {
 }
 
-TracksModel::TracksModel(const TracksModel &other)
+VlcTrackModel::VlcTrackModel(const VlcTrackModel &other)
 {
     _tracks = other._tracks;
 }
 
-int TracksModel::rowCount(const QModelIndex &parent) const
+int VlcTrackModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
 
     return _tracks.count();
 }
 
-QHash<int, QByteArray> TracksModel::roleNames() const
+QHash<int, QByteArray> VlcTrackModel::roleNames() const
 {
     QHash<int, QByteArray> roles = QAbstractListModel::roleNames();
     roles.insert(IdRole, "id");
@@ -31,7 +31,7 @@ QHash<int, QByteArray> TracksModel::roleNames() const
     return roles;
 }
 
-QVariant TracksModel::data(const QModelIndex &index, int role) const
+QVariant VlcTrackModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
         return QVariant();
@@ -39,7 +39,7 @@ QVariant TracksModel::data(const QModelIndex &index, int role) const
     return data(index.row(), role);
 }
 
-QVariant TracksModel::data(const int row, int role) const
+QVariant VlcTrackModel::data(const int row, int role) const
 {
     if (row > (_tracks.count() - 1))
         return QVariant();
@@ -57,7 +57,7 @@ QVariant TracksModel::data(const int row, int role) const
     }
 }
 
-void TracksModel::clear()
+void VlcTrackModel::clear()
 {
     beginRemoveRows(QModelIndex(), 0, _tracks.count() - 1);
     _tracks.clear();
@@ -65,7 +65,7 @@ void TracksModel::clear()
     emit countChanged();
 }
 
-void TracksModel::load(const QMap<int, QString> &data)
+void VlcTrackModel::load(const QMap<int, QString> &data)
 {
     QMapIterator<int, QString> i(data);
     while(i.hasNext())
@@ -75,7 +75,7 @@ void TracksModel::load(const QMap<int, QString> &data)
     }
 }
 
-void TracksModel::insert(const int id, const QString &title)
+void VlcTrackModel::insert(const int id, const QString &title)
 {
     beginInsertRows(QModelIndex(), _tracks.size(), _tracks.size());
     _tracks.insert(id, title);
@@ -83,7 +83,7 @@ void TracksModel::insert(const int id, const QString &title)
     emit countChanged();
 }
 
-int TracksModel::count() const
+int VlcTrackModel::count() const
 {
     return rowCount(QModelIndex());
 }

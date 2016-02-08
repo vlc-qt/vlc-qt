@@ -24,7 +24,7 @@
 #include "QmlVideoObject.h"
 #include "SharedExportQml.h"
 
-#include "TracksModel.h"
+#include "VlcTrackModel.h"
 
 class VlcAudio;
 class VlcInstance;
@@ -129,7 +129,7 @@ public:
         \brief Audio tracks model
         \see audioTracksModel
      */
-    Q_PROPERTY(TracksModel *audioTracksModel READ audioTracksModel CONSTANT)
+    Q_PROPERTY(VlcTrackModel *audioTracksModel READ audioTracksModel CONSTANT)
 
     /*!
         \brief Current audio preferred language
@@ -149,7 +149,7 @@ public:
         \brief Subtitle tracks model
         \see subtitleTracksModel
      */
-    Q_PROPERTY(TracksModel *subtitleTracksModel READ subtitleTracksModel CONSTANT)
+    Q_PROPERTY(VlcTrackModel *subtitleTracksModel READ subtitleTracksModel CONSTANT)
 
     /*!
         \brief Current subtitle preferred language
@@ -169,7 +169,7 @@ public:
         \brief Video tracks model
         \see videoTracksModel
      */
-    Q_PROPERTY(TracksModel *videoTracksModel READ videoTracksModel CONSTANT)
+    Q_PROPERTY(VlcTrackModel *videoTracksModel READ videoTracksModel CONSTANT)
 
     /*!
         \brief VlcQmlVideoPlayer constructor.
@@ -385,11 +385,11 @@ public:
 
     /*!
         \brief Get audio tracks model.
-        \return audio tracks model poiner(const TracksModel*)
+        \return audio tracks model poiner(const VlcTrackModel*)
 
         Used as property in QML.
      */
-    TracksModel *audioTracksModel() const;
+    VlcTrackModel *audioTracksModel() const;
 
     /*!
         \brief Get preferred audio language.
@@ -425,11 +425,11 @@ public:
 
     /*!
         \brief Get subtitle tracks model.
-        \return subtitle tracks model poiner(const TracksModel*)
+        \return subtitle tracks model poiner(const VlcTrackModel*)
 
         Used as property in QML.
      */
-    TracksModel *subtitleTracksModel() const;
+    VlcTrackModel *subtitleTracksModel() const;
 
     /*!
         \brief Get preferred subtitle language.
@@ -465,11 +465,11 @@ public:
 
     /*!
         \brief Get video tracks model.
-        \return video tracks model poiner(const TracksModel*)
+        \return video tracks model poiner(const VlcTrackModel*)
 
         Used as property in QML.
      */
-    TracksModel *videoTracksModel() const;
+    VlcTrackModel *videoTracksModel() const;
 
 signals:
     /*!
@@ -548,9 +548,9 @@ private:
     bool _autoplay;
     bool _seekable;
 
-    TracksModel *_audioTracksModel;
-    TracksModel *_subtitleTracksModel;
-    TracksModel *_videoTracksModel;
+    VlcTrackModel *_audioTracksModel;
+    VlcTrackModel *_subtitleTracksModel;
+    VlcTrackModel *_videoTracksModel;
 
     QString _audioPreferredLanguage;
     QString _subtitlePreferredLanguage;

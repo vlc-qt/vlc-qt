@@ -1,9 +1,9 @@
-#ifndef TRACKS_MODEL_H
-#define TRACKS_MODEL_H
+#ifndef VLC_TRACK_MODEL_H
+#define VLC_TRACK_MODEL_H
 
 #include <QAbstractListModel>
 
-class TracksModel: public QAbstractListModel
+class VlcTrackModel: public QAbstractListModel
 {
     Q_OBJECT
     Q_PROPERTY(int count READ count NOTIFY countChanged)
@@ -13,9 +13,9 @@ public:
         TitleRole
     };
 
-    explicit TracksModel(QObject *parent = 0);
-    explicit TracksModel(const QMap<int, QString> &tracks, QObject *parent = 0);
-    explicit TracksModel(const TracksModel &other);
+    explicit VlcTrackModel(QObject *parent = 0);
+    explicit VlcTrackModel(const QMap<int, QString> &tracks, QObject *parent = 0);
+    explicit VlcTrackModel(const VlcTrackModel &other);
 
     int rowCount(const QModelIndex &parent) const;
     QHash<int, QByteArray> roleNames() const;
@@ -31,5 +31,5 @@ private:
 signals:
     void countChanged();
 };
-Q_DECLARE_METATYPE(TracksModel)
-#endif // TRACKS_MODEL_H
+Q_DECLARE_METATYPE(VlcTrackModel)
+#endif // VLC_TRACK_MODEL_H

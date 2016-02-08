@@ -55,9 +55,9 @@ VlcQmlVideoPlayer::VlcQmlVideoPlayer(QQuickItem *parent)
     connect(_player, SIGNAL(positionChanged(float)), this, SIGNAL(positionChanged()));
     connect(_player, SIGNAL(vout(int)), this, SLOT(mediaPlayerVout(int)));
 
-    _audioTracksModel = new TracksModel(this);
-    _subtitleTracksModel = new TracksModel(this);
-    _videoTracksModel = new TracksModel(this);
+    _audioTracksModel = new VlcTrackModel(this);
+    _subtitleTracksModel = new VlcTrackModel(this);
+    _videoTracksModel = new VlcTrackModel(this);
 }
 
 VlcQmlVideoPlayer::~VlcQmlVideoPlayer()
@@ -101,10 +101,10 @@ int VlcQmlVideoPlayer::preferredAudioTrackId()
         {
             for(int i = 0; i < _audioTracksModel->count() && !found; i++)
             {
-                QString trackTitle = _audioTracksModel->data(i, TracksModel::TitleRole).toString();
+                QString trackTitle = _audioTracksModel->data(i, VlcTrackModel::TitleRole).toString();
                 if(trackTitle.contains(languages.at(j)))
                 {
-                    currentTrackId = _audioTracksModel->data(i, TracksModel::IdRole).toInt();
+                    currentTrackId = _audioTracksModel->data(i, VlcTrackModel::IdRole).toInt();
                     found = true;
                 }
             }
@@ -129,10 +129,10 @@ int VlcQmlVideoPlayer::preferredSubtitleTrackId()
         {
             for(int i = 0; i < _subtitleTracksModel->count() && !found; i++)
             {
-                QString trackTitle = _subtitleTracksModel->data(i, TracksModel::TitleRole).toString();
+                QString trackTitle = _subtitleTracksModel->data(i, VlcTrackModel::TitleRole).toString();
                 if(trackTitle.contains(languages.at(j)))
                 {
-                    currentTrackId = _subtitleTracksModel->data(i, TracksModel::IdRole).toInt();
+                    currentTrackId = _subtitleTracksModel->data(i, VlcTrackModel::IdRole).toInt();
                     found = true;
                 }
             }
@@ -142,7 +142,7 @@ int VlcQmlVideoPlayer::preferredSubtitleTrackId()
     return currentTrackId;
 }
 
-TracksModel *VlcQmlVideoPlayer::audioTracksModel() const
+VlcTrackModel *VlcQmlVideoPlayer::audioTracksModel() const
 {
     return _audioTracksModel;
 }
@@ -191,7 +191,7 @@ void VlcQmlVideoPlayer::setSubtitlePreferredLanguage(const QString &subtitlePref
     emit subtitlePreferredLanguageChanged();
 }
 
-TracksModel *VlcQmlVideoPlayer::subtitleTracksModel() const
+VlcTrackModel *VlcQmlVideoPlayer::subtitleTracksModel() const
 {
     return _subtitleTracksModel;
 }
@@ -207,7 +207,7 @@ void VlcQmlVideoPlayer::setVideoTrack(int videoTrack)
     emit videoTrackChanged();
 }
 
-TracksModel *VlcQmlVideoPlayer::videoTracksModel() const
+VlcTrackModel *VlcQmlVideoPlayer::videoTracksModel() const
 {
     return _videoTracksModel;
 }
