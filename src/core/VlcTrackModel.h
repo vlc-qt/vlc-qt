@@ -21,7 +21,9 @@
 
 #include <QAbstractListModel>
 
-class VlcTrackModel: public QAbstractListModel
+#include "SharedExportCore.h"
+
+class VLCQT_CORE_EXPORT VlcTrackModel: public QAbstractListModel
 {
     Q_OBJECT
     Q_PROPERTY(int count READ count NOTIFY countChanged)

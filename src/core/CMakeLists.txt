@@ -58,6 +58,7 @@ SET(VLCQT_CORE_SRCS
     VideoDelegate.h
     VideoMemoryStream.cpp
     VideoFrame.cpp
+    VlcTrackModel.cpp
 )
 
 # Define the Include files
@@ -79,6 +80,7 @@ SET(VLCQT_CORE_HEADERS
     VideoDelegate.h
     VideoFrame.h
     VideoMemoryStream.h
+    VlcTrackModel.h
 
     ${CMAKE_BINARY_DIR}/src/Config.h
 )
