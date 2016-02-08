@@ -56,20 +56,23 @@ public:
     /*!
         \brief Current aspect ratio
         \see setAspectRatio
+        \see aspectRatioChanged
      */
-    Q_PROPERTY(QString aspectRatio READ aspectRatio WRITE setAspectRatio)
+    Q_PROPERTY(QString aspectRatio READ aspectRatio WRITE setAspectRatio NOTIFY aspectRatioChanged)
 
     /*!
         \brief Current crop ratio
         \see setCropRatio
+        \see cropRatioChanged
      */
-    Q_PROPERTY(QString cropRatio READ cropRatio WRITE setCropRatio)
+    Q_PROPERTY(QString cropRatio READ cropRatio WRITE setCropRatio NOTIFY cropRatioChanged)
 
     /*!
         \brief Current deinterlacing mode
         \see setDeinterlacing
+        \see deinterlacingChanged
      */
-    Q_PROPERTY(QString deinterlacing READ deinterlacing WRITE setDeinterlacing)
+    Q_PROPERTY(QString deinterlacing READ deinterlacing WRITE setDeinterlacing NOTIFY deinterlacingChanged)
 
     /*!
         \brief Current media URL
@@ -318,6 +321,21 @@ signals:
         \brief Volume changed signal
     */
     void volumeChanged();
+
+    /*!
+        \brief Aspect ratio changed signal
+    */
+    void aspectRatioChanged();
+
+    /*!
+        \brief Crop ratio changed signal
+    */
+    void cropRatioChanged();
+
+    /*!
+        \brief Deinterlacing changed signal
+    */
+    void deinterlacingChanged();
 
     /*!
         \brief State changed signal

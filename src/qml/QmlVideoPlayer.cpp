@@ -89,6 +89,7 @@ void VlcQmlVideoPlayer::setDeinterlacing(const QString &deinterlacing)
 {
     _deinterlacing = (Vlc::Deinterlacing) Vlc::deinterlacing().indexOf(deinterlacing);
     _player->video()->setDeinterlace(_deinterlacing);
+    emit deinterlacingChanged();
 }
 
 int VlcQmlVideoPlayer::state() const
@@ -201,6 +202,7 @@ QString VlcQmlVideoPlayer::aspectRatio() const
 void VlcQmlVideoPlayer::setAspectRatio(const QString &aspectRatio)
 {
     VlcQmlVideoObject::setAspectRatio( (Vlc::Ratio) Vlc::ratio().indexOf(aspectRatio) );
+    emit aspectRatioChanged();
 }
 
 QString VlcQmlVideoPlayer::cropRatio() const
@@ -211,4 +213,5 @@ QString VlcQmlVideoPlayer::cropRatio() const
 void VlcQmlVideoPlayer::setCropRatio(const QString &cropRatio)
 {
     VlcQmlVideoObject::setCropRatio( (Vlc::Ratio) Vlc::ratio().indexOf(cropRatio) );
+    emit cropRatioChanged();
 }
