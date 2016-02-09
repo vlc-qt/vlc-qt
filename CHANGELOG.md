@@ -1,9 +1,11 @@
 # VLC-Qt Changelog
 
-## Unreleased
+## 1.0.1 (2016-02-09)
+ - Update VLC to 2.2.2
  - Support Homebrew provided Qt (issue #128)
-
----
+ - Error messages are marked as proper warnings/errors on console output
+ - Fix: Video output should be default first
+ - Fix: Add LIB_SUFFIX to generated CMake modules install path (related to issue #132)
 
 ## 1.0.0 (2015-12-27)
  - Add audio and video filter module list (issue #112)

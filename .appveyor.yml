@@ -1,4 +1,4 @@
-version: 1.0.0.{build}
+version: 1.0.1.{build}
 
 branches:
   except:
@@ -7,7 +7,7 @@ branches:
     - feature/experiments
 
 environment:
-  vlcqt_version: 1.0.0
+  vlcqt_version: 1.0.1
   vlc_version: 2.2.2
 
   matrix:
