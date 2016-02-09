@@ -16,7 +16,7 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include "core/VlcTrackModel.h"
+#include "core/TrackModel.h"
 
 VlcTrackModel::VlcTrackModel(QObject *parent):
     QAbstractListModel(parent)

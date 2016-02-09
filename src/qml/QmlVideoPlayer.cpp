@@ -27,6 +27,7 @@
 #include "core/Instance.h"
 #include "core/Media.h"
 #include "core/MediaPlayer.h"
+#include "core/TrackModel.h"
 
 #include "qml/QmlVideoPlayer.h"
 

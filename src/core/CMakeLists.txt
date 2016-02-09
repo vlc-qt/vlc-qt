@@ -54,11 +54,11 @@ SET(VLCQT_CORE_SRCS
     ModuleDescription.cpp
     SharedExportCore.h
     Stats.h
+    TrackModel.cpp
     Video.cpp
     VideoDelegate.h
     VideoMemoryStream.cpp
     VideoFrame.cpp
-    VlcTrackModel.cpp
 )
 
 # Define the Include files
@@ -76,11 +76,11 @@ SET(VLCQT_CORE_HEADERS
     ModuleDescription.h
     SharedExportCore.h
     Stats.h
+    TrackModel.h
     Video.h
     VideoDelegate.h
     VideoFrame.h
     VideoMemoryStream.h
-    VlcTrackModel.h
 
     ${CMAKE_BINARY_DIR}/src/Config.h
 )
