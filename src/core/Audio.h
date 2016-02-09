@@ -21,6 +21,7 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QStringList>
+#include <QtCore/QMap>
 
 #include "Enums.h"
 
@@ -119,6 +120,12 @@ public:
         \return list with ids of available audio tracks (const QList<int>)
     */
     QList<int> trackIds() const;
+
+    /*!
+        \brief Get available audio tracks.
+        \return dictionary with available audio tracks (const QMap<int, QString>)
+    */
+    QMap<int, QString> tracks() const;
 
     /*!
         \brief Get current audio level.
