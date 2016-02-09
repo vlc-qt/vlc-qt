@@ -1,5 +1,11 @@
 # VLC-Qt Changelog
 
+## Unreleased
+ - QML audio, video and subtitles tracks support
+ - Deinterlacing, aspect ratio and crop ratio changed signals
+
+---
+
 ## 1.0.1 (2016-02-09)
  - Update VLC to 2.2.2
  - Support Homebrew provided Qt (issue #128)
