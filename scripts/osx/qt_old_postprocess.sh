@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Usage:
-#   osx_qt_old_postprocess.sh <dylib>
+#   qt_old_postprocess.sh <dylib>
 #
 # Use install_name_tool(1) to update <dylib> so that the dynamic loader will
 # look for Qt libraries in Frameworks

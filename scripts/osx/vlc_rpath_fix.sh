@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Usage:
-#   osx_vlc_rpath_fix.sh <dylib>
+#   vlc_rpath_fix.sh <dylib>
 #
 # Use install_name_tool(1) to update <dylib> so that the dynamic loader will
 # look for VLC libraries in specific locations, and in a specific order.
@@ -75,7 +75,7 @@ add_rpath() {
 
 echo "[$SCRIPT] # Processing: '$DYLIB'"
 
-change_id_name @rpath/$DYLIB "$DYLIB"
+change_id_name @rpath/$(basename "$DYLIB") "$DYLIB"
 
 LIBVLC=$(otool -L "$DYLIB" | grep '\(/libvlc\..[0-9]*\.dylib\)' -o)
 LIBVLCCORE=$(otool -L "$DYLIB" | grep '\(/libvlccore\..[0-9]*\.dylib\)' -o)

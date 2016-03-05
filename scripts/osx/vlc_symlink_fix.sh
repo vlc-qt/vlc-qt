@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Usage:
-#   osx_vlc_symlink_fix.sh <dir>
+#   vlc_symlink_fix.sh <dir>
 #
 # Fix symlinks provided by default package
 #

@@ -33,3 +33,8 @@ CONFIGURE_FILE(
     "${CMAKE_SOURCE_DIR}/docs/index.md"
     "${CMAKE_BINARY_DIR}/docs/index.md"
     COPYONLY)
+
+CONFIGURE_FILE(
+    "${CMAKE_SOURCE_DIR}/BUILDING.md"
+    "${CMAKE_BINARY_DIR}/docs/building.md"
+    COPYONLY)

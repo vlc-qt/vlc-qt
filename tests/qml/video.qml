@@ -27,7 +27,6 @@ Rectangle {
     VlcVideoPlayer {
         id: vidwidget
         anchors.fill: parent
-        url: "http://videos.hd-trailers.net/e23ab4b8-a737-46dd-a0e4-259ba36056b6_YsfXbEghC5XywlmkKiYrF0D1oWcPYHA94aPeKmTuUKJJVJBpH4AFbPzcNWMhAJHuRnKZAAatvKg-_8_0.mp4"
-        //url: "http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_640x360.m4v"
+        url: "http://videos.hd-trailers.net/Hobbit_The_Battle_Of_The_Five_Armies_2014_Trailer2_5.1-480p-HDTN.mp4"
     }
 }

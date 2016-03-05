@@ -28,20 +28,7 @@ manual intervention when installing.
 
 
 ## Building
-There are some specific CMake flags may need:
-
- * `BUILD_TESTS`: build test application, OFF by default
- * `DEBUG_SUFFIX`: add debug suffix 'd' to the libraries, ON on Widows, OFF elsewhere
- * `LIBVLC_VERSION`: set VLC version you are compiling with to disable unsupported
- 	features, should be defined as base 16 integer like `0x020200`, defaults to
- 	latest stable VLC version
- * `STATIC`: build statically, OFF by default
-
-After running CMake, build with your compiler, depending on makefile generator:
-Unix based: `make`, MSVC: `nmake` or `jom`, MinGW: `mingw32-make`
-
-There are two platform specific targets. You can make DMG file on OS X by running
-`make dmg` and you can copy required Qt libraries to test with `make windows`.
+See [How to build VLC-QT](md_building.html).
 
 
 ## Submitting Issues
