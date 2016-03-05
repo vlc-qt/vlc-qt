@@ -3,6 +3,7 @@
 ## Unreleased
  - QML audio, video and subtitles tracks support
  - Deinterlacing, aspect ratio and crop ratio changed signals
+ - Reading libvlc arguments from environment variable `VLC_ARGS`
 
 ---
 

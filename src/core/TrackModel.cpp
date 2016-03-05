@@ -19,15 +19,12 @@
 #include "core/TrackModel.h"
 
 VlcTrackModel::VlcTrackModel(QObject *parent):
-    QAbstractListModel(parent)
-{
-}
+    QAbstractListModel(parent) { }
 
-VlcTrackModel::VlcTrackModel(const QMap<int, QString> &tracks, QObject *parent):
+VlcTrackModel::VlcTrackModel(const QMap<int, QString> &tracks,
+                             QObject *parent):
     QAbstractListModel(parent),
-    _tracks(tracks)
-{
-}
+    _tracks(tracks) { }
 
 VlcTrackModel::VlcTrackModel(const VlcTrackModel &other)
 {
@@ -49,7 +46,8 @@ QHash<int, QByteArray> VlcTrackModel::roleNames() const
     return roles;
 }
 
-QVariant VlcTrackModel::data(const QModelIndex &index, int role) const
+QVariant VlcTrackModel::data(const QModelIndex &index,
+                             int role) const
 {
     if (!index.isValid())
         return QVariant();
@@ -57,7 +55,8 @@ QVariant VlcTrackModel::data(const QModelIndex &index, int role) const
     return data(index.row(), role);
 }
 
-QVariant VlcTrackModel::data(const int row, int role) const
+QVariant VlcTrackModel::data(const int row,
+                             int role) const
 {
     if (row > (_tracks.count() - 1))
         return QVariant();
@@ -93,7 +92,8 @@ void VlcTrackModel::load(const QMap<int, QString> &data)
     }
 }
 
-void VlcTrackModel::insert(const int id, const QString &title)
+void VlcTrackModel::insert(const int id,
+                           const QString &title)
 {
     beginInsertRows(QModelIndex(), _tracks.size(), _tracks.size());
     _tracks.insert(id, title);

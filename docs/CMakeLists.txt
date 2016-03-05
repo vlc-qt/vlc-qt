@@ -38,3 +38,13 @@ CONFIGURE_FILE(
     "${CMAKE_SOURCE_DIR}/BUILDING.md"
     "${CMAKE_BINARY_DIR}/docs/building.md"
     COPYONLY)
+
+CONFIGURE_FILE(
+    "${CMAKE_SOURCE_DIR}/docs/contributing.md"
+    "${CMAKE_BINARY_DIR}/docs/contributing.md"
+    COPYONLY)
+
+CONFIGURE_FILE(
+    "${CMAKE_SOURCE_DIR}/LICENSE.md"
+    "${CMAKE_BINARY_DIR}/docs/license.md"
+    COPYONLY)

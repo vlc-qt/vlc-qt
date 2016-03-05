@@ -12,16 +12,16 @@ VLC-Qt runs on supported versions of Linux, OS X and Windows. It is developed
 in cross-platform spirit so it may work on other systems but is not supported.
 
 ## Important changes with 1.0
-
 **Since 1.0 release, libraries were renamed and includes prefix changed
 to make them fully modular. Please, update CMake search scripts, configure scripts
 and/or makefiles before updating to latest version.
-See [library reference](https://vlc-qt.tano.si/reference/git/) for more information.**
+See [library reference](https://vlc-qt.tano.si/reference/1.0/) for more information.**
 
 
 ## Binaries and source code
-
-You can download VLC-Qt binaries and sources from the [official web page](https://vlc-qt.tano.si) or [GitHub releases](https://github.com/vlc-qt/vlc-qt/releases).
+You can download VLC-Qt binaries and sources from the
+[official web page](https://vlc-qt.tano.si) or
+[GitHub releases](https://github.com/vlc-qt/vlc-qt/releases).
 
 Latest source is also available via Git:
 ```bash
@@ -41,38 +41,19 @@ All discussions that are not bug related can be made [here](https://discuss.tano
 This is also a place where you can publish your guides.
 
 
-## Requirements
+## Building and requirements
+See [How to build VLC-QT](BUILDING.md).
 
-VLC-Qt can be built with any common compiler (g++, clang, MSVC, MinGW).
-Build files are generated using [CMake](http://www.cmake.org) (3.0.2 or later).
-
-All stable versions of VLC since 2.0 work with VLC-Qt.
-Both Qt version 4 (4.8 or later) and 5 (5.2 or later) are supported but
-can not be used at the same time. Binaries will always be provided for latest Qt version
-released at the time of release. Note that Qt4 may require some manual intervention
-when installing.
-
-
-## Building
-There are some specific CMake flags may need:
-
- * `BUILD_TESTS`: build test application, OFF by default
- * `DEBUG_SUFFIX`: add debug suffix 'd' to the libraries, ON on Widows, OFF elsewhere
- * `LIBVLC_VERSION`: set VLC version you are compiling with to disable unsupported
- 	features, should be defined as base 16 integer like `0x020200`, defaults to
- 	latest stable VLC version
- * `STATIC`: build statically, OFF by default
-
-After running CMake, build with your compiler, depending on makefile generator:
-Unix based: `make`, MSVC: `nmake` or `jom`, MinGW: `mingw32-make`
-
-There are two platform specific targets. You can make DMG file on OS X by running
-`make dmg` and you can copy required Qt libraries to test with `make windows`.
+## Contributing
+There are several ways to contribute to VLC-Qt:
+ * [Report a bug](CONTRIBUTING.md#submitting-issues)
+ * [Propose a new feature](CONTRIBUTING.md#feature-requests)
+ * [Submit a pull-request](CONTRIBUTING.md#pull-requests)
+ * [Write a guide](CONTRIBUTING.md#writing-guides)
 
 
 ## Copyright info
-
-Copyright (C) 2010-2015 Tadej Novak
+Copyright (C) 2010-2016 Tadej Novak
 
 VLC-Qt is free (libre) software. This means that the library
 source code is available to public, anyone is welcome to research
@@ -81,7 +62,7 @@ distribute the application and spread the word!
 
 This project may be used under the terms of the
 GNU Lesser General Public License version 3.0 as published by the
-Free Software Foundation and appearing in the file LICENSE.md.
+Free Software Foundation and appearing in the file [LICENSE.md](LICENSE.md).
 
 
 [web]: https://vlc-qt.tano.si

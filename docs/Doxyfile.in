@@ -122,7 +122,7 @@ BRIEF_MEMBER_DESC      = YES
 # brief descriptions will be completely suppressed.
 # The default value is: YES.
 
-REPEAT_BRIEF           = NO
+REPEAT_BRIEF           = YES
 
 # This tag implements a quasi-intelligent brief description abbreviator that is
 # used to form the text in various listings. Each string in this list, if found
@@ -783,6 +783,8 @@ WARN_LOGFILE           =
 INPUT                  = index.md \
                          changelog.md \
                          building.md \
+                         contributing.md \
+                         license.md \
                          @CMAKE_SOURCE_DIR@/src
 
 # This tag can be used to specify the character encoding of the source files
