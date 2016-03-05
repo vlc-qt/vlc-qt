@@ -19,11 +19,11 @@ branches:
 
 language: cpp
 
-before_install: . tools/ci/$TRAVIS_OS_NAME/before_install.sh
-install: . tools/ci/$TRAVIS_OS_NAME/install.sh
-script: . tools/ci/$TRAVIS_OS_NAME/script.sh
+before_install: . scripts/ci/$TRAVIS_OS_NAME/before_install.sh
+install: . scripts/ci/$TRAVIS_OS_NAME/install.sh
+script: . scripts/ci/$TRAVIS_OS_NAME/script.sh
 after_success:
-  - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && . tools/ci/$TRAVIS_OS_NAME/after_success.sh || true'
+  - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && . scripts/ci/$TRAVIS_OS_NAME/after_success.sh || true'
 
 addons:
   apt:

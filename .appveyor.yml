@@ -48,7 +48,7 @@ install:
   - 7z x vlc.7z > NUL
   - move vlc-* vlc-%name%
   - cd vlc-%name%
-  - if not %platform%==mingw call ..\..\vlc-qt\tools\win_vlc_symbols_%name%.bat
+  - if not %platform%==mingw call ..\..\vlc-qt\scripts\win\vlc_symbols_%name%.bat
 
 before_build:
   - cd c:\dev\vlc-qt
