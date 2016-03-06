@@ -34,6 +34,7 @@ IF(CMAKE_BUILD_TYPE MATCHES Debug)
     MESSAGE("VLC-Qt: Debug library suffix ${DEBUG_SUFFIX}")
     IF(DEBUG_SUFFIX)
         SET(LS d) # For VLC-Qt
+        SET(CMAKE_DEBUG_POSTFIX ${LS})
     ENDIF()
 ENDIF()
 

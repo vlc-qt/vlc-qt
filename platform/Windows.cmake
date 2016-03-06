@@ -17,6 +17,16 @@
 #############################################################################
 # Windows Extra #
 #################
+# MSVC: Avoid Debug/Release/... subfolders
+IF(MSVC)
+    SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ".")
+    SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG ".")
+    SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ".")
+    SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELWITHDUBUGINFO ".")
+    SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_MINSIZEREL ".")
+    SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_PROFILE ".")
+ENDIF()
+
 SET(Vlc_Plugins_Type
     3dnow
     access
