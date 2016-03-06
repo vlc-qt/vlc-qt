@@ -41,4 +41,6 @@ void VlcError::showErrmsg()
 	}
 }
 
+#if !LIBVLCQT_MOBILE
 void VlcError::clearerr() { }
+#endif

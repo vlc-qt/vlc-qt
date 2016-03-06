@@ -148,6 +148,10 @@ IF(NOT STATIC)
     ENDIF()
 ENDIF()
 
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Android")
+    TARGET_LINK_LIBRARIES(${VLCQT_QML} PRIVATE -lGLESv2)
+ENDIF()
+
 
 ################
 # Installation #

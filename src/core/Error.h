@@ -19,6 +19,7 @@
 #ifndef VLCQT_ERROR_H_
 #define VLCQT_ERROR_H_
 
+#include "Config.h"
 #include "SharedExportCore.h"
 
 /*!
@@ -48,6 +49,7 @@ public:
 	*/
 	static void showErrmsg();
 
+#if !LIBVLCQT_MOBILE
 	/*!
 		\brief Clears the libvlc error status for the current thread.
 
@@ -56,6 +58,7 @@ public:
         \deprecated Deprecated since VLC-Qt 1.1, will be removed in 2.0
 	*/
     Q_DECL_DEPRECATED static void clearerr();
+#endif
 };
 
 #endif // VLCQT_ERROR_H_
