@@ -47,13 +47,6 @@ public:
 		\warning There may be no output, if there is no error.
 	*/
 	static void showErrmsg();
-
-	/*!
-		\brief Clears the libvlc error status for the current thread.
-
-		This is optional. By default, the error status is automatically overriden when a new error occurs, and destroyed when the thread exits.
-	*/
-	static void clearerr();
 };
 
 #endif // VLCQT_ERROR_H_
