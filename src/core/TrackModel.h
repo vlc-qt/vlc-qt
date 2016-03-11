@@ -30,7 +30,7 @@
 
     A model for displaying audio, video and other tracks
 */
-class VLCQT_CORE_EXPORT VlcTrackModel: public QAbstractListModel
+class VLCQT_CORE_EXPORT VlcTrackModel: public QAbstractListModel // LCOV_EXCL_LINE
 {
     Q_OBJECT
     /*!

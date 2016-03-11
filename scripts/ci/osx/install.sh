@@ -3,7 +3,7 @@ set -ev
 
 # Install from homebrew
 brew outdated cmake || brew upgrade cmake
-brew install qt5 p7zip ninja
+brew install qt5 p7zip ninja lcov
 
 # Install other dependencies
 pushd dependencies

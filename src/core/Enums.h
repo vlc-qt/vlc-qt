@@ -30,7 +30,7 @@
     \ingroup VLCQtCore
     \brief Common enumerations
 */
-class VLCQT_CORE_EXPORT Vlc : public QObject
+class VLCQT_CORE_EXPORT Vlc : public QObject // LCOV_EXCL_LINE
 {
 Q_OBJECT
 
