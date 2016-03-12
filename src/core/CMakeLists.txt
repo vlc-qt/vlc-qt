@@ -117,6 +117,14 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     )
 ENDIF()
 
+IF(MSVC OR MINGW)
+    SET(VLCQT_CORE_SRCS
+        ${VLCQT_CORE_SRCS}
+        compat/asprintf.c
+        compat/vasprintf.c
+    )
+ENDIF()
+
 
 #####################
 # Compiler settings #

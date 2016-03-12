@@ -54,7 +54,7 @@ FUNCTION(SETUP_TARGET_FOR_COVERAGE _targetname _testrunner _outputname)
 
 		# Capturing lcov counters and generating report
 		COMMAND ${LCOV_PATH} --directory . --capture --output-file ${_outputname}.info
-		COMMAND ${LCOV_PATH} --remove ${_outputname}.info 'moc_*' 'tests/*' 'tests-old/*' '/usr/*' '/Applications/*' '${QT_LIB_DIR}/*' --output-file ${_outputname}.info.cleaned
+                COMMAND ${LCOV_PATH} --remove ${_outputname}.info 'moc_*' 'tests/*' 'tests-old/*' '/usr/*' '/Applications/*' 'compat/*' '${QT_LIB_DIR}/*' --output-file ${_outputname}.info.cleaned
 		COMMAND ${GENHTML_PATH} -t "VLC-Qt" -o ${_outputname} ${_outputname}.info.cleaned
 		COMMAND ${CMAKE_COMMAND} -E remove ${_outputname}.info ${_outputname}.info.cleaned
 

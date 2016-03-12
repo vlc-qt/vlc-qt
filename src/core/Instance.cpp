@@ -27,6 +27,10 @@
 #include "core/Instance.h"
 #include "core/ModuleDescription.h"
 
+#ifdef Q_OS_WIN
+    #include "compat/asprintf.h"
+#endif
+
 void logCallback(void *data,
                  int level,
                  const libvlc_log_t *ctx,
