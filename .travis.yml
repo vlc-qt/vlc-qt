@@ -1,3 +1,5 @@
+sudo: required
+dist: trusty
 os:
   - linux
   - osx
@@ -15,7 +17,6 @@ branches:
   except:
     - project/appveyor
     - project/docs
-    - feature/experiments
 
 language: cpp
 
@@ -26,17 +27,6 @@ after_success:
   - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && . scripts/ci/$TRAVIS_OS_NAME/after_success.sh || true'
 
 addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - gcc-4.8
-      - g++-4.8
-      - libqt4-dev
-      - libvlc-dev
-      - libvlccore-dev
-      - vlc
-      - p7zip-full
   artifacts:
     paths:
       - ./install/artifacts
