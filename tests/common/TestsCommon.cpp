@@ -33,6 +33,7 @@ void TestsCommon::init()
 #endif
 
     _instance = new VlcInstance(VlcCommon::args(), this);
+    _instance->setLogLevel(Vlc::DebugLevel);
 }
 
 void TestsCommon::cleanup()

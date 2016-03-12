@@ -27,11 +27,51 @@
 #include "core/Instance.h"
 #include "core/ModuleDescription.h"
 
+void logCallback(void *data,
+                 int level,
+                 const libvlc_log_t *ctx,
+                 const char *fmt,
+                 va_list args)
+{
+    Q_UNUSED(ctx)
+
+    VlcInstance *instance = static_cast<VlcInstance *>(data);
+    if (instance->logLevel() > level) {
+        return;
+    }
+
+    char *result;
+    if (vasprintf(&result, fmt, args) < 0) {
+        return;
+    }
+
+    QString message(result);
+    free(result);
+
+    message.prepend("libvlc: ");
+
+    switch (level)
+    {
+    case Vlc::ErrorLevel:
+        qCritical(message.toUtf8().data(), NULL);
+        break;
+    case Vlc::WarningLevel:
+        qWarning(message.toUtf8().data(), NULL);
+        break;
+    case Vlc::NoticeLevel:
+    case Vlc::DebugLevel:
+    default:
+        qDebug(message.toUtf8().data(), NULL);
+        break;
+    }
+}
+
 VlcInstance::VlcInstance(const QStringList &args,
                          QObject *parent)
     : QObject(parent),
       _vlcInstance(0),
-      _status(false)
+      _status(false),
+      _logLevel(Vlc::ErrorLevel)
 {
 // Convert arguments to required format
 #if defined(Q_OS_WIN32) // Will be removed on Windows if confirmed working
@@ -54,6 +94,8 @@ VlcInstance::VlcInstance(const QStringList &args,
 
     // Check if instance is running
     if(_vlcInstance) {
+        libvlc_log_set(_vlcInstance, logCallback, this);
+
         _status = true;
         qDebug() << "VLC-Qt" << libVersion() << "initialised";
         qDebug() << "Using libvlc version:" << version();
@@ -77,6 +119,16 @@ libvlc_instance_t *VlcInstance::core()
 bool VlcInstance::status() const
 {
     return _status;
+}
+
+Vlc::LogLevel VlcInstance::logLevel() const
+{
+    return _logLevel;
+}
+
+void VlcInstance::setLogLevel(Vlc::LogLevel level)
+{
+    _logLevel = level;
 }
 
 QString VlcInstance::libVersion()

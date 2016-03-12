@@ -21,7 +21,7 @@
 
 #include <QtCore/QObject>
 
-#include "Config.h"
+#include "Enums.h"
 #include "SharedExportCore.h"
 
 class VlcModuleDescription;
@@ -68,6 +68,20 @@ public:
     */
     bool status() const;
 
+    /*!
+        \brief Returns current log level (default Vlc::ErrorLevel)
+        \return log level
+        \since VLC-Qt 1.1
+    */
+    Vlc::LogLevel logLevel() const;
+
+    /*!
+        \brief Set current log level
+        \param level desired log level
+        \see Vlc::LogLevel
+        \since VLC-Qt 1.1
+    */
+    void setLogLevel(Vlc::LogLevel level);
 
     /*!
         \brief VLC-Qt version info
@@ -147,6 +161,7 @@ public:
 private:
     libvlc_instance_t *_vlcInstance;
     bool _status;
+    Vlc::LogLevel _logLevel;
 };
 
 #endif // VLCQT_VLCINSTANCE_H_

@@ -2,6 +2,7 @@
 
 ## Unreleased
  - Requires libVLC 2.1 or newer
+ - Native logging support with ability to set log level
  - Add ability to set application ID
  - QML audio, video and subtitles tracks support
  - Deinterlacing, aspect ratio and crop ratio changed signals

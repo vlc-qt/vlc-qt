@@ -21,6 +21,19 @@
 Vlc::Vlc(QObject *parent)
     : QObject(parent) { }
 
+QStringList Vlc::logLevel()
+{
+    QStringList list;
+    list << "debug"
+         << "debug"
+         << "notice"
+         << "warning"
+         << "error"
+         << "disabled";
+
+    return list;
+}
+
 QStringList Vlc::audioCodec()
 {
     QStringList list;

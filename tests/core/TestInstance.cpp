@@ -20,7 +20,6 @@
 
 #include "TestsConfig.h"
 
-#include "Config.h"
 #include "core/Common.h"
 #include "core/Instance.h"
 
@@ -71,6 +70,7 @@ void TestInstance::withExternalPluginsSet()
 void TestInstance::withPlugins()
 {
     VlcInstance *instance = new VlcInstance(VlcCommon::args(), this);
+    instance->setLogLevel(Vlc::DebugLevel);
 
     QCOMPARE(instance->status(), true);
 
