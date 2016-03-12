@@ -115,6 +115,22 @@ void VlcMedia::removeCoreConnections()
     }
 }
 
+bool VlcMedia::parsed() const
+{
+    int parsed = libvlc_media_is_parsed(_vlcMedia);
+
+    VlcError::showErrmsg();
+
+    return parsed;
+}
+
+void VlcMedia::parse()
+{
+    libvlc_media_parse_async(_vlcMedia);
+
+    VlcError::showErrmsg();
+}
+
 QString VlcMedia::currentLocation() const
 {
     return _currentLocation;
@@ -144,6 +160,25 @@ VlcStats *VlcMedia::getStats()
     stats->send_bitrate = coreStats->f_send_bitrate;
 
     return stats;
+}
+
+Vlc::State VlcMedia::state() const
+{
+    libvlc_state_t state;
+    state = libvlc_media_get_state(_vlcMedia);
+
+    VlcError::showErrmsg();
+
+    return Vlc::State(state);
+}
+
+qint64 VlcMedia::duration() const
+{
+    libvlc_time_t duration = libvlc_media_get_duration(_vlcMedia);
+
+    VlcError::showErrmsg();
+
+    return duration;
 }
 
 QString VlcMedia::duplicate(const QString &name,
@@ -327,6 +362,7 @@ void VlcMedia::libvlc_callback(const libvlc_event_t *event,
         break;
     case libvlc_MediaParsedChanged:
         emit core->parsedChanged(event->u.media_parsed_changed.new_status);
+        emit core->parsedChanged((bool)event->u.media_parsed_changed.new_status);
         break;
     case libvlc_MediaFreed:
         emit core->freed(event->u.media_freed.md);

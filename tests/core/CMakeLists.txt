@@ -17,4 +17,5 @@
 #############################################################################
 
 ADD_AUTO_TEST(CoreInstance TestInstance.cpp)
+ADD_AUTO_TEST(CoreMedia TestMedia.cpp)
 ADD_AUTO_TEST(CoreMetaManager TestMetaManager.cpp)

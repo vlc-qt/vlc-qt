@@ -4,11 +4,13 @@
  - Requires libVLC 2.1 or newer
  - Native logging support with ability to set log level
  - Add ability to set application ID
+ - VLC media: add parsed state, async parse request, duration and current state
  - QML audio, video and subtitles tracks support
  - Deinterlacing, aspect ratio and crop ratio changed signals
  - Reading libvlc arguments from environment variable `VLC_ARGS`
  - Initial automatic testing support
- - Fix: VlcError:clearerr is not needed and causes issues so it is removed
+ - Deprecated: VlcError:clearerr is not needed and causes issues so it is
+   deprecated and will be removed in 2.0 (currently does nothing)
 
 ---
 

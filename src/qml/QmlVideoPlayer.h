@@ -589,7 +589,7 @@ signals:
 
 private slots:
     void seekableChangedPrivate(bool);
-    void mediaParsed(int);
+    void mediaParsed(bool);
     void mediaPlayerVout(int);
 private:
     void openInternal();

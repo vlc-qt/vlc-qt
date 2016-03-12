@@ -266,7 +266,7 @@ void VlcQmlVideoPlayer::seekableChangedPrivate(bool seekable)
     emit seekableChanged();
 }
 
-void VlcQmlVideoPlayer::mediaParsed(int parsed)
+void VlcQmlVideoPlayer::mediaParsed(bool parsed)
 {
     if(parsed == 1)
     {
@@ -321,7 +321,7 @@ void VlcQmlVideoPlayer::setUrl(const QUrl &url)
         _media = new VlcMedia(url.toString(QUrl::FullyEncoded), false, _instance);
     }
 
-    connect(_media, &VlcMedia::parsedChanged, this, &VlcQmlVideoPlayer::mediaParsed);
+    connect(_media, static_cast<void (VlcMedia::*)(bool)>(&VlcMedia::parsedChanged), this, &VlcQmlVideoPlayer::mediaParsed);
 
     openInternal();
 }
