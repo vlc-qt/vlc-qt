@@ -20,6 +20,7 @@
 
 #include "TestsConfig.h"
 
+#include "Config.h"
 #include "core/Common.h"
 #include "core/Instance.h"
 
@@ -29,17 +30,30 @@ class TestInstance : public QObject
 private slots:
     void init();
 
+    void wrongArguments();
     void withExternalPluginsSet();
     void withPlugins();
 
     void versions();
     void userAgent();
+    void appId();
     void filters();
 };
 
 void TestInstance::init()
 {
     qunsetenv("VLC_PLUGIN_PATH");
+}
+
+void TestInstance::wrongArguments()
+{
+    QStringList wrong;
+    wrong << "--something-wrong";
+    VlcInstance *instance = new VlcInstance(wrong, this);
+
+    QCOMPARE(instance->status(), false);
+
+    delete instance;
 }
 
 void TestInstance::withExternalPluginsSet()
@@ -56,9 +70,6 @@ void TestInstance::withExternalPluginsSet()
 
 void TestInstance::withPlugins()
 {
-#ifndef Q_OS_DARWIN
-    VlcCommon::setPluginPath(QString(LIBVLC_PLUGINS_DIR));
-#endif
     VlcInstance *instance = new VlcInstance(VlcCommon::args(), this);
 
     QCOMPARE(instance->status(), true);
@@ -68,9 +79,6 @@ void TestInstance::withPlugins()
 
 void TestInstance::versions()
 {
-#ifndef Q_OS_DARWIN
-    VlcCommon::setPluginPath(QString(LIBVLC_PLUGINS_DIR));
-#endif
     VlcInstance *instance = new VlcInstance(VlcCommon::args(), this);
 
     qDebug() << instance->libVersion() << instance->libVersionMajor() << instance->libVersionMinor();
@@ -81,9 +89,6 @@ void TestInstance::versions()
 
 void TestInstance::userAgent()
 {
-#ifndef Q_OS_DARWIN
-    VlcCommon::setPluginPath(QString(LIBVLC_PLUGINS_DIR));
-#endif
     VlcInstance *instance = new VlcInstance(VlcCommon::args(), this);
 
     instance->setUserAgent("TestCase", "1.0");
@@ -91,11 +96,17 @@ void TestInstance::userAgent()
     delete instance;
 }
 
+void TestInstance::appId()
+{
+    VlcInstance *instance = new VlcInstance(VlcCommon::args(), this);
+
+    instance->setAppId("si.tano.vlc-qt", "1.0", "image");
+
+    delete instance;
+}
+
 void TestInstance::filters()
 {
-#ifndef Q_OS_DARWIN
-    VlcCommon::setPluginPath(QString(LIBVLC_PLUGINS_DIR));
-#endif
     VlcInstance *instance = new VlcInstance(VlcCommon::args(), this);
 
     instance->audioFilterList();

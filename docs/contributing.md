@@ -38,8 +38,8 @@ To ease the pull request merge into mainline, please follow these requirements:
 
 - The pull request title and message should be meaningful enough that reading
   the code is not necessary.
-- VLC 2.0 is still supported and VLC-Qt must build against it. Wrap libVLC functions
-  from version newer than 2.0 in compiler if clauses to maintain backwards
+- VLC 2.1 is still supported and VLC-Qt must build against it. Wrap libVLC functions
+  from version newer than 2.1 in compiler if clauses to maintain backwards
   compatibility. Version should be defined as a base 16 integer (similar to Qt).
 
   ```

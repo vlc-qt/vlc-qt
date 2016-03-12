@@ -143,11 +143,18 @@ void VlcInstance::setUserAgent(const QString &application,
     libvlc_set_user_agent(_vlcInstance, applicationOutput.toUtf8().data(), httpOutput.toUtf8().data());
 }
 
+void VlcInstance::setAppId(const QString &id,
+                           const QString &version,
+                           const QString &icon)
+{
+    libvlc_set_app_id(_vlcInstance, id.toUtf8().data(), version.toUtf8().data(), icon.toUtf8().data());
+}
+
 QList<VlcModuleDescription *> VlcInstance::audioFilterList() const
 {
     libvlc_module_description_t *original = libvlc_video_filter_list_get(_vlcInstance);
     if (original == NULL) {
-        return QList<VlcModuleDescription *>();
+        return QList<VlcModuleDescription *>(); // LCOV_EXCL_LINE
     }
 
     libvlc_module_description_t *list = original;
@@ -171,7 +178,7 @@ QList<VlcModuleDescription *> VlcInstance::videoFilterList() const
 {
     libvlc_module_description_t *original = libvlc_video_filter_list_get(_vlcInstance);
     if (original == NULL) {
-        return QList<VlcModuleDescription *>();
+        return QList<VlcModuleDescription *>(); // LCOV_EXCL_LINE
     }
 
     libvlc_module_description_t *list = original;

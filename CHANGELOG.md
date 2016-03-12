@@ -1,6 +1,8 @@
 # VLC-Qt Changelog
 
 ## Unreleased
+ - Requires libVLC 2.1 or newer
+ - Add ability to set application ID
  - QML audio, video and subtitles tracks support
  - Deinterlacing, aspect ratio and crop ratio changed signals
  - Reading libvlc arguments from environment variable `VLC_ARGS`

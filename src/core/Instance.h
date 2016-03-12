@@ -21,6 +21,7 @@
 
 #include <QtCore/QObject>
 
+#include "Config.h"
 #include "SharedExportCore.h"
 
 class VlcModuleDescription;
@@ -111,9 +112,25 @@ public:
 
         \param application Application name (QString)
         \param version Application version (QString)
+
+        \see setAppId
     */
     void setUserAgent(const QString &application,
                       const QString &version);
+
+    /*!
+        \brief Sets the application some meta-information.
+
+        \param id Java-style application identifier, e.g. "com.acme.foobar"
+        \param version application version numbers, e.g. "1.2.3"
+        \param icon application icon name, e.g. "foobar"
+
+        \see setUserAgent
+        \since VLC-Qt 1.1
+    */
+    void setAppId(const QString &id,
+                  const QString &version,
+                  const QString &icon);
 
     /*!
         \brief List audio filter modules

@@ -4,7 +4,7 @@
 VLC-Qt can be built with any common compiler (g++, clang, MSVC, MinGW).
 Build files are generated using [CMake](http://www.cmake.org) (3.0.2 or later).
 
-All stable versions of VLC since 2.0 work with VLC-Qt.
+All stable versions of VLC since 2.1 work with VLC-Qt.
 Both Qt version 4 (4.8 or later) and 5 (5.2 or later) are supported but
 can not be used at the same time. Binaries will always be provided for latest Qt version
 released at the time of release. Note that Qt4 may require some manual intervention
