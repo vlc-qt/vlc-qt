@@ -198,6 +198,7 @@ public:
     /*!
         \brief Get available video subtitles.
         \return dictionary with available video subtitles (const QMap<int, QString>)
+        \since VLC-Qt 1.1
     */
     QMap<int, QString> subtitles() const;
 
@@ -246,6 +247,7 @@ public:
     /*!
         \brief Get available video tracks.
         \return dictionary with available video tracks (const QMap<int, QString>)
+        \since VLC-Qt 1.1
     */
     QMap<int, QString> tracks() const;
 

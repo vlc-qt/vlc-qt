@@ -29,6 +29,8 @@
     \brief Track model
 
     A model for displaying audio, video and other tracks
+
+    \since VLC-Qt 1.1
 */
 class VLCQT_CORE_EXPORT VlcTrackModel: public QAbstractListModel // LCOV_EXCL_LINE
 {

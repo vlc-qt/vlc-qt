@@ -124,6 +124,7 @@ public:
     /*!
         \brief Get available audio tracks.
         \return dictionary with available audio tracks (const QMap<int, QString>)
+        \since VLC-Qt 1.1
     */
     QMap<int, QString> tracks() const;
 
