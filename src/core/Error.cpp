@@ -40,3 +40,5 @@ void VlcError::showErrmsg()
         qWarning() << "libvlc" << "Error:" << error;
 	}
 }
+
+void VlcError::clearerr() { }

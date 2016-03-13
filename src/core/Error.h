@@ -47,6 +47,15 @@ public:
 		\warning There may be no output, if there is no error.
 	*/
 	static void showErrmsg();
+
+	/*!
+		\brief Clears the libvlc error status for the current thread.
+
+        This does nothing.
+
+        \deprecated Deprecated since VLC-Qt 1.1, will be removed in 2.0
+	*/
+    Q_DECL_DEPRECATED static void clearerr();
 };
 
 #endif // VLCQT_ERROR_H_
