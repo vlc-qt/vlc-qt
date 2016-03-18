@@ -17,11 +17,6 @@
 #############################################################################
 # Macros #
 ##########
-IF(MSVC OR MINGW)
-    SET(WINDOWS_TEST_PATH "${LIBVLC_BIN_DIR}\;${QT_BIN_DIR}\;${CMAKE_BINARY_DIR}/src/core\;${CMAKE_BINARY_DIR}/src/qml\;${CMAKE_BINARY_DIR}/src/widgets\;")
-    STRING(REGEX REPLACE "/" "\\\\" WINDOWS_TEST_PATH "${WINDOWS_TEST_PATH}")
-ENDIF()
-
 SET(TestCommonFiles ${CMAKE_SOURCE_DIR}/tests/common/TestsCommon.cpp)
 
 MACRO(ADD_AUTO_TEST TestName)
@@ -42,7 +37,7 @@ MACRO(ADD_AUTO_TEST TestName)
 
     ADD_TEST(Test_${TestName} Test_${TestName})
     IF(MINGW OR MSVC)
-        SET_TESTS_PROPERTIES(Test_${TestName} PROPERTIES ENVIRONMENT "PATH=${WINDOWS_TEST_PATH}")
+        SET_TESTS_PROPERTIES(Test_${TestName} PROPERTIES ENVIRONMENT "PATH=${WINDOWS_RUN_PATH}")
     ENDIF()
 ENDMACRO()
 
