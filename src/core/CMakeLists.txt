@@ -32,8 +32,18 @@ ENDIF()
 ###################
 # List of sources #
 ###################
+# Deprecated C++ source files
+SET(VLCQT_CORE_SRCS_DEPRECATED
+    VideoFrame.cpp
+    VideoMemoryStream.cpp
+)
+IF(NOT MSVC)
+    SET_SOURCE_FILES_PROPERTIES (${VLCQT_CORE_SRCS_DEPRECATED} PROPERTIES COMPILE_FLAGS -Wno-deprecated)
+ENDIF()
+
 # Define the C++ source files
 SET(VLCQT_CORE_SRCS
+    AbstractVideoStream.cpp
     Audio.cpp
     Common.cpp
     Enums.cpp
@@ -50,12 +60,21 @@ SET(VLCQT_CORE_SRCS
     TrackModel.cpp
     Video.cpp
     VideoDelegate.h
-    VideoMemoryStream.cpp
-    VideoFrame.cpp
+    VideoFrameYUV.cpp
+    VideoStream.cpp
+
+    ${VLCQT_CORE_SRCS_DEPRECATED}
+)
+
+# Deprecated Include files
+SET(VLCQT_CORE_HEADERS_DEPRECATED
+    VideoFrame.h
+    VideoMemoryStream.h
 )
 
 # Define the Include files
 SET(VLCQT_CORE_HEADERS
+    AbstractVideoStream.h
     Audio.h
     Common.h
     Enums.h
@@ -72,8 +91,10 @@ SET(VLCQT_CORE_HEADERS
     TrackModel.h
     Video.h
     VideoDelegate.h
-    VideoFrame.h
-    VideoMemoryStream.h
+    VideoFrameYUV.h
+    VideoStream.h
+
+    ${VLCQT_CORE_HEADERS_DEPRECATED}
 
     ${CMAKE_BINARY_DIR}/src/Config.h
 )
