@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2016 Tadej Novak <tadej@tano.si>
 *
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published
@@ -16,20 +16,28 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_CONFIG_H_
-#define VLCQT_CONFIG_H_
+#include <QtQuick/QQuickItem>
 
-// Version
-#define LIBVLCQT_VERSION "@VLCQT_VERSION@"
-#define LIBVLCQT_VERSION_VCS "@PROJECT_VERSION_VCS@"
+#include "Config.h"
 
-#define LIBVLCQT_VERSION_MAJOR @PROJECT_VERSION_MAJOR@
-#define LIBVLCQT_VERSION_MINOR @PROJECT_VERSION_MINOR@
-#define LIBVLCQT_VERSION_PATCH @PROJECT_VERSION_PATCH@
+#include "core/Enums.h"
+#include "qml/Qml.h"
+#include "qml/QmlPlayer.h"
+#include "qml/QmlSource.h"
+#include "qml/QmlVideoOutput.h"
+#include "qml/QmlVideoPlayer.h"
 
-#define LIBVLCQT_QML_MODULE "@VLCQT_PLUGIN_QML_NAME@"
+void VlcQml::registerTypes()
+{
+    QByteArray module(LIBVLCQT_QML_MODULE);
+    const char *m = module.data();
 
-// libVLC this library is built with
-#define LIBVLC_VERSION @LIBVLC_VERSION@
+    qmlRegisterUncreatableType<Vlc>(m, 1, 1, "Vlc", QStringLiteral("Vlc cannot be instantiated directly"));
+    qmlRegisterUncreatableType<VlcQmlSource>(m, 1, 1, "VlcSource", QStringLiteral("VlcQmlSource cannot be instantiated directly"));
 
-#endif // VLCQT_CONFIG_H_
+    qmlRegisterType<VlcQmlPlayer>(m, 1, 1, "VlcPlayer");
+    qmlRegisterType<VlcQmlVideoOutput>(m, 1, 1, "VlcVideoOutput");
+
+    // Deprecated
+    qmlRegisterType<VlcQmlVideoPlayer>(m, 1, 0, "VlcVideoPlayer");
+}

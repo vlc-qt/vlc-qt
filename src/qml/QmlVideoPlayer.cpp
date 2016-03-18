@@ -74,7 +74,7 @@ VlcQmlVideoPlayer::~VlcQmlVideoPlayer()
 
 void VlcQmlVideoPlayer::registerPlugin()
 {
-    qmlRegisterType<VlcQmlVideoPlayer>("VLCQt", LIBVLCQT_VERSION_QML_MAJOR, LIBVLCQT_VERSION_QML_MINOR, "VlcVideoPlayer");
+    qmlRegisterType<VlcQmlVideoPlayer>("VLCQt", 1, 0, "VlcVideoPlayer");
 }
 
 void VlcQmlVideoPlayer::openInternal()
