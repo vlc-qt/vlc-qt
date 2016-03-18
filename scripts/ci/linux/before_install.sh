@@ -13,7 +13,7 @@ sudo apt-get install libvlc-dev libvlccore-dev vlc p7zip-full lcov -y
 # Install Qt
 if [ $QT_VERSION -eq 5 ]
 then
-    sudo apt-get install qtbase5-dev qtdeclarative5-dev -y
+    sudo apt-get install qtbase5-dev qtdeclarative5-dev qtdeclarative5-dev-tools qtdeclarative5-qtquick2-plugin qtdeclarative5-test-plugin -y
 else
     sudo apt-get install libqt4-dev -y
 fi
