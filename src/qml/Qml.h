@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2016 Tadej Novak <tadej@tano.si>
 *
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published
@@ -16,20 +16,28 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_CONFIG_H_
-#define VLCQT_CONFIG_H_
+#ifndef VLCQT_QML_H_
+#define VLCQT_QML_H_
 
-// Version
-#define LIBVLCQT_VERSION "@VLCQT_VERSION@"
-#define LIBVLCQT_VERSION_VCS "@PROJECT_VERSION_VCS@"
+#include "SharedExportQml.h"
 
-#define LIBVLCQT_VERSION_MAJOR @PROJECT_VERSION_MAJOR@
-#define LIBVLCQT_VERSION_MINOR @PROJECT_VERSION_MINOR@
-#define LIBVLCQT_VERSION_PATCH @PROJECT_VERSION_PATCH@
+/*!
+    \defgroup VLCQtQml VLC-Qt Qml (VLCQtQml)
+    \brief QML classes for controlling video and media playback
+ */
 
-#define LIBVLCQT_QML_MODULE "@VLCQT_PLUGIN_QML_NAME@"
+namespace VlcQml {
+    /*!
+        \brief Register QML types as VLCQt
 
-// libVLC this library is built with
-#define LIBVLC_VERSION @LIBVLC_VERSION@
+        Intended for use without plugin.
 
-#endif // VLCQT_CONFIG_H_
+        Include into QML file as
+        import VLCQt VERSION_MAJOR.VERSION_MINOR
+
+        Object names: VlcPlayer, VlcVideoObject
+     */
+    VLCQT_QML_EXPORT void registerTypes();
+}
+
+#endif // VLCQT_QML_H_

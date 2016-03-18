@@ -1,6 +1,6 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2012 Tadej Novak <tadej@tano.si>
+* Copyright (C) 2016 Tadej Novak <tadej@tano.si>
 *
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published
@@ -16,20 +16,22 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_CONFIG_H_
-#define VLCQT_CONFIG_H_
+#include <QtQml/QQmlExtensionPlugin>
 
-// Version
-#define LIBVLCQT_VERSION "@VLCQT_VERSION@"
-#define LIBVLCQT_VERSION_VCS "@PROJECT_VERSION_VCS@"
+#include "qml/Qml.h"
 
-#define LIBVLCQT_VERSION_MAJOR @PROJECT_VERSION_MAJOR@
-#define LIBVLCQT_VERSION_MINOR @PROJECT_VERSION_MINOR@
-#define LIBVLCQT_VERSION_PATCH @PROJECT_VERSION_PATCH@
+class Q_DECL_EXPORT VlcPluginQml : public QQmlExtensionPlugin
+{
+    Q_OBJECT
+    Q_PLUGIN_METADATA(IID "si.tano.VLC-Qt")
 
-#define LIBVLCQT_QML_MODULE "@VLCQT_PLUGIN_QML_NAME@"
+public:
+    void registerTypes(const char *uri)
+    {
+        Q_ASSERT(uri == QLatin1String("VLCQt"));
 
-// libVLC this library is built with
-#define LIBVLC_VERSION @LIBVLC_VERSION@
+        VlcQml::registerTypes();
+    }
+};
 
-#endif // VLCQT_CONFIG_H_
+#include "Plugin.moc"

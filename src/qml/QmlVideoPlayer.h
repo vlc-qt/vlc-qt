@@ -33,11 +33,6 @@ class VlcMediaPlayer;
 class VlcVideo;
 
 /*!
-    \defgroup VLCQtQml VLC-Qt Qml (VLCQtQml)
-    \brief QML classes for controlling video and media playback
- */
-
-/*!
     \class VlcQmlVideoPlayer QmlVideoPlayer.h VLCQtQml/QmlVideoPlayer.h
     \ingroup VLCQtQml
     \brief QML video player (deprecated)

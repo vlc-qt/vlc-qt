@@ -47,6 +47,7 @@ ENDIF()
 # Define the C++ source files
 SET(VLCQT_QML_SRCS
     SharedExportQml.h
+    Qml.cpp
     QmlPlayer.cpp
     QmlSource.cpp
 
@@ -68,6 +69,7 @@ SET(VLCQT_QML_HEADERS_DEPRECATED
 
 # Define the Include files
 SET(VLCQT_QML_HEADERS
+    Qml.h
     QmlPlayer.h
     QmlSource.h
     QmlVideoOutput.h

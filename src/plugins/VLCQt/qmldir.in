@@ -1,0 +1,3 @@
+module @VLCQT_PLUGIN_QML_NAME@
+plugin @VLCQT_PLUGIN_QML_BINARY_NAME@
+typeinfo @VLCQT_PLUGIN_QML_NAME@.qmltypes
