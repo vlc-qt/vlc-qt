@@ -29,9 +29,11 @@
 /*!
     \struct VlcVideoFrame VideoFrame.h VLCQtCore/VideoFrame.h
     \ingroup VLCQtCore
-    \brief Video frame data container
+    \brief Video frame data container (deprecated)
+    \see VlcVideoFrameYUV
+    \deprecated Deprecated since VLC-Qt 1.1, will be removed in 2.0
 */
-struct VLCQT_CORE_EXPORT VlcVideoFrame
+struct Q_DECL_DEPRECATED VLCQT_CORE_EXPORT VlcVideoFrame
 {
     /*!
         \brief VlcVideoFrame constructor.
