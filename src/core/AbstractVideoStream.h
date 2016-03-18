@@ -1,9 +1,9 @@
 /****************************************************************************
 * VLC-Qt - Qt and libvlc connector library
-* Copyright (C) 2014 Tadej Novak <tadej@tano.si>
-*
-* Based on Phonon multimedia library
+* Copyright (C) 2016 Tadej Novak <tadej@tano.si>
 * Copyright (C) 2012 Harald Sitter <sitter@kde.org>
+*
+* This file is based on Phonon multimedia library
 *
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published
@@ -19,67 +19,38 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_VIDEOMEMORYSTREAM_H_
-#define VLCQT_VIDEOMEMORYSTREAM_H_
+#ifndef VLCQT_ABSTRACTVIDEOSTREAM_H_
+#define VLCQT_ABSTRACTVIDEOSTREAM_H_
 
 #include "SharedExportCore.h"
-
-#if defined(VLCQT_CORE_LIBRARY) || defined(VLCQT_QML_LIBRARY)
-/* MSVC support fix */
-#if defined(_MSC_VER)
-#   include <BaseTsd.h>
-    typedef SSIZE_T ssize_t;
-#endif
-/* MSVC + MinGW support fix */
-#if defined (_WIN32)
-#   define LIBVLC_USE_PTHREAD_CANCEL 1
-#endif
-#include <vlc_common.h>
-#include <vlc_fourcc.h>
-#else
-struct vlc_chroma_description_t;
-#endif
 
 class VlcMediaPlayer;
 
 /*!
-    \class VlcVideoMemoryStream VideoMemoryStream.h VLCQtCore/VideoMemoryStream.h
+    \class VlcAbstractVideoStream AbstractVideoStream.h VLCQtCore/AbstractVideoStream.h
     \ingroup VLCQtCore
-    \brief Video memory stream (deprecated)
+    \brief Abstract video memory stream
 
-    VlcVideoMemoryStream is a template class for creating own video rendering engines.
+    VlcAbstractVideoStream is a template class for creating own video rendering engines.
+    Subclass it and implement necessary calbacks.
 
-    \see VlcAbstractVideoStream
-    \deprecated Deprecated since VLC-Qt 1.1, will be removed in 2.0
+    \since VLC-Qt 1.1
  */
-class Q_DECL_DEPRECATED VLCQT_CORE_EXPORT VlcVideoMemoryStream
+class VLCQT_CORE_EXPORT VlcAbstractVideoStream
 {
 public:
-    explicit VlcVideoMemoryStream();
-    virtual ~VlcVideoMemoryStream();
-    
-    /*!
-        \brief Set required information for rendering video
-
-        \returns overall buffersize needed
-     */
-    static unsigned setPitchAndLines(const vlc_chroma_description_t *chromaDescription,
-                                     unsigned width,
-                                     unsigned height,
-                                     unsigned *pitches,
-                                     unsigned *lines,
-                                     unsigned *visiblePitches = 0,
-                                     unsigned *visibleLines = 0);
+    explicit VlcAbstractVideoStream();
+    virtual ~VlcAbstractVideoStream();
 
     /*!
         \brief Set VlcMediaPlayer callbacks
-        \param player media player (VlcMediaPlayer *)
+        \param player media player
      */
     void setCallbacks(VlcMediaPlayer *player);
 
     /*!
         \brief Unset VlcMediaPlayer callbacks
-        \param player media player (VlcMediaPlayer *)
+        \param player media player
      */
     void unsetCallbacks(VlcMediaPlayer *player);
 
@@ -93,7 +64,7 @@ protected:
         \brief Unlock callback
      */
     virtual void unlockCallback(void *picture,
-                                void *const *planes) = 0;
+                                void * const *planes) = 0;
 
     /*!
         \brief Display callback
@@ -119,7 +90,7 @@ private:
                                       void **planes);
     static void unlockCallbackInternal(void *opaque,
                                        void *picture,
-                                       void *const *planes);
+                                       void * const *planes);
     static void displayCallbackInternal(void *opaque,
                                         void *picture);
 
@@ -132,4 +103,4 @@ private:
     static void formatCleanUpCallbackInternal(void *opaque);
 };
 
-#endif // VLCQT_VIDEOMEMORYSTREAM_H_
+#endif // VLCQT_ABSTRACTVIDEOSTREAM_H_
