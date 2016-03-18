@@ -32,21 +32,49 @@ ENDIF()
 ###################
 # List of sources #
 ###################
-# Define the C++ source files
-SET(VLCQT_QML_SRCS
+# Deprecated C++ source files
+SET(VLCQT_QML_SRCS_DEPRECATED
     QmlVideoObject.cpp
     QmlVideoPlayer.cpp
-    SharedExportQml.h
 
     painter/GlPainter.cpp
     painter/GlslPainter.cpp
 )
+IF(NOT MSVC)
+    SET_SOURCE_FILES_PROPERTIES (${VLCQT_QML_SRCS_DEPRECATED} PROPERTIES COMPILE_FLAGS -Wno-deprecated)
+ENDIF()
+
+# Define the C++ source files
+SET(VLCQT_QML_SRCS
+    SharedExportQml.h
+    QmlPlayer.cpp
+    QmlSource.cpp
+
+    QmlVideoOutput.cpp
+
+    rendering/QmlVideoStream.cpp
+    rendering/VideoMaterial.cpp
+    rendering/VideoMaterialShader.cpp
+    rendering/VideoNode.cpp
+
+    ${VLCQT_QML_SRCS_DEPRECATED}
+)
+
+# Deprecated Include files
+SET(VLCQT_QML_HEADERS_DEPRECATED
+    QmlVideoObject.h
+    QmlVideoPlayer.h
+)
 
 # Define the Include files
 SET(VLCQT_QML_HEADERS
-    QmlVideoObject.h
+    QmlPlayer.h
+    QmlSource.h
+    QmlVideoOutput.h
     QmlVideoPlayer.h
     SharedExportQml.h
+
+    ${VLCQT_QML_HEADERS_DEPRECATED}
 )
 
 SET(VLCQT_QML_SRCS

@@ -40,11 +40,13 @@ class VlcVideo;
 /*!
     \class VlcQmlVideoPlayer QmlVideoPlayer.h VLCQtQml/QmlVideoPlayer.h
     \ingroup VLCQtQml
-    \brief QML video player
+    \brief QML video player (deprecated)
 
     A simple QML video player that can be used standalone and directly inside QML.
+
+    \deprecated Deprecated since VLC-Qt 1.1, will be removed in 2.0
  */
-class VLCQT_QML_EXPORT VlcQmlVideoPlayer : public VlcQmlVideoObject
+class Q_DECL_DEPRECATED VLCQT_QML_EXPORT VlcQmlVideoPlayer : public VlcQmlVideoObject
 {
 Q_OBJECT
 public:
