@@ -93,6 +93,9 @@ ADD_SUBDIRECTORY(docs)
 #########
 # Tests #
 #########
+OPTION(COVERAGE "Coverage report" OFF)
+MESSAGE("\nVLC-Qt: Coverage report: ${COVERAGE}\n")
+
 OPTION(BUILD_TESTS "Build tests" OFF)
 MESSAGE("\nVLC-Qt: Build tests: ${BUILD_TESTS}\n")
 
