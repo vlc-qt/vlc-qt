@@ -72,6 +72,40 @@ void VlcQmlVideoOutput::setFillMode(int mode)
     emit fillModeChanged();
 }
 
+int VlcQmlVideoOutput::aspectRatio() const
+{
+    return _aspectRatio;
+}
+
+void VlcQmlVideoOutput::setAspectRatio(int aspectRatio)
+{
+    if (_aspectRatio == aspectRatio)
+        return;
+
+    _aspectRatio = Vlc::Ratio(aspectRatio);
+
+    update();
+
+    emit aspectRatioChanged();
+}
+
+int VlcQmlVideoOutput::cropRatio() const
+{
+    return _cropRatio;
+}
+
+void VlcQmlVideoOutput::setCropRatio(int cropRatio)
+{
+    if (_cropRatio == cropRatio)
+        return;
+
+    _cropRatio = Vlc::Ratio(cropRatio);
+
+    update();
+
+    emit cropRatioChanged();
+}
+
 QSGNode *VlcQmlVideoOutput::updatePaintNode(QSGNode *oldNode,
                                             UpdatePaintNodeData *data)
 {
@@ -93,8 +127,27 @@ QSGNode *VlcQmlVideoOutput::updatePaintNode(QSGNode *oldNode,
         const uint16_t fw = _frame->width;
         const uint16_t fh = _frame->height;
 
-        const qreal frameAspect = qreal(fw) / fh;
+        qreal frameAspectTmp = qreal(fw) / fh;
+        QSizeF aspectRatioSize = Vlc::ratioSize(_aspectRatio);
+        if (aspectRatioSize.width() != 0 && aspectRatioSize.height() != 0) {
+            frameAspectTmp = aspectRatioSize.width()  / aspectRatioSize.height();
+        }
+        QSizeF cropRatioSize = Vlc::ratioSize(_cropRatio);
+        if (cropRatioSize.width() != 0 && cropRatioSize.height() != 0) {
+            const qreal cropAspect = cropRatioSize.width()  / cropRatioSize.height();
+
+            if (frameAspectTmp > cropAspect) {
+                srcRect.setX((1. - cropAspect / frameAspectTmp) / 2);
+                srcRect.setWidth(1. - srcRect.x() - srcRect.x());
+            } else if (frameAspectTmp < cropAspect) {
+                srcRect.setY((1. - frameAspectTmp / cropAspect) / 2);
+                srcRect.setHeight(1. - srcRect.y() - srcRect.y());
+            }
+
+            frameAspectTmp = cropAspect;
+        }
         const qreal itemAspect = width() / height();
+        const qreal frameAspect = frameAspectTmp;
 
         if (fillMode() == Vlc::PreserveAspectFit) {
             qreal outWidth = width();
