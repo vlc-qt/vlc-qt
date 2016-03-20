@@ -50,4 +50,66 @@ Rectangle {
             wait(2000)
         }
     }
+
+    TestCase {
+        id: tc2
+        name: "AspectRatio"
+        when: tc1.completed
+
+        function test_aspectRatio() {
+            video.aspectRatio = Vlc.R_1_1
+            wait(500)
+            video.aspectRatio = Vlc.R_5_4
+            wait(500)
+            video.aspectRatio = Vlc.R_4_3
+            wait(500)
+            video.aspectRatio = Vlc.R_16_10
+            wait(500)
+            video.aspectRatio = Vlc.R_5_3
+            wait(500)
+            video.aspectRatio = Vlc.R_16_9
+            wait(500)
+            video.aspectRatio = Vlc.R_185_100
+            wait(500)
+            video.aspectRatio = Vlc.R_221_100
+            wait(500)
+            video.aspectRatio = Vlc.R_235_100
+            wait(500)
+            video.aspectRatio = Vlc.R_239_100
+            wait(500)
+            video.aspectRatio = Vlc.Original
+            wait(2000)
+        }
+    }
+
+    TestCase {
+        id: tc3
+        name: "CropRatio"
+        when: tc2.completed
+
+        function test_cropRatio() {
+            video.cropRatio = Vlc.R_1_1
+            wait(500)
+            video.cropRatio = Vlc.R_5_4
+            wait(500)
+            video.cropRatio = Vlc.R_4_3
+            wait(500)
+            video.cropRatio = Vlc.R_16_10
+            wait(500)
+            video.cropRatio = Vlc.R_5_3
+            wait(500)
+            video.cropRatio = Vlc.R_16_9
+            wait(500)
+            video.cropRatio = Vlc.R_185_100
+            wait(500)
+            video.cropRatio = Vlc.R_221_100
+            wait(500)
+            video.cropRatio = Vlc.R_235_100
+            wait(500)
+            video.cropRatio = Vlc.R_239_100
+            wait(500)
+            video.cropRatio = Vlc.Original
+            wait(2000)
+        }
+    }
 }
