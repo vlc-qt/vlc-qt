@@ -58,6 +58,23 @@ class VLCQT_QML_EXPORT VlcQmlVideoOutput : public QQuickItem
      */
     Q_PROPERTY(int fillMode READ fillMode WRITE setFillMode NOTIFY fillModeChanged)
 
+    /*!
+        \brief Current aspect ratio
+        \see aspectRatio
+        \see setAspectRatio
+        \see aspectRatioChanged
+     */
+    Q_PROPERTY(int aspectRatio READ aspectRatio WRITE setAspectRatio NOTIFY aspectRatioChanged)
+
+    /*!
+        \brief Current crop ratio
+        \see cropRatio
+        \see setCropRatio
+        \see cropRatioChanged
+     */
+    Q_PROPERTY(int cropRatio READ cropRatio WRITE setCropRatio NOTIFY cropRatioChanged)
+
+
 public:
     VlcQmlVideoOutput();
     ~VlcQmlVideoOutput();
@@ -94,6 +111,40 @@ public:
      */
     void setFillMode(int mode);
 
+    /*!
+        \brief Current aspect ratio
+        \return aspect ratio
+
+        Used as property in QML.
+     */
+    int aspectRatio() const;
+
+    /*!
+        \brief Set aspect ratio
+        \param aspectRatio new aspect ratio
+
+        No effect when fillMode equals Vlc::Stretch.
+        Used as property in QML.
+     */
+    void setAspectRatio(int aspectRatio);
+
+    /*!
+        \brief Current crop ratio
+        \return crop ratio
+
+        Used as property in QML.
+     */
+    int cropRatio() const;
+
+    /*!
+        \brief Set crop ratio
+        \param cropRatio new crop ratio
+
+        No effect when fillMode equals Vlc::Stretch.
+        Used as property in QML.
+     */
+    void setCropRatio(int cropRatio);
+
 
 public slots:
     /*!
@@ -114,12 +165,24 @@ signals:
      */
     void fillModeChanged();
 
+    /*!
+        \brief Fill mode changed signal
+     */
+    void aspectRatioChanged();
+
+    /*!
+        \brief Fill mode changed signal
+     */
+    void cropRatioChanged();
+
 
 private:
     virtual QSGNode *updatePaintNode(QSGNode *oldNode,
                                      UpdatePaintNodeData *data);
 
     Vlc::FillMode _fillMode;
+    Vlc::Ratio _aspectRatio;
+    Vlc::Ratio _cropRatio;
 
     QPointer<VlcQmlSource> _source;
 
