@@ -47,8 +47,12 @@ INCLUDE(CustomTargets)
 INCLUDE(CompilerConfig)
 INCLUDE(Dependencies)
 
-OPTION(STATIC "Build statically" OFF)
-MESSAGE("VLC-Qt: Build statically: ${STATIC}")
+IF(NOT IOS)
+    OPTION(STATIC "Build statically" OFF)
+    MESSAGE("VLC-Qt: Build statically: ${STATIC}")
+ELSE()
+    SET(STATIC ON)
+ENDIF()
 
 # Link parameters
 IF(STATIC)

@@ -60,31 +60,33 @@ INSTALL(
     COMPONENT Devel
 )
 
-WRITE_BASIC_PACKAGE_VERSION_FILE(
-    "${CMAKE_BINARY_DIR}/package/VLCQtWidgets/VLCQtWidgetsConfigVersion.cmake"
-    VERSION ${VLCQT_VERSION}
-    COMPATIBILITY AnyNewerVersion
-)
-EXPORT(EXPORT VLCQtWidgetsTargets
-       FILE "${CMAKE_BINARY_DIR}/package/VLCQtWidgets/VLCQtWidgetsTargets.cmake"
-       NAMESPACE VLCQt::
-)
-CONFIGURE_FILE(config/package/VLCQtWidgetsConfig.cmake
-    "${CMAKE_BINARY_DIR}/package/VLCQtWidgets/VLCQtWidgetsConfig.cmake"
-)
-SET(VlcQtWidgetsConfigPackageLocation lib${LIB_SUFFIX}/cmake/VLCQtWidgets)
-INSTALL(EXPORT VLCQtWidgetsTargets
-        FILE VLCQtWidgetsTargets.cmake
-        NAMESPACE VLCQt::
-        DESTINATION ${VlcQtWidgetsConfigPackageLocation}
-)
-INSTALL(
-    FILES
-        config/package/VLCQtWidgetsConfig.cmake
+IF(NOT MOBILE)
+    WRITE_BASIC_PACKAGE_VERSION_FILE(
         "${CMAKE_BINARY_DIR}/package/VLCQtWidgets/VLCQtWidgetsConfigVersion.cmake"
-    DESTINATION ${VlcQtWidgetsConfigPackageLocation}
-    COMPONENT Devel
-)
+        VERSION ${VLCQT_VERSION}
+        COMPATIBILITY AnyNewerVersion
+    )
+    EXPORT(EXPORT VLCQtWidgetsTargets
+           FILE "${CMAKE_BINARY_DIR}/package/VLCQtWidgets/VLCQtWidgetsTargets.cmake"
+           NAMESPACE VLCQt::
+    )
+    CONFIGURE_FILE(config/package/VLCQtWidgetsConfig.cmake
+        "${CMAKE_BINARY_DIR}/package/VLCQtWidgets/VLCQtWidgetsConfig.cmake"
+    )
+    SET(VlcQtWidgetsConfigPackageLocation lib${LIB_SUFFIX}/cmake/VLCQtWidgets)
+    INSTALL(EXPORT VLCQtWidgetsTargets
+            FILE VLCQtWidgetsTargets.cmake
+            NAMESPACE VLCQt::
+            DESTINATION ${VlcQtWidgetsConfigPackageLocation}
+    )
+    INSTALL(
+        FILES
+            config/package/VLCQtWidgetsConfig.cmake
+            "${CMAKE_BINARY_DIR}/package/VLCQtWidgets/VLCQtWidgetsConfigVersion.cmake"
+        DESTINATION ${VlcQtWidgetsConfigPackageLocation}
+        COMPONENT Devel
+    )
+ENDIF()
 
 IF(QT_VERSION MATCHES 5)
     WRITE_BASIC_PACKAGE_VERSION_FILE(

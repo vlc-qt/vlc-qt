@@ -99,7 +99,7 @@ IF(${LIBVLC_VERSION} EQUAL 0x020200 OR ${LIBVLC_VERSION} GREATER 0x020200)
     )
 ENDIF()
 
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+IF(NOT STATIC AND ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     SET(VLCQT_CORE_SRCS
         ${VLCQT_CORE_SRCS}
         ${Vlc_Libs}
@@ -197,7 +197,7 @@ ENDIF()
 ################
 # Installation #
 ################
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+IF(NOT STATIC AND ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     SET(VLCQtCoreIncludesLocation lib/${VLCQT_CORE_NAME}.framework)
     SET(VLCQtCorePublicHeaderLocation lib/${VLCQT_CORE_NAME}.framework)
 ELSE()

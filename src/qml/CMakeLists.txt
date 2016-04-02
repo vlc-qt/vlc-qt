@@ -116,30 +116,32 @@ SET_TARGET_PROPERTIES(${VLCQT_QML} PROPERTIES FRAMEWORK ON
 )
 
 # Link the required libraries
-TARGET_LINK_LIBRARIES(${VLCQT_QML} PRIVATE Qt5::Quick ${VLCQT_CORE_BINARY} ${LIBVLCCORE_LIBRARY})
-
-IF(Qt5Core_VERSION VERSION_LESS "5.5.0" AND WITH_GLES)
-    IF(MSVC)
-        TARGET_LINK_LIBRARIES(${VLCQT_QML} PRIVATE
-                              ${_qt5Core_install_prefix}/lib/libEGL${LE}.lib
-                              ${_qt5Core_install_prefix}/lib/libGLESv2${LE}.lib)
+TARGET_LINK_LIBRARIES(${VLCQT_QML} PRIVATE Qt5::Quick)
+IF(NOT STATIC)
+    TARGET_LINK_LIBRARIES(${VLCQT_QML} PRIVATE ${VLCQT_CORE_BINARY} ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY})
+    IF(Qt5Core_VERSION VERSION_LESS "5.5.0" AND WITH_GLES)
+        IF(MSVC)
+            TARGET_LINK_LIBRARIES(${VLCQT_QML} PRIVATE
+                                  ${_qt5Core_install_prefix}/lib/libEGL${LE}.lib
+                                  ${_qt5Core_install_prefix}/lib/libGLESv2${LE}.lib)
+        ENDIF()
+        IF(MINGW)
+            TARGET_LINK_LIBRARIES(${VLCQT_QML} PRIVATE
+                                  ${_qt5Core_install_prefix}/lib/liblibEGL${LE}.a
+                                  ${_qt5Core_install_prefix}/lib/liblibGLESv2${LE}.a)
+        ENDIF()
     ENDIF()
-    IF(MINGW)
-        TARGET_LINK_LIBRARIES(${VLCQT_QML} PRIVATE
-                              ${_qt5Core_install_prefix}/lib/liblibEGL${LE}.a
-                              ${_qt5Core_install_prefix}/lib/liblibGLESv2${LE}.a)
-    ENDIF()
-ENDIF()
 
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux" AND WITH_X11)
-    TARGET_LINK_LIBRARIES(${VLCQT_QML} PRIVATE -lX11)
+    IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux" AND WITH_X11)
+        TARGET_LINK_LIBRARIES(${VLCQT_QML} PRIVATE -lX11)
+    ENDIF()
 ENDIF()
 
 
 ################
 # Installation #
 ################
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+IF(NOT STATIC AND ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     SET(VLCQtQmlIncludesLocation lib/${VLCQT_QML_NAME}.framework)
     SET(VLCQtQmlPublicHeaderLocation lib/${VLCQT_QML_NAME}.framework)
 ELSE()

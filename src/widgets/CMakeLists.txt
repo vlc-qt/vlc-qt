@@ -123,7 +123,7 @@ ENDIF()
 ################
 # Installation #
 ################
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+IF(NOT STATIC AND ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     SET(VLCQtWidgetsIncludesLocation lib/${VLCQT_WIDGETS_NAME}.framework)
     SET(VLCQtWidgetsPublicHeaderLocation lib/${VLCQT_WIDGETS_NAME}.framework)
 ELSE()

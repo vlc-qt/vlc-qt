@@ -15,6 +15,11 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this library. If not, see <http://www.gnu.org/licenses/>.
 #############################################################################
+# Detect building for mobile
+IF(CMAKE_SYSTEM_NAME MATCHES "Android" OR IOS)
+    SET(MOBILE ON)
+ENDIF()
+
 # Automatically run moc, uic and/or rcc, if required
 SET(CMAKE_AUTOMOC ON)
 SET(CMAKE_AUTOUIC ON)
@@ -50,7 +55,7 @@ IF(NOT MSVC)
 ENDIF()
 
 # Coverage reports
-IF(COVERAGE AND NOT MSVC)
+IF(COVERAGE AND NOT MOBILE AND NOT MSVC)
     SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -coverage")
     SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -coverage")
 ENDIF()
@@ -74,7 +79,7 @@ IF(MSVC)
 ENDIF()
 
 # Support OS X 10.6 or later (64-bit only)
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+IF(NOT IOS AND ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     OPTION(HOMEBREW "Build using Homebrew provided Qt" OFF)
     MESSAGE("VLC-Qt: Build using Homebrew provided Qt: ${HOMEBREW}")
 
