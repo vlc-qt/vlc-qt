@@ -28,12 +28,20 @@ ELSE()
     ADD_DEFINITIONS(-DQT_SHARED -D_REENTRANT)
 ENDIF()
 
+# Configure files
+CONFIGURE_FILE(
+    lib${VLCQT_WIDGETS_NAME}.pc.in
+    lib${VLCQT_WIDGETS_NAME}.pc
+    @ONLY
+)
+
 IF(MINGW OR MSVC)
     CONFIGURE_FILE(
         ${VLCQT_WIDGETS_NAME}.rc.in
         ${VLCQT_WIDGETS_NAME}.rc
     )
 ENDIF()
+
 
 ###################
 # List of sources #
@@ -139,3 +147,7 @@ INSTALL(TARGETS ${VLCQT_WIDGETS} EXPORT VLCQtWidgetsTargets
         INCLUDES DESTINATION ${VLCQtWidgetsIncludesLocation}
         PUBLIC_HEADER DESTINATION ${VLCQtWidgetsPublicHeaderLocation}
 )
+
+IF(PKGCONFIG)
+    INSTALL(FILES ${CMAKE_BINARY_DIR}/src/widgets/lib${VLCQT_WIDGETS_NAME}.pc DESTINATION lib${LIB_SUFFIX}/pkgconfig)
+ENDIF()

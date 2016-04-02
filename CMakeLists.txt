@@ -81,9 +81,6 @@ ENDIF()
 ###################
 # Compile and set #
 ###################
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR MINGW)
-    INCLUDE(pkgconfig)
-ENDIF()
 IF(MINGW OR MSVC)
     INCLUDE(Windows)
 ENDIF()

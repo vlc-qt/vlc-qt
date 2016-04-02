@@ -20,6 +20,11 @@ IF(CMAKE_SYSTEM_NAME MATCHES "Android" OR IOS)
     SET(MOBILE ON)
 ENDIF()
 
+# pkgconfig
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR MINGW)
+    SET(PKGCONFIG ON)
+ENDIF()
+
 # Automatically run moc, uic and/or rcc, if required
 SET(CMAKE_AUTOMOC ON)
 SET(CMAKE_AUTOUIC ON)

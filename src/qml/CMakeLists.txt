@@ -28,12 +28,20 @@ ELSE()
     ADD_DEFINITIONS(-DQT_SHARED -D_REENTRANT)
 ENDIF()
 
+# Configure files
+CONFIGURE_FILE(
+    lib${VLCQT_QML_NAME}.pc.in
+    lib${VLCQT_QML_NAME}.pc
+    @ONLY
+)
+
 IF(MINGW OR MSVC)
     CONFIGURE_FILE(
         ${VLCQT_QML_NAME}.rc.in
         ${VLCQT_QML_NAME}.rc
     )
 ENDIF()
+
 
 ###################
 # List of sources #
@@ -157,3 +165,7 @@ INSTALL(TARGETS ${VLCQT_QML} EXPORT VLCQtQmlTargets
         INCLUDES DESTINATION ${VLCQtQmlIncludesLocation}
         PUBLIC_HEADER DESTINATION ${VLCQtQmlPublicHeaderLocation}
 )
+
+IF(PKGCONFIG)
+    INSTALL(FILES ${CMAKE_BINARY_DIR}/src/qml/lib${VLCQT_QML_NAME}.pc DESTINATION lib${LIB_SUFFIX}/pkgconfig)
+ENDIF()

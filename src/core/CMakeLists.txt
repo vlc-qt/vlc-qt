@@ -28,6 +28,13 @@ ELSE()
     ADD_DEFINITIONS(-DQT_SHARED -D_REENTRANT)
 ENDIF()
 
+# Generate files
+CONFIGURE_FILE(
+    lib${VLCQT_CORE_NAME}.pc.in
+    lib${VLCQT_CORE_NAME}.pc
+    @ONLY
+)
+
 IF(MINGW OR MSVC)
     CONFIGURE_FILE(
         ${VLCQT_CORE_NAME}.rc.in
@@ -213,3 +220,7 @@ INSTALL(TARGETS ${VLCQT_CORE} EXPORT VLCQtCoreTargets
         INCLUDES DESTINATION ${VLCQtCoreIncludesLocation}
         PUBLIC_HEADER DESTINATION ${VLCQtCorePublicHeaderLocation}
 )
+
+IF(PKGCONFIG)
+    INSTALL(FILES ${CMAKE_BINARY_DIR}/src/core/lib${VLCQT_CORE_NAME}.pc DESTINATION lib${LIB_SUFFIX}/pkgconfig)
+ENDIF()
