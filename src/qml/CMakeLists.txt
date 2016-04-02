@@ -30,8 +30,8 @@ ENDIF()
 
 IF(MINGW OR MSVC)
     CONFIGURE_FILE(
-        ${CMAKE_SOURCE_DIR}/platform/windows/qml.rc.in
-        ${CMAKE_BINARY_DIR}/platform/windows/qml.rc
+        ${VLCQT_QML_NAME}.rc.in
+        ${VLCQT_QML_NAME}.rc
     )
 ENDIF()
 
@@ -80,17 +80,17 @@ INCLUDE_DIRECTORIES(
 # Compile resources with windres
 IF(MINGW)
     ADD_CUSTOM_COMMAND(
-        OUTPUT ${CMAKE_BINARY_DIR}/platform/windows/qml.obj
+        OUTPUT ${CMAKE_BINARY_DIR}/src/qml/${VLCQT_QML_NAME}.obj
         COMMAND ${CMAKE_RC_COMPILER}
-        -i ${CMAKE_BINARY_DIR}/platform/windows/qml.rc
-        -o ${CMAKE_BINARY_DIR}/platform/windows/qml.obj
-        WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/platform/windows"
+        -i ${CMAKE_BINARY_DIR}/src/qml/${VLCQT_QML_NAME}.rc
+        -o ${CMAKE_BINARY_DIR}/src/qml/${VLCQT_QML_NAME}.obj
+        WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/src/qml"
     )
-    SET(VLCQT_QML_SRCS ${VLCQT_QML_SRCS} ${CMAKE_BINARY_DIR}/platform/windows/qml.obj)
+    SET(VLCQT_QML_SRCS ${VLCQT_QML_SRCS} ${CMAKE_BINARY_DIR}/src/qml/${VLCQT_QML_NAME}.obj)
 ENDIF()
 
 IF(MSVC)
-    SET(VLCQT_QML_SRCS ${VLCQT_QML_SRCS} ${CMAKE_BINARY_DIR}/platform/windows/qml.rc)
+    SET(VLCQT_QML_SRCS ${VLCQT_QML_SRCS} ${CMAKE_BINARY_DIR}/src/qml/${VLCQT_QML_NAME}.rc)
 ENDIF()
 
 # Create the library.

@@ -30,8 +30,8 @@ ENDIF()
 
 IF(MINGW OR MSVC)
     CONFIGURE_FILE(
-        ${CMAKE_SOURCE_DIR}/platform/windows/widgets.rc.in
-        ${CMAKE_BINARY_DIR}/platform/windows/widgets.rc
+        ${VLCQT_WIDGETS_NAME}.rc.in
+        ${VLCQT_WIDGETS_NAME}.rc
     )
 ENDIF()
 
@@ -78,17 +78,17 @@ ENDIF()
 # Compile resources with windres
 IF(MINGW)
     ADD_CUSTOM_COMMAND(
-        OUTPUT ${CMAKE_BINARY_DIR}/platform/windows/widgets.obj
+        OUTPUT ${CMAKE_BINARY_DIR}/src/widgets/${VLCQT_WIDGETS_NAME}.obj
         COMMAND ${CMAKE_RC_COMPILER}
-        -i ${CMAKE_BINARY_DIR}/platform/windows/widgets.rc
-        -o ${CMAKE_BINARY_DIR}/platform/windows/widgets.obj
-        WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/platform/windows"
+        -i ${CMAKE_BINARY_DIR}/src/widgets/${VLCQT_WIDGETS_NAME}.rc
+        -o ${CMAKE_BINARY_DIR}/src/widgets/${VLCQT_WIDGETS_NAME}.obj
+        WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/src/widgets"
     )
-    SET(VLCQT_WIDGETS_SRCS ${VLCQT_WIDGETS_SRCS} ${CMAKE_BINARY_DIR}/platform/windows/widgets.obj)
+    SET(VLCQT_WIDGETS_SRCS ${VLCQT_WIDGETS_SRCS} ${CMAKE_BINARY_DIR}/src/widgets/${VLCQT_WIDGETS_NAME}.obj)
 ENDIF()
 
 IF(MSVC)
-    SET(VLCQT_WIDGETS_SRCS ${VLCQT_WIDGETS_SRCS} ${CMAKE_BINARY_DIR}/platform/windows/widgets.rc)
+    SET(VLCQT_WIDGETS_SRCS ${VLCQT_WIDGETS_SRCS} ${CMAKE_BINARY_DIR}/src/widgets/${VLCQT_WIDGETS_NAME}.rc)
 ENDIF()
 
 # Create the library.
