@@ -34,7 +34,8 @@
 #if defined (_WIN32)
 #   define LIBVLC_USE_PTHREAD_CANCEL 1
 #endif
-#include <vlc/plugins/vlc_fourcc.h>
+#include <vlc_common.h>
+#include <vlc_fourcc.h>
 #else
 struct vlc_chroma_description_t;
 #endif

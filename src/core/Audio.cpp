@@ -27,8 +27,8 @@
 #endif
 
 #include <vlc/vlc.h>
-#include <vlc/plugins/vlc_common.h>
-#include <vlc/plugins/vlc_variables.h>
+#include <vlc_common.h>
+#include <vlc_variables.h>
 
 #include "core/Audio.h"
 #include "core/Error.h"
