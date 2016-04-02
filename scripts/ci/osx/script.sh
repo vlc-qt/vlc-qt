@@ -13,6 +13,5 @@ cmake ..
 ninja -v
 ninja coverage -v
 ninja install -v
-ninja dmg -v
 
 popd

@@ -12,6 +12,3 @@ then
     make test
 fi
 popd
-
-# Legacy test run
-LD_LIBRARY_PATH=install/lib/ install/bin/VLC-Qt test

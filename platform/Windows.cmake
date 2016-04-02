@@ -80,11 +80,6 @@ IF(Vlc_Std)
     )
 ENDIF()
 
-IF(${BUILD_TESTS})
-    ADD_CUSTOM_TARGET(windows
-        "${QT_BIN_DIR}/windeployqt.exe" "${CMAKE_INSTALL_PREFIX}/test${LS}/${VLCQT_TEST}.exe")
-ENDIF()
-
 
 ################
 # Installation #
