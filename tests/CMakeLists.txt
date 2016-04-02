@@ -24,12 +24,17 @@ ENDIF()
 
 SET(TestCommonFiles ${CMAKE_SOURCE_DIR}/tests/common/TestsCommon.cpp)
 
-MACRO(ADD_AUTO_TEST TestName TestSrc)
-    SET(Test_${TestName}_Srcs ${TestSrc} ${TestCommonFiles})
+MACRO(ADD_AUTO_TEST TestName)
+    SET(Test_${TestName}_Srcs ${ARGN} ${TestCommonFiles})
 
     ADD_EXECUTABLE(Test_${TestName} ${Test_${TestName}_Srcs})
     ADD_DEPENDENCIES(Test_${TestName} ${VLCQT_CORE})
     TARGET_LINK_LIBRARIES(Test_${TestName} Qt5::Core Qt5::Test ${VLCQT_CORE_BINARY})
+
+    IF(${TestName} MATCHES "Widgets")
+        ADD_DEPENDENCIES(Test_${TestName} ${VLCQT_WIDGETS})
+        TARGET_LINK_LIBRARIES(Test_${TestName} Qt5::Widgets ${VLCQT_WIDGETS_BINARY})
+    ENDIF()
 
     IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
         SET_TARGET_PROPERTIES(Test_${TestName} PROPERTIES BUILD_WITH_INSTALL_RPATH FALSE)
@@ -58,6 +63,8 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/src
     ${CMAKE_BINARY_DIR}/tests
     ${CMAKE_BINARY_DIR}/tests/core
+    ${CMAKE_BINARY_DIR}/tests/widgets
 )
 
 ADD_SUBDIRECTORY(core)
+ADD_SUBDIRECTORY(widgets)
