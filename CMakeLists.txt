@@ -22,7 +22,7 @@ CMAKE_POLICY(VERSION 3.0.2)
 SET(CMAKE_MODULE_PATH
     ${CMAKE_SOURCE_DIR}/cmake
     ${CMAKE_SOURCE_DIR}/config
-    ${CMAKE_SOURCE_DIR}/platform
+    ${CMAKE_SOURCE_DIR}/config/platform
 )
 
 INCLUDE(ParseVersion)
@@ -46,6 +46,7 @@ SET(VLCQT_QML_NAME ${PROJECT_LIBRARY}Qml)
 INCLUDE(CustomTargets)
 INCLUDE(CompilerConfig)
 INCLUDE(Dependencies)
+INCLUDE(Platform)
 
 IF(NOT IOS)
     OPTION(STATIC "Build statically" OFF)
@@ -81,12 +82,6 @@ ENDIF()
 ###################
 # Compile and set #
 ###################
-IF(MINGW OR MSVC)
-    INCLUDE(Windows)
-ENDIF()
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    INCLUDE(OSX)
-ENDIF()
 ADD_SUBDIRECTORY(src)
 ADD_SUBDIRECTORY(docs)
 
