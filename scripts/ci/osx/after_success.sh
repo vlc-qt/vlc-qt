@@ -2,7 +2,7 @@
 set -ev
 
 # Report code coverage
-bash <(curl -s https://codecov.io/bash)
+bash <(curl -s https://codecov.io/bash) -f build/coverage.info
 
 # Deploy builds
 pushd install
