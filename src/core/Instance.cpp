@@ -46,7 +46,7 @@ void logCallback(void *data,
 
     char *result;
     if (vasprintf(&result, fmt, args) < 0) {
-        return;
+        return; // LCOV_EXCL_LINE
     }
 
     QString message(result);

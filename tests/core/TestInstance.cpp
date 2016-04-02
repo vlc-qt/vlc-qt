@@ -30,6 +30,7 @@ private slots:
     void init();
 
     void wrongArguments();
+    void envArguments();
     void withExternalPluginsSet();
     void withPlugins();
 
@@ -53,6 +54,19 @@ void TestInstance::wrongArguments()
     QCOMPARE(instance->status(), false);
 
     delete instance;
+}
+
+void TestInstance::envArguments()
+{
+    qputenv("VLC_ARGS", QString("--something-wrong").toLocal8Bit());
+
+    VlcInstance *instance = new VlcInstance(VlcCommon::args(), this);
+
+    QCOMPARE(instance->status(), false);
+
+    delete instance;
+
+    qunsetenv("VLC_ARGS");
 }
 
 void TestInstance::withExternalPluginsSet()

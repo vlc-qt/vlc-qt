@@ -5,6 +5,7 @@
  - Native logging support with ability to set log level
  - Add ability to set application ID
  - VLC media: add parsed state, async parse request, duration and current state
+ - VLC media list player: next item signal now also sends pointer to VlcMedia
  - QML audio, video and subtitles tracks support
  - Deinterlacing, aspect ratio and crop ratio changed signals
  - Reading libvlc arguments from environment variable `VLC_ARGS`

@@ -323,7 +323,7 @@ VlcVideoDelegate *VlcMediaPlayer::videoWidget() const
 void VlcMediaPlayer::libvlc_callback(const libvlc_event_t *event,
                                      void *data)
 {
-    VlcMediaPlayer *core = (VlcMediaPlayer *)data;
+    VlcMediaPlayer *core = static_cast<VlcMediaPlayer *>(data);
 
     switch(event->type)
     {

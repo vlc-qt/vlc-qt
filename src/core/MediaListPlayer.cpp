@@ -164,7 +164,7 @@ void VlcMediaListPlayer::setPlaybackMode(const Vlc::PlaybackMode &mode)
 void VlcMediaListPlayer::libvlc_callback(const libvlc_event_t *event,
                                          void *data)
 {
-    VlcMediaListPlayer *core = (VlcMediaListPlayer *)data;
+    VlcMediaListPlayer *core = static_cast<VlcMediaListPlayer *>(data);
 
     switch(event->type)
     {
@@ -173,11 +173,12 @@ void VlcMediaListPlayer::libvlc_callback(const libvlc_event_t *event,
         break;
     case libvlc_MediaListPlayerNextItemSet:
         emit core->nextItemSet(event->u.media_list_player_next_item_set.item);
+        emit core->nextItemSet(core->currentMediaList()->at(core->currentMediaList()->indexOf(event->u.media_list_player_next_item_set.item)));
         break;
     case libvlc_MediaListPlayerStopped:
         emit core->stopped();
         break;
     default:
-        break;
+        break; // LCOV_EXCL_LINE
     }
 }

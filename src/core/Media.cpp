@@ -347,7 +347,7 @@ void VlcMedia::setOptions(const QStringList &options)
 void VlcMedia::libvlc_callback(const libvlc_event_t *event,
                                void *data)
 {
-    VlcMedia *core = (VlcMedia *)data;
+    VlcMedia *core = static_cast<VlcMedia *>(data);
 
     switch(event->type)
     {

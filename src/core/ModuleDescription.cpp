@@ -23,7 +23,7 @@ VlcModuleDescription::VlcModuleDescription(Type type,
     : _type(type),
       _name(name) { }
 
-VlcModuleDescription::~VlcModuleDescription() { }
+VlcModuleDescription::~VlcModuleDescription() { } // LCOV_EXCL_LINE
 
 void VlcModuleDescription::setShortName(const QString &name)
 {

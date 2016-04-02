@@ -153,9 +153,9 @@ void VlcMediaList::unlock()
 }
 
 void VlcMediaList::libvlc_callback(const libvlc_event_t *event,
-                               void *data)
+                                   void *data)
 {
-    VlcMediaList *core = (VlcMediaList *)data;
+    VlcMediaList *core = static_cast<VlcMediaList *>(data);
 
     switch(event->type)
     {
@@ -172,6 +172,6 @@ void VlcMediaList::libvlc_callback(const libvlc_event_t *event,
         emit core->willDeleteItem(event->u.media_list_will_delete_item.item, event->u.media_list_will_delete_item.index);
         break;
     default:
-        break;
+        break; // LCOV_EXCL_LINE
     }
 }

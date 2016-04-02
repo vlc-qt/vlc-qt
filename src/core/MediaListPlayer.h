@@ -146,6 +146,13 @@ signals:
     /*!
         \brief Signal sent on next item set
         \param media next media item
+        \since VLC-Qt 1.1
+    */
+    void nextItemSet(VlcMedia *media);
+
+    /*!
+        \brief Signal sent on next item set
+        \param media next media item
     */
     void nextItemSet(libvlc_media_t *media);
 

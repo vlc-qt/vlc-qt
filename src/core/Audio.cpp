@@ -50,7 +50,7 @@ public:
         Q_UNUSED(name)
         Q_UNUSED(oldVal)
 
-        VlcAudio *core = (VlcAudio *)data;
+        VlcAudio *core = static_cast<VlcAudio *>(data);
         emit core->volumeChangedF(newVal.f_float);
         int vol = newVal.f_float < 0 ? -1 : qRound(newVal.f_float * 100.f);
         emit core->volumeChanged(vol);
@@ -67,7 +67,7 @@ public:
         Q_UNUSED(name);
         Q_UNUSED(oldVal);
 
-        VlcAudio *core = (VlcAudio *)data;
+        VlcAudio *core = static_cast<VlcAudio *>(data);
         emit core->muteChanged(newVal.b_bool);
         return VLC_SUCCESS;
     }

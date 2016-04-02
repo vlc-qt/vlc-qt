@@ -54,6 +54,7 @@ CONFIGURE_FILE(
 INCLUDE_DIRECTORIES(
     ${CMAKE_SOURCE_DIR}/src
     ${CMAKE_SOURCE_DIR}/tests/common
+    ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/src
     ${CMAKE_BINARY_DIR}/tests
     ${CMAKE_BINARY_DIR}/tests/core
