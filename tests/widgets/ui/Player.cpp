@@ -25,35 +25,39 @@
 #include "Player.h"
 #include "ui_Player.h"
 
-Player::Player(QWidget *parent)
+Player::Player(VlcInstance *instance,
+               QWidget *parent)
     : QMainWindow(parent),
       ui(new Ui::Player),
-      _media(0)
+      _instance(instance)
 {
     ui->setupUi(this);
 
-    _instance = new VlcInstance(VlcCommon::args(), this);
-    if (_instance->status()) {
-        _player = new VlcMediaPlayer(_instance);
-        _player->setVideoWidget(ui->video);
+    if (!_instance->status())
+        return;
 
-        ui->video->setMediaPlayer(_player);
-        ui->volume->setMediaPlayer(_player);
-        ui->volume->setVolume(50);
-        ui->seek->setMediaPlayer(_player);
-    }
+    _player = new VlcMediaPlayer(_instance);
+    _player->setVideoWidget(ui->video);
 
-    if (_instance->status()) {
-        connect(ui->pause, SIGNAL(toggled(bool)), _player, SLOT(togglePause()));
-        connect(ui->stop, SIGNAL(clicked()), _player, SLOT(stop()));
-    }
+    ui->video->setMediaPlayer(_player);
+    ui->volume->setMediaPlayer(_player);
+    ui->volume->setVolume(50);
+    ui->seek->setMediaPlayer(_player);
+
+    connect(ui->pause, SIGNAL(toggled(bool)), _player, SLOT(togglePause()));
+    connect(ui->stop, SIGNAL(clicked()), _player, SLOT(stop()));
+
+    _media = new VlcMedia("http://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_480p_surround-fix.avi", _instance);
+    _player->open(_media);
 }
 
 Player::~Player()
 {
     if (_instance->status()) {
-        delete _player;
+        _player->stop();
+
         delete _media;
+        delete _player;
     }
     delete _instance;
     delete ui;

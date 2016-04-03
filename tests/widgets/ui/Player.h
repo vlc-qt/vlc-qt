@@ -33,7 +33,8 @@ class Player : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit Player(QWidget *parent = 0);
+    explicit Player(VlcInstance *instance,
+                    QWidget *parent = 0);
     ~Player();
 
 private:

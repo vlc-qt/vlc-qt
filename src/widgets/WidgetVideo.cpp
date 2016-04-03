@@ -226,7 +226,7 @@ WId VlcWidgetVideo::request()
        management */
     /* This is currently disabled on X11 as it does not seem to improve
      * performance, but causes the video widget to be transparent... */
-#ifndef Q_WS_X11
+#if QT_VERSION < 0x050000 && !defined(Q_WS_X11)
     _video->setAttribute( Qt::WA_PaintOnScreen, true );
 #endif
 
