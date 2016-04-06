@@ -23,7 +23,7 @@ ENDIF()
 IF(QT_VERSION MATCHES 4)
     FIND_PACKAGE(Qt4 4.8.0 REQUIRED)
 
-    MESSAGE("VLC-Qt: Build with Qt4")
+    MESSAGE("VLC-Qt: Qt4 support is deprecated and will be removed. Please update to Qt 5 soon.")
 ELSE()
     FIND_PACKAGE(Qt5Core 5.2.0 REQUIRED)
     FIND_PACKAGE(Qt5Quick 5.2.0 REQUIRED)
@@ -31,6 +31,10 @@ ELSE()
     FIND_PACKAGE(Qt5Test 5.2.0 REQUIRED)
 
     MESSAGE("VLC-Qt: Build with Qt5")
+ENDIF()
+
+IF(NOT ${CMAKE_SYSTEM_NAME} MATCHES "Linux" AND QT_VERSION MATCHES 5 AND Qt5Core_VERSION VERSION_LESS "5.5.0")
+    MESSAGE("VLC-Qt: Your Qt5 version is old and support for it will be removed. Please update to Qt 5.5 or later soon.")
 ENDIF()
 
 IF(QT_VERSION MATCHES 5 AND Qt5Core_VERSION VERSION_LESS "5.5.0")

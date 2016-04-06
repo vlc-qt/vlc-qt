@@ -1,10 +1,12 @@
 # VLC-Qt Library
 
-## Important changes with 1.0
+## Upcoming 1.1 Qt/VLC versions deprecation warning
 
-**Since 1.0 release, libraries were renamed and includes prefix changed
-to make them fully modular. Please, update CMake search scripts, configure
-scripts and/or makefiles before updating to latest version.**
+**Since 1.1 release, support for some older Qt and VLC versions
+will be removed or deprecated:**
+ - Qt 4 support will be deprecated and removed in 2.0
+ - Qt 5 lower than 5.5 will be deprecated and removed in 2.0
+ - libVLC 2.1 will be required
 
 
 ## Binaries and source code

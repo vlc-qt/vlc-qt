@@ -12,12 +12,12 @@ media playback and also some GUI classes for faster media player development.
 VLC-Qt runs on supported versions of Linux, OS X and Windows. It is developed
 in cross-platform spirit so it may work on other systems but is not supported.
 
-## Important changes with 1.0
-**Since 1.0 release, libraries were renamed and includes prefix changed
-to make them fully modular. Please, update CMake search scripts, configure scripts
-and/or makefiles before updating to latest version.
-See [library reference](https://vlc-qt.tano.si/reference/1.0/) for more information.**
-
+## Upcoming 1.1 Qt/VLC versions deprecation warning
+**Since 1.1 release, support for some older Qt and VLC versions will be removed
+or deprecated:**
+ - Qt 4 support will be deprecated and removed in 2.0
+ - Qt 5 lower than 5.5 will be deprecated and removed in 2.0
+ - libVLC 2.1 will be required
 
 ## Binaries and source code
 You can download VLC-Qt binaries and sources from the
