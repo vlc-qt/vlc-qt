@@ -1,6 +1,6 @@
 #############################################################################
 # VLC-Qt - Qt and libvlc connector library
-# Copyright (C) 2014 Tadej Novak <tadej@tano.si>
+# Copyright (C) 2016 Tadej Novak <tadej@tano.si>
 #
 # This library is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published
@@ -26,20 +26,6 @@ IF(STATIC)
     ADD_DEFINITIONS(-DQT_STATIC -D_REENTRANT)
 ELSE()
     ADD_DEFINITIONS(-DQT_SHARED -D_REENTRANT)
-ENDIF()
-
-# Configure files
-CONFIGURE_FILE(
-    lib${VLCQT_WIDGETS_NAME}.pc.in
-    lib${VLCQT_WIDGETS_NAME}.pc
-    @ONLY
-)
-
-IF(MINGW OR MSVC)
-    CONFIGURE_FILE(
-        ${VLCQT_WIDGETS_NAME}.rc.in
-        ${VLCQT_WIDGETS_NAME}.rc
-    )
 ENDIF()
 
 
@@ -83,21 +69,9 @@ IF(MSVC)
     INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/windows/msvc)
 ENDIF()
 
-# Compile resources with windres
-IF(MINGW)
-    ADD_CUSTOM_COMMAND(
-        OUTPUT ${CMAKE_BINARY_DIR}/src/widgets/${VLCQT_WIDGETS_NAME}.obj
-        COMMAND ${CMAKE_RC_COMPILER}
-        -i ${CMAKE_BINARY_DIR}/src/widgets/${VLCQT_WIDGETS_NAME}.rc
-        -o ${CMAKE_BINARY_DIR}/src/widgets/${VLCQT_WIDGETS_NAME}.obj
-        WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/src/widgets"
-    )
-    SET(VLCQT_WIDGETS_SRCS ${VLCQT_WIDGETS_SRCS} ${CMAKE_BINARY_DIR}/src/widgets/${VLCQT_WIDGETS_NAME}.obj)
-ENDIF()
-
-IF(MSVC)
-    SET(VLCQT_WIDGETS_SRCS ${VLCQT_WIDGETS_SRCS} ${CMAKE_BINARY_DIR}/src/widgets/${VLCQT_WIDGETS_NAME}.rc)
-ENDIF()
+# Additional macros
+GENERATE_PKGCONFIG(${VLCQT_WIDGETS_NAME} widgets)
+GENERATE_WINDOWS_RC(${VLCQT_WIDGETS_NAME} widgets VLCQT_WIDGETS_SRCS)
 
 # Create the library.
 IF(STATIC)
@@ -147,7 +121,3 @@ INSTALL(TARGETS ${VLCQT_WIDGETS} EXPORT VLCQtWidgetsTargets
         INCLUDES DESTINATION ${VLCQtWidgetsIncludesLocation}
         PUBLIC_HEADER DESTINATION ${VLCQtWidgetsPublicHeaderLocation}
 )
-
-IF(PKGCONFIG)
-    INSTALL(FILES ${CMAKE_BINARY_DIR}/src/widgets/lib${VLCQT_WIDGETS_NAME}.pc DESTINATION lib${LIB_SUFFIX}/pkgconfig)
-ENDIF()

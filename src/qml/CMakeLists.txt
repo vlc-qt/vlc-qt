@@ -1,6 +1,6 @@
 #############################################################################
 # VLC-Qt - Qt and libvlc connector library
-# Copyright (C) 2014 Tadej Novak <tadej@tano.si>
+# Copyright (C) 2016 Tadej Novak <tadej@tano.si>
 #
 # This library is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published
@@ -26,20 +26,6 @@ IF(STATIC)
     ADD_DEFINITIONS(-DQT_STATIC -D_REENTRANT)
 ELSE()
     ADD_DEFINITIONS(-DQT_SHARED -D_REENTRANT)
-ENDIF()
-
-# Configure files
-CONFIGURE_FILE(
-    lib${VLCQT_QML_NAME}.pc.in
-    lib${VLCQT_QML_NAME}.pc
-    @ONLY
-)
-
-IF(MINGW OR MSVC)
-    CONFIGURE_FILE(
-        ${VLCQT_QML_NAME}.rc.in
-        ${VLCQT_QML_NAME}.rc
-    )
 ENDIF()
 
 
@@ -84,22 +70,9 @@ INCLUDE_DIRECTORIES(
     ${LIBVLC_INCLUDE_DIR}/vlc/plugins
 )
 
-
-# Compile resources with windres
-IF(MINGW)
-    ADD_CUSTOM_COMMAND(
-        OUTPUT ${CMAKE_BINARY_DIR}/src/qml/${VLCQT_QML_NAME}.obj
-        COMMAND ${CMAKE_RC_COMPILER}
-        -i ${CMAKE_BINARY_DIR}/src/qml/${VLCQT_QML_NAME}.rc
-        -o ${CMAKE_BINARY_DIR}/src/qml/${VLCQT_QML_NAME}.obj
-        WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/src/qml"
-    )
-    SET(VLCQT_QML_SRCS ${VLCQT_QML_SRCS} ${CMAKE_BINARY_DIR}/src/qml/${VLCQT_QML_NAME}.obj)
-ENDIF()
-
-IF(MSVC)
-    SET(VLCQT_QML_SRCS ${VLCQT_QML_SRCS} ${CMAKE_BINARY_DIR}/src/qml/${VLCQT_QML_NAME}.rc)
-ENDIF()
+# Additional macros
+GENERATE_PKGCONFIG(${VLCQT_QML_NAME} qml)
+GENERATE_WINDOWS_RC(${VLCQT_QML_NAME} qml VLCQT_QML_SRCS)
 
 # Create the library.
 IF(STATIC)
@@ -165,7 +138,3 @@ INSTALL(TARGETS ${VLCQT_QML} EXPORT VLCQtQmlTargets
         INCLUDES DESTINATION ${VLCQtQmlIncludesLocation}
         PUBLIC_HEADER DESTINATION ${VLCQtQmlPublicHeaderLocation}
 )
-
-IF(PKGCONFIG)
-    INSTALL(FILES ${CMAKE_BINARY_DIR}/src/qml/lib${VLCQT_QML_NAME}.pc DESTINATION lib${LIB_SUFFIX}/pkgconfig)
-ENDIF()

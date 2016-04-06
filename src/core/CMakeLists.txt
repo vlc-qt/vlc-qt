@@ -28,20 +28,6 @@ ELSE()
     ADD_DEFINITIONS(-DQT_SHARED -D_REENTRANT)
 ENDIF()
 
-# Generate files
-CONFIGURE_FILE(
-    lib${VLCQT_CORE_NAME}.pc.in
-    lib${VLCQT_CORE_NAME}.pc
-    @ONLY
-)
-
-IF(MINGW OR MSVC)
-    CONFIGURE_FILE(
-        ${VLCQT_CORE_NAME}.rc.in
-        ${VLCQT_CORE_NAME}.rc
-    )
-ENDIF()
-
 
 ###################
 # List of sources #
@@ -147,22 +133,9 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/src
 )
 
-
-# Compile resources with windres
-IF(MINGW)
-    ADD_CUSTOM_COMMAND(
-        OUTPUT ${CMAKE_BINARY_DIR}/src/core/${VLCQT_CORE_NAME}.obj
-        COMMAND ${CMAKE_RC_COMPILER}
-        -i ${CMAKE_BINARY_DIR}/src/core/${VLCQT_CORE_NAME}.rc
-        -o ${CMAKE_BINARY_DIR}/src/core/${VLCQT_CORE_NAME}.obj
-        WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/src/core"
-    )
-    SET(VLCQT_CORE_SRCS ${VLCQT_CORE_SRCS} ${CMAKE_BINARY_DIR}/src/core/${VLCQT_CORE_NAME}.obj)
-ENDIF()
-
-IF(MSVC)
-    SET(VLCQT_CORE_SRCS ${VLCQT_CORE_SRCS} ${CMAKE_BINARY_DIR}/src/core/${VLCQT_CORE_NAME}.rc)
-ENDIF()
+# Additional macros
+GENERATE_PKGCONFIG(${VLCQT_CORE_NAME} core)
+GENERATE_WINDOWS_RC(${VLCQT_CORE_NAME} core VLCQT_CORE_SRCS)
 
 # Create the library.
 IF(STATIC)
@@ -220,7 +193,3 @@ INSTALL(TARGETS ${VLCQT_CORE} EXPORT VLCQtCoreTargets
         INCLUDES DESTINATION ${VLCQtCoreIncludesLocation}
         PUBLIC_HEADER DESTINATION ${VLCQtCorePublicHeaderLocation}
 )
-
-IF(PKGCONFIG)
-    INSTALL(FILES ${CMAKE_BINARY_DIR}/src/core/lib${VLCQT_CORE_NAME}.pc DESTINATION lib${LIB_SUFFIX}/pkgconfig)
-ENDIF()
