@@ -277,6 +277,18 @@ void VlcMediaPlayer::setVideoWidget(VlcVideoDelegate *widget)
     _videoWidget = widget;
 }
 
+bool VlcMediaPlayer::seekable() const
+{
+    if (!libvlc_media_player_get_media(_vlcMediaPlayer))
+        return false;
+
+    bool seekable = libvlc_media_player_is_seekable(_vlcMediaPlayer);
+
+    VlcError::showErrmsg();
+
+    return seekable;
+}
+
 Vlc::State VlcMediaPlayer::state() const
 {
     // It's possible that the vlc doesn't play anything

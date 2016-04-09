@@ -16,6 +16,7 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
+#include "core/Audio.h"
 #include "core/Common.h"
 #include "core/Instance.h"
 #include "core/MediaPlayer.h"
@@ -27,11 +28,19 @@
 
 VlcQmlPlayer::VlcQmlPlayer(QObject *parent)
     : VlcQmlSource(parent),
-      _media(0)
+      _media(0),
+      _autoplay(true),
+      _deinterlacing(Vlc::Disabled)
 {
     _instance = new VlcInstance(VlcCommon::args(), this);
     _player = new VlcMediaPlayer(_instance);
-    _video = new VlcVideo(_player);
+
+    connect(_player, &VlcMediaPlayer::lengthChanged, this, &VlcQmlPlayer::lengthChanged);
+    connect(_player, &VlcMediaPlayer::positionChanged, this, &VlcQmlPlayer::positionChanged);
+    connect(_player, &VlcMediaPlayer::seekableChanged, this, &VlcQmlPlayer::seekableChanged);
+    connect(_player, &VlcMediaPlayer::stateChanged, this, &VlcQmlPlayer::stateChanged);
+    connect(_player, &VlcMediaPlayer::timeChanged, this, &VlcQmlPlayer::timeChanged);
+    connect(_player, &VlcMediaPlayer::vout, this, &VlcQmlPlayer::mediaPlayerVout);
 
     setPlayer(_player);
 }
@@ -48,6 +57,85 @@ VlcQmlPlayer::~VlcQmlPlayer()
     delete _instance;
 }
 
+void VlcQmlPlayer::pause()
+{
+    _player->pause();
+}
+
+void VlcQmlPlayer::play()
+{
+    _player->play();
+}
+
+void VlcQmlPlayer::stop()
+{
+    _player->stop();
+}
+
+bool VlcQmlPlayer::autoplay() const
+{
+    return _autoplay;
+}
+
+void VlcQmlPlayer::setAutoplay(bool autoplay)
+{
+    if (_autoplay == autoplay)
+        return;
+
+    _autoplay = autoplay;
+    emit autoplayChanged();
+}
+
+int VlcQmlPlayer::deinterlacing() const
+{
+    return _deinterlacing;
+}
+
+void VlcQmlPlayer::setDeinterlacing(int deinterlacing)
+{
+    if (_deinterlacing == deinterlacing)
+        return;
+
+    _deinterlacing = Vlc::Deinterlacing(deinterlacing);
+    _player->video()->setDeinterlace(_deinterlacing);
+    emit deinterlacingChanged();
+}
+
+qint64 VlcQmlPlayer::length() const
+{
+    return _player->length();
+}
+
+bool VlcQmlPlayer::seekable() const
+{
+    return _player->seekable();
+}
+
+int VlcQmlPlayer::state() const
+{
+    return _player->state();
+}
+
+float VlcQmlPlayer::position() const
+{
+    return _player->position();
+}
+
+void VlcQmlPlayer::setPosition(float position)
+{
+    _player->setPosition(position);
+}
+
+qint64 VlcQmlPlayer::time() const
+{
+    return _player->time();
+}
+
+void VlcQmlPlayer::setTime(qint64 time)
+{
+    _player->setTime(time);
+}
+
 QUrl VlcQmlPlayer::url() const
 {
     if (_media)
@@ -58,6 +146,9 @@ QUrl VlcQmlPlayer::url() const
 
 void VlcQmlPlayer::setUrl(const QUrl &url)
 {
+    if (url == VlcQmlPlayer::url())
+        return;
+
     _player->stop();
 
     if (_media)
@@ -69,12 +160,40 @@ void VlcQmlPlayer::setUrl(const QUrl &url)
         _media = new VlcMedia(url.toString(QUrl::FullyEncoded), false, _instance);
     }
 
+    connect(_media, static_cast<void (VlcMedia::*)(bool)>(&VlcMedia::parsedChanged), this, &VlcQmlPlayer::mediaParsed);
+
     openInternal();
 
     emit urlChanged();
 }
 
+int VlcQmlPlayer::volume() const
+{
+    return _player->audio()->volume();
+}
+
+void VlcQmlPlayer::setVolume(int volume)
+{
+    if (volume == VlcQmlPlayer::volume())
+        return;
+
+    _player->audio()->setVolume(volume);
+    emit volumeChanged();
+}
+
+void VlcQmlPlayer::mediaParsed(bool parsed)
+{
+    Q_UNUSED(parsed)
+}
+
+void VlcQmlPlayer::mediaPlayerVout(int)
+{
+}
+
 void VlcQmlPlayer::openInternal()
 {
-    _player->open(_media);
+    if (_autoplay)
+        _player->open(_media);
+    else
+        _player->openOnly(_media);
 }
