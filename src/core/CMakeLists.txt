@@ -146,6 +146,8 @@ ENDIF()
 # Compiler settings #
 #####################
 INCLUDE_DIRECTORIES(
+    ${LIBVLC_EXTRA_INCLUDE_DIR}
+    ${LIBVLC_EXTRA_INCLUDE_DIR}/vlc/plugins
     ${LIBVLC_INCLUDE_DIR}
     ${LIBVLC_INCLUDE_DIR}/vlc/plugins
 )

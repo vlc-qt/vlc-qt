@@ -18,6 +18,8 @@ You can download VLC-Qt binaries and sources from the
 Latest source is also available via Git:
 ```bash
   git clone git://github.com/vlc-qt/vlc-qt.git
+  git submodule init
+  git submodule update
 ```
 
 Master branch is considered stable and working on all supported platforms.
