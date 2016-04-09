@@ -27,6 +27,7 @@ Rectangle {
 
     VlcPlayer {
         id: player
+        logLevel: Vlc.DebugLevel
         url: "http://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_480p_surround-fix.avi"
     }
     VlcVideoOutput {
