@@ -154,6 +154,13 @@ public:
     bool hasVout() const;
 
     /*!
+        \brief Get seekable status
+        \return seekable status (const bool)
+        \since VLC-Qt 1.1
+    */
+    bool seekable() const;
+
+    /*!
         \brief Get current player state.
         \return current player state (const Vlc::State)
     */
