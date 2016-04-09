@@ -76,6 +76,9 @@ QVariant VlcTrackModel::data(const int row,
 
 void VlcTrackModel::clear()
 {
+    if (!_tracks.count())
+        return;
+
     beginRemoveRows(QModelIndex(), 0, _tracks.count() - 1);
     _tracks.clear();
     endRemoveRows();
