@@ -113,6 +113,20 @@ qint64 VlcQmlPlayer::length() const
     return _player->length();
 }
 
+int VlcQmlPlayer::logLevel() const
+{
+    return _instance->logLevel();
+}
+
+void VlcQmlPlayer::setLogLevel(int level)
+{
+    if (level == logLevel())
+        return;
+
+    _instance->setLogLevel(Vlc::LogLevel(level));
+    emit logLevelChanged();
+}
+
 bool VlcQmlPlayer::seekable() const
 {
     return _player->seekable();

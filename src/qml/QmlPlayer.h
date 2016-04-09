@@ -68,6 +68,14 @@ class VlcQmlPlayer : public VlcQmlSource
     Q_PROPERTY(qint64 length READ length NOTIFY lengthChanged)
 
     /*!
+        \brief Current log level
+        \see logLevel
+        \see setLogLevel
+        \see logLevelChanged
+     */
+    Q_PROPERTY(int logLevel READ logLevel WRITE setLogLevel NOTIFY logLevelChanged)
+
+    /*!
         \brief Current media position
         \see position
         \see setPosition;
@@ -250,6 +258,22 @@ public:
         Used as property in QML.
      */
     qint64 length() const;
+
+    /*!
+        \brief Get current log level
+        \return current log level
+
+        Used as property in QML.
+     */
+    int logLevel() const;
+
+    /*!
+        \brief Set log level
+        \param level log level
+
+        Used as property in QML.
+     */
+    void setLogLevel(int level);
 
     /*!
         \brief Get current media position
@@ -451,6 +475,11 @@ signals:
         \brief Length changed signal
     */
     void lengthChanged();
+
+    /*!
+        \brief Log level changed signal
+    */
+    void logLevelChanged();
 
     /*!
         \brief Position changed signal
