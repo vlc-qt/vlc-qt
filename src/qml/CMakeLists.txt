@@ -125,6 +125,11 @@ SET_TARGET_PROPERTIES(${VLCQT_QML} PROPERTIES FRAMEWORK ON
                                               SOVERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}"
                                               PUBLIC_HEADER "${VLCQT_QML_HEADERS}"
 )
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    SET_TARGET_PROPERTIES(${VLCQT_QML} PROPERTIES INSTALL_RPATH "@loader_path/../../../${VLCQT_CORE_NAME}.framework/Versions/${VLCQT_VERSION}/lib")
+ENDIF()
+
+SYMLINK_FRAMEWORK_TEST(${VLCQT_QML} qml ${VLCQT_QML_NAME})
 
 # Link the required libraries
 TARGET_LINK_LIBRARIES(${VLCQT_QML} PRIVATE Qt5::Quick)
