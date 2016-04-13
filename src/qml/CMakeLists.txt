@@ -124,6 +124,7 @@ SET_TARGET_PROPERTIES(${VLCQT_QML} PROPERTIES FRAMEWORK ON
                                               VERSION ${VLCQT_VERSION}
                                               SOVERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}"
                                               PUBLIC_HEADER "${VLCQT_QML_HEADERS}"
+                                              INSTALL_RPATH "@loader_path/../../../${VLCQT_CORE_NAME}.framework/Versions/${VLCQT_VERSION}/lib"
 )
 
 # Link the required libraries
