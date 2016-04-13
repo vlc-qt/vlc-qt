@@ -21,6 +21,7 @@
 #include "Config.h"
 
 #include "core/Enums.h"
+#include "core/TrackModel.h"
 #include "qml/Qml.h"
 #include "qml/QmlPlayer.h"
 #include "qml/QmlSource.h"
@@ -34,6 +35,7 @@ void VlcQml::registerTypes()
 
     qmlRegisterUncreatableType<Vlc>(m, 1, 1, "Vlc", QStringLiteral("Vlc cannot be instantiated directly"));
     qmlRegisterUncreatableType<VlcQmlSource>(m, 1, 1, "VlcSource", QStringLiteral("VlcQmlSource cannot be instantiated directly"));
+    qmlRegisterUncreatableType<VlcTrackModel>(m, 1, 1, "VlcTrackModel", QStringLiteral("VlcTrackModel cannot be instantiated directly"));
 
     qmlRegisterType<VlcQmlPlayer>(m, 1, 1, "VlcPlayer");
     qmlRegisterType<VlcQmlVideoOutput>(m, 1, 1, "VlcVideoOutput");
