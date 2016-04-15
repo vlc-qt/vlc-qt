@@ -68,18 +68,13 @@ ADD_SUBDIRECTORY(docs)
 #########
 # Tests #
 #########
-IF(QT_VERSION MATCHES 5)
-    OPTION(BUILD_TESTS "Build tests" OFF)
-    MESSAGE("\nVLC-Qt: Build tests: ${BUILD_TESTS}\n")
+IF(QT_VERSION MATCHES 5 AND NOT MOBILE)
+    ENABLE_TESTING(true)
+    ADD_SUBDIRECTORY(tests)
 
-    IF(BUILD_TESTS)
-        ENABLE_TESTING(true)
-        ADD_SUBDIRECTORY(tests)
-
-        IF(NOT MSVC)
-            OPTION(COVERAGE "Coverage report" OFF)
-            MESSAGE("\nVLC-Qt: Coverage report: ${COVERAGE}\n")
-        ENDIF()
+    IF(NOT MSVC)
+        OPTION(COVERAGE "Coverage report" OFF)
+        MESSAGE("\nVLC-Qt: Coverage report: ${COVERAGE}\n")
     ENDIF()
 
     IF(COVERAGE)
