@@ -28,7 +28,7 @@
 
 #include "SharedExportQml.h"
 
-struct VlcVideoFrameYUV;
+struct VlcYUVVideoFrame;
 class VlcQmlSource;
 
 /*!
@@ -151,7 +151,7 @@ public slots:
         \brief Set frame which will be rendered in the output.
         \param frame
      */
-    void presentFrame(const std::shared_ptr<const VlcVideoFrameYUV> &frame);
+    void presentFrame(const std::shared_ptr<const VlcYUVVideoFrame> &frame);
 
 
 signals:
@@ -187,7 +187,7 @@ private:
     QPointer<VlcQmlSource> _source;
 
     bool _frameUpdated;
-    std::shared_ptr<const VlcVideoFrameYUV> _frame;
+    std::shared_ptr<const VlcYUVVideoFrame> _frame;
 };
 
 #endif // VLCQT_QMLVIDEOOUTPUT_H_

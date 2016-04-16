@@ -27,7 +27,7 @@
 
 #include <QtQuick/QSGMaterial>
 
-class VideoMaterialShader : public QSGMaterialShader
+class VideoMaterialShader : public QSGMaterialShader // LCOV_EXCL_LINE
 {
 public:
     virtual char const * const *attributeNames() const;

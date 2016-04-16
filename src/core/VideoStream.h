@@ -28,9 +28,10 @@
 
 #include <QtCore/QObject>
 
+#include "AbstractVideoFrame.h"
 #include "AbstractVideoStream.h"
+#include "Enums.h"
 #include "SharedExportCore.h"
-#include "VideoFrameYUV.h"
 
 class VlcMediaPlayer;
 
@@ -43,7 +44,7 @@ class VlcMediaPlayer;
     This class should be subclassed and implement frameUpdated to specify what to do with the frame.
 
     \see VlcQmlVideoStream
-    \see VlcVideoFrameYUV
+    \see VlcAbstractVideoFrame
     \since VLC-Qt 1.1
  */
 class VLCQT_CORE_EXPORT VlcVideoStream : public QObject,
@@ -53,10 +54,18 @@ class VLCQT_CORE_EXPORT VlcVideoStream : public QObject,
 public:
     /*!
         \brief VlcVideoStream constructor
+        \param format rendering format
         \param parent parent object
      */
-    explicit VlcVideoStream(QObject *parent = 0);
+    explicit VlcVideoStream(Vlc::RenderFormat format,
+                            QObject *parent = 0);
     ~VlcVideoStream();
+
+    /*!
+        \brief Rendering format
+        \return current rendering format
+     */
+    Vlc::RenderFormat format() const { return _format; } // LCOV_EXCL_LINE
 
     /*!
         \brief Initialise video memory stream with player
@@ -73,29 +82,31 @@ public:
         \brief Get current frame
         \return current frame
      */
-    std::shared_ptr<const VlcVideoFrameYUV> renderFrame() const { return _renderFrame; }
+    std::shared_ptr<const VlcAbstractVideoFrame> renderFrame() const { return _renderFrame; } // LCOV_EXCL_LINE
 
 private:
     Q_INVOKABLE virtual void frameUpdated() = 0;
 
-    virtual unsigned formatCallback(char *chroma,
-                                    unsigned *width,
-                                    unsigned *height,
-                                    unsigned *pitches,
-                                    unsigned *lines);
-    virtual void formatCleanUpCallback();
+    unsigned formatCallback(char *chroma,
+                            unsigned *width,
+                            unsigned *height,
+                            unsigned *pitches,
+                            unsigned *lines);
+    void formatCleanUpCallback();
 
-    virtual void *lockCallback(void **planes);
-    virtual void  unlockCallback(void *picture,
-                                 void * const *planes);
-    virtual void  displayCallback(void *picture);
+    void *lockCallback(void **planes);
+    void  unlockCallback(void *picture,
+                         void * const *planes);
+    void  displayCallback(void *picture);
 
-private:
+    std::shared_ptr<VlcAbstractVideoFrame> cloneFrame(std::shared_ptr<VlcAbstractVideoFrame> frame);
+
+    Vlc::RenderFormat _format;
     VlcMediaPlayer *_player;
 
-    std::deque<std::shared_ptr<VlcVideoFrameYUV>> _frames;
-    std::list<std::shared_ptr<VlcVideoFrameYUV>> _lockedFrames;
-    std::shared_ptr<VlcVideoFrameYUV> _renderFrame;
+    std::deque<std::shared_ptr<VlcAbstractVideoFrame>> _frames;
+    std::list<std::shared_ptr<VlcAbstractVideoFrame>> _lockedFrames;
+    std::shared_ptr<VlcAbstractVideoFrame> _renderFrame;
 };
 
 #endif // VLCQT_VIDEOSTREAM_H_

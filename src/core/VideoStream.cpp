@@ -22,9 +22,12 @@
 #include <functional>
 
 #include "core/VideoStream.h"
+#include "core/YUVVideoFrame.h"
 
-VlcVideoStream::VlcVideoStream(QObject *parent)
-    : QObject(parent) { }
+VlcVideoStream::VlcVideoStream(Vlc::RenderFormat format,
+                               QObject *parent)
+    : QObject(parent),
+      _format(format) { }
 
 VlcVideoStream::~VlcVideoStream()
 {
@@ -53,38 +56,15 @@ unsigned VlcVideoStream::formatCallback(char *chroma,
                                         unsigned *pitches,
                                         unsigned *lines)
 {
-    qstrcpy(chroma, "I420");
+    switch (_format)
+    {
+    case Vlc::YUVFormat:
+        qstrcpy(chroma, "I420");
+        _frames.emplace(_frames.end(), new VlcYUVVideoFrame(width, height, pitches, lines));
+        return 3;
+    }
 
-    uint16_t evenWidth = *width + (*width & 1 ? 1 : 0);
-    uint16_t evenHeight = *height + (*height & 1 ? 1 : 0);
-
-    pitches[0] = evenWidth; if (pitches[0] % 4) pitches[0] += 4 - pitches[0] % 4;
-    pitches[1] = evenWidth / 2; if (pitches[1] % 4) pitches[1] += 4 - pitches[1] % 4;
-    pitches[2] = pitches[1];
-
-    lines[0] = evenHeight;
-    lines[1] = evenHeight / 2;
-    lines[2] = lines[1];
-
-    std::shared_ptr<VlcVideoFrameYUV>& frame = *_frames.emplace(_frames.end(), new VlcVideoFrameYUV);
-
-    frame->frameBuf.resize(pitches[0] * lines[0] + pitches[1] * lines[1] + pitches[2] * lines[2]);
-
-    frame->width = evenWidth;
-    frame->height = evenHeight;
-
-    char* fb = frame->frameBuf.data();
-
-    frame->yPlane = fb;
-    frame->yPlaneSize = pitches[0] * lines[0];
-
-    frame->uPlane = fb + frame->yPlaneSize;
-    frame->uPlaneSize = pitches[1] * lines[1];
-
-    frame->vPlane = fb + frame->yPlaneSize + frame->uPlaneSize;
-    frame->vPlaneSize = pitches[2] * lines[2];
-
-    return 3;
+    return -1; // LCOV_EXCL_LINE
 }
 
 void VlcVideoStream::formatCleanUpCallback()
@@ -104,10 +84,10 @@ void* VlcVideoStream::lockCallback(void **planes)
     if (frameIt == _frames.end())
         frameIt = _frames.emplace(_frames.end(), cloneFrame(_frames.front()));
 
-    std::shared_ptr<VlcVideoFrameYUV>& frame = *frameIt;
-    planes[0] = frame->yPlane;
-    planes[1] = frame->uPlane;
-    planes[2] = frame->vPlane;
+    std::shared_ptr<VlcAbstractVideoFrame>& frame = *frameIt;
+    for (size_t i = 0; i < frame->planes.size(); i++) {
+        planes[i] = frame->planes[i];
+    }
 
     _lockedFrames.emplace_back(frame);
 
@@ -120,10 +100,10 @@ void VlcVideoStream::unlockCallback(void *picture, void * const * planes)
 
     auto frameNo = reinterpret_cast<decltype(_frames)::size_type>(picture);
     if (frameNo >= _frames.size()) {
-        return;
+        return; // LCOV_EXCL_LINE
     }
 
-    std::shared_ptr<VlcVideoFrameYUV>& frame = _frames[frameNo];
+    std::shared_ptr<VlcAbstractVideoFrame>& frame = _frames[frameNo];
 
     _lockedFrames.erase(std::find(_lockedFrames.begin(), _lockedFrames.end(), frame));
 }
@@ -133,12 +113,26 @@ void VlcVideoStream::displayCallback(void *picture)
     auto frameNo = reinterpret_cast<decltype(_frames)::size_type>(picture);
     if (frameNo >= _frames.size()) {
         Q_ASSERT(false);
-        return;
+        return; // LCOV_EXCL_LINE
     }
 
-    std::shared_ptr<VlcVideoFrameYUV>& frame = _frames[frameNo];
+    std::shared_ptr<VlcAbstractVideoFrame>& frame = _frames[frameNo];
 
     _renderFrame = frame;
 
     QMetaObject::invokeMethod(this, "frameUpdated");
+}
+
+std::shared_ptr<VlcAbstractVideoFrame> VlcVideoStream::cloneFrame(std::shared_ptr<VlcAbstractVideoFrame> frame)
+{
+    switch (_format)
+    {
+    case Vlc::YUVFormat:
+        std::shared_ptr<VlcYUVVideoFrame> from = std::dynamic_pointer_cast<VlcYUVVideoFrame>(frame);
+        if (from) {
+            return std::make_shared<VlcYUVVideoFrame>(from);
+        }
+    }
+
+    return 0; // LCOV_EXCL_LINE
 }

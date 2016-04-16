@@ -20,7 +20,7 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include "core/VideoFrameYUV.h"
+#include "core/YUVVideoFrame.h"
 
 #include "rendering/VideoMaterial.h"
 #include "rendering/VideoMaterialShader.h"
@@ -75,7 +75,7 @@ int VideoMaterial::compare(const QSGMaterial *other) const
     return 0;
 }
 
-void VideoMaterial::setFrame(const std::shared_ptr<const VlcVideoFrameYUV> &frame)
+void VideoMaterial::setFrame(const std::shared_ptr<const VlcYUVVideoFrame> &frame)
 {
     _frame = frame;
 }
@@ -85,7 +85,7 @@ void VideoMaterial::bindPlanes()
     if (_planeTexIds[0] == 0 && _planeTexIds[1] == 0 && _planeTexIds[2] == 0)
         _glF->glGenTextures(3, _planeTexIds);
 
-    std::shared_ptr<const VlcVideoFrameYUV> tmpFrame;
+    std::shared_ptr<const VlcYUVVideoFrame> tmpFrame;
     _frame.swap(tmpFrame);
 
     if (tmpFrame) {
@@ -93,9 +93,9 @@ void VideoMaterial::bindPlanes()
         const quint16 tw = tmpFrame->width;
         const quint16 th = tmpFrame->height;
 
-        bindPlane(GL_TEXTURE1, _planeTexIds[1], tmpFrame->uPlane, tw / 2, th / 2);
-        bindPlane(GL_TEXTURE2, _planeTexIds[2], tmpFrame->vPlane, tw / 2, th / 2);
-        bindPlane(GL_TEXTURE0, _planeTexIds[0], tmpFrame->yPlane, tw, th);
+        bindPlane(GL_TEXTURE1, _planeTexIds[1], tmpFrame->planes[1], tw / 2, th / 2);
+        bindPlane(GL_TEXTURE2, _planeTexIds[2], tmpFrame->planes[2], tw / 2, th / 2);
+        bindPlane(GL_TEXTURE0, _planeTexIds[0], tmpFrame->planes[0], tw, th);
     } else {
         bindPlane(GL_TEXTURE1, _planeTexIds[1], 0, 0, 0);
         bindPlane(GL_TEXTURE2, _planeTexIds[2], 0, 0, 0);

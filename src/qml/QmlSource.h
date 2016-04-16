@@ -78,8 +78,10 @@ public:
 
 
 private:
+    // LCOV_EXCL_START
     void classBegin() override {}
     void componentComplete() override {}
+    // LCOV_EXCL_END
 
     VlcQmlVideoStream *_videoStream;
 };

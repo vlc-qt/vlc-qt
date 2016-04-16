@@ -75,6 +75,15 @@ public:
     };
 
     /*!
+        \enum RenderFormat
+        \brief Frame format used for custom rendering
+        \since VLC-Qt 1.1
+    */
+    enum RenderFormat {
+        YUVFormat
+    };
+
+    /*!
         \enum ActionsType
         \brief Actions types identifiers
     */

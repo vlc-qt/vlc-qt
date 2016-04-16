@@ -36,7 +36,7 @@
     #include <QtGui/QOpenGLFunctions>
 #endif
 
-struct VlcVideoFrameYUV;
+struct VlcYUVVideoFrame;
 
 class VideoMaterial : public QSGMaterial
 {
@@ -48,7 +48,7 @@ public:
     virtual QSGMaterialShader *createShader() const;
     virtual int compare(const QSGMaterial *other) const;
 
-    void setFrame(const std::shared_ptr<const VlcVideoFrameYUV> &frame);
+    void setFrame(const std::shared_ptr<const VlcYUVVideoFrame> &frame);
 
     void bindPlanes();
 
@@ -70,7 +70,7 @@ private:
     QOpenGLFunctions *_glF;
 #endif
 
-    std::shared_ptr<const VlcVideoFrameYUV> _frame;
+    std::shared_ptr<const VlcYUVVideoFrame> _frame;
     GLuint _planeTexIds[3];
 };
 

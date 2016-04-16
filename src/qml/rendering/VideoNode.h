@@ -29,12 +29,12 @@
 
 #include "rendering/VideoMaterial.h"
 
-class VideoNode : public QSGGeometryNode
+class VideoNode : public QSGGeometryNode // LCOV_EXCL_LINE
 {
 public:
     VideoNode();
 
-    void setFrame(const std::shared_ptr<const VlcVideoFrameYUV> &frame);
+    void setFrame(const std::shared_ptr<const VlcYUVVideoFrame> &frame);
     void setRect(const QRectF &rect,
                  const QRectF &sourceRect);
 

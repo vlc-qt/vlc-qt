@@ -21,18 +21,23 @@
 
 #include <functional>
 
+#include "core/YUVVideoFrame.h"
 #include "qml/QmlVideoOutput.h"
 #include "qml/rendering/QmlVideoStream.h"
 
 VlcQmlVideoStream::VlcQmlVideoStream(QObject *parent)
-    : VlcVideoStream(parent) { }
+    : VlcVideoStream(Vlc::YUVFormat, parent) { }
 
 VlcQmlVideoStream::~VlcQmlVideoStream() { }
 
 void VlcQmlVideoStream::frameUpdated()
 {
     // convert to shared pointer to const frame to avoid crash
-    std::shared_ptr<const VlcVideoFrameYUV> frame = renderFrame();
+    std::shared_ptr<const VlcYUVVideoFrame> frame = std::dynamic_pointer_cast<const VlcYUVVideoFrame>(renderFrame());
+
+    if (!frame) {
+        return; // LCOV_EXCL_LINE
+    }
 
     std::for_each(_attachedOutputs.begin(), _attachedOutputs.end(),
                   std::bind2nd(std::mem_fun(&VlcQmlVideoOutput::presentFrame), frame));

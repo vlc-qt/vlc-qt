@@ -16,7 +16,7 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include "core/VideoFrameYUV.h"
+#include "core/YUVVideoFrame.h"
 #include "qml/QmlSource.h"
 #include "qml/QmlVideoOutput.h"
 #include "qml/rendering/VideoNode.h"
@@ -179,7 +179,7 @@ QSGNode *VlcQmlVideoOutput::updatePaintNode(QSGNode *oldNode,
     return node;
 }
 
-void VlcQmlVideoOutput::presentFrame(const std::shared_ptr<const VlcVideoFrameYUV> &frame)
+void VlcQmlVideoOutput::presentFrame(const std::shared_ptr<const VlcYUVVideoFrame> &frame)
 {
     _frame = frame;
     _frameUpdated = true;

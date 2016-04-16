@@ -19,63 +19,42 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#ifndef VLCQT_VIDEOFRAMEYUV_H_
-#define VLCQT_VIDEOFRAMEYUV_H_
+#ifndef VLCQT_YUVVIDEOFRAME_H_
+#define VLCQT_YUVVIDEOFRAME_H_
 
-#include <memory>
-
-#include <QtCore/QByteArray>
-
+#include "AbstractVideoFrame.h"
 #include "SharedExportCore.h"
 
 /*!
-    \struct VlcVideoFrameYUV VideoFrameYUV.h VLCQtCore/VideoFrameYUV.h
+    \struct VlcYUVVideoFrame YUVVideoFrame.h VLCQtCore/YUVVideoFrame.h
     \ingroup VLCQtCore
     \brief Video YUV frame data container
     \since VLC-Qt 1.1
 */
-struct VLCQT_CORE_EXPORT VlcVideoFrameYUV
+struct VLCQT_CORE_EXPORT VlcYUVVideoFrame : VlcAbstractVideoFrame
 {
     /*!
         \brief VlcVideoFrame constructor.
-
-        This construction ensures default data is set.
+        This construction ensures data is set and containers prepared.
+        \param width
+        \param height
+        \param pitches
+        \param lines
     */
-    VlcVideoFrameYUV();
+    VlcYUVVideoFrame(unsigned *width,
+                     unsigned *height,
+                     unsigned *pitches,
+                     unsigned *lines);
 
     /*!
-        \brief Reset frame to default values
-     */
-    void clear();
+        \brief VlcVideoFrame constructor.
+        This construction copies an existing frame into a new one.
+        \param frame existing shared pointer to a frame
+    */
+    VlcYUVVideoFrame(const std::shared_ptr<VlcYUVVideoFrame> &frame);
 
-    /*!
-        \brief Validate frame
-        \return true if frame has size greater than 0 in both dimensions
-     */
-    bool isValid();
-
-
-    QByteArray frameBuf  /*!< frame buffer */;
-
-    quint16 width; /*!< frame width */
-    quint16 height; /*!< frame height */
-
-    void* yPlane; /*!< pointer to Y plane */
-    quint32 yPlaneSize; /*!< Y plane size */
-
-    void* uPlane; /*!< pointer to U plane */
-    quint32 uPlaneSize; /*!< Y plane size */
-
-    void* vPlane; /*!< pointer to V plane */
-    quint32 vPlaneSize; /*!< Y plane size */
+    ~VlcYUVVideoFrame();
 };
 
 
-/*!
-    \brief Clone frame
-    \param from frame to clone
- */
-std::shared_ptr<VlcVideoFrameYUV> cloneFrame(const std::shared_ptr<VlcVideoFrameYUV> &from);
-
-
-#endif // VLCQT_VIDEOFRAMEYUV_H_
+#endif // VLCQT_YUVVIDEOFRAME_H_

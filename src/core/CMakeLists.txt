@@ -43,6 +43,7 @@ ENDIF()
 
 # Define the C++ source files
 SET(VLCQT_CORE_SRCS
+    AbstractVideoFrame.cpp
     AbstractVideoStream.cpp
     Audio.cpp
     Common.cpp
@@ -60,8 +61,8 @@ SET(VLCQT_CORE_SRCS
     TrackModel.cpp
     Video.cpp
     VideoDelegate.h
-    VideoFrameYUV.cpp
     VideoStream.cpp
+    YUVVideoFrame.cpp
 
     ${VLCQT_CORE_SRCS_DEPRECATED}
 )
@@ -74,6 +75,7 @@ SET(VLCQT_CORE_HEADERS_DEPRECATED
 
 # Define the Include files
 SET(VLCQT_CORE_HEADERS
+    AbstractVideoFrame.h
     AbstractVideoStream.h
     Audio.h
     Common.h
@@ -91,8 +93,8 @@ SET(VLCQT_CORE_HEADERS
     TrackModel.h
     Video.h
     VideoDelegate.h
-    VideoFrameYUV.h
     VideoStream.h
+    YUVVideoFrame.h
 
     ${VLCQT_CORE_HEADERS_DEPRECATED}
 
