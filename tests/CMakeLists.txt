@@ -29,11 +29,11 @@ MACRO(ADD_AUTO_TEST TestName)
 
     ADD_EXECUTABLE(Test_${TestName} ${Test_${TestName}_Srcs})
     ADD_DEPENDENCIES(Test_${TestName} ${VLCQT_CORE})
-    TARGET_LINK_LIBRARIES(Test_${TestName} Qt5::Core Qt5::Test ${VLCQT_CORE_BINARY})
+    TARGET_LINK_LIBRARIES(Test_${TestName} Qt5::Core Qt5::Test ${VLCQT_CORE})
 
     IF(${TestName} MATCHES "Widgets")
         ADD_DEPENDENCIES(Test_${TestName} ${VLCQT_WIDGETS})
-        TARGET_LINK_LIBRARIES(Test_${TestName} Qt5::Widgets ${VLCQT_WIDGETS_BINARY})
+        TARGET_LINK_LIBRARIES(Test_${TestName} Qt5::Widgets ${VLCQT_WIDGETS})
     ENDIF()
 
     IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
