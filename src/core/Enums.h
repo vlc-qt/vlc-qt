@@ -40,6 +40,7 @@ class VLCQT_CORE_EXPORT Vlc : public QObject // LCOV_EXCL_LINE
     Q_ENUMS(AudioCodec)
     Q_ENUMS(AudioOutput)
     Q_ENUMS(Deinterlacing)
+    Q_ENUMS(FillMode)
     Q_ENUMS(Meta)
     Q_ENUMS(Mux)
     Q_ENUMS(PlaybackMode)
@@ -71,6 +72,15 @@ public:
         WarningLevel = 3,
         ErrorLevel = 4,
         DisabledLevel = 5
+    };
+
+    /*!
+        \enum RenderFormat
+        \brief Frame format used for custom rendering
+        \since VLC-Qt 1.1
+    */
+    enum RenderFormat {
+        YUVFormat
     };
 
     /*!
@@ -134,6 +144,16 @@ public:
         Yadif2x,
         Phospor,
         IVTC
+    };
+
+    /*!
+        \enum FillMode
+        \brief Supported fill modes (QML only)
+    */
+    enum FillMode {
+        PreserveAspectFit  = Qt::KeepAspectRatio,
+        PreserveAspectCrop = Qt::KeepAspectRatioByExpanding,
+        Stretch            = Qt::IgnoreAspectRatio
     };
 
     /*!

@@ -38,9 +38,11 @@ SET(PROJECT_DESCRIPTION "VLC-Qt - Qt bindings for libVLC")
 SET(VLCQT_CORE Core)
 SET(VLCQT_WIDGETS Widgets)
 SET(VLCQT_QML Qml)
+SET(VLCQT_PLUGIN_QML PluginQml)
 SET(VLCQT_CORE_NAME ${PROJECT_LIBRARY}Core)
 SET(VLCQT_WIDGETS_NAME ${PROJECT_LIBRARY}Widgets)
 SET(VLCQT_QML_NAME ${PROJECT_LIBRARY}Qml)
+SET(VLCQT_PLUGIN_QML_NAME ${PROJECT_LIBRARY})
 
 INCLUDE(Macros)
 INCLUDE(CustomTargets)
@@ -66,18 +68,13 @@ ADD_SUBDIRECTORY(docs)
 #########
 # Tests #
 #########
-IF(QT_VERSION MATCHES 5)
-    OPTION(BUILD_TESTS "Build tests" OFF)
-    MESSAGE("\nVLC-Qt: Build tests: ${BUILD_TESTS}\n")
+IF(QT_VERSION MATCHES 5 AND NOT MOBILE)
+    ENABLE_TESTING(true)
+    ADD_SUBDIRECTORY(tests)
 
-    IF(BUILD_TESTS)
-        ENABLE_TESTING(true)
-        ADD_SUBDIRECTORY(tests)
-
-        IF(NOT MSVC)
-            OPTION(COVERAGE "Coverage report" OFF)
-            MESSAGE("\nVLC-Qt: Coverage report: ${COVERAGE}\n")
-        ENDIF()
+    IF(NOT MSVC)
+        OPTION(COVERAGE "Coverage report" OFF)
+        MESSAGE("\nVLC-Qt: Coverage report: ${COVERAGE}\n")
     ENDIF()
 
     IF(COVERAGE)

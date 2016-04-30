@@ -32,21 +32,51 @@ ENDIF()
 ###################
 # List of sources #
 ###################
-# Define the C++ source files
-SET(VLCQT_QML_SRCS
+# Deprecated C++ source files
+SET(VLCQT_QML_SRCS_DEPRECATED
     QmlVideoObject.cpp
     QmlVideoPlayer.cpp
-    SharedExportQml.h
 
     painter/GlPainter.cpp
     painter/GlslPainter.cpp
 )
+IF(NOT MSVC)
+    SET_SOURCE_FILES_PROPERTIES (${VLCQT_QML_SRCS_DEPRECATED} PROPERTIES COMPILE_FLAGS -Wno-deprecated)
+ENDIF()
+
+# Define the C++ source files
+SET(VLCQT_QML_SRCS
+    SharedExportQml.h
+    Qml.cpp
+    QmlPlayer.cpp
+    QmlSource.cpp
+
+    QmlVideoOutput.cpp
+
+    rendering/QmlVideoStream.cpp
+    rendering/VideoMaterial.cpp
+    rendering/VideoMaterialShader.cpp
+    rendering/VideoNode.cpp
+
+    ${VLCQT_QML_SRCS_DEPRECATED}
+)
+
+# Deprecated Include files
+SET(VLCQT_QML_HEADERS_DEPRECATED
+    QmlVideoObject.h
+    QmlVideoPlayer.h
+)
 
 # Define the Include files
 SET(VLCQT_QML_HEADERS
-    QmlVideoObject.h
+    Qml.h
+    QmlPlayer.h
+    QmlSource.h
+    QmlVideoOutput.h
     QmlVideoPlayer.h
     SharedExportQml.h
+
+    ${VLCQT_QML_HEADERS_DEPRECATED}
 )
 
 SET(VLCQT_QML_SRCS
@@ -95,6 +125,11 @@ SET_TARGET_PROPERTIES(${VLCQT_QML} PROPERTIES FRAMEWORK ON
                                               SOVERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}"
                                               PUBLIC_HEADER "${VLCQT_QML_HEADERS}"
 )
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    SET_TARGET_PROPERTIES(${VLCQT_QML} PROPERTIES INSTALL_RPATH "@loader_path/../../../${VLCQT_CORE_NAME}.framework/Versions/${VLCQT_VERSION}/lib")
+ENDIF()
+
+SYMLINK_FRAMEWORK_TEST(${VLCQT_QML} qml ${VLCQT_QML_NAME})
 
 # Link the required libraries
 TARGET_LINK_LIBRARIES(${VLCQT_QML} PRIVATE Qt5::Quick)

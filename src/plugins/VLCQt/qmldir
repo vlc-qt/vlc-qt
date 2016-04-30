@@ -1,0 +1,4 @@
+module VLCQt
+plugin VLCQt
+typeinfo VLCQt.qmltypes
+classname VLCQtPlugin

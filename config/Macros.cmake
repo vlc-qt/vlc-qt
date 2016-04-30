@@ -16,6 +16,17 @@
 # along with this library. If not, see <http://www.gnu.org/licenses/>.
 #############################################################################
 
+MACRO(SYMLINK_FRAMEWORK_TEST Target Path Framework)
+    IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+        FILE(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/src/lib")
+        ADD_CUSTOM_COMMAND(TARGET ${Target}
+            PRE_LINK
+            COMMAND "${CMAKE_COMMAND}" -E create_symlink "${CMAKE_BINARY_DIR}/src/${Path}/${Framework}.framework" "${Framework}.framework"
+            WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/src/lib"
+        )
+    ENDIF()
+ENDMACRO()
+
 MACRO(GENERATE_PKGCONFIG LibraryName LibraryFolder)
     CONFIGURE_FILE(
         lib${LibraryName}.pc.in
@@ -29,12 +40,10 @@ MACRO(GENERATE_PKGCONFIG LibraryName LibraryFolder)
 ENDMACRO()
 
 MACRO(GENERATE_WINDOWS_RC LibraryName LibraryFolder LibrarySrcs)
-    IF(MINGW OR MSVC)
-        CONFIGURE_FILE(
-            ${LibraryName}.rc.in
-            ${LibraryName}.rc
-        )
-    ENDIF()
+    CONFIGURE_FILE(
+        ${LibraryName}.rc.in
+        ${LibraryName}.rc
+    )
 
     # Compile resources with windres
     IF(MINGW)

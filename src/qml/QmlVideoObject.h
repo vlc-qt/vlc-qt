@@ -39,11 +39,13 @@ class GlslPainter;
 /*!
     \class VlcQmlVideoObject QmlVideoObject.h VLCQtQml/QmlVideoObject.h
     \ingroup VLCQtQml
-    \brief QML video object
+    \brief QML video object (deprecated)
 
     A basic QML video object for painting video. It acts as a replacement for video widget.
+
+    \deprecated Deprecated since VLC-Qt 1.1, will be removed in 2.0
  */
-class VLCQT_QML_EXPORT VlcQmlVideoObject : public QQuickPaintedItem,
+class Q_DECL_DEPRECATED VLCQT_QML_EXPORT VlcQmlVideoObject : public QQuickPaintedItem,
                                            public VlcVideoMemoryStream
 {
 Q_OBJECT

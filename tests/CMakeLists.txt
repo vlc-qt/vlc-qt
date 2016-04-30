@@ -17,11 +17,6 @@
 #############################################################################
 # Macros #
 ##########
-IF(MSVC OR MINGW)
-    SET(WINDOWS_TEST_PATH "${LIBVLC_BIN_DIR}\;${QT_BIN_DIR}\;${CMAKE_BINARY_DIR}/src/core\;${CMAKE_BINARY_DIR}/src/qml\;${CMAKE_BINARY_DIR}/src/widgets\;")
-    STRING(REGEX REPLACE "/" "\\\\" WINDOWS_TEST_PATH "${WINDOWS_TEST_PATH}")
-ENDIF()
-
 SET(TestCommonFiles ${CMAKE_SOURCE_DIR}/tests/common/TestsCommon.cpp)
 
 MACRO(ADD_AUTO_TEST TestName)
@@ -30,6 +25,11 @@ MACRO(ADD_AUTO_TEST TestName)
     ADD_EXECUTABLE(Test_${TestName} ${Test_${TestName}_Srcs})
     ADD_DEPENDENCIES(Test_${TestName} ${VLCQT_CORE})
     TARGET_LINK_LIBRARIES(Test_${TestName} Qt5::Core Qt5::Test ${VLCQT_CORE})
+
+    IF(${TestName} MATCHES "Qml")
+        ADD_DEPENDENCIES(Test_${TestName} ${VLCQT_QML})
+        TARGET_LINK_LIBRARIES(Test_${TestName} Qt5::QuickTest)
+    ENDIF()
 
     IF(${TestName} MATCHES "Widgets")
         ADD_DEPENDENCIES(Test_${TestName} ${VLCQT_WIDGETS})
@@ -42,7 +42,9 @@ MACRO(ADD_AUTO_TEST TestName)
 
     ADD_TEST(Test_${TestName} Test_${TestName})
     IF(MINGW OR MSVC)
-        SET_TESTS_PROPERTIES(Test_${TestName} PROPERTIES ENVIRONMENT "PATH=${WINDOWS_TEST_PATH}")
+        SET_TESTS_PROPERTIES(Test_${TestName} PROPERTIES ENVIRONMENT "PATH=${WINDOWS_RUN_PATH};QML2_IMPORT_PATH=${CMAKE_BINARY_DIR}/src/plugins")
+    ELSE()
+        SET_TESTS_PROPERTIES(Test_${TestName} PROPERTIES ENVIRONMENT "QML2_IMPORT_PATH=${CMAKE_BINARY_DIR}/src/plugins")
     ENDIF()
 ENDMACRO()
 
@@ -50,6 +52,7 @@ ENDMACRO()
 #################
 # Configuration #
 #################
+ADD_DEFINITIONS(-DQUICK_TEST_SOURCE_DIR=\"${CMAKE_SOURCE_DIR}/tests/qml/\")
 
 CONFIGURE_FILE(
     ${CMAKE_SOURCE_DIR}/tests/TestsConfig.h.in
@@ -63,8 +66,12 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/src
     ${CMAKE_BINARY_DIR}/tests
     ${CMAKE_BINARY_DIR}/tests/core
+    ${CMAKE_BINARY_DIR}/tests/qml
     ${CMAKE_BINARY_DIR}/tests/widgets
 )
 
 ADD_SUBDIRECTORY(core)
+ADD_SUBDIRECTORY(qml)
 ADD_SUBDIRECTORY(widgets)
+
+ADD_SUBDIRECTORY(app)
