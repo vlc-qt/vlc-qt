@@ -37,6 +37,8 @@ class VlcQmlSource;
     \brief QML video output
 
     A QML video output that can be used to display video inside QML.
+
+    \since VLC-Qt 1.1
  */
 class VLCQT_QML_EXPORT VlcQmlVideoOutput : public QQuickItem
 {

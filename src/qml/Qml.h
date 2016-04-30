@@ -36,6 +36,8 @@ namespace VlcQml {
         import VLCQt VERSION_MAJOR.VERSION_MINOR
 
         Object names: VlcPlayer, VlcVideoObject
+
+        \since VLC-Qt 1.1
      */
     VLCQT_QML_EXPORT void registerTypes();
 }

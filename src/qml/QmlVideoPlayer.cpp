@@ -56,9 +56,9 @@ VlcQmlVideoPlayer::VlcQmlVideoPlayer(QQuickItem *parent)
     connect(_player, SIGNAL(positionChanged(float)), this, SIGNAL(positionChanged()));
     connect(_player, SIGNAL(vout(int)), this, SLOT(mediaPlayerVout(int)));
 
-    _audioTracksModel = new VlcTrackModel(this);
-    _subtitleTracksModel = new VlcTrackModel(this);
-    _videoTracksModel = new VlcTrackModel(this);
+    _audioTrackModel = new VlcTrackModel(this);
+    _subtitleTrackModel = new VlcTrackModel(this);
+    _videoTrackModel = new VlcTrackModel(this);
 }
 
 VlcQmlVideoPlayer::~VlcQmlVideoPlayer()
@@ -91,21 +91,14 @@ void VlcQmlVideoPlayer::openInternal()
 
 int VlcQmlVideoPlayer::preferredAudioTrackId()
 {
-    QStringList languages = _audioPreferredLanguage.split(",", QString::SkipEmptyParts, Qt::CaseInsensitive);
-
-    int currentTrackId = _audioManager->track();
-    if(_audioTracksModel->count() > 0 && languages.count() > 0)
-    {
+    int currentTrackId = _player->audio()->track();
+    if (_audioTrackModel->count() && _audioPreferredLanguages.count()) {
         bool found = false;
-
-        for(int j = 0; j < languages.count() && !found; j++)
-        {
-            for(int i = 0; i < _audioTracksModel->count() && !found; i++)
-            {
-                QString trackTitle = _audioTracksModel->data(i, VlcTrackModel::TitleRole).toString();
-                if(trackTitle.contains(languages.at(j)))
-                {
-                    currentTrackId = _audioTracksModel->data(i, VlcTrackModel::IdRole).toInt();
+        for (int j = 0; !found && j < _audioPreferredLanguages.count(); j++) {
+            for (int i = 0; !found && i < _audioTrackModel->count(); i++) {
+                QString trackTitle = _audioTrackModel->data(i, VlcTrackModel::TitleRole).toString();
+                if (trackTitle.contains(_audioPreferredLanguages.at(j))) {
+                    currentTrackId = _audioTrackModel->data(i, VlcTrackModel::IdRole).toInt();
                     found = true;
                 }
             }
@@ -117,23 +110,14 @@ int VlcQmlVideoPlayer::preferredAudioTrackId()
 
 int VlcQmlVideoPlayer::preferredSubtitleTrackId()
 {
-    QStringList languages = _subtitlePreferredLanguage.split(",", QString::SkipEmptyParts, Qt::CaseInsensitive);
-    if(languages.count() == 0)
-        languages << "Disable";
-
-    int currentTrackId = _videoManager->subtitle();
-    if(_subtitleTracksModel->count() > 0)
-    {
+    int currentTrackId = _player->video()->subtitle();
+    if (_subtitleTrackModel->count()) {
         bool found = false;
-
-        for(int j = 0; j < languages.count() && !found; j++)
-        {
-            for(int i = 0; i < _subtitleTracksModel->count() && !found; i++)
-            {
-                QString trackTitle = _subtitleTracksModel->data(i, VlcTrackModel::TitleRole).toString();
-                if(trackTitle.contains(languages.at(j)))
-                {
-                    currentTrackId = _subtitleTracksModel->data(i, VlcTrackModel::IdRole).toInt();
+        for (int j = 0; !found && j < _subtitlePreferredLanguages.count(); j++) {
+            for (int i = 0; !found && i < _subtitleTrackModel->count(); i++) {
+                QString trackTitle = _subtitleTrackModel->data(i, VlcTrackModel::TitleRole).toString();
+                if (trackTitle.contains(_subtitlePreferredLanguages.at(j))) {
+                    currentTrackId = _subtitleTrackModel->data(i, VlcTrackModel::IdRole).toInt();
                     found = true;
                 }
             }
@@ -143,9 +127,9 @@ int VlcQmlVideoPlayer::preferredSubtitleTrackId()
     return currentTrackId;
 }
 
-VlcTrackModel *VlcQmlVideoPlayer::audioTracksModel() const
+VlcTrackModel *VlcQmlVideoPlayer::audioTrackModel() const
 {
-    return _audioTracksModel;
+    return _audioTrackModel;
 }
 
 int VlcQmlVideoPlayer::audioTrack() const
@@ -159,15 +143,15 @@ void VlcQmlVideoPlayer::setAudioTrack(int audioTrack)
     emit audioTrackChanged();
 }
 
-QString VlcQmlVideoPlayer::audioPreferredLanguage() const
+QStringList VlcQmlVideoPlayer::audioPreferredLanguages() const
 {
-    return _audioPreferredLanguage;
+    return _audioPreferredLanguages;
 }
 
-void VlcQmlVideoPlayer::setAudioPreferredLanguage(const QString &audioPreferredLanguage)
+void VlcQmlVideoPlayer::setAudioPreferredLanguages(const QStringList &audioPreferredLanguages)
 {
-    _audioPreferredLanguage = audioPreferredLanguage;
-    emit audioPreferredLanguageChanged();
+    _audioPreferredLanguages = audioPreferredLanguages;
+    emit audioPreferredLanguagesChanged();
 }
 
 int VlcQmlVideoPlayer::subtitleTrack() const
@@ -181,20 +165,20 @@ void VlcQmlVideoPlayer::setSubtitleTrack(int subtitleTrack)
     emit subtitleTrackChanged();
 }
 
-QString VlcQmlVideoPlayer::subtitlePreferredLanguage() const
+QStringList VlcQmlVideoPlayer::subtitlePreferredLanguages() const
 {
-    return _subtitlePreferredLanguage;
+    return _subtitlePreferredLanguages;
 }
 
-void VlcQmlVideoPlayer::setSubtitlePreferredLanguage(const QString &subtitlePreferredLanguage)
+void VlcQmlVideoPlayer::setSubtitlePreferredLanguages(const QStringList &subtitlePreferredLanguages)
 {
-    _subtitlePreferredLanguage = subtitlePreferredLanguage;
-    emit subtitlePreferredLanguageChanged();
+    _subtitlePreferredLanguages = subtitlePreferredLanguages;
+    emit subtitlePreferredLanguagesChanged();
 }
 
-VlcTrackModel *VlcQmlVideoPlayer::subtitleTracksModel() const
+VlcTrackModel *VlcQmlVideoPlayer::subtitleTrackModel() const
 {
-    return _subtitleTracksModel;
+    return _subtitleTrackModel;
 }
 
 int VlcQmlVideoPlayer::videoTrack() const
@@ -208,9 +192,9 @@ void VlcQmlVideoPlayer::setVideoTrack(int videoTrack)
     emit videoTrackChanged();
 }
 
-VlcTrackModel *VlcQmlVideoPlayer::videoTracksModel() const
+VlcTrackModel *VlcQmlVideoPlayer::videoTrackModel() const
 {
-    return _videoTracksModel;
+    return _videoTrackModel;
 }
 
 QString VlcQmlVideoPlayer::deinterlacing() const
@@ -270,8 +254,8 @@ void VlcQmlVideoPlayer::mediaParsed(bool parsed)
 {
     if(parsed == 1)
     {
-        _audioTracksModel->clear();
-        _audioTracksModel->load(_audioManager->tracks());
+        _audioTrackModel->clear();
+        _audioTrackModel->load(_audioManager->tracks());
 
         setAudioTrack(preferredAudioTrackId());
     }
@@ -279,13 +263,13 @@ void VlcQmlVideoPlayer::mediaParsed(bool parsed)
 
 void VlcQmlVideoPlayer::mediaPlayerVout(int)
 {
-    _subtitleTracksModel->clear();
-    _subtitleTracksModel->load(_videoManager->subtitles());
+    _subtitleTrackModel->clear();
+    _subtitleTrackModel->load(_videoManager->subtitles());
 
     setSubtitleTrack(preferredSubtitleTrackId());
 
-    _videoTracksModel->clear();
-    _videoTracksModel->load(_videoManager->tracks());
+    _videoTrackModel->clear();
+    _videoTrackModel->load(_videoManager->tracks());
 
     setVideoTrack(_videoManager->track());
 }

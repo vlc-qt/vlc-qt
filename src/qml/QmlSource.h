@@ -39,6 +39,8 @@ class VlcQmlVideoStream;
 
     \see VlcQmlPlayer
     \see VlcQmlVideoOutput
+
+    \since VLC-Qt 1.1
  */
 class VLCQT_QML_EXPORT VlcQmlSource : public QObject,
                                       public QQmlParserStatus

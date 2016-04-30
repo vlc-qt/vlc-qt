@@ -39,6 +39,7 @@ class VlcTrackModel;
     You need VlcQmlVideoOutput to display video.
 
     \see VlcQmlVideoOutput
+    \since VLC-Qt 1.1
  */
 class VlcQmlPlayer : public VlcQmlSource
 {
@@ -124,7 +125,6 @@ class VlcQmlPlayer : public VlcQmlSource
     /*!
         \brief Audio track model
         \see audioTrackModel
-        \since VLC-Qt 1.1
      */
     Q_PROPERTY(VlcTrackModel *audioTrackModel READ audioTrackModel CONSTANT)
 
@@ -133,7 +133,6 @@ class VlcQmlPlayer : public VlcQmlSource
         \see audioTrack
         \see setAudioTrack
         \see audioTrackChanged
-        \since VLC-Qt 1.1
      */
     Q_PROPERTY(int audioTrack READ audioTrack WRITE setAudioTrack NOTIFY audioTrackChanged)
 
@@ -142,14 +141,12 @@ class VlcQmlPlayer : public VlcQmlSource
         \see audioPreferredLanguages
         \see setAudioPreferredLanguages
         \see audioPreferredLanguagesChanged
-        \since VLC-Qt 1.1
      */
     Q_PROPERTY(QStringList audioPreferredLanguages READ audioPreferredLanguages WRITE setAudioPreferredLanguages NOTIFY audioPreferredLanguagesChanged)
 
     /*!
         \brief Subtitle track model
         \see subtitleTrackModel
-        \since VLC-Qt 1.1
      */
     Q_PROPERTY(VlcTrackModel *subtitleTrackModel READ subtitleTrackModel CONSTANT)
 
@@ -158,7 +155,6 @@ class VlcQmlPlayer : public VlcQmlSource
         \see subtitleTrack
         \see setSubtitleTrack
         \see subtitleTrackChanged
-        \since VLC-Qt 1.1
      */
     Q_PROPERTY(int subtitleTrack READ subtitleTrack WRITE setSubtitleTrack NOTIFY subtitleTrackChanged)
 
@@ -167,14 +163,12 @@ class VlcQmlPlayer : public VlcQmlSource
         \see subtitlePreferredLanguages
         \see setSubtitlePreferredLanguages
         \see subtitlePreferredLanguagesChanged
-        \since VLC-Qt 1.1
      */
     Q_PROPERTY(QStringList subtitlePreferredLanguages READ subtitlePreferredLanguages WRITE setSubtitlePreferredLanguages NOTIFY subtitlePreferredLanguagesChanged)
 
     /*!
         \brief Video track model
         \see videoTrackModel
-        \since VLC-Qt 1.1
      */
     Q_PROPERTY(VlcTrackModel *videoTrackModel READ videoTrackModel CONSTANT)
 
@@ -183,7 +177,6 @@ class VlcQmlPlayer : public VlcQmlSource
         \see videoTrack
         \see setVideoTrack
         \see videoTrackChanged
-        \since VLC-Qt 1.1
      */
     Q_PROPERTY(int videoTrack READ videoTrack WRITE setVideoTrack NOTIFY videoTrackChanged)
 
@@ -517,7 +510,7 @@ signals:
     void audioTrackChanged();
 
     /*!
-        \brief Audio preferred language changed signal
+        \brief Audio preferred languages changed signal
     */
     void audioPreferredLanguagesChanged();
 
@@ -527,7 +520,7 @@ signals:
     void subtitleTrackChanged();
 
     /*!
-        \brief Subtitle preferred language changed signal
+        \brief Subtitle preferred languages changed signal
     */
     void subtitlePreferredLanguagesChanged();
 
