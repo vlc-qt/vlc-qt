@@ -20,7 +20,7 @@
 # VLC-Qt version number
 FILE(READ VERSION VLCQT_VERSION)
 STRING(REGEX REPLACE "\n" "" VLCQT_VERSION "${VLCQT_VERSION}") # get rid of the newline at the end
-MESSAGE("\nVLC-Qt: You are compiling VLC-Qt ${VLCQT_VERSION}\n")
+MESSAGE(STATUS "Building VLC-Qt ${VLCQT_VERSION}")
 
 # Find Git Version Patch
 FIND_PROGRAM(GIT git)
@@ -32,7 +32,7 @@ IF(GIT AND NOT NO_GIT)
     )
     IF(NOT GIT_OUT STREQUAL "")
         SET(PROJECT_VERSION_VCS "${GIT_OUT}")
-        MESSAGE(STATUS "Git Version Patch: ${GIT_OUT}")
+        MESSAGE(STATUS "Git revision: ${GIT_OUT}")
     ENDIF()
 ELSEIF(GITBUILD)
     SET(PROJECT_VERSION_VCS "${GITBUILD}")

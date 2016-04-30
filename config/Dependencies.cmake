@@ -23,7 +23,7 @@ ENDIF()
 IF(QT_VERSION MATCHES 4)
     FIND_PACKAGE(Qt4 4.8.0 REQUIRED)
 
-    MESSAGE("VLC-Qt: Qt4 support is deprecated and will be removed. Please update to Qt 5 soon.")
+    MESSAGE(WARNING "Qt4 support is deprecated and will be removed. Please update to Qt 5 soon.")
 ELSE()
     FIND_PACKAGE(Qt5Core 5.2.0 REQUIRED)
     FIND_PACKAGE(Qt5Quick 5.2.0 REQUIRED)
@@ -32,28 +32,24 @@ ELSE()
     FIND_PACKAGE(Qt5QuickTest 5.2.0 REQUIRED)
     FIND_PACKAGE(Qt5Test 5.2.0 REQUIRED)
 
-    MESSAGE("VLC-Qt: Build with Qt5")
+    MESSAGE(STATUS "Using Qt ${Qt5Core_VERSION}")
 ENDIF()
 
 IF(NOT ${CMAKE_SYSTEM_NAME} MATCHES "Linux" AND QT_VERSION MATCHES 5 AND Qt5Core_VERSION VERSION_LESS "5.5.0")
-    MESSAGE("VLC-Qt: Your Qt5 version is old and support for it will be removed. Please update to Qt 5.5 or later soon.")
+    MESSAGE(WARNING "Your Qt5 version is old and support for it will be removed. Please update to Qt 5.5 or later soon.")
 ENDIF()
 
-IF(QT_VERSION MATCHES 5 AND Qt5Core_VERSION VERSION_LESS "5.5.0")
-    OPTION(WITH_GLES "Build with OpenGL ES2" OFF)
-    MESSAGE("VLC-Qt: Build with OpenGL ES2: ${WITH_GLES}")
+IF((MINGW OR MSVC) AND QT_VERSION MATCHES 5 AND Qt5Core_VERSION VERSION_LESS "5.5.0")
+    SET(WITH_GLES OFF CACHE BOOL "Build with OpenGL ES2")
 ENDIF()
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-    OPTION(WITH_X11 "Link with X11" OFF)
-    MESSAGE("VLC-Qt: Link with X11: ${WITH_X11}")
+    SET(WITH_X11 OFF CACHE BOOL "Link with X11")
 ENDIF()
 
 # Add libVLC libraries
 # Define version, if not defined use latest relased
-IF(NOT DEFINED LIBVLC_VERSION)
-    SET(LIBVLC_VERSION 0x020200)
-ENDIF()
+SET(LIBVLC_VERSION 0x020200 CACHE STRING "libVLC version used")
 # Include libVLC library
 SET(LIBVLC_EXTRA_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/libvlc-headers/include)
 IF(NOT MOBILE)

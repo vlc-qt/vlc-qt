@@ -50,13 +50,6 @@ INCLUDE(CompilerConfig)
 INCLUDE(Dependencies)
 INCLUDE(Platform)
 
-IF(NOT IOS)
-    OPTION(STATIC "Build statically" OFF)
-    MESSAGE("VLC-Qt: Build statically: ${STATIC}")
-ELSE()
-    SET(STATIC ON)
-ENDIF()
-
 
 ###################
 # Compile and set #
@@ -73,11 +66,11 @@ IF(QT_VERSION MATCHES 5 AND NOT MOBILE)
     ADD_SUBDIRECTORY(tests)
 
     IF(NOT MSVC)
-        OPTION(COVERAGE "Coverage report" OFF)
-        MESSAGE("\nVLC-Qt: Coverage report: ${COVERAGE}\n")
+        SET(COVERAGE OFF CACHE BOOL "Coverage report")
     ENDIF()
 
     IF(COVERAGE)
+        MESSAGE(STATUS "Generate coverage report using 'coverage' target")
         INCLUDE(CodeCoverage)
         SETUP_TARGET_FOR_COVERAGE(coverage ${CMAKE_CTEST_COMMAND} "${CMAKE_BINARY_DIR}/coverage")
     ENDIF()

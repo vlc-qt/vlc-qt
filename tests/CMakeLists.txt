@@ -28,12 +28,19 @@ MACRO(ADD_AUTO_TEST TestName)
 
     IF(${TestName} MATCHES "Qml")
         ADD_DEPENDENCIES(Test_${TestName} ${VLCQT_QML})
-        TARGET_LINK_LIBRARIES(Test_${TestName} Qt5::QuickTest)
+        TARGET_LINK_LIBRARIES(Test_${TestName} Qt5::QuickTest ${VLCQT_QML})
+        IF(STATIC)
+            TARGET_LINK_LIBRARIES(Test_${TestName} ${VLCQT_PLUGIN_QML})
+        ENDIF()
     ENDIF()
 
     IF(${TestName} MATCHES "Widgets")
         ADD_DEPENDENCIES(Test_${TestName} ${VLCQT_WIDGETS})
         TARGET_LINK_LIBRARIES(Test_${TestName} Qt5::Widgets ${VLCQT_WIDGETS})
+    ENDIF()
+
+    IF(STATIC)
+        TARGET_LINK_LIBRARIES(Test_${TestName} ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY})
     ENDIF()
 
     IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")

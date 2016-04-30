@@ -15,6 +15,19 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this library. If not, see <http://www.gnu.org/licenses/>.
 #############################################################################
+# Choose static or dynamic build
+IF(NOT IOS)
+    SET(STATIC OFF CACHE BOOL "Build statically")
+    MESSAGE(STATUS "Build statically: ${STATIC}")
+ELSE()
+    SET(STATIC ON)
+ENDIF()
+IF(STATIC)
+    SET(STATIC_BUILD 1)
+ELSE()
+    SET(STATIC_BUILD 0)
+ENDIF()
+
 # Detect building for mobile
 IF(CMAKE_SYSTEM_NAME MATCHES "Android" OR IOS)
     SET(MOBILE ON)
@@ -37,11 +50,10 @@ IF(CMAKE_BUILD_TYPE MATCHES Debug)
     SET(LE d) # For Qt
 
     IF(MINGW OR MSVC)
-        OPTION(DEBUG_SUFFIX "Debug library suffix" ON)
+        SET(DEBUG_SUFFIX ON CACHE BOOL "Debug library suffix")
     ELSE()
-        OPTION(DEBUG_SUFFIX "Debug library suffix" OFF)
+        SET(DEBUG_SUFFIX OFF CACHE BOOL "Debug library suffix")
     ENDIF()
-    MESSAGE("VLC-Qt: Debug library suffix ${DEBUG_SUFFIX}")
     IF(DEBUG_SUFFIX)
         SET(LS d) # For VLC-Qt
         SET(CMAKE_DEBUG_POSTFIX ${LS})
@@ -85,10 +97,9 @@ ENDIF()
 
 # Support OS X 10.6 or later (64-bit only)
 IF(NOT IOS AND ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    OPTION(HOMEBREW "Build using Homebrew provided Qt" OFF)
-    MESSAGE("VLC-Qt: Build using Homebrew provided Qt: ${HOMEBREW}")
+    SET(WITH_HOMEBREW OFF CACHE BOOL "Build using Homebrew provided Qt")
 
-    IF(HOMEBREW)
+    IF(WITH_HOMEBREW)
         SET(CMAKE_MACOSX_RPATH OFF)
     ELSE()
         SET(CMAKE_MACOSX_RPATH ON)

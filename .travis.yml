@@ -23,10 +23,4 @@ language: cpp
 before_install: . scripts/ci/$TRAVIS_OS_NAME/before_install.sh
 install: . scripts/ci/$TRAVIS_OS_NAME/install.sh
 script: . scripts/ci/$TRAVIS_OS_NAME/script.sh
-after_success:
-  - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && . scripts/ci/$TRAVIS_OS_NAME/after_success.sh || true'
-
-addons:
-  artifacts:
-    paths:
-      - ./install/artifacts
+after_success: . scripts/ci/$TRAVIS_OS_NAME/after_success.sh

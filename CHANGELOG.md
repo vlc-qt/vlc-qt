@@ -2,6 +2,7 @@
 
 ## Unreleased
  - Requires libVLC 2.1 or newer
+ - libVLC 2.2 headers are provided as submodule
  - Native logging support with ability to set log level
  - Add ability to set application ID
  - VLC media: add parsed state, async parse request, duration and current state
@@ -9,7 +10,7 @@
  - VLC media player: seekable status
  - New frame stream class
  - New QML player and video rendering (deprecates old VlcQmlVideoPlayer)
- - QML plugin
+ - New QML plugin
  - QML audio, video and subtitles tracks support
  - Deinterlacing, aspect ratio and crop ratio changed signals
  - Reading libvlc arguments from environment variable `VLC_ARGS`

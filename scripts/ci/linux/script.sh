@@ -3,7 +3,7 @@ set -ev
 
 # Configure and build
 pushd build
-cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../install/ -DQT_VERSION=$QT_VERSION -DBUILD_TESTS=ON -DLIBVLC_VERSION=0x020100
+cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../install/ -DQT_VERSION=$QT_VERSION -DLIBVLC_VERSION=0x020100
 make
 make install
 # Run tests (Qt5 only)

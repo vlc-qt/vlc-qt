@@ -45,7 +45,7 @@ This is also a place where you can publish your guides.
 
 
 ## Building and requirements
-See [How to build VLC-QT](BUILDING.md).
+See [How to build VLC-Qt](BUILDING.md).
 
 ## Contributing
 There are several ways to contribute to VLC-Qt:
