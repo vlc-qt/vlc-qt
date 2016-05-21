@@ -1,6 +1,6 @@
 #############################################################################
 # VLC-Qt - Qt and libvlc connector library
-# Copyright (C) 2014 Tadej Novak <tadej@tano.si>
+# Copyright (C) 2016 Tadej Novak <tadej@tano.si>
 #
 # This library is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published
@@ -31,6 +31,12 @@ ENDIF()
 CONFIGURE_FILE(
     windows.bat.in
     windows.bat
+    @ONLY
+)
+
+CONFIGURE_FILE(
+    linux.sh.in
+    linux.sh
     @ONLY
 )
 
@@ -111,9 +117,11 @@ INSTALL(FILES qmldir DESTINATION qml/${VLCQT_PLUGIN_QML_NAME})
 IF(NOT STATIC)
     IF(MSVC OR MINGW)
         IF(NOT CMAKE_BUILD_TYPE MATCHES "Debug")
-            INSTALL(CODE "EXECUTE_PROCESS(COMMAND ${CMAKE_BINARY_DIR}/src/plugins/${VLCQT_PLUGIN_QML_NAME}/windows.bat -nonrelocatable ${VLCQT_PLUGIN_QML_NAME} 1.1 . WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/qml\)")
+            INSTALL(CODE "EXECUTE_PROCESS(COMMAND ${CMAKE_BINARY_DIR}/src/plugins/${VLCQT_PLUGIN_QML_NAME}/windows.bat WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/qml)")
         ENDIF()
+    ELSEIF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+        INSTALL(CODE "EXECUTE_PROCESS(COMMAND ${CMAKE_BINARY_DIR}/src/plugins/${VLCQT_PLUGIN_QML_NAME}/linux.sh WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/qml)")
     ELSEIF(NOT MOBILE)
-        INSTALL(CODE "EXECUTE_PROCESS(COMMAND ${QT_BIN_DIR}/qmlplugindump -nonrelocatable ${VLCQT_PLUGIN_QML_NAME} 1.1 . OUTPUT_FILE ${VLCQT_PLUGIN_QML_NAME}/${VLCQT_PLUGIN_QML_NAME}.qmltypes WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/qml\)")
+        INSTALL(CODE "EXECUTE_PROCESS(COMMAND ${QT_BIN_DIR}/qmlplugindump -nonrelocatable ${VLCQT_PLUGIN_QML_NAME} 1.1 . OUTPUT_FILE ${VLCQT_PLUGIN_QML_NAME}/${VLCQT_PLUGIN_QML_NAME}.qmltypes WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/qml)")
     ENDIF()
 ENDIF()
