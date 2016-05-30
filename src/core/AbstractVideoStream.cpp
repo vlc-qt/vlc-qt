@@ -28,9 +28,11 @@ static inline VlcAbstractVideoStream *p_this(void *opaque) { return static_cast<
 static inline VlcAbstractVideoStream *p_this(void **opaque) { return static_cast<VlcAbstractVideoStream *>(*opaque); }
 #define P_THIS p_this(opaque)
 
-VlcAbstractVideoStream::VlcAbstractVideoStream() { }
+VlcAbstractVideoStream::VlcAbstractVideoStream()
+{
+}
 
-VlcAbstractVideoStream::~VlcAbstractVideoStream() { }
+VlcAbstractVideoStream::~VlcAbstractVideoStream() {}
 
 void VlcAbstractVideoStream::setCallbacks(VlcMediaPlayer *player)
 {
@@ -52,7 +54,6 @@ void VlcAbstractVideoStream::unsetCallbacks(VlcMediaPlayer *player)
     }
 }
 
-
 void *VlcAbstractVideoStream::lockCallbackInternal(void *opaque,
                                                    void **planes)
 {
@@ -61,8 +62,8 @@ void *VlcAbstractVideoStream::lockCallbackInternal(void *opaque,
 
 void VlcAbstractVideoStream::unlockCallbackInternal(void *opaque,
                                                     void *picture,
-                                                    void * const *planes)
-            {
+                                                    void *const *planes)
+{
     P_THIS->unlockCallback(picture, planes);
 }
 

@@ -29,7 +29,7 @@ VlcAbstractVideoFrame::VlcAbstractVideoFrame(int planeCount)
     planeSizes.resize(planeCount);
 }
 
-VlcAbstractVideoFrame::~VlcAbstractVideoFrame() { }
+VlcAbstractVideoFrame::~VlcAbstractVideoFrame() {}
 
 void VlcAbstractVideoFrame::clear()
 {

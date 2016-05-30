@@ -95,7 +95,7 @@ void VlcMedia::createCoreConnections()
          << libvlc_MediaFreed
          << libvlc_MediaStateChanged;
 
-    foreach(const libvlc_event_e &event, list) {
+    foreach (const libvlc_event_e &event, list) {
         libvlc_event_attach(_vlcEvents, event, libvlc_callback, this);
     }
 }
@@ -110,7 +110,7 @@ void VlcMedia::removeCoreConnections()
          << libvlc_MediaFreed
          << libvlc_MediaStateChanged;
 
-    foreach(const libvlc_event_e &event, list) {
+    foreach (const libvlc_event_e &event, list) {
         libvlc_event_detach(_vlcEvents, event, libvlc_callback, this);
     }
 }
@@ -337,7 +337,7 @@ void VlcMedia::setOption(const QString &option)
 
 void VlcMedia::setOptions(const QStringList &options)
 {
-    foreach(const QString &option, options) {
+    foreach (const QString &option, options) {
         libvlc_media_add_option(_vlcMedia, option.toUtf8().data());
     }
 
@@ -349,8 +349,7 @@ void VlcMedia::libvlc_callback(const libvlc_event_t *event,
 {
     VlcMedia *core = static_cast<VlcMedia *>(data);
 
-    switch(event->type)
-    {
+    switch (event->type) {
     case libvlc_MediaMetaChanged:
         emit core->metaChanged(Vlc::Meta(event->u.media_meta_changed.meta_type));
         break;

@@ -21,7 +21,8 @@
 
 #include <QMainWindow>
 
-namespace Ui {
+namespace Ui
+{
     class Player;
 }
 

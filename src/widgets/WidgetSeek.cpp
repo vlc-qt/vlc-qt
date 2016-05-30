@@ -22,15 +22,15 @@
 #include <QtGui/QWheelEvent>
 
 #if QT_VERSION >= 0x050000
-    #include <QtWidgets/QHBoxLayout>
-    #include <QtWidgets/QLabel>
-    #include <QtWidgets/QSlider>
-    #include <QtWidgets/QProgressBar>
+#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QSlider>
+#include <QtWidgets/QProgressBar>
 #else
-    #include <QtGui/QHBoxLayout>
-    #include <QtGui/QLabel>
-    #include <QtGui/QSlider>
-    #include <QtGui/QProgressBar>
+#include <QtGui/QHBoxLayout>
+#include <QtGui/QLabel>
+#include <QtGui/QSlider>
+#include <QtGui/QProgressBar>
 #endif
 
 #include "core/Error.h"
@@ -79,7 +79,7 @@ VlcWidgetSeek::VlcWidgetSeek(QWidget *parent)
     initWidgetSeek(0);
 }
 
-VlcWidgetSeek::~VlcWidgetSeek() { }
+VlcWidgetSeek::~VlcWidgetSeek() {}
 
 void VlcWidgetSeek::initWidgetSeek(QWidget *slider)
 {
@@ -106,11 +106,11 @@ void VlcWidgetSeek::initWidgetSeek(QWidget *slider)
         bar->setTextVisible(false);
     }
 
-    if(_labelElapsed == 0)
+    if (_labelElapsed == 0)
         _labelElapsed = new QLabel(this);
     _labelElapsed->setText("--:--");
 
-    if(_labelFull == 0)
+    if (_labelFull == 0)
         _labelFull = new QLabel(this);
     _labelFull->setText("--:--");
 
@@ -206,7 +206,6 @@ void VlcWidgetSeek::updateCurrentTime(int time)
         _progress->setValue(time);
     }
 }
-
 
 void VlcWidgetSeek::updateFullTime(int time)
 {

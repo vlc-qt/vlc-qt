@@ -20,9 +20,9 @@
 #define VLCQT_WIDGETSEEK_H_
 
 #if QT_VERSION >= 0x050000
-    #include <QtWidgets/QWidget>
+#include <QtWidgets/QWidget>
 #else
-    #include <QtGui/QWidget>
+#include <QtGui/QWidget>
 #endif
 
 #include "SharedExportWidgets.h"
@@ -108,7 +108,6 @@ public:
     virtual void setSliderWidget(QWidget *slider,
                                  bool updateSlider = true);
 
-
 protected slots:
     /*!
         \brief Update turrent time callback
@@ -122,7 +121,6 @@ protected slots:
     */
     virtual void updateFullTime(int time);
 
-
 protected:
     /*!
      * \brief Media player
@@ -133,7 +131,6 @@ protected:
      * \brief Progress bar
      */
     QProgressBar *_progress;
-
 
 private slots:
     void end();

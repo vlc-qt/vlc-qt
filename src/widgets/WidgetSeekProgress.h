@@ -84,7 +84,6 @@ private slots:
     virtual void updateFullTime(int time);
 
 private:
-
     virtual void setSliderWidget(QWidget *slider,
                                  bool updateSlider = true);
 

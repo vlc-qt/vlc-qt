@@ -36,8 +36,7 @@
     \brief Abstract video frame data container
     \since VLC-Qt 1.1
 */
-struct VLCQT_CORE_EXPORT VlcAbstractVideoFrame
-{
+struct VLCQT_CORE_EXPORT VlcAbstractVideoFrame {
     /*!
         \brief VlcVideoFrame constructor.
         \param planeCount
@@ -70,13 +69,12 @@ struct VLCQT_CORE_EXPORT VlcAbstractVideoFrame
      */
     void setPitchesAndLines(const std::shared_ptr<VlcAbstractVideoFrame> &frame);
 
-
     QByteArray frameBuffer; /*!< frame buffer */
 
-    quint16 width; /*!< frame width */
+    quint16 width;  /*!< frame width */
     quint16 height; /*!< frame height */
 
-    std::vector<char *> planes;  /*!< planes */
+    std::vector<char *> planes;      /*!< planes */
     std::vector<quint32> planeSizes; /*!< plane sizes */
 };
 

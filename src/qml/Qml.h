@@ -26,7 +26,8 @@
     \brief QML classes for controlling video and media playback
  */
 
-namespace VlcQml {
+namespace VlcQml
+{
     /*!
         \brief Register QML types as VLCQt
 

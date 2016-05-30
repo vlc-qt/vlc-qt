@@ -78,7 +78,6 @@ public:
      */
     virtual void deregisterVideoOutput(VlcQmlVideoOutput *output);
 
-
 private:
     // LCOV_EXCL_START
     void classBegin() override {}

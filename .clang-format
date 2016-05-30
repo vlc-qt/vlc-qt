@@ -1,0 +1,10 @@
+BasedOnStyle: LLVM
+
+AccessModifierOffset: -4
+AlignAfterOpenBracket: Align
+BreakBeforeBraces: Linux
+BreakBeforeBinaryOperators: All
+ColumnLimit: 0
+IndentWidth: 4
+NamespaceIndentation: All
+SortIncludes: false

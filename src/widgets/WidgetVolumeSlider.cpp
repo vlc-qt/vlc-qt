@@ -20,13 +20,13 @@
 #include <QtGui/QMouseEvent>
 
 #if QT_VERSION >= 0x050000
-    #include <QtWidgets/QHBoxLayout>
-    #include <QtWidgets/QLabel>
-    #include <QtWidgets/QSlider>
+#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QSlider>
 #else
-    #include <QtGui/QHBoxLayout>
-    #include <QtGui/QLabel>
-    #include <QtGui/QSlider>
+#include <QtGui/QHBoxLayout>
+#include <QtGui/QLabel>
+#include <QtGui/QSlider>
 #endif
 
 #include "core/Audio.h"
@@ -90,9 +90,9 @@ void VlcWidgetVolumeSlider::setMediaPlayer(VlcMediaPlayer *player)
 
 bool VlcWidgetVolumeSlider::mute() const
 {
-    if (!(_vlcMediaPlayer->state() == Vlc::Buffering ||
-        _vlcMediaPlayer->state() == Vlc::Playing ||
-        _vlcMediaPlayer->state() == Vlc::Paused))
+    if (!(_vlcMediaPlayer->state() == Vlc::Buffering
+          || _vlcMediaPlayer->state() == Vlc::Playing
+          || _vlcMediaPlayer->state() == Vlc::Paused))
         return false;
     else
         return _vlcAudio->getMute();
@@ -100,9 +100,9 @@ bool VlcWidgetVolumeSlider::mute() const
 
 void VlcWidgetVolumeSlider::setMute(bool enabled)
 {
-    if (!(_vlcMediaPlayer->state() == Vlc::Buffering ||
-        _vlcMediaPlayer->state() == Vlc::Playing ||
-        _vlcMediaPlayer->state() == Vlc::Paused))
+    if (!(_vlcMediaPlayer->state() == Vlc::Buffering
+          || _vlcMediaPlayer->state() == Vlc::Playing
+          || _vlcMediaPlayer->state() == Vlc::Paused))
         return;
 
     if (!enabled) {
@@ -139,9 +139,9 @@ void VlcWidgetVolumeSlider::updateVolume()
     if (!_vlcMediaPlayer)
         return;
 
-    if (_vlcMediaPlayer->state() == Vlc::Buffering ||
-        _vlcMediaPlayer->state() == Vlc::Playing ||
-        _vlcMediaPlayer->state() == Vlc::Paused)
+    if (_vlcMediaPlayer->state() == Vlc::Buffering
+        || _vlcMediaPlayer->state() == Vlc::Playing
+        || _vlcMediaPlayer->state() == Vlc::Paused)
         _vlcAudio->setVolume(_currentVolume);
 }
 

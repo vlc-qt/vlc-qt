@@ -28,7 +28,7 @@
 #include "core/ModuleDescription.h"
 
 #ifdef Q_OS_WIN
-    #include "compat/asprintf.h"
+#include "compat/asprintf.h"
 #endif
 
 void logCallback(void *data,
@@ -54,8 +54,7 @@ void logCallback(void *data,
 
     message.prepend("libvlc: ");
 
-    switch (level)
-    {
+    switch (level) {
     case Vlc::ErrorLevel:
         qCritical(message.toUtf8().data(), NULL);
         break;
@@ -97,7 +96,7 @@ VlcInstance::VlcInstance(const QStringList &args,
     VlcError::showErrmsg();
 
     // Check if instance is running
-    if(_vlcInstance) {
+    if (_vlcInstance) {
         libvlc_log_set(_vlcInstance, logCallback, this);
 
         _status = true;
@@ -145,7 +144,7 @@ QString VlcInstance::libVersion()
 #endif //LIBVLCQT_VERSION
 
 #if defined(LIBVLCQT_VERSION_VCS)
-    if(QString(LIBVLCQT_VERSION_VCS) != "0" && QString(LIBVLCQT_VERSION_VCS) != "") {
+    if (QString(LIBVLCQT_VERSION_VCS) != "0" && QString(LIBVLCQT_VERSION_VCS) != "") {
         version.append("-" + QString(LIBVLCQT_VERSION_VCS));
     }
 #endif //LIBVLCQT_VERSION

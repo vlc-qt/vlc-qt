@@ -19,9 +19,9 @@
 #include <QtCore/QTimer>
 
 #if QT_VERSION >= 0x050000
-    #include <QtWidgets/QAction>
+#include <QtWidgets/QAction>
 #else
-    #include <QtGui/QAction>
+#include <QtGui/QAction>
 #endif
 
 #include "core/Audio.h"
@@ -48,7 +48,6 @@ VlcControlAudio::VlcControlAudio(VlcMediaPlayer *player,
 
     _timer->start(1000);
 }
-
 
 VlcControlAudio::~VlcControlAudio()
 {

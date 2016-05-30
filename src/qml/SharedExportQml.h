@@ -22,9 +22,9 @@
 #include <QtCore/qglobal.h>
 
 #if defined(VLCQT_QML_LIBRARY)
-#  define VLCQT_QML_EXPORT Q_DECL_EXPORT
+#define VLCQT_QML_EXPORT Q_DECL_EXPORT
 #else
-#  define VLCQT_QML_EXPORT Q_DECL_IMPORT
+#define VLCQT_QML_EXPORT Q_DECL_IMPORT
 #endif
 
 #endif // SHARED_EXPORT_QML_H

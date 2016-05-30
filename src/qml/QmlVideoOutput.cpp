@@ -130,11 +130,11 @@ QSGNode *VlcQmlVideoOutput::updatePaintNode(QSGNode *oldNode,
         qreal frameAspectTmp = qreal(fw) / fh;
         QSizeF aspectRatioSize = Vlc::ratioSize(_aspectRatio);
         if (aspectRatioSize.width() != 0 && aspectRatioSize.height() != 0) {
-            frameAspectTmp = aspectRatioSize.width()  / aspectRatioSize.height();
+            frameAspectTmp = aspectRatioSize.width() / aspectRatioSize.height();
         }
         QSizeF cropRatioSize = Vlc::ratioSize(_cropRatio);
         if (cropRatioSize.width() != 0 && cropRatioSize.height() != 0) {
-            const qreal cropAspect = cropRatioSize.width()  / cropRatioSize.height();
+            const qreal cropAspect = cropRatioSize.width() / cropRatioSize.height();
 
             if (frameAspectTmp > cropAspect) {
                 srcRect.setX((1. - cropAspect / frameAspectTmp) / 2);

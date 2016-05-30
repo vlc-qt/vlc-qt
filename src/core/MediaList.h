@@ -43,7 +43,7 @@ struct libvlc_media_list_t;
 */
 class VLCQT_CORE_EXPORT VlcMediaList : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 public:
     /*!
         \brief VlcMediaList constructor.
@@ -112,7 +112,6 @@ public:
     */
     void removeMedia(int index);
 
-
 signals:
     /*!
         \brief Signal sent on item added
@@ -146,7 +145,6 @@ signals:
     void willDeleteItem(libvlc_media_t *item,
                         int index);
 
-
 private:
     void lock();
     void unlock();
@@ -157,7 +155,7 @@ private:
     void createCoreConnections();
     void removeCoreConnections();
 
-    libvlc_media_list_t * _vlcMediaList;
+    libvlc_media_list_t *_vlcMediaList;
     libvlc_event_manager_t *_vlcEvents;
 
     QList<VlcMedia *> _list;

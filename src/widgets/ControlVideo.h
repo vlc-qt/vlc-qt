@@ -42,7 +42,7 @@ class VlcVideo;
 */
 class VLCQT_WIDGETS_EXPORT VlcControlVideo : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 public:
     /*!
         \brief VideoControl constructor
@@ -59,7 +59,6 @@ public:
     */
     ~VlcControlVideo();
 
-
     /*!
         \brief Reset all settings and selected video and subtitle tracks
 
@@ -73,14 +72,12 @@ public:
     */
     void setDefaultSubtitleLanguage(const QString &language);
 
-
 public slots:
     /*!
         \brief Open and load subtitles from file
         \param subtitle full path to subtitles file
     */
     void loadSubtitle(const QString &subtitle);
-
 
 signals:
     /*!
@@ -102,7 +99,6 @@ signals:
         \param actions list of actions
     */
     void videoTracks(QList<QAction *> actions);
-
 
 private slots:
     void updateSubtitleActions();

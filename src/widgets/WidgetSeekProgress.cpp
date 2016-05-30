@@ -20,9 +20,9 @@
 #include <QtGui/QWheelEvent>
 
 #if QT_VERSION >= 0x050000
-    #include <QtWidgets/QProgressBar>
+#include <QtWidgets/QProgressBar>
 #else
-    #include <QtGui/QProgressBar>
+#include <QtGui/QProgressBar>
 #endif
 
 #include "core/Error.h"
@@ -31,7 +31,7 @@
 #include "widgets/WidgetSeekProgress.h"
 
 VlcWidgetSeekProgress::VlcWidgetSeekProgress(VlcMediaPlayer *player,
-                             QWidget *parent)
+                                             QWidget *parent)
     : VlcWidgetSeek(player, new QProgressBar(), true, parent),
       _lock(false)
 {
@@ -45,7 +45,7 @@ VlcWidgetSeekProgress::VlcWidgetSeekProgress(QWidget *parent)
     _progress->setMaximumHeight(15);
 }
 
-VlcWidgetSeekProgress::~VlcWidgetSeekProgress() { }
+VlcWidgetSeekProgress::~VlcWidgetSeekProgress() {}
 
 void VlcWidgetSeekProgress::mouseMoveEvent(QMouseEvent *event)
 {
@@ -107,7 +107,7 @@ void VlcWidgetSeekProgress::updateEvent(const QPoint &pos)
         return;
 
     float click = pos.x() - _progress->pos().x();
-    float op = _progress->maximum()/_progress->width();
+    float op = _progress->maximum() / _progress->width();
     float newValue = click * op;
 
     _vlcMediaPlayer->setTime(newValue);
@@ -121,7 +121,6 @@ void VlcWidgetSeekProgress::updateCurrentTime(int time)
 
     VlcWidgetSeek::updateCurrentTime(time);
 }
-
 
 void VlcWidgetSeekProgress::updateFullTime(int time)
 {

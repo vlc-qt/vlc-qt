@@ -49,6 +49,7 @@ To ease the pull request merge into mainline, please follow these requirements:
   ```
 - Use similar coding style as you see in existing code, notably:
 
+  - use provided clang-format config (mostly based on LLVM coding style)
   - use 4 spaces indentation not tabs
   - private variables have underscore as a prefix ```_vlcInstance```
   - all public functions should be documented, for better readability put each

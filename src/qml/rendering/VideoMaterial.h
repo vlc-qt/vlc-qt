@@ -27,13 +27,13 @@
 
 #include <QtQuick/QSGMaterial>
 #if QT_VERSION < 0x050300
-    #if defined(QT_OPENGL_ES_2)
-        #include <QtGui/QOpenGLFunctions_ES2>
-    #else
-        #include <QtGui/QOpenGLFunctions_1_3>
-    #endif
+#if defined(QT_OPENGL_ES_2)
+#include <QtGui/QOpenGLFunctions_ES2>
 #else
-    #include <QtGui/QOpenGLFunctions>
+#include <QtGui/QOpenGLFunctions_1_3>
+#endif
+#else
+#include <QtGui/QOpenGLFunctions>
 #endif
 
 struct VlcYUVVideoFrame;
@@ -61,11 +61,11 @@ private:
 
 private:
 #if QT_VERSION < 0x050300
-    #if defined(QT_OPENGL_ES_2)
-        QOpenGLFunctions_ES2 *_glF;
-    #else
-        QOpenGLFunctions_1_3 *_glF;
-    #endif
+#if defined(QT_OPENGL_ES_2)
+    QOpenGLFunctions_ES2 *_glF;
+#else
+    QOpenGLFunctions_1_3 *_glF;
+#endif
 #else
     QOpenGLFunctions *_glF;
 #endif

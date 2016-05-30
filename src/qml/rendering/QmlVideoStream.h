@@ -30,7 +30,7 @@ class VlcQmlVideoStream : public VlcVideoStream
 {
     Q_OBJECT
 public:
-    explicit VlcQmlVideoStream(QObject* parent = 0);
+    explicit VlcQmlVideoStream(QObject *parent = 0);
     ~VlcQmlVideoStream();
 
     void registerVideoOutput(VlcQmlVideoOutput *output);

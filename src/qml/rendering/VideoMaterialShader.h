@@ -30,7 +30,7 @@
 class VideoMaterialShader : public QSGMaterialShader // LCOV_EXCL_LINE
 {
 public:
-    virtual char const * const *attributeNames() const;
+    virtual char const *const *attributeNames() const;
     virtual const char *vertexShader() const;
     virtual const char *fragmentShader() const;
     virtual void initialize();

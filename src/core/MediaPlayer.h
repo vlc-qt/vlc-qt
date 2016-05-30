@@ -51,7 +51,7 @@ struct libvlc_media_player_t;
 */
 class VLCQT_CORE_EXPORT VlcMediaPlayer : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 public:
     /*!
         \brief VlcMediaPlayer constructor.
@@ -229,7 +229,6 @@ public slots:
         \brief Stops playing current media
     */
     void stop();
-
 
 signals:
     /*!

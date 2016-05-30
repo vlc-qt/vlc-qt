@@ -24,7 +24,7 @@
 QString VlcError::errmsg()
 {
     QString error;
-    if(libvlc_errmsg()) {
+    if (libvlc_errmsg()) {
         error = QString::fromUtf8(libvlc_errmsg());
         libvlc_clearerr();
     }
@@ -34,11 +34,12 @@ QString VlcError::errmsg()
 
 void VlcError::showErrmsg()
 {
-	// Outputs libvlc error message if there is any
+    // Outputs libvlc error message if there is any
     QString error = errmsg();
-    if(!error.isEmpty()) {
-        qWarning() << "libvlc" << "Error:" << error;
-	}
+    if (!error.isEmpty()) {
+        qWarning() << "libvlc"
+                   << "Error:" << error;
+    }
 }
 
-void VlcError::clearerr() { }
+void VlcError::clearerr() {}

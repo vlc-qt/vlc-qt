@@ -32,14 +32,14 @@ VideoMaterial::VideoMaterial()
     setFlag(Blending, false);
 
 #if QT_VERSION < 0x050300
-    #if defined(QT_OPENGL_ES_2)
-        _glF = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_ES2>();
-    #else
-        _glF = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_1_3>();
-    #endif
-        Q_ASSERT(_glF);
+#if defined(QT_OPENGL_ES_2)
+    _glF = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_ES2>();
+#else
+    _glF = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_1_3>();
+#endif
+    Q_ASSERT(_glF);
 
-        _glF->initializeOpenGLFunctions();
+    _glF->initializeOpenGLFunctions();
 #else
     _glF = QOpenGLContext::currentContext()->functions();
 #endif
@@ -51,13 +51,13 @@ VideoMaterial::~VideoMaterial()
         _glF->glDeleteTextures(3, _planeTexIds);
 }
 
-QSGMaterialType* VideoMaterial::type() const
+QSGMaterialType *VideoMaterial::type() const
 {
     static QSGMaterialType theType;
     return &theType;
 }
 
-QSGMaterialShader* VideoMaterial::createShader() const
+QSGMaterialShader *VideoMaterial::createShader() const
 {
     return new VideoMaterialShader;
 }

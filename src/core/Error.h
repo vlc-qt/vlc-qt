@@ -40,15 +40,15 @@ public:
     */
     static QString errmsg();
 
-	/*!
+    /*!
         \brief A human-readable error message displayed into standard output for the last libvlc error in the calling thread.
 
 		The resulting string is valid until another error occurs.
 		\warning There may be no output, if there is no error.
 	*/
-	static void showErrmsg();
+    static void showErrmsg();
 
-	/*!
+    /*!
 		\brief Clears the libvlc error status for the current thread.
 
         This does nothing.

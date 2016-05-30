@@ -43,7 +43,7 @@ struct libvlc_media_t;
 */
 class VLCQT_CORE_EXPORT VlcMedia : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 public:
     /*!
         \brief VlcMedia constructor.
@@ -199,7 +199,6 @@ public:
                       int fps,
                       int scale);
 
-
     /*!
         \brief Merge
 
@@ -295,7 +294,6 @@ public:
     */
     void setOptions(const QStringList &options);
 
-
 signals:
     /*!
         \brief Signal sent on meta change
@@ -340,7 +338,6 @@ signals:
     */
     void stateChanged(const Vlc::State &state);
 
-
 private:
     void initMedia(const QString &location,
                    bool localFile,
@@ -352,7 +349,7 @@ private:
     void createCoreConnections();
     void removeCoreConnections();
 
-    libvlc_media_t * _vlcMedia;
+    libvlc_media_t *_vlcMedia;
     libvlc_event_manager_t *_vlcEvents;
 
     QString _currentLocation;

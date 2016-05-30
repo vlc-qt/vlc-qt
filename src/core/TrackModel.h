@@ -32,7 +32,7 @@
 
     \since VLC-Qt 1.1
 */
-class VLCQT_CORE_EXPORT VlcTrackModel: public QAbstractListModel // LCOV_EXCL_LINE
+class VLCQT_CORE_EXPORT VlcTrackModel : public QAbstractListModel // LCOV_EXCL_LINE
 {
     Q_OBJECT
     /*!
@@ -98,7 +98,6 @@ public:
     */
     QVariant data(const int row, int role) const;
 
-
     /*!
         \brief Clear the model
     */
@@ -122,7 +121,6 @@ public:
         \return count
     */
     int count() const;
-
 
 signals:
     /*!

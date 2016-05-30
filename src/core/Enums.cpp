@@ -19,7 +19,7 @@
 #include "core/Enums.h"
 
 Vlc::Vlc(QObject *parent)
-    : QObject(parent) { }
+    : QObject(parent) {}
 
 QStringList Vlc::logLevel()
 {
@@ -133,63 +133,62 @@ QStringList Vlc::ratioHuman()
 
 QSizeF Vlc::ratioSize(const Vlc::Ratio &ratio)
 {
-    switch(ratio)
-    {
-        case Vlc::R_16_9:
-            return QSizeF(16,9);
-            break;
-        case Vlc::R_16_10:
-            return QSizeF(16,10);
-            break;
-        case Vlc::R_185_100:
-            return QSizeF(185,100);
-            break;
-        case Vlc::R_221_100:
-            return QSizeF(221,100);
-            break;
-        case Vlc::R_235_100:
-            return QSizeF(235,100);
-            break;
-        case Vlc::R_239_100:
-            return QSizeF(239,100);
-            break;
-        case Vlc::R_4_3:
-            return QSizeF(4,3);
-            break;
-        case Vlc::R_5_4:
-            return QSizeF(5,4);
-            break;
-        case Vlc::R_5_3:
-            return QSizeF(5,3);
-            break;
-        case Vlc::R_1_1:
-            return QSizeF(1,1);
-            break;
-        case Vlc::Original:
-        case Vlc::Ignore:
-        default:
-            return QSizeF(0,0);
-            break;
+    switch (ratio) {
+    case Vlc::R_16_9:
+        return QSizeF(16, 9);
+        break;
+    case Vlc::R_16_10:
+        return QSizeF(16, 10);
+        break;
+    case Vlc::R_185_100:
+        return QSizeF(185, 100);
+        break;
+    case Vlc::R_221_100:
+        return QSizeF(221, 100);
+        break;
+    case Vlc::R_235_100:
+        return QSizeF(235, 100);
+        break;
+    case Vlc::R_239_100:
+        return QSizeF(239, 100);
+        break;
+    case Vlc::R_4_3:
+        return QSizeF(4, 3);
+        break;
+    case Vlc::R_5_4:
+        return QSizeF(5, 4);
+        break;
+    case Vlc::R_5_3:
+        return QSizeF(5, 3);
+        break;
+    case Vlc::R_1_1:
+        return QSizeF(1, 1);
+        break;
+    case Vlc::Original:
+    case Vlc::Ignore:
+    default:
+        return QSizeF(0, 0);
+        break;
     }
 
-    return QSizeF(0,0);
+    return QSizeF(0, 0);
 }
 
 QList<float> Vlc::scale()
 {
     QList<float> list;
-    list << (float) 0
-         << (float) 1.05
-         << (float) 1.1
-         << (float) 1.2
-         << (float) 1.3
-         << (float) 1.4
-         << (float) 1.5
-         << (float) 1.6
-         << (float) 1.7
-         << (float) 1.8
-         << (float) 1.9
-         << (float) 2.0;
+    list << (float)0
+         << (float)1.05
+         << (float)1.1
+         << (float)1.2
+         << (float)1.3
+         << (float)1.4
+         << (float)1.5
+         << (float)1.6
+         << (float)1.7
+         << (float)1.8
+         << (float)1.9
+         << (float)2.0;
 
     return list;
 }

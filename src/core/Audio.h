@@ -40,8 +40,9 @@ struct libvlc_media_player_t;
 */
 class VLCQT_CORE_EXPORT VlcAudio : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
     friend class VlcAudioCallbackHelper;
+
 public:
     /*!
         \brief VlcAudio constructor.
@@ -62,7 +63,6 @@ public:
         \return current mute state (const bool)
     */
     bool getMute() const;
-
 
 public slots:
     /*!
@@ -94,7 +94,6 @@ public slots:
         \param mute mute state (bool)
     */
     void setMute(bool mute) const;
-
 
 public:
     /*!
@@ -140,7 +139,6 @@ public:
     */
     Vlc::AudioChannel channel() const;
 
-
 signals:
     /*!
         \brief Signal sent when volume has changed.
@@ -159,7 +157,6 @@ signals:
         \param mute new mute state (bool)
     */
     void muteChanged(bool mute);
-
 
 private:
     libvlc_media_player_t *_vlcMediaPlayer;

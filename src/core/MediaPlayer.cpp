@@ -89,7 +89,7 @@ VlcVideo *VlcMediaPlayer::video() const
 #if LIBVLC_VERSION >= 0x020200
 VlcEqualizer *VlcMediaPlayer::equalizer() const
 {
-     return _vlcEqualizer;
+    return _vlcEqualizer;
 }
 #endif
 
@@ -116,7 +116,7 @@ void VlcMediaPlayer::createCoreConnections()
          << libvlc_MediaPlayerLengthChanged
          << libvlc_MediaPlayerVout;
 
-    foreach(const libvlc_event_e &event, list) {
+    foreach (const libvlc_event_e &event, list) {
         libvlc_event_attach(_vlcEvents, event, libvlc_callback, this);
     }
 }
@@ -144,7 +144,7 @@ void VlcMediaPlayer::removeCoreConnections()
          << libvlc_MediaPlayerLengthChanged
          << libvlc_MediaPlayerVout;
 
-    foreach(const libvlc_event_e &event, list) {
+    foreach (const libvlc_event_e &event, list) {
         libvlc_event_detach(_vlcEvents, event, libvlc_callback, this);
     }
 }
@@ -262,9 +262,9 @@ void VlcMediaPlayer::resume()
 
 void VlcMediaPlayer::setTime(int time)
 {
-    if (!(state() == Vlc::Buffering ||
-        state() == Vlc::Playing ||
-        state() == Vlc::Paused))
+    if (!(state() == Vlc::Buffering
+          || state() == Vlc::Playing
+          || state() == Vlc::Paused))
         return;
 
     libvlc_media_player_set_time(_vlcMediaPlayer, time);
@@ -340,8 +340,7 @@ void VlcMediaPlayer::libvlc_callback(const libvlc_event_t *event,
 {
     VlcMediaPlayer *core = static_cast<VlcMediaPlayer *>(data);
 
-    switch(event->type)
-    {
+    switch (event->type) {
     case libvlc_MediaPlayerMediaChanged:
         emit core->mediaChanged(event->u.media_player_media_changed.new_media);
         break;
@@ -404,8 +403,8 @@ void VlcMediaPlayer::libvlc_callback(const libvlc_event_t *event,
         break;
     }
 
-    if (event->type >= libvlc_MediaPlayerNothingSpecial &&
-        event->type <= libvlc_MediaPlayerEncounteredError) {
+    if (event->type >= libvlc_MediaPlayerNothingSpecial
+        && event->type <= libvlc_MediaPlayerEncounteredError) {
         emit core->stateChanged();
     }
 }
@@ -420,27 +419,24 @@ float VlcMediaPlayer::position()
 
 float VlcMediaPlayer::sampleAspectRatio()
 {
-    if(!_vlcMediaPlayer)
+    if (!_vlcMediaPlayer)
         return 0.0;
 #if LIBVLC_VERSION >= 0x020100
     float sar = 0.0;
 
     libvlc_media_track_t **tracks;
     unsigned tracksCount;
-    tracksCount = libvlc_media_tracks_get( _media->core(), &tracks );
-    if( tracksCount > 0 )
-    {
-        for(unsigned i = 0; i < tracksCount; i++)
-        {
+    tracksCount = libvlc_media_tracks_get(_media->core(), &tracks);
+    if (tracksCount > 0) {
+        for (unsigned i = 0; i < tracksCount; i++) {
             libvlc_media_track_t *track = tracks[i];
-            if( track->i_type == libvlc_track_video && track->i_id == 0 )
-            {
+            if (track->i_type == libvlc_track_video && track->i_id == 0) {
                 libvlc_video_track_t *videoTrack = track->video;
-                if( videoTrack->i_sar_num > 0 )
+                if (videoTrack->i_sar_num > 0)
                     sar = (float)videoTrack->i_sar_den / (float)videoTrack->i_sar_num;
             }
         }
-        libvlc_media_tracks_release( tracks, tracksCount );
+        libvlc_media_tracks_release(tracks, tracksCount);
     }
 
     return sar;

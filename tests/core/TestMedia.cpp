@@ -69,8 +69,7 @@ void TestMedia::basic()
 #ifdef Q_OS_MAC
     QEventLoop *loop = new QEventLoop(this);
 
-    connect(media, static_cast<void (VlcMedia::*)(bool)>(&VlcMedia::parsedChanged), [=]()
-    {
+    connect(media, static_cast<void (VlcMedia::*)(bool)>(&VlcMedia::parsedChanged), [=]() {
         QCOMPARE(media->duration(), 30097);
 
         media->getStats();
@@ -104,7 +103,8 @@ void TestMedia::options()
 {
     VlcMedia *media = new VlcMedia(QString(SAMPLES_DIR) + "sample.mp3", true, _instance);
     media->setProgram(1);
-    media->setOptions(QStringList() << "option1" << "option2");
+    media->setOptions(QStringList() << "option1"
+                                    << "option2");
     delete media;
 }
 
