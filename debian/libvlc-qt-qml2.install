@@ -1,1 +1,3 @@
 usr/lib/libVLCQtQml.so.*
+usr/qml/VLCQt/libVLCQt.so.*
+usr/qml/VLCQt/qmldir

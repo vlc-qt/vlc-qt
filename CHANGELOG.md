@@ -1,6 +1,7 @@
 # VLC-Qt Changelog
 
 ## 1.1.0 (2016-06-19)
+ - Update VLC to 2.2.4
  - Requires libVLC 2.1 or newer
  - libVLC 2.2 headers are provided as submodule
  - Native logging support with ability to set log level
