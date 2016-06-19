@@ -1,6 +1,6 @@
 # VLC-Qt Library
 
-## Upcoming 1.1 Qt/VLC versions deprecation warning
+## VLC-Qt 1.1 Qt/VLC versions deprecation warning
 
 **Since 1.1 release, support for some older Qt and VLC versions
 will be removed or deprecated:**
