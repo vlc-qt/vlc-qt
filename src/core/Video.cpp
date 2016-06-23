@@ -224,6 +224,17 @@ int VlcVideo::subtitleCount() const
     return count;
 }
 
+qint64 VlcVideo::subtitleDelay() const
+{
+    int64_t delay = 0;
+    if (_vlcMediaPlayer && libvlc_media_player_has_vout(_vlcMediaPlayer)) {
+        delay = libvlc_video_get_spu_delay(_vlcMediaPlayer);
+        VlcError::showErrmsg();
+    }
+
+    return delay;
+}
+
 QStringList VlcVideo::subtitleDescription() const
 {
     QStringList descriptions;
