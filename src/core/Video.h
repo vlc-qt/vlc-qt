@@ -122,6 +122,12 @@ public:
     void setSubtitleFile(const QString &subtitle);
 
     /*!
+        \brief Set new video subtitle delay.
+        \param subtitle new video subtitle delay in microseconds (qint64)
+    */
+    void setSubtitleDelay(qint64 delayU);
+
+    /*!
         \brief Set new teletext page to retrieve.
         \param page new teletext page number (int)
     */
@@ -182,6 +188,12 @@ public:
         \return the number of available video subtitles, or -1 if unavailable (const int)
     */
     int subtitleCount() const;
+
+    /*!
+        \brief Get current video subtitle delay.
+        \return the delay of subtitle (const qint64)
+    */
+    qint64 subtitleDelay() const;
 
     /*!
         \brief Get the descriptions of available video subtitles.

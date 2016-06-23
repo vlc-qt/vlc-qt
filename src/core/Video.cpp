@@ -127,6 +127,14 @@ void VlcVideo::setSubtitleFile(const QString &subtitle)
     }
 }
 
+void VlcVideo::setSubtitleDelay(qint64 delayU)
+{
+    if (_vlcMediaPlayer && libvlc_media_player_has_vout(_vlcMediaPlayer)) {
+         libvlc_video_set_spu_delay(_vlcMediaPlayer, delayU);
+        VlcError::showErrmsg();
+    }
+}
+
 void VlcVideo::setTeletextPage(int page)
 {
     if (_vlcMediaPlayer && libvlc_media_player_has_vout(_vlcMediaPlayer)) {
