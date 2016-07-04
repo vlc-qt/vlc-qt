@@ -95,7 +95,7 @@ IF(MSVC)
     SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NOLOGO /DYNAMICBASE /NXCOMPAT")
 ENDIF()
 
-# Support OS X 10.6 or later (64-bit only)
+# Support macOS 10.6 or later (64-bit only)
 IF(NOT IOS AND ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     SET(WITH_HOMEBREW OFF CACHE BOOL "Build using Homebrew provided Qt")
 

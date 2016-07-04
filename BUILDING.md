@@ -25,14 +25,14 @@ Extra platform specific flags:
  * `WITH_GLES`: link OpenGL ES v2 on Windows, OFF by default, only needed for
     Qt 5.4 and lower (deprecated)
  * `WITH_HOMEBREW`: let system know you are using Homebrew provided Qt,
-    OFF by default, OS X only
+    OFF by default, macOS only
  * `WITH_X11`: link with X11, required by some Linux distributions, OFF by default
 
 Building in separate `build` directory is recommended.
 There is a `test` target to run automatic tests for the library.
 
 ## Platform specific instructions
-### OS X
+### macOS
 You need to prepare VLC libraries and plugins before building. After `cmake` run
 `make prepare`, then re-run `cmake`. Build as a normal library or application.
 

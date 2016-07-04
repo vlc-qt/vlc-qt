@@ -9,7 +9,7 @@ VLC-Qt is a free library used to connect [Qt](http://qt.io) and
 [libVLC](http://videolan.org) libraries. It contains core classes for main
 media playback and also some GUI classes for faster media player development.
 
-VLC-Qt runs on supported versions of Linux, OS X and Windows. It is developed
+VLC-Qt runs on supported versions of Linux, macOS and Windows. It is developed
 in cross-platform spirit so it may work on other systems but is not supported.
 
 ## VLC-Qt 1.1 Qt/VLC versions deprecation warning
