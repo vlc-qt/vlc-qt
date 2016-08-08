@@ -207,7 +207,7 @@ void VlcInstance::setAppId(const QString &id,
 
 QList<VlcModuleDescription *> VlcInstance::audioFilterList() const
 {
-    libvlc_module_description_t *original = libvlc_video_filter_list_get(_vlcInstance);
+    libvlc_module_description_t *original = libvlc_audio_filter_list_get(_vlcInstance);
     if (original == NULL) {
         return QList<VlcModuleDescription *>(); // LCOV_EXCL_LINE
     }
