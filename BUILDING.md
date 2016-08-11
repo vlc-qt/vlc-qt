@@ -20,6 +20,7 @@ There are some specific CMake flags may need:
  	features, should be defined as base 16 integer like `0x020200`, defaults to
  	latest stable VLC version
  * `STATIC`: build statically, OFF by default
+ * `SYSTEM_QML`: detect and install to system QML location, OFF by default
 
 Extra platform specific flags:
  * `WITH_GLES`: link OpenGL ES v2 on Windows, OFF by default, only needed for
