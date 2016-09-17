@@ -1,5 +1,10 @@
 # VLC-Qt Changelog
 
+## 1.1.1 (2016-09-17)
+ - Use GNUInstallDirs module (issue #132)
+ - Add ability to install QML plugins to the system location (issue #162)
+ - Properly build with MSVC2015 (issue #168)
+
 ## 1.1.0 (2016-06-19)
  - Update VLC to 2.2.4
  - Requires libVLC 2.1 or newer
