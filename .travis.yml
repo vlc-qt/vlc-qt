@@ -1,17 +1,33 @@
 sudo: required
 dist: trusty
-os:
-  - linux
-  - osx
+osx_image: xcode8.3
+services:
+  - docker
 
-env:
-  - QT_VERSION=5
-  - QT_VERSION=4
+deploy:
+  provider: bintray
+  skip_cleanup: true
+  file: "packaging/root/${PACKAGE}-${DIST}-${TARGET}/descriptor.json"
+  user: "ntadej"
+  key:
+    secure: "ODJ5nLdypZBP2EZHbp4d7WrW1jzOxdV4psOOTG2BHUqNEePrY5uurWjqQvTysN0c5UDdqkeIhb7qDxh5leyb0l6cisdv+1DGR8Z+CyDdwhYJXtKTEBeqHY5nbvAuSqsVf7SLekSZC2sauTJOU3a3i8Ig1VhqQacSXBGwTw5cv0c="
+  on:
+    branch: project/travis
+
+cache:
+  ccache: true
+  directories:
+    - dependencies/vlc
+    - $HOME/Qt5.9.1
 
 matrix:
-  exclude:
+  include:
+    - os: linux
+      env: DIST=ubuntu TARGET=xenial-amd64 PACKAGE=deb
+    - os: linux
+      env: DIST=ubuntu TARGET=xenial-i386 PACKAGE=deb
     - os: osx
-      env: QT_VERSION=4
+      env: DIST=macos TARGET=all-x86_64 PACKAGE=apple
 
 branches:
   except:
@@ -20,7 +36,7 @@ branches:
 
 language: cpp
 
-before_install: . scripts/ci/$TRAVIS_OS_NAME/before_install.sh
-install: . scripts/ci/$TRAVIS_OS_NAME/install.sh
-script: . scripts/ci/$TRAVIS_OS_NAME/script.sh
-after_success: . scripts/ci/$TRAVIS_OS_NAME/after_success.sh
+before_script: rvm get head > /dev/null 2>&1 || true
+install: . packaging/travis/install.sh
+script: ./packaging/build PROJECT=vlc-qt CI_COMMIT=${TRAVIS_COMMIT:0:7} CI_TAG=${TRAVIS_TAG} CI_BUILD=${TRAVIS_BUILD_NUMBER} ${DIST}-${TARGET}
+after_success: . packaging/travis/after_success.sh

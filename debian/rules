@@ -10,6 +10,7 @@ endif
 
 override_dh_auto_configure:
 	dh_auto_configure -- -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
+		-DNO_GIT=ON -DGITBUILD=${GIT_COMMIT} \
 		-DLIBVLC_VERSION=${LIBVLC_VERSION} -DSYSTEM_QML=ON
 
 override_dh_auto_test:

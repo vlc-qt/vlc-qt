@@ -1,3 +1,6 @@
 [submodule "libvlc-headers"]
 	path = libvlc-headers
 	url = https://github.com/vlc-qt/libvlc-headers.git
+[submodule "packaging"]
+	path = packaging
+	url = https://github.com/vlc-qt/packaging.git
