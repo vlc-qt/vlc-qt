@@ -1,2 +1,2 @@
-usr/lib
-usr/qml
+usr/lib/*/lib
+usr/lib/*/qt5/qml

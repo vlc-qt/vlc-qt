@@ -9,7 +9,8 @@ endif
 	dh $@
 
 override_dh_auto_configure:
-	dh_auto_configure -- -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo -DLIBVLC_VERSION=${LIBVLC_VERSION}
+	dh_auto_configure -- -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
+		-DLIBVLC_VERSION=${LIBVLC_VERSION} -DSYSTEM_QML=ON
 
 override_dh_auto_test:
 	echo "Skip dh_auto_test"
