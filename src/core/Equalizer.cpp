@@ -39,7 +39,12 @@ float VlcEqualizer::amplificationForBandAt(uint bandIndex) const
 {
     if (_vlcEqualizer) {
         float ret = libvlc_audio_equalizer_get_amp_at_index(_vlcEqualizer, bandIndex);
+
+#if __cplusplus < 201103L
+        if (!_isnan(ret)) {
+#else
         if (!std::isnan(ret)) {
+#endif
             return ret;
         }
     }

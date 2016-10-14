@@ -20,6 +20,7 @@
 *****************************************************************************/
 
 #include "core/YUVVideoFrame.h"
+#include <stdint.h>
 
 VlcYUVVideoFrame::VlcYUVVideoFrame(unsigned *width,
                                    unsigned *height,

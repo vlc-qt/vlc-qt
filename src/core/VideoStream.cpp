@@ -98,7 +98,7 @@ void VlcVideoStream::unlockCallback(void *picture, void *const *planes)
 {
     Q_UNUSED(planes)
 
-    auto frameNo = reinterpret_cast<decltype(_frames)::size_type>(picture);
+    auto frameNo = reinterpret_cast<std::deque<VlcAbstractVideoFramePtr>::size_type>(picture);
     if (frameNo >= _frames.size()) {
         return; // LCOV_EXCL_LINE
     }
@@ -110,7 +110,7 @@ void VlcVideoStream::unlockCallback(void *picture, void *const *planes)
 
 void VlcVideoStream::displayCallback(void *picture)
 {
-    auto frameNo = reinterpret_cast<decltype(_frames)::size_type>(picture);
+    auto frameNo = reinterpret_cast<std::deque<VlcAbstractVideoFramePtr>::size_type>(picture);
     if (frameNo >= _frames.size()) {
         Q_ASSERT(false);
         return; // LCOV_EXCL_LINE
@@ -123,7 +123,7 @@ void VlcVideoStream::displayCallback(void *picture)
     QMetaObject::invokeMethod(this, "frameUpdated");
 }
 
-std::shared_ptr<VlcAbstractVideoFrame> VlcVideoStream::cloneFrame(std::shared_ptr<VlcAbstractVideoFrame> frame)
+VlcVideoStream::VlcAbstractVideoFramePtr VlcVideoStream::cloneFrame(VlcAbstractVideoFramePtr frame)
 {
     switch (_format) {
     case Vlc::YUVFormat:
