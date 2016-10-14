@@ -51,7 +51,10 @@ class VLCQT_CORE_EXPORT VlcVideoStream : public QObject,
                                          public VlcAbstractVideoStream
 {
     Q_OBJECT
+
 public:
+    typedef std::shared_ptr<VlcAbstractVideoFrame> VlcAbstractVideoFramePtr;
+
     /*!
         \brief VlcVideoStream constructor
         \param format rendering format
@@ -99,14 +102,14 @@ private:
                         void *const *planes);
     void displayCallback(void *picture);
 
-    std::shared_ptr<VlcAbstractVideoFrame> cloneFrame(std::shared_ptr<VlcAbstractVideoFrame> frame);
+    VlcAbstractVideoFramePtr cloneFrame(VlcAbstractVideoFramePtr frame);
 
     Vlc::RenderFormat _format;
     VlcMediaPlayer *_player;
 
-    std::deque<std::shared_ptr<VlcAbstractVideoFrame>> _frames;
-    std::list<std::shared_ptr<VlcAbstractVideoFrame>> _lockedFrames;
-    std::shared_ptr<VlcAbstractVideoFrame> _renderFrame;
+    std::deque<VlcAbstractVideoFramePtr> _frames;
+    std::list<VlcAbstractVideoFramePtr> _lockedFrames;
+    VlcAbstractVideoFramePtr _renderFrame;
 };
 
 #endif // VLCQT_VIDEOSTREAM_H_
