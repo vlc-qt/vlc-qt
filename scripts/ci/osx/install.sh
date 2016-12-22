@@ -8,7 +8,7 @@ brew install qt5 p7zip ninja lcov
 # Install other dependencies
 pushd dependencies
 
-export VLC_VERSION=2.2.3
+export VLC_VERSION=2.2.4
 
 # Install VLC
 curl -LO http://download.videolan.org/vlc/${VLC_VERSION}/macosx/vlc-${VLC_VERSION}.dmg

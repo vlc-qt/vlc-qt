@@ -32,7 +32,10 @@ ELSE()
     FIND_PACKAGE(Qt5QuickTest 5.2.0 REQUIRED)
     FIND_PACKAGE(Qt5Test 5.2.0 REQUIRED)
 
+    SET(SYSTEM_QML OFF CACHE BOOL "Install to system QML import path")
+
     MESSAGE(STATUS "Using Qt ${Qt5Core_VERSION}")
+    MESSAGE(STATUS "Installing to system QML import path: ${SYSTEM_QML}")
 ENDIF()
 
 IF(NOT ${CMAKE_SYSTEM_NAME} MATCHES "Linux" AND QT_VERSION MATCHES 5 AND Qt5Core_VERSION VERSION_LESS "5.5.0")
@@ -68,3 +71,18 @@ SET(LIBVLC_LIB_DIR "${LIBVLC_BIN_DIR}/lib")
 STRING(REGEX REPLACE "([^ ]+)[/\\].*" "\\1" QT_BIN_DIR_TMP "${QT_MOC_EXECUTABLE}")
 STRING(REGEX REPLACE "\\\\" "/" QT_BIN_DIR "${QT_BIN_DIR_TMP}")  # Replace back slashes to slashes
 STRING(REGEX REPLACE "bin" "lib" QT_LIB_DIR "${QT_BIN_DIR}")
+
+IF(QT_VERSION MATCHES 5)
+    IF(SYSTEM_QML)
+        FIND_PROGRAM(QMAKE NAMES qmake-qt5 qmake)
+        IF(NOT QMAKE)
+            MESSAGE(FATAL_ERROR "qmake not found")
+        ENDIF()
+        EXECUTE_PROCESS(
+            COMMAND ${QMAKE} -query QT_INSTALL_QML
+            OUTPUT_VARIABLE QT_INSTALL_QML OUTPUT_STRIP_TRAILING_WHITESPACE
+        )
+    ELSE()
+        SET(QT_INSTALL_QML ${CMAKE_INSTALL_PREFIX}/qml)
+    ENDIF()
+ENDIF()

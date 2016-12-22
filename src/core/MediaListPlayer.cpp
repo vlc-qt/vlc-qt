@@ -90,7 +90,7 @@ void VlcMediaListPlayer::createCoreConnections()
          << libvlc_MediaListPlayerNextItemSet
          << libvlc_MediaListPlayerStopped;
 
-    foreach(const libvlc_event_e &event, list) {
+    foreach (const libvlc_event_e &event, list) {
         libvlc_event_attach(_vlcEvents, event, libvlc_callback, this);
     }
 }
@@ -102,7 +102,7 @@ void VlcMediaListPlayer::removeCoreConnections()
          << libvlc_MediaListPlayerNextItemSet
          << libvlc_MediaListPlayerStopped;
 
-    foreach(const libvlc_event_e &event, list) {
+    foreach (const libvlc_event_e &event, list) {
         libvlc_event_detach(_vlcEvents, event, libvlc_callback, this);
     }
 }
@@ -166,8 +166,7 @@ void VlcMediaListPlayer::libvlc_callback(const libvlc_event_t *event,
 {
     VlcMediaListPlayer *core = static_cast<VlcMediaListPlayer *>(data);
 
-    switch(event->type)
-    {
+    switch (event->type) {
     case libvlc_MediaListPlayerPlayed:
         emit core->played();
         break;

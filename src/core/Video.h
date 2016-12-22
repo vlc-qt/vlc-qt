@@ -41,7 +41,7 @@ struct libvlc_media_player_t;
 */
 class VLCQT_CORE_EXPORT VlcVideo : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 public:
     /*!
         \brief VlcVideo constructor.

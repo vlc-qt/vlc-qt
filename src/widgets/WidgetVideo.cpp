@@ -19,20 +19,20 @@
 #include <QtGlobal>
 
 #if QT_VERSION >= 0x050000
-    #include <QtWidgets/QApplication>
-    #include <QtWidgets/QDesktopWidget>
-    #include <QtWidgets/QHBoxLayout>
-    #include <QtWidgets/QToolBar>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QDesktopWidget>
+#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QToolBar>
 #else
-    #include <QtGui/QApplication>
-    #include <QtGui/QDesktopWidget>
-    #include <QtGui/QHBoxLayout>
-    #include <QtGui/QToolBar>
+#include <QtGui/QApplication>
+#include <QtGui/QDesktopWidget>
+#include <QtGui/QHBoxLayout>
+#include <QtGui/QToolBar>
 #endif
 
 #if defined(Q_WS_X11)
-    #include <X11/Xlib.h>
-    #include <qx11info_x11.h>
+#include <X11/Xlib.h>
+#include <qx11info_x11.h>
 #endif
 
 #include "core/Error.h"
@@ -221,13 +221,13 @@ WId VlcWidgetVideo::request()
     _video->setPalette(plt);
     _video->setAutoFillBackground(true);
     _video->setMouseTracking(true);
-    /* Indicates that the widget wants to draw directly onto the screen.
+/* Indicates that the widget wants to draw directly onto the screen.
        Widgets with this attribute set do not participate in composition
        management */
-    /* This is currently disabled on X11 as it does not seem to improve
+/* This is currently disabled on X11 as it does not seem to improve
      * performance, but causes the video widget to be transparent... */
 #if QT_VERSION < 0x050000 && !defined(Q_WS_X11)
-    _video->setAttribute( Qt::WA_PaintOnScreen, true );
+    _video->setAttribute(Qt::WA_PaintOnScreen, true);
 #endif
 
     _layout->addWidget(_video);

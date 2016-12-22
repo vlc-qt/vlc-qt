@@ -27,7 +27,7 @@
 VlcVideoStream::VlcVideoStream(Vlc::RenderFormat format,
                                QObject *parent)
     : QObject(parent),
-      _format(format) { }
+      _format(format) {}
 
 VlcVideoStream::~VlcVideoStream()
 {
@@ -56,8 +56,7 @@ unsigned VlcVideoStream::formatCallback(char *chroma,
                                         unsigned *pitches,
                                         unsigned *lines)
 {
-    switch (_format)
-    {
+    switch (_format) {
     case Vlc::YUVFormat:
         qstrcpy(chroma, "I420");
         _frames.emplace(_frames.end(), new VlcYUVVideoFrame(width, height, pitches, lines));
@@ -76,15 +75,16 @@ void VlcVideoStream::formatCleanUpCallback()
     QMetaObject::invokeMethod(this, "frameUpdated");
 }
 
-void* VlcVideoStream::lockCallback(void **planes)
+void *VlcVideoStream::lockCallback(void **planes)
 {
     auto frameIt = _frames.begin();
-    for ( ; frameIt != _frames.end() && frameIt->use_count() > 1; ++frameIt);
+    for (; frameIt != _frames.end() && frameIt->use_count() > 1; ++frameIt)
+        ;
 
     if (frameIt == _frames.end())
         frameIt = _frames.emplace(_frames.end(), cloneFrame(_frames.front()));
 
-    std::shared_ptr<VlcAbstractVideoFrame>& frame = *frameIt;
+    std::shared_ptr<VlcAbstractVideoFrame> &frame = *frameIt;
     for (size_t i = 0; i < frame->planes.size(); i++) {
         planes[i] = frame->planes[i];
     }
@@ -94,7 +94,7 @@ void* VlcVideoStream::lockCallback(void **planes)
     return reinterpret_cast<void *>(frameIt - _frames.begin());
 }
 
-void VlcVideoStream::unlockCallback(void *picture, void * const * planes)
+void VlcVideoStream::unlockCallback(void *picture, void *const *planes)
 {
     Q_UNUSED(planes)
 
@@ -103,7 +103,7 @@ void VlcVideoStream::unlockCallback(void *picture, void * const * planes)
         return; // LCOV_EXCL_LINE
     }
 
-    std::shared_ptr<VlcAbstractVideoFrame>& frame = _frames[frameNo];
+    std::shared_ptr<VlcAbstractVideoFrame> &frame = _frames[frameNo];
 
     _lockedFrames.erase(std::find(_lockedFrames.begin(), _lockedFrames.end(), frame));
 }
@@ -116,7 +116,7 @@ void VlcVideoStream::displayCallback(void *picture)
         return; // LCOV_EXCL_LINE
     }
 
-    std::shared_ptr<VlcAbstractVideoFrame>& frame = _frames[frameNo];
+    std::shared_ptr<VlcAbstractVideoFrame> &frame = _frames[frameNo];
 
     _renderFrame = frame;
 
@@ -125,8 +125,7 @@ void VlcVideoStream::displayCallback(void *picture)
 
 std::shared_ptr<VlcAbstractVideoFrame> VlcVideoStream::cloneFrame(std::shared_ptr<VlcAbstractVideoFrame> frame)
 {
-    switch (_format)
-    {
+    switch (_format) {
     case Vlc::YUVFormat:
         std::shared_ptr<VlcYUVVideoFrame> from = std::dynamic_pointer_cast<VlcYUVVideoFrame>(frame);
         if (from) {

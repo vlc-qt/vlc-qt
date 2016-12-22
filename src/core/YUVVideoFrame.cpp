@@ -30,8 +30,12 @@ VlcYUVVideoFrame::VlcYUVVideoFrame(unsigned *width,
     uint16_t evenWidth = *width + (*width & 1 ? 1 : 0);
     uint16_t evenHeight = *height + (*height & 1 ? 1 : 0);
 
-    pitches[0] = evenWidth; if (pitches[0] % 4) pitches[0] += 4 - pitches[0] % 4;
-    pitches[1] = evenWidth / 2; if (pitches[1] % 4) pitches[1] += 4 - pitches[1] % 4;
+    pitches[0] = evenWidth;
+    if (pitches[0] % 4)
+        pitches[0] += 4 - pitches[0] % 4;
+    pitches[1] = evenWidth / 2;
+    if (pitches[1] % 4)
+        pitches[1] += 4 - pitches[1] % 4;
     pitches[2] = pitches[1];
 
     lines[0] = evenHeight;
@@ -46,7 +50,7 @@ VlcYUVVideoFrame::VlcYUVVideoFrame(unsigned *width,
     setPitchesAndLines(pitches, lines);
 }
 
-VlcYUVVideoFrame::~VlcYUVVideoFrame() { }
+VlcYUVVideoFrame::~VlcYUVVideoFrame() {}
 
 VlcYUVVideoFrame::VlcYUVVideoFrame(const std::shared_ptr<VlcYUVVideoFrame> &frame)
     : VlcAbstractVideoFrame(3)

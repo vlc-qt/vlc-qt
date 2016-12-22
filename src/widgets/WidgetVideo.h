@@ -22,9 +22,9 @@
 #include <QtCore/QTimer>
 
 #if QT_VERSION >= 0x050000
-    #include <QtWidgets/QFrame>
+#include <QtWidgets/QFrame>
 #else
-    #include <QtGui/QFrame>
+#include <QtGui/QFrame>
 #endif
 
 #include <VLCQtCore/Enums.h>
@@ -49,7 +49,7 @@ class VlcMediaPlayer;
 */
 class VLCQT_WIDGETS_EXPORT VlcWidgetVideo : public QFrame, public VlcVideoDelegate
 {
-Q_OBJECT
+    Q_OBJECT
 public:
     /*!
         \brief VlcWidgetVideo constructor
@@ -186,7 +186,6 @@ public:
     */
     void release();
 
-
 public slots:
     /*!
         \brief Enable default video settings
@@ -232,7 +231,6 @@ public slots:
         \param scale scale ratio
     */
     void setScale(const Vlc::Scale &scale);
-
 
 private slots:
     void applyPreviousSettings();

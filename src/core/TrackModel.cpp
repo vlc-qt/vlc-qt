@@ -18,13 +18,13 @@
 
 #include "core/TrackModel.h"
 
-VlcTrackModel::VlcTrackModel(QObject *parent):
-    QAbstractListModel(parent) { }
+VlcTrackModel::VlcTrackModel(QObject *parent)
+    : QAbstractListModel(parent) {}
 
 VlcTrackModel::VlcTrackModel(const QMap<int, QString> &tracks,
-                             QObject *parent):
-    QAbstractListModel(parent),
-    _tracks(tracks) { }
+                             QObject *parent)
+    : QAbstractListModel(parent),
+      _tracks(tracks) {}
 
 VlcTrackModel::VlcTrackModel(const VlcTrackModel &other)
 {
@@ -61,8 +61,7 @@ QVariant VlcTrackModel::data(const int row,
     if (row > (_tracks.count() - 1))
         return QVariant();
 
-    switch (role)
-    {
+    switch (role) {
     case Qt::DisplayRole:
     case TitleRole:
         return QVariant::fromValue(_tracks.value(_tracks.keys().at(row)));
@@ -88,8 +87,7 @@ void VlcTrackModel::clear()
 void VlcTrackModel::load(const QMap<int, QString> &data)
 {
     QMapIterator<int, QString> i(data);
-    while(i.hasNext())
-    {
+    while (i.hasNext()) {
         i.next();
         insert(i.key(), i.value());
     }

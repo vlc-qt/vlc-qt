@@ -180,7 +180,6 @@ class VlcQmlPlayer : public VlcQmlSource
      */
     Q_PROPERTY(int videoTrack READ videoTrack WRITE setVideoTrack NOTIFY videoTrackChanged)
 
-
 public:
     /*!
         \brief VlcQmlPlayer constructor
@@ -188,7 +187,6 @@ public:
      */
     explicit VlcQmlPlayer(QObject *parent = 0);
     ~VlcQmlPlayer();
-
 
     /*!
         \brief Pause current playback
@@ -210,7 +208,6 @@ public:
         Invokable from QML.
      */
     Q_INVOKABLE void stop();
-
 
     /*!
         \brief Get current autoplay setting
@@ -452,7 +449,6 @@ public:
      */
     void setVideoTrack(int videoTrack);
 
-
 signals:
     /*!
         \brief Autoplay changed signal
@@ -528,7 +524,6 @@ signals:
         \brief Video track changed signal
     */
     void videoTrackChanged();
-
 
 private slots:
     void mediaParsed(bool parsed);

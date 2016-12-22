@@ -18,12 +18,12 @@
 
 /* MSVC support fix */
 #if defined(_MSC_VER)
-#   include <BaseTsd.h>
-    typedef SSIZE_T ssize_t;
+#include <BaseTsd.h>
+typedef SSIZE_T ssize_t;
 #endif
 /* MSVC + MinGW support fix */
-#if defined (_WIN32)
-#   define LIBVLC_USE_PTHREAD_CANCEL 1
+#if defined(_WIN32)
+#define LIBVLC_USE_PTHREAD_CANCEL 1
 #endif
 
 #include <vlc/vlc.h>
@@ -189,7 +189,7 @@ QList<int> VlcAudio::trackIds() const
 
         ids << desc->i_id;
         if (trackCount() > 1) {
-            for(int i = 1; i < trackCount(); i++) {
+            for (int i = 1; i < trackCount(); i++) {
                 desc = desc->p_next;
                 ids << desc->i_id;
             }
@@ -208,11 +208,10 @@ QMap<int, QString> VlcAudio::tracks() const
         first = desc = libvlc_audio_get_track_description(_vlcMediaPlayer);
         VlcError::showErrmsg();
 
-        if(desc != NULL)
-        {
+        if (desc != NULL) {
             tracks.insert(desc->i_id, QString().fromUtf8(desc->psz_name));
             if (trackCount() > 1) {
-                for(int i = 1; i < trackCount(); i++) {
+                for (int i = 1; i < trackCount(); i++) {
                     desc = desc->p_next;
                     tracks.insert(desc->i_id, QString().fromUtf8(desc->psz_name));
                 }

@@ -11,5 +11,8 @@ endif
 override_dh_auto_configure:
 	dh_auto_configure -- -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo -DLIBVLC_VERSION=${LIBVLC_VERSION}
 
+override_dh_auto_test:
+	echo "Skip dh_auto_test"
+
 override_dh_strip:
 	dh_strip --dbg-package=libvlc-qt-dbg

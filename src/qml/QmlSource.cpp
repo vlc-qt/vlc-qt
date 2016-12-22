@@ -19,9 +19,9 @@
 #include "qml/QmlSource.h"
 #include "qml/rendering/QmlVideoStream.h"
 
-VlcQmlSource::VlcQmlSource(QObject* parent)
+VlcQmlSource::VlcQmlSource(QObject *parent)
     : QObject(parent),
-      _videoStream(new VlcQmlVideoStream(parent)) { }
+      _videoStream(new VlcQmlVideoStream(parent)) {}
 
 VlcQmlSource::~VlcQmlSource()
 {

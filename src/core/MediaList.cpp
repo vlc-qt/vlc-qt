@@ -36,7 +36,7 @@ VlcMediaList::VlcMediaList(VlcInstance *instance)
 
 VlcMediaList::~VlcMediaList()
 {
-    foreach(VlcMedia *m, _list)
+    foreach (VlcMedia *m, _list)
         delete m;
 
     removeCoreConnections();
@@ -59,7 +59,7 @@ void VlcMediaList::createCoreConnections()
          << libvlc_MediaListItemDeleted
          << libvlc_MediaListWillDeleteItem;
 
-    foreach(const libvlc_event_e &event, list) {
+    foreach (const libvlc_event_e &event, list) {
         libvlc_event_attach(_vlcEvents, event, libvlc_callback, this);
     }
 }
@@ -72,7 +72,7 @@ void VlcMediaList::removeCoreConnections()
          << libvlc_MediaListItemDeleted
          << libvlc_MediaListWillDeleteItem;
 
-    foreach(const libvlc_event_e &event, list) {
+    foreach (const libvlc_event_e &event, list) {
         libvlc_event_detach(_vlcEvents, event, libvlc_callback, this);
     }
 }
@@ -157,8 +157,7 @@ void VlcMediaList::libvlc_callback(const libvlc_event_t *event,
 {
     VlcMediaList *core = static_cast<VlcMediaList *>(data);
 
-    switch(event->type)
-    {
+    switch (event->type) {
     case libvlc_MediaListItemAdded:
         emit core->itemAdded(event->u.media_list_item_added.item, event->u.media_list_item_added.index);
         break;

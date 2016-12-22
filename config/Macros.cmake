@@ -35,7 +35,7 @@ MACRO(GENERATE_PKGCONFIG LibraryName LibraryFolder)
     )
 
     IF(PKGCONFIG)
-        INSTALL(FILES ${CMAKE_BINARY_DIR}/src/${LibraryFolder}/lib${LibraryName}.pc DESTINATION lib${LIB_SUFFIX}/pkgconfig)
+        INSTALL(FILES ${CMAKE_BINARY_DIR}/src/${LibraryFolder}/lib${LibraryName}.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
     ENDIF()
 ENDMACRO()
 

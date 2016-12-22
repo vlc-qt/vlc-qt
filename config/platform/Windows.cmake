@@ -58,7 +58,7 @@ SET(Vlc_Plugins_Type
 MACRO(VLC_INSTALL_PLUGINS)
     FOREACH(type ${ARGN})
         FILE(GLOB Vlc_Plugins ${LIBVLC_BIN_DIR}/plugins/${type}/*.dll)
-        INSTALL(FILES ${Vlc_Plugins} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin/plugins/${type}")
+        INSTALL(FILES ${Vlc_Plugins} DESTINATION "${CMAKE_INSTALL_FULL_BINDIR}/plugins/${type}")
     ENDFOREACH(type)
 ENDMACRO(VLC_INSTALL_PLUGINS)
 
@@ -87,9 +87,9 @@ ENDIF()
 ################
 # Installation #
 ################
-INSTALL(FILES ${Vlc_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+INSTALL(FILES ${Vlc_Libs} DESTINATION "${CMAKE_INSTALL_FULL_BINDIR}")
 IF(Vlc_Gcc OR Vlc_Std)
-    INSTALL(FILES ${Extra_Libs} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+    INSTALL(FILES ${Extra_Libs} DESTINATION "${CMAKE_INSTALL_FULL_BINDIR}")
 ENDIF()
 
 VLC_INSTALL_PLUGINS(${Vlc_Plugins_Type})

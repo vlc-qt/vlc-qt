@@ -26,7 +26,7 @@
 VlcEqualizer::VlcEqualizer(VlcMediaPlayer *vlcMediaPlayer)
     : QObject(vlcMediaPlayer),
       _vlcMediaPlayer(vlcMediaPlayer),
-      _vlcEqualizer(libvlc_audio_equalizer_new()) { }
+      _vlcEqualizer(libvlc_audio_equalizer_new()) {}
 
 VlcEqualizer::~VlcEqualizer()
 {

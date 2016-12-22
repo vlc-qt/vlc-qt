@@ -36,7 +36,7 @@
 */
 namespace VlcCommon
 {
-	/*!
+    /*!
 		\brief Common libvlc arguments
 		\return libvlc arguments (QStringList)
 	*/

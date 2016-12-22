@@ -24,9 +24,9 @@
 
 VlcVideo::VlcVideo(VlcMediaPlayer *player)
     : QObject(player),
-      _vlcMediaPlayer(player->core()) { }
+      _vlcMediaPlayer(player->core()) {}
 
-VlcVideo::~VlcVideo() { }
+VlcVideo::~VlcVideo() {}
 
 Vlc::Ratio VlcVideo::aspectRatio() const
 {
@@ -246,7 +246,7 @@ QStringList VlcVideo::subtitleDescription() const
 
         descriptions << QString().fromUtf8(desc->psz_name);
         if (subtitleCount() > 1) {
-            for(int i = 1; i < subtitleCount(); i++) {
+            for (int i = 1; i < subtitleCount(); i++) {
                 desc = desc->p_next;
                 descriptions << QString().fromUtf8(desc->psz_name);
             }
@@ -267,7 +267,7 @@ QList<int> VlcVideo::subtitleIds() const
 
         ids << desc->i_id;
         if (subtitleCount() > 1) {
-            for(int i = 1; i < subtitleCount(); i++) {
+            for (int i = 1; i < subtitleCount(); i++) {
                 desc = desc->p_next;
                 ids << desc->i_id;
             }
@@ -286,11 +286,10 @@ QMap<int, QString> VlcVideo::subtitles() const
         first = desc = libvlc_video_get_spu_description(_vlcMediaPlayer);
         VlcError::showErrmsg();
 
-        if(desc != NULL)
-        {
+        if (desc != NULL) {
             tracks.insert(desc->i_id, QString().fromUtf8(desc->psz_name));
             if (subtitleCount() > 1) {
-                for(int i = 1; i < subtitleCount(); i++) {
+                for (int i = 1; i < subtitleCount(); i++) {
                     desc = desc->p_next;
                     tracks.insert(desc->i_id, QString().fromUtf8(desc->psz_name));
                 }
@@ -365,7 +364,7 @@ QStringList VlcVideo::trackDescription() const
 
         descriptions << QString().fromUtf8(desc->psz_name);
         if (trackCount() > 1) {
-            for(int i = 1; i < trackCount(); i++) {
+            for (int i = 1; i < trackCount(); i++) {
                 desc = desc->p_next;
                 descriptions << QString().fromUtf8(desc->psz_name);
             }
@@ -386,7 +385,7 @@ QList<int> VlcVideo::trackIds() const
 
         ids << desc->i_id;
         if (trackCount() > 1) {
-            for(int i = 1; i < trackCount(); i++) {
+            for (int i = 1; i < trackCount(); i++) {
                 desc = desc->p_next;
                 ids << desc->i_id;
             }
@@ -405,11 +404,10 @@ QMap<int, QString> VlcVideo::tracks() const
         first = desc = libvlc_video_get_track_description(_vlcMediaPlayer);
         VlcError::showErrmsg();
 
-        if(desc != NULL)
-        {
+        if (desc != NULL) {
             tracks.insert(desc->i_id, QString().fromUtf8(desc->psz_name));
             if (trackCount() > 1) {
-                for(int i = 1; i < trackCount(); i++) {
+                for (int i = 1; i < trackCount(); i++) {
                     desc = desc->p_next;
                     tracks.insert(desc->i_id, QString().fromUtf8(desc->psz_name));
                 }

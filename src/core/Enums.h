@@ -151,9 +151,9 @@ public:
         \brief Supported fill modes (QML only)
     */
     enum FillMode {
-        PreserveAspectFit  = Qt::KeepAspectRatio,
+        PreserveAspectFit = Qt::KeepAspectRatio,
         PreserveAspectCrop = Qt::KeepAspectRatioByExpanding,
-        Stretch            = Qt::IgnoreAspectRatio
+        Stretch = Qt::IgnoreAspectRatio
     };
 
     /*!

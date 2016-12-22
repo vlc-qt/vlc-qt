@@ -19,9 +19,9 @@
 #include <QtCore/QTimer>
 
 #if QT_VERSION >= 0x050000
-    #include <QtWidgets/QAction>
+#include <QtWidgets/QAction>
 #else
-    #include <QtGui/QAction>
+#include <QtGui/QAction>
 #endif
 
 #include "core/Error.h"
@@ -80,7 +80,7 @@ void VlcControlVideo::updateSubtitleActions()
         //QList<int> ids = _vlcVideo->subtitleIds();
         for (int i = 0; i < desc.size(); i++) {
             _descSub.insert(desc[i], i); //_descSub.insert(desc[i], ids[i]);
-            _idSub.insert(i, i); //_idSub.insert(ids[i], i);
+            _idSub.insert(i, i);         //_idSub.insert(ids[i], i);
             _actionSubList << new QAction(desc[i], this);
         }
     } else {

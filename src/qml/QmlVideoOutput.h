@@ -76,7 +76,6 @@ class VLCQT_QML_EXPORT VlcQmlVideoOutput : public QQuickItem
      */
     Q_PROPERTY(int cropRatio READ cropRatio WRITE setCropRatio NOTIFY cropRatioChanged)
 
-
 public:
     VlcQmlVideoOutput();
     ~VlcQmlVideoOutput();
@@ -147,14 +146,12 @@ public:
      */
     void setCropRatio(int cropRatio);
 
-
 public slots:
     /*!
         \brief Set frame which will be rendered in the output.
         \param frame
      */
     void presentFrame(const std::shared_ptr<const VlcYUVVideoFrame> &frame);
-
 
 signals:
     /*!
@@ -176,7 +173,6 @@ signals:
         \brief Fill mode changed signal
      */
     void cropRatioChanged();
-
 
 private:
     virtual QSGNode *updatePaintNode(QSGNode *oldNode,

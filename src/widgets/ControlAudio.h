@@ -42,7 +42,7 @@ class VlcMediaPlayer;
 */
 class VLCQT_WIDGETS_EXPORT VlcControlAudio : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 public:
     /*!
         \brief VlcControlAudio constructor
@@ -59,7 +59,6 @@ public:
     */
     ~VlcControlAudio();
 
-
     /*!
         \brief Reset all settings and selected audio tracks.
 
@@ -72,7 +71,6 @@ public:
         \param language comma separated languages
     */
     void setDefaultAudioLanguage(const QString &language);
-
 
 signals:
     /*!
@@ -88,7 +86,6 @@ signals:
         \param actions list of actions
     */
     void audioTracks(QList<QAction *> actions);
-
 
 private slots:
     void clean();

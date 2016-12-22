@@ -25,18 +25,17 @@ QStringList VlcCommon::args()
     QString args = qgetenv("VLC_ARGS");
     if (!args.isEmpty())
         args_list << args.split(" ", QString::SkipEmptyParts);
-    else
-    {
+    else {
         args_list << "--intf=dummy"
-             << "--no-media-library"
-             << "--no-stats"
-             << "--no-osd"
-             << "--no-loop"
-             << "--no-video-title-show"
-        #if defined(Q_OS_DARWIN)
-             << "--vout=macosx"
-        #endif
-             << "--drop-late-frames";
+                  << "--no-media-library"
+                  << "--no-stats"
+                  << "--no-osd"
+                  << "--no-loop"
+                  << "--no-video-title-show"
+#if defined(Q_OS_DARWIN)
+                  << "--vout=macosx"
+#endif
+                  << "--drop-late-frames";
     }
 
     return args_list;

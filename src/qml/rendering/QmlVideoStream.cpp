@@ -26,9 +26,9 @@
 #include "qml/rendering/QmlVideoStream.h"
 
 VlcQmlVideoStream::VlcQmlVideoStream(QObject *parent)
-    : VlcVideoStream(Vlc::YUVFormat, parent) { }
+    : VlcVideoStream(Vlc::YUVFormat, parent) {}
 
-VlcQmlVideoStream::~VlcQmlVideoStream() { }
+VlcQmlVideoStream::~VlcQmlVideoStream() {}
 
 void VlcQmlVideoStream::frameUpdated()
 {

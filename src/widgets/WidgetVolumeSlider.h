@@ -39,7 +39,7 @@ class VlcMediaPlayer;
 */
 class VLCQT_WIDGETS_EXPORT VlcWidgetVolumeSlider : public QSlider
 {
-Q_OBJECT
+    Q_OBJECT
 public:
     /*!
         \brief VlcWidgetVolumeSlider constructor
@@ -60,7 +60,6 @@ public:
         \brief VlcWidgetVolumeSlider destructor
     */
     ~VlcWidgetVolumeSlider();
-
 
     /*!
         \brief Set media player if initialised without it

@@ -21,8 +21,8 @@
 #include "TestsConfig.h"
 
 #if STATIC_BUILD
-    #include <QtPlugin>
-    Q_IMPORT_PLUGIN(VLCQtPlugin)
+#include <QtPlugin>
+Q_IMPORT_PLUGIN(VLCQtPlugin)
 #endif
 
 QUICK_TEST_MAIN(player)

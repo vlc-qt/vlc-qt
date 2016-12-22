@@ -95,9 +95,9 @@ private:
     void formatCleanUpCallback();
 
     void *lockCallback(void **planes);
-    void  unlockCallback(void *picture,
-                         void * const *planes);
-    void  displayCallback(void *picture);
+    void unlockCallback(void *picture,
+                        void *const *planes);
+    void displayCallback(void *picture);
 
     std::shared_ptr<VlcAbstractVideoFrame> cloneFrame(std::shared_ptr<VlcAbstractVideoFrame> frame);
 

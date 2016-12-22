@@ -108,18 +108,18 @@ ENDIF()
 # Installation #
 ################
 IF(NOT STATIC AND ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    SET(VLCQtWidgetsIncludesLocation lib/${VLCQT_WIDGETS_NAME}.framework)
-    SET(VLCQtWidgetsPublicHeaderLocation lib/${VLCQT_WIDGETS_NAME}.framework)
+    SET(VLCQtWidgetsIncludesLocation ${CMAKE_INSTALL_LIBDIR}/${VLCQT_WIDGETS_NAME}.framework)
+    SET(VLCQtWidgetsPublicHeaderLocation ${CMAKE_INSTALL_LIBDIR}/${VLCQT_WIDGETS_NAME}.framework)
 ELSE()
-    SET(VLCQtWidgetsIncludesLocation include)
-    SET(VLCQtWidgetsPublicHeaderLocation include/${VLCQT_WIDGETS_NAME})
+    SET(VLCQtWidgetsIncludesLocation ${CMAKE_INSTALL_INCLUDEDIR})
+    SET(VLCQtWidgetsPublicHeaderLocation ${CMAKE_INSTALL_INCLUDEDIR}/${VLCQT_WIDGETS_NAME})
 ENDIF()
 
 INSTALL(TARGETS ${VLCQT_WIDGETS} EXPORT VLCQtWidgetsTargets
-        RUNTIME DESTINATION bin
-        FRAMEWORK DESTINATION lib${LIB_SUFFIX}
-        LIBRARY DESTINATION lib${LIB_SUFFIX}
-        ARCHIVE DESTINATION lib${LIB_SUFFIX}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         INCLUDES DESTINATION ${VLCQtWidgetsIncludesLocation}
         PUBLIC_HEADER DESTINATION ${VLCQtWidgetsPublicHeaderLocation}
 )

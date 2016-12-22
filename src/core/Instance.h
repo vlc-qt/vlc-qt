@@ -38,7 +38,7 @@ struct libvlc_instance_t;
 */
 class VLCQT_CORE_EXPORT VlcInstance : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 public:
     /*!
         \brief VlcInstance constructor.

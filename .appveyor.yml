@@ -8,7 +8,7 @@ branches:
 
 environment:
   vlcqt_version: 1.1.0
-  vlc_version: 2.2.3
+  vlc_version: 2.2.4
 
   matrix:
   # MSVC x86
@@ -33,7 +33,7 @@ init:
   - if %platform%==mingw set PATH=%PATH:C:\Program Files\Git\usr\bin;=%
   - if %platform%==mingw set PATH=C:\Qt\Tools\mingw492_32\bin;%PATH%
   - set PATH=C:\Qt\%qt%\bin;%PATH%
-  - if not %platform%==mingw call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" %platform%
+  - if not %platform%==mingw call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" %platform%
   - if not %platform%==mingw (set makefiles="NMake Makefiles") else (set makefiles="MinGW Makefiles")
   - if %APPVEYOR_REPO_TAG%==true (set nogitinfo=ON) else (set nogitinfo=OFF)
 

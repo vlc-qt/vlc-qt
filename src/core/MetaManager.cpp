@@ -27,7 +27,7 @@ VlcMetaManager::VlcMetaManager(VlcMedia *media)
     libvlc_media_parse(media->core());
 }
 
-VlcMetaManager::~VlcMetaManager() { }
+VlcMetaManager::~VlcMetaManager() {}
 
 QString VlcMetaManager::title() const
 {

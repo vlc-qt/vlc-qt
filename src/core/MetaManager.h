@@ -50,7 +50,6 @@ public:
     */
     ~VlcMetaManager();
 
-
     /*!
         \brief Get current track title.
         \return current track title (const QString)
