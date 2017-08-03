@@ -1,4 +1,4 @@
-libvlc-qt (1.1.0-1) unstable; urgency=low
+libvlc-qt (1.2.0-1) unstable; urgency=low
 
   * The full changelog can be found in CHANGELOG.md
     or by running 'git log' when using Git
