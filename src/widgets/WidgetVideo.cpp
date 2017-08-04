@@ -47,7 +47,9 @@ VlcWidgetVideo::VlcWidgetVideo(VlcMediaPlayer *player,
 {
     _vlcMediaPlayer = player;
 
-    connect(_vlcMediaPlayer, SIGNAL(vout(int)), this, SLOT(applyPreviousSettings()));
+    if (_vlcMediaPlayer) {
+        connect(_vlcMediaPlayer, SIGNAL(vout(int)), this, SLOT(applyPreviousSettings()));
+    }
 
     initWidgetVideo();
 }
@@ -87,9 +89,15 @@ void VlcWidgetVideo::initWidgetVideo()
 
 void VlcWidgetVideo::setMediaPlayer(VlcMediaPlayer *player)
 {
+    if (_vlcMediaPlayer) {
+        disconnect(_vlcMediaPlayer, SIGNAL(vout(int)), this, SLOT(applyPreviousSettings()));
+    }
+
     _vlcMediaPlayer = player;
 
-    connect(_vlcMediaPlayer, SIGNAL(vout(int)), this, SLOT(applyPreviousSettings()));
+    if (_vlcMediaPlayer) {
+        connect(_vlcMediaPlayer, SIGNAL(vout(int)), this, SLOT(applyPreviousSettings()));
+    }
 }
 
 void VlcWidgetVideo::setCurrentAspectRatio(const Vlc::Ratio &ratio)

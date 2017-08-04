@@ -1,5 +1,10 @@
 # VLC-Qt Changelog
 
+## Unreleased
+ - Protect signals handling for null pointers in VlcVideoWidget (issue #211)
+
+-----
+
 ## 1.1.1 (2017-08-02)
  - Use GNUInstallDirs module (issue #132)
  - Add ability to install QML plugins to the system location (issue #162)
