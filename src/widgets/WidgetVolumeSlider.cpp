@@ -68,14 +68,14 @@ void VlcWidgetVolumeSlider::initWidgetVolumeSlider()
 
 void VlcWidgetVolumeSlider::mousePressEvent(QMouseEvent *event)
 {
-    event->ignore();
+    QSlider::mousePressEvent(event);
 
     lock();
 }
 
 void VlcWidgetVolumeSlider::mouseReleaseEvent(QMouseEvent *event)
 {
-    event->ignore();
+    QSlider::mouseReleaseEvent(event);
 
     unlock();
 }
