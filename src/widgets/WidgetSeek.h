@@ -132,6 +132,16 @@ protected:
      */
     QProgressBar *_progress;
 
+    /*!
+     * \brief Elapsed time label
+     */
+    QLabel *_labelElapsed;
+
+    /*!
+     * \brief Total time label
+     */
+    QLabel *_labelTotal;
+
 private slots:
     void end();
 
@@ -141,8 +151,6 @@ private:
     bool _autoHide;
     QAbstractSlider *_slider;
     bool _connectSlider;
-    QLabel *_labelElapsed;
-    QLabel *_labelFull;
 };
 
 #endif // VLCQT_WIDGETSEEK_H_

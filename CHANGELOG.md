@@ -2,6 +2,7 @@
 
 ## Unreleased
  - Protect signals handling for null pointers in VlcVideoWidget (issue #211)
+ - Labels are now protected in WidgetSeek to allow easier subclassing (issue #188)
 
 -----
 

@@ -45,10 +45,10 @@ VlcWidgetSeek::VlcWidgetSeek(VlcMediaPlayer *player,
     : QWidget(parent),
       _vlcMediaPlayer(player),
       _progress(0),
-      _slider(0),
-      _connectSlider(connectSlider),
       _labelElapsed(0),
-      _labelFull(0)
+      _labelTotal(0),
+      _slider(0),
+      _connectSlider(connectSlider)
 {
     initWidgetSeek(slider);
 }
@@ -59,10 +59,10 @@ VlcWidgetSeek::VlcWidgetSeek(QWidget *slider,
     : QWidget(parent),
       _vlcMediaPlayer(0),
       _progress(0),
-      _slider(0),
-      _connectSlider(connectSlider),
       _labelElapsed(0),
-      _labelFull(0)
+      _labelTotal(0),
+      _slider(0),
+      _connectSlider(connectSlider)
 {
     initWidgetSeek(slider);
 }
@@ -71,10 +71,10 @@ VlcWidgetSeek::VlcWidgetSeek(QWidget *parent)
     : QWidget(parent),
       _vlcMediaPlayer(0),
       _progress(0),
-      _slider(0),
-      _connectSlider(true),
       _labelElapsed(0),
-      _labelFull(0)
+      _labelTotal(0),
+      _slider(0),
+      _connectSlider(true)
 {
     initWidgetSeek(0);
 }
@@ -110,15 +110,15 @@ void VlcWidgetSeek::initWidgetSeek(QWidget *slider)
         _labelElapsed = new QLabel(this);
     _labelElapsed->setText("--:--");
 
-    if (_labelFull == 0)
-        _labelFull = new QLabel(this);
-    _labelFull->setText("--:--");
+    if (_labelTotal == 0)
+        _labelTotal = new QLabel(this);
+    _labelTotal->setText("--:--");
 
     delete layout();
     QHBoxLayout *layout = new QHBoxLayout;
     layout->addWidget(_labelElapsed);
     layout->addWidget(slider);
-    layout->addWidget(_labelFull);
+    layout->addWidget(_labelTotal);
     setLayout(layout);
 }
 
@@ -178,7 +178,7 @@ void VlcWidgetSeek::setSliderWidget(QWidget *slider,
 void VlcWidgetSeek::end()
 {
     _labelElapsed->setText("--:--");
-    _labelFull->setText("--:--");
+    _labelTotal->setText("--:--");
     if (_slider != 0 && _connectSlider) {
         _slider->setMaximum(1);
         _slider->setValue(0);
@@ -210,7 +210,7 @@ void VlcWidgetSeek::updateCurrentTime(int time)
 void VlcWidgetSeek::updateFullTime(int time)
 {
     if (time == 0) {
-        _labelFull->setText("--:--");
+        _labelTotal->setText("--:--");
     } else {
         QTime fullTime = QTime(0, 0);
         fullTime = fullTime.addMSecs(time);
@@ -219,7 +219,7 @@ void VlcWidgetSeek::updateFullTime(int time)
         if (fullTime.hour() > 0)
             display = "hh:mm:ss";
 
-        _labelFull->setText(fullTime.toString(display));
+        _labelTotal->setText(fullTime.toString(display));
     }
 
     if (!time) {
