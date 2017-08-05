@@ -16,7 +16,9 @@
 # along with this library. If not, see <http://www.gnu.org/licenses/>.
 #############################################################################
 # macOS Extra #
-##############
+###############
+SET(CMAKE_OSX_DEPLOYMENT_TARGET 10.9)
+
 ADD_CUSTOM_TARGET(prepare
     "${CMAKE_SOURCE_DIR}/scripts/macos/vlc_libraries_prepare.sh" "${LIBVLC_BIN_DIR}" "${CMAKE_BINARY_DIR}")
 
