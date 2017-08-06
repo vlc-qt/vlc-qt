@@ -41,7 +41,7 @@ class VlcTrackModel;
     \see VlcQmlVideoOutput
     \since VLC-Qt 1.1
  */
-class VlcQmlPlayer : public VlcQmlSource
+class VLCQT_QML_EXPORT VlcQmlPlayer : public VlcQmlSource
 {
     Q_OBJECT
 
