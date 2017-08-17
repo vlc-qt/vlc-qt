@@ -46,6 +46,10 @@ VlcMedia::VlcMedia(libvlc_media_t *media)
     // Create a new libvlc media descriptor from existing one
     _vlcMedia = libvlc_media_duplicate(media);
 
+    _vlcEvents = libvlc_media_event_manager(_vlcMedia);
+
+    createCoreConnections();
+
     VlcError::showErrmsg();
 }
 
