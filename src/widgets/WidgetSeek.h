@@ -50,7 +50,7 @@ public:
         \brief VlcWidgetSeek constructor
         \param player media player
         \param slider widget to be used as slider
-        \param connectSlider connect the slider to relevant sigals, set to false if you want to handle everything yourself
+        \param connectSlider connect the slider to relevant signals, set to false if you want to handle everything yourself
         \param parent seek widget's parent GUI widget
     */
     explicit VlcWidgetSeek(VlcMediaPlayer *player,
@@ -61,7 +61,7 @@ public:
     /*!
         \brief VlcWidgetSeek constructor
         \param slider widget to be used as slider
-        \param connectSlider connect the slider to relevant sigals, set to false if you want to handle everything yourself
+        \param connectSlider connect the slider to relevant signals, set to false if you want to handle everything yourself
         \param parent seek widget's parent GUI widget
     */
     explicit VlcWidgetSeek(QWidget *slider,
@@ -110,7 +110,7 @@ public:
 
 protected slots:
     /*!
-        \brief Update turrent time callback
+        \brief Update current time callback
         \param time current time
     */
     virtual void updateCurrentTime(int time);
