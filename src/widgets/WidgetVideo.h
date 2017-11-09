@@ -126,7 +126,7 @@ public:
 
     /*!
         \brief Get default deinterlacing filter setting
-        \return current deinterlacing filter
+        \return default deinterlacing filter
     */
     inline Vlc::Deinterlacing defaultDeinterlacing() const { return _defaultDeinterlacing; }
 
