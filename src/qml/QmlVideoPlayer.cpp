@@ -44,7 +44,7 @@ VlcQmlVideoPlayer::VlcQmlVideoPlayer(QQuickItem *parent)
 
 {
     _instance = new VlcInstance(VlcCommon::args(), this);
-    _instance->setUserAgent(qApp->applicationName(), qApp->applicationVersion());
+    //_instance->setUserAgent(qApp->applicationName(), qApp->applicationVersion());
     _player = new VlcMediaPlayer(_instance);
     _audioManager = new VlcAudio(_player);
     _videoManager = new VlcVideo(_player);
