@@ -33,6 +33,11 @@ void VlcQmlSource::setPlayer(VlcMediaPlayer *player)
     _videoStream->init(player);
 }
 
+VlcMediaPlayer *VlcQmlSource::player() const
+{
+    return _videoStream->player();
+}
+
 void VlcQmlSource::removePlayer()
 {
     _videoStream->deinit();

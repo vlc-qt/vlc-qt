@@ -19,6 +19,7 @@
 #include "core/YUVVideoFrame.h"
 #include "qml/QmlSource.h"
 #include "qml/QmlVideoOutput.h"
+#include "core/MediaPlayer.h"
 #include "qml/rendering/VideoNode.h"
 
 VlcQmlVideoOutput::VlcQmlVideoOutput()
@@ -124,8 +125,10 @@ QSGNode *VlcQmlVideoOutput::updatePaintNode(QSGNode *oldNode,
     QRectF srcRect(0, 0, 1., 1.);
 
     if (fillMode() != Vlc::Stretch) {
+        float sar = _source->player()->sampleAspectRatio();
+        if (sar <= 0) sar = 1;
         const uint16_t fw = _frame->width;
-        const uint16_t fh = _frame->height;
+        const uint16_t fh = _frame->height * sar;
 
         qreal frameAspectTmp = qreal(fw) / fh;
         QSizeF aspectRatioSize = Vlc::ratioSize(_aspectRatio);
