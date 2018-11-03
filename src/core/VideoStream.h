@@ -84,6 +84,11 @@ public:
      */
     std::shared_ptr<const VlcAbstractVideoFrame> renderFrame() const { return _renderFrame; } // LCOV_EXCL_LINE
 
+    /*!
+        \brief Get the current player
+        \return current player
+     */
+    VlcMediaPlayer *player() const { return _player; }
 private:
     Q_INVOKABLE virtual void frameUpdated() = 0;
 
