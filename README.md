@@ -24,6 +24,11 @@ You can download VLC-Qt binaries and sources from the
 [official web page](https://vlc-qt.tano.si) or
 [GitHub releases](https://github.com/vlc-qt/vlc-qt/releases).
 
+--------------
+VLC Latest change and Download : 
+https://www.videolan.org/vlc/download-windows.html
+-------------
+
 Latest source is also available via Git:
 ```bash
   git clone git://github.com/vlc-qt/vlc-qt.git
