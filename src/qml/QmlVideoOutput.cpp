@@ -123,6 +123,13 @@ QSGNode *VlcQmlVideoOutput::updatePaintNode(QSGNode *oldNode,
     QRectF outRect(0, 0, width(), height());
     QRectF srcRect(0, 0, 1., 1.);
 
+    const uint16_t fw = _frame->width;
+    setFrame_width(fw);
+    const uint16_t fh = _frame->height;
+    setFrame_height(fh);
+
+    qreal frameAspectTmp = qreal(fw) / fh;
+
     if (fillMode() != Vlc::Stretch) {
         const uint16_t fw = _frame->width;
         const uint16_t fh = _frame->height;
@@ -177,6 +184,32 @@ QSGNode *VlcQmlVideoOutput::updatePaintNode(QSGNode *oldNode,
     node->setRect(outRect, srcRect);
 
     return node;
+}
+
+uint VlcQmlVideoOutput::frame_width() const
+{
+    return m_frame_width;
+}
+
+uint VlcQmlVideoOutput::frame_height() const
+{
+    return m_frame_height;
+}
+
+void VlcQmlVideoOutput::setFrame_height(const uint16_t &frame_height)
+{
+    if (m_frame_height != frame_height) {
+        m_frame_height = frame_height;
+        emit frameSizeChanged();
+    }
+}
+
+void VlcQmlVideoOutput::setFrame_width(const uint16_t &frame_width)
+{
+    if (m_frame_width != frame_width) {
+        m_frame_width = frame_width;
+        emit frameSizeChanged();
+    }
 }
 
 void VlcQmlVideoOutput::presentFrame(const std::shared_ptr<const VlcYUVVideoFrame> &frame)
