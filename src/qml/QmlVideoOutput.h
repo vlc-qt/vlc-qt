@@ -75,6 +75,22 @@ class VLCQT_QML_EXPORT VlcQmlVideoOutput : public QQuickItem
         \see cropRatioChanged
      */
     Q_PROPERTY(int cropRatio READ cropRatio WRITE setCropRatio NOTIFY cropRatioChanged)
+    
+    /*!
+        \brief Current frame width
+        \see frame_width
+        \see frameSizeChanged
+
+    */
+    Q_PROPERTY(uint frameWidth READ frame_width NOTIFY frameSizeChanged)
+    
+    /*!
+        \brief Current frame height
+        \see frame_height
+        \see frameSizeChanged
+        \see cropRatioChanged
+     */
+    Q_PROPERTY(uint frameHeight READ frame_height NOTIFY frameSizeChanged)
 
 public:
     VlcQmlVideoOutput();
@@ -145,6 +161,18 @@ public:
         Used as property in QML.
      */
     void setCropRatio(int cropRatio);
+    
+    /*!
+       \brief frame_width width of the frame. Is set only when the frame width changes.
+       \return width of the incoming frame
+     */
+    uint frame_width() const;
+
+    /*!
+       \brief frame_height height of the height. Is set only when the frame height changes.
+       \return height of the incoming frame
+     */
+    uint frame_height() const;
 
 public slots:
     /*!
@@ -173,14 +201,25 @@ signals:
         \brief Fill mode changed signal
      */
     void cropRatioChanged();
+    
+    /*!
+        \brief frameSizeChanged emitted when the width or height of the frame changes
+     */
+    void frameSizeChanged();
 
 private:
     virtual QSGNode *updatePaintNode(QSGNode *oldNode,
                                      UpdatePaintNodeData *data);
+                                     
+    void setFrame_width(const uint16_t &frame_width);
+    void setFrame_height(const uint16_t &frame_height);
 
     Vlc::FillMode _fillMode;
     Vlc::Ratio _aspectRatio;
     Vlc::Ratio _cropRatio;
+    
+    uint16_t m_frame_width = 0;
+    uint16_t m_frame_height = 0;
 
     QPointer<VlcQmlSource> _source;
 
