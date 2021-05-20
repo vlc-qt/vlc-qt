@@ -52,7 +52,7 @@ MACRO(GENERATE_WINDOWS_RC LibraryName LibraryFolder LibrarySrcs)
             COMMAND ${CMAKE_RC_COMPILER}
             -i ${CMAKE_BINARY_DIR}/src/${LibraryFolder}/${LibraryName}.rc
             -o ${CMAKE_BINARY_DIR}/src/${LibraryFolder}/${LibraryName}.obj
-            WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/src/${LibraryFolder}"
+            WORKING_DIRECTORY "${VLCQt_ROOT_DIR}/src/${LibraryFolder}"
         )
         LIST(APPEND ${LibrarySrcs} ${CMAKE_BINARY_DIR}/src/${LibraryFolder}/${LibraryName}.obj)
     ENDIF()
