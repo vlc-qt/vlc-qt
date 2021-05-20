@@ -18,7 +18,7 @@
 # Configuration #
 #################
 CONFIGURE_FILE(
-    ${CMAKE_CURRENT_SOURCE_DIR}/Config.h.in
+    ${VLCQt_ROOT_DIR}/src/Config.h.in
     ${CMAKE_BINARY_DIR}/src/Config.h
 )
 
