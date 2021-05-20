@@ -17,7 +17,7 @@
 #############################################################################
 # Macros #
 ##########
-SET(TestCommonFiles ${CMAKE_SOURCE_DIR}/tests/common/TestsCommon.cpp)
+SET(TestCommonFiles ${VLCQt_ROOT_DIR}/tests/common/TestsCommon.cpp)
 
 MACRO(ADD_AUTO_TEST TestName)
     SET(Test_${TestName}_Srcs ${ARGN} ${TestCommonFiles})
@@ -61,16 +61,16 @@ ENDMACRO()
 #################
 # Configuration #
 #################
-ADD_DEFINITIONS(-DQUICK_TEST_SOURCE_DIR=\"${CMAKE_SOURCE_DIR}/tests/qml/\")
+ADD_DEFINITIONS(-DQUICK_TEST_SOURCE_DIR=\"${VLCQt_ROOT_DIR}/tests/qml/\")
 
 CONFIGURE_FILE(
-    ${CMAKE_SOURCE_DIR}/tests/TestsConfig.h.in
+    ${VLCQt_ROOT_DIR}/tests/TestsConfig.h.in
     ${CMAKE_BINARY_DIR}/tests/TestsConfig.h
 )
 
 INCLUDE_DIRECTORIES(
-    ${CMAKE_SOURCE_DIR}/src
-    ${CMAKE_SOURCE_DIR}/tests/common
+    ${VLCQt_ROOT_DIR}/src
+    ${VLCQt_ROOT_DIR}/tests/common
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/src
     ${CMAKE_BINARY_DIR}/tests
