@@ -59,14 +59,14 @@ SET(VLCQT_WIDGETS_HEADERS
 # Compiler settings #
 #####################
 INCLUDE_DIRECTORIES(
-    ${CMAKE_SOURCE_DIR}/src
-    ${CMAKE_SOURCE_DIR}/src/widgets
+    ${VLCQt_ROOT_DIR}/src
+    ${VLCQt_ROOT_DIR}/src/widgets
     ${CMAKE_BINARY_DIR}/src
     ${CMAKE_BINARY_DIR}/include
 )
 
 IF(MSVC)
-    INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/windows/msvc)
+    INCLUDE_DIRECTORIES(${VLCQt_ROOT_DIR}/windows/msvc)
 ENDIF()
 
 # Additional macros
