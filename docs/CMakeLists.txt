@@ -19,7 +19,7 @@
 #################
 
 CONFIGURE_FILE(
-    "${CMAKE_SOURCE_DIR}/docs/Doxyfile.in"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in"
     "${CMAKE_BINARY_DIR}/docs/Doxyfile"
     @ONLY
 )
@@ -30,7 +30,7 @@ CONFIGURE_FILE(
     COPYONLY)
 
 CONFIGURE_FILE(
-    "${CMAKE_SOURCE_DIR}/docs/index.md"
+    "CMAKE_CURRENT_SOURCE_DIR/index.md"
     "${CMAKE_BINARY_DIR}/docs/index.md"
     COPYONLY)
 
@@ -40,7 +40,7 @@ CONFIGURE_FILE(
     COPYONLY)
 
 CONFIGURE_FILE(
-    "${CMAKE_SOURCE_DIR}/docs/contributing.md"
+    "CMAKE_CURRENT_SOURCE_DIR/contributing.md"
     "${CMAKE_BINARY_DIR}/docs/contributing.md"
     COPYONLY)
 
