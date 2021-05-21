@@ -44,8 +44,6 @@ MACRO(GENERATE_WINDOWS_RC LibraryName LibraryFolder LibrarySrcs)
         ${LibraryName}.rc.in
         ${LibraryName}.rc
     )
-    message("CURRENT_BINARY_DIR = ${CMAKE_CURRENT_BINARY_DIR}")
-    message("CMAKE_CURRENT_BINARY_DIR = ${CMAKE_CURRENT_BINARY_DIR}")
     # Compile resources with windres
     IF(MINGW)
         ADD_CUSTOM_COMMAND(
@@ -56,11 +54,11 @@ MACRO(GENERATE_WINDOWS_RC LibraryName LibraryFolder LibrarySrcs)
             WORKING_DIRECTORY "${VLCQt_ROOT_DIR}/src/${LibraryFolder}"
         )
         #LIST(APPEND ${LibrarySrcs} ${CMAKE_CURRENT_BINARY_DIR}/src/${LibraryFolder}/${LibraryName}.obj)
-        LIST(APPEND ${LibrarySrcs} ${CMAKE_CURRENT_BINARY_DIR}/${LibraryName}.obj)
+        LIST(APPEND ${LibrarySrcs} ${CURRENT_BINARY_DIR}/${LibraryName}.obj)
     ENDIF()
 
     IF(MSVC)
         #LIST(APPEND ${LibrarySrcs} ${CMAKE_CURRENT_BINARY_DIR}/src/${LibraryFolder}/${LibraryName}.rc)
-        LIST(APPEND ${LibrarySrcs} ${CMAKE_CURRENT_BINARY_DIR}/${LibraryName}.rc)
+        LIST(APPEND ${LibrarySrcs} ${CURRENT_BINARY_DIR}/${LibraryName}.rc)
     ENDIF()
 ENDMACRO()
