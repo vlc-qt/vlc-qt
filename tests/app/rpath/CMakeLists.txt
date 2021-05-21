@@ -49,7 +49,7 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
         COMMAND ${CMAKE_COMMAND} -E create_symlink "${CMAKE_BINARY_DIR}/src/core/${VLCQT_CORE_NAME}.framework" "Contents/Frameworks/${VLCQT_CORE_NAME}.framework"
         COMMAND ${CMAKE_COMMAND} -E create_symlink "${CMAKE_BINARY_DIR}/src/qml/${VLCQT_QML_NAME}.framework" "Contents/Frameworks/${VLCQT_QML_NAME}.framework"
         COMMAND ${CMAKE_COMMAND} -E create_symlink "${CMAKE_BINARY_DIR}/src/plugins/${VLCQT_PLUGIN_QML_NAME}/" "Contents/Resources/qml/${VLCQT_PLUGIN_QML_NAME}"
-        COMMAND ${QT_BIN_DIR}/macdeployqt ../${TEST_APP_RPATH}.app -qmldir=${CMAKE_SOURCE_DIR}/tests/app/
+        COMMAND ${QT_BIN_DIR}/macdeployqt ../${TEST_APP_RPATH}.app -qmldir=${VLCQt_ROOT_DIR}/tests/app/
         COMMAND open ../${TEST_APP_RPATH}.app
         WORKING_DIRECTORY "${TEST_APP_RPATH}.app"
     )

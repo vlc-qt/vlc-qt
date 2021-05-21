@@ -19,32 +19,32 @@
 #################
 
 CONFIGURE_FILE(
-    "${CMAKE_SOURCE_DIR}/docs/Doxyfile.in"
+    "${VLCQt_ROOT_DIR}/docs/Doxyfile.in"
     "${CMAKE_BINARY_DIR}/docs/Doxyfile"
     @ONLY
 )
 
 CONFIGURE_FILE(
-    "${CMAKE_SOURCE_DIR}/CHANGELOG.md"
+    "${VLCQt_ROOT_DIR}/CHANGELOG.md"
     "${CMAKE_BINARY_DIR}/docs/changelog.md"
     COPYONLY)
 
 CONFIGURE_FILE(
-    "${CMAKE_SOURCE_DIR}/docs/index.md"
+    "${VLCQt_ROOT_DIR}/docs/index.md"
     "${CMAKE_BINARY_DIR}/docs/index.md"
     COPYONLY)
 
 CONFIGURE_FILE(
-    "${CMAKE_SOURCE_DIR}/BUILDING.md"
+    "${VLCQt_ROOT_DIR}/BUILDING.md"
     "${CMAKE_BINARY_DIR}/docs/building.md"
     COPYONLY)
 
 CONFIGURE_FILE(
-    "${CMAKE_SOURCE_DIR}/docs/contributing.md"
+    "${VLCQt_ROOT_DIR}/docs/contributing.md"
     "${CMAKE_BINARY_DIR}/docs/contributing.md"
     COPYONLY)
 
 CONFIGURE_FILE(
-    "${CMAKE_SOURCE_DIR}/LICENSE.md"
+    "${VLCQt_ROOT_DIR}/LICENSE.md"
     "${CMAKE_BINARY_DIR}/docs/license.md"
     COPYONLY)

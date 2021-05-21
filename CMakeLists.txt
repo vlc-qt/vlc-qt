@@ -20,10 +20,15 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.0.2)
 CMAKE_POLICY(VERSION 3.0.2)
 
 SET(CMAKE_MODULE_PATH
-    ${CMAKE_SOURCE_DIR}/cmake
-    ${CMAKE_SOURCE_DIR}/config
-    ${CMAKE_SOURCE_DIR}/config/platform
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmake
+    ${CMAKE_CURRENT_SOURCE_DIR}/config
+    ${CMAKE_CURRENT_SOURCE_DIR}/config/platform
+    ${CMAKE_MODULE_PATH}
 )
+
+mark_as_advanced(BUILD_TESTING)
+
+SET(VLCQt_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
 INCLUDE(ParseVersion)
 
@@ -61,18 +66,20 @@ ADD_SUBDIRECTORY(docs)
 #########
 # Tests #
 #########
-IF(QT_VERSION MATCHES 5 AND NOT MOBILE)
-    ENABLE_TESTING(true)
-    ADD_SUBDIRECTORY(tests)
+IF(BUILD_TESTING)
+    IF(QT_VERSION MATCHES 5 AND NOT MOBILE)
+        ENABLE_TESTING(true)
+        ADD_SUBDIRECTORY(tests)
 
-    IF(NOT MSVC)
-        SET(COVERAGE OFF CACHE BOOL "Coverage report")
-    ENDIF()
+        IF(NOT MSVC)
+            SET(COVERAGE OFF CACHE BOOL "Coverage report")
+        ENDIF()
 
-    IF(COVERAGE)
-        MESSAGE(STATUS "Generate coverage report using 'coverage' target")
-        INCLUDE(CodeCoverage)
-        SETUP_TARGET_FOR_COVERAGE(coverage ${CMAKE_CTEST_COMMAND} "${CMAKE_BINARY_DIR}/coverage")
+        IF(COVERAGE)
+            MESSAGE(STATUS "Generate coverage report using 'coverage' target")
+            INCLUDE(CodeCoverage)
+            SETUP_TARGET_FOR_COVERAGE(coverage ${CMAKE_CTEST_COMMAND} "${CMAKE_BINARY_DIR}/coverage")
+        ENDIF()
     ENDIF()
 ENDIF()
 

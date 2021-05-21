@@ -61,9 +61,9 @@ ENDIF()
 # Compiler settings #
 #####################
 INCLUDE_DIRECTORIES(
-    ${CMAKE_SOURCE_DIR}/src
-    ${CMAKE_SOURCE_DIR}/src/qml
-    ${CMAKE_SOURCE_DIR}/src/plugins/${VLCQT_PLUGIN_QML_NAME}
+    ${VLCQt_ROOT_DIR}/src
+    ${VLCQt_ROOT_DIR}/src/qml
+    ${VLCQt_ROOT_DIR}/src/plugins/${VLCQT_PLUGIN_QML_NAME}
     ${CMAKE_BINARY_DIR}/src
     ${CMAKE_BINARY_DIR}/src/plugins/${VLCQT_PLUGIN_QML_NAME}
     ${CMAKE_BINARY_DIR}/include

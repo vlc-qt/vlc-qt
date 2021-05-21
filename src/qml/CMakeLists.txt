@@ -89,8 +89,8 @@ SET(VLCQT_QML_SRCS
 # Compiler settings #
 #####################
 INCLUDE_DIRECTORIES(
-    ${CMAKE_SOURCE_DIR}/src
-    ${CMAKE_SOURCE_DIR}/src/qml
+    ${VLCQt_ROOT_DIR}/src
+    ${VLCQt_ROOT_DIR}/src/qml
     ${CMAKE_BINARY_DIR}/src
     ${CMAKE_BINARY_DIR}/include
 )

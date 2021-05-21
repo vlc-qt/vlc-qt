@@ -20,7 +20,7 @@
 #define VLCQT_TESTSCONFIG_H_
 
 #define STATIC_BUILD @STATIC_BUILD@
-#define SAMPLES_DIR "@CMAKE_SOURCE_DIR@/tests/samples/"
+#define SAMPLES_DIR "@VLCQt_ROOT_DIR@/tests/samples/"
 #define LIBVLC_PLUGINS_DIR "@LIBVLC_PLUGINS_DIR@"
 
 #endif // VLCQT_TESTSCONFIG_H_

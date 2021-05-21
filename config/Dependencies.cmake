@@ -54,7 +54,7 @@ ENDIF()
 # Define version, if not defined use latest relased
 SET(LIBVLC_VERSION 0x020200 CACHE STRING "libVLC version used")
 # Include libVLC library
-SET(LIBVLC_EXTRA_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/libvlc-headers/include)
+SET(LIBVLC_EXTRA_INCLUDE_DIR ${VLCQt_ROOT_DIR}/libvlc-headers/include)
 IF(NOT MOBILE)
     FIND_PACKAGE(LIBVLC REQUIRED)
 ENDIF()
